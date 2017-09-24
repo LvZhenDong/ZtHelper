@@ -25,5 +25,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.tv)
     protected void onTvClick(){
         Logger.i("click");
+        Logger.t("tag").i("click");
     }
 }
