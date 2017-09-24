@@ -1,10 +1,11 @@
 package com.kklv.fragme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
+import com.kklv.fragme.ui.activity.TestActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv)
     protected void onTvClick(){
-        Logger.i("click");
-        Logger.t("tag").i("click");
+        Intent intent=new Intent(this, TestActivity.class);
+        startActivity(intent);
     }
 }

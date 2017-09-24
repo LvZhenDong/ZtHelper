@@ -7,6 +7,18 @@ def buildTime() {
     return formattedDate
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.code.findbugs:jsr305:3.0.1'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -36,7 +48,7 @@ android {
         }
 
         debug{
-            buildConfigField "String","BASE_URL","\"http://api.ehuu.com/site-api0/\""
+            buildConfigField "String","BASE_URL","\"http://101.201.222.160:8080/\""
             minifyEnabled false
 
             applicationVariants.all { variant ->
@@ -59,9 +71,28 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
-//    ButterKnife
+    //    ButterKnife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-//    Logger
+    //    Logger
     compile 'com.orhanobut:logger:2.1.1'
+    //    RxJava
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    //    ?
+    compile 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+    compile 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
+    compile 'com.github.MFlisar:RxBus2:0.1'
+    //    Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    //    okHttp日志拦截器
+    compile('com.github.ihsanbal:LoggingInterceptor:2.0.2') {
+        exclude group: 'org.json', module: 'json'
+    }
+    //    AES加密
+    compile 'com.scottyab:aes-crypto:0.0.4'
 }
