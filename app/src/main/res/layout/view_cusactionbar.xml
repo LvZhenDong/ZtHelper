@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionbarSize">
+
+    <ImageView
+        android:id="@+id/anctionbar_left_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_back"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/anctionbar_left_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/anctionbar_left_arrow"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_close"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/anctionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:maxLength="8"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/actionbar_titlesize" />
+
+    <FrameLayout
+        android:id="@+id/anctionbar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/anctionbar_right_ic"
+            android:layout_width="@dimen/actionbarIconSize"
+            android:layout_height="@dimen/actionbarIconSize"
+            android:layout_gravity="center_vertical"
+            android:padding="4dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/anctionbar_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/actionbar_title_rightsize"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/anctionbar_right_ic2"
+        android:layout_width="@dimen/actionbarIconSize"
+        android:layout_height="@dimen/actionbarIconSize"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/anctionbar_right"
+        android:padding="4dp"
+        android:visibility="gone" />
+</RelativeLayout>

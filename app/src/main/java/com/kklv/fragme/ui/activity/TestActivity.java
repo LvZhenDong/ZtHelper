@@ -1,7 +1,6 @@
 package com.kklv.fragme.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.kklv.fragme.R;
 import com.kklv.fragme.api.NetApi;
@@ -9,8 +8,10 @@ import com.kklv.fragme.api.error.LObserver;
 import com.kklv.fragme.api.error.ResponeThrowable;
 import com.kklv.fragme.bean.request.LoginRequest;
 import com.kklv.fragme.bean.response.Resident;
+import com.kklv.fragme.contract.TextContract;
 import com.kklv.fragme.factory.APIServiceFactory;
 import com.kklv.fragme.factory.TransformersFactory;
+import com.kklv.fragme.presenter.TestPresenterImpl;
 import com.kklv.fragme.ui.base.BaseMVPActivity;
 import com.orhanobut.logger.Logger;
 
@@ -23,13 +24,16 @@ import io.reactivex.disposables.Disposable;
  * Created by lvzhendong on 2017/9/24.
  */
 
-public class TestActivity extends BaseMVPActivity {
+public class TestActivity extends BaseMVPActivity<TextContract.View,TestPresenterImpl>
+    implements TextContract.View{
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+    public int returnLayoutID() {
+        return R.layout.activity_test;
+    }
 
+    @Override
+    public void TODO(Bundle savedInstanceState) {
         LoginRequest request = new LoginRequest();
         request.setLoginName("111865");
         request.setPassword("e10adc3949ba59abbe56e057f20f883e");
@@ -58,6 +62,10 @@ public class TestActivity extends BaseMVPActivity {
                         Logger.i(Resident.getAccount());
                     }
                 });
+    }
 
+    @Override
+    public TestPresenterImpl createPresenter() {
+        return new TestPresenterImpl();
     }
 }
