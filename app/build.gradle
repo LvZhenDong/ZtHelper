@@ -23,7 +23,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
-        applicationId "com.kklv.fragme"
+        applicationId "com.egr.drillinghelper"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
