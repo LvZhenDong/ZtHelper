@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <RadioGroup
+        android:id="@+id/rg_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            style="@style/RbHome"
+            android:drawableTop="@drawable/bg_home_home_rb_selector"
+            android:text="@string/rb_home" />
+
+        <RadioButton
+            style="@style/RbHome"
+            android:drawableTop="@drawable/bg_home_parts_rb_selector"
+            android:text="@string/rb_parts" />
+
+        <RadioButton
+            style="@style/RbHome"
+            android:drawableTop="@drawable/bg_home_feedback_rb_selector"
+            android:text="@string/rb_feedback" />
+
+        <RadioButton
+            style="@style/RbHome"
+            android:drawableTop="@drawable/bg_home_my_rb_selector"
+            android:text="@string/rb_my" />
+    </RadioGroup>
+
+    <com.kklv.fragme.ui.widgets.BanSlideViewPager
+        android:id="@+id/vp_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rg_home" />
+</RelativeLayout>

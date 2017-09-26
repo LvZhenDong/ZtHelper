@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:orientation="vertical">
+
+    <include layout="@layout/line_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/line_divider" />
+
+        <RelativeLayout
+            android:id="@+id/rl_phoneNum"
+            style="@style/EditTextRl">
+
+            <TextView
+                android:id="@+id/tv_phoneNum"
+                style="@style/EditTextTv"
+                android:text="@string/phone_num" />
+
+            <EditText
+                android:id="@+id/et_phoneNum"
+                style="@style/EditTextEt"
+                android:layout_width="150dp"
+                android:layout_toRightOf="@id/tv_phoneNum"
+                android:hint="@string/register_phone_num_hint"
+                android:inputType="number"
+                android:maxLength="11" />
+
+            <TextView
+                android:id="@+id/tv_get_ver_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/et_phoneNum"
+                android:gravity="center"
+                android:text="@string/get_ver_code"
+                android:textColor="@color/tv_green"
+                android:textSize="@dimen/text_size_tv_small" />
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_ver_code"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/ver_code" />
+
+            <EditText
+                android:id="@+id/et_ver_code"
+                style="@style/EditTextEt"
+                android:layout_toRightOf="@id/tv_ver_code"
+                android:hint="@string/ver_code_hint"
+                android:inputType="number" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_new_pswd"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/new_pswd" />
+
+            <EditText
+                android:id="@+id/et_new_pswd"
+                style="@style/EditTextEt"
+                android:layout_toRightOf="@id/tv_new_pswd"
+                android:hint="@string/register_pswd_hint"
+                android:inputType="textPassword"
+                android:maxLength="16" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_ensure_pswd"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp" />
+
+            <EditText
+                android:id="@+id/et_ensure_pswd"
+                style="@style/EditTextEt"
+                android:layout_toRightOf="@id/tv_ensure_pswd"
+                android:hint="@string/ensure_pswd_hint"
+                android:inputType="textPassword"
+                android:maxLength="16" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        style="@style/RadiusBtn"
+        android:layout_marginTop="30dp"
+        android:text="@string/complete" />
+</LinearLayout>

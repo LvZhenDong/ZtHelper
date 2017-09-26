@@ -16,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kklv.fragme.R;
-import com.kklv.fragme.mvp.IMvpBase;
-import com.kklv.fragme.mvp.IPresenter;
-import com.kklv.fragme.mvp.IView;
 import com.kklv.fragme.ui.widgets.swipeback.SwipeBackActivity;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 
@@ -26,35 +23,25 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> extends
-        SwipeBackActivity implements IMvpBase<V> {
+public abstract class BaseActivity extends SwipeBackActivity {
 
     protected ActionBar actionBar;
     protected TextView title, rightTv;
-    protected ImageView leftIv, rightIv, rightIv2;
+    protected ImageView leftIv, rightIv, rightIv2, leftIv2;
     private Unbinder unbinder;
-    protected P presenter;
 
     public abstract int returnLayoutID();
 
     public abstract void TODO(Bundle savedInstanceState);
 
-    public abstract P createPresenter();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(returnLayoutID());
         actionBar = getSupportActionBar();
         unbinder = ButterKnife.bind(this);
-        presenter = createPresenter();
-        presenter.attachView(getMvpView());
         TODO(savedInstanceState);
-    }
-
-    @Override
-    public V getMvpView() {
-        return (V) this;
     }
 
     /**
@@ -67,7 +54,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
             return;
         }
         loadView();
-        title.setText(getString(actionBarTitleResId));
+        title.setText(actionBarTitleResId);
         rightIv.setVisibility(View.GONE);
         if (displayHomeAsUpEnabled) {
             leftIv.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +78,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
             return;
         }
         loadView();
-        title.setText(getString(actionBarTitleResId));
+        title.setText(actionBarTitleResId);
         rightIv.setVisibility(View.GONE);
         if (displayHomeAsUpEnabled) {
             leftIv.setOnClickListener(listener);
@@ -164,6 +151,30 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
      *
      * @param actionBarTitleResId
      */
+    protected void setupActionBar(int actionBarTitleResId, int Color, boolean displayHomeAsUpEnabled) {
+        if (actionBar == null) {
+            return;
+        }
+        loadView();
+        title.setText(actionBarTitleResId);
+        rightIv.setVisibility(View.GONE);
+        if (displayHomeAsUpEnabled) {
+            leftIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        } else {
+            leftIv.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * set actionbar title user resid
+     *
+     * @param actionBarTitleResId
+     */
     protected void setupActionBar(int actionBarTitleResId) {
         if (actionBar == null) {
             return;
@@ -192,6 +203,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         rightIv = (ImageView) actionbarLayout.findViewById(R.id.anctionbar_right_ic);
         rightIv2 = (ImageView) actionbarLayout.findViewById(R.id.anctionbar_right_ic2);
         leftIv = (ImageView) actionbarLayout.findViewById(R.id.anctionbar_left_arrow);
+        leftIv2 = (ImageView) actionbarLayout.findViewById(R.id.anctionbar_left_close);
     }
 
     /**
@@ -209,8 +221,22 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
             leftIv.setOnClickListener(listener);
     }
 
+    public void setActionBarLeft2Icon(View.OnClickListener listener) {
+        setActionBarLeft2Icon(0, listener);
+    }
+
+    public void setActionBarLeft2Icon(int resId, View.OnClickListener listener) {
+        if (leftIv2 == null)
+            throw new RuntimeException("setupAction must first call!!!");
+        leftIv2.setVisibility(View.VISIBLE);
+        if (resId != 0)
+            leftIv2.setImageResource(resId);
+        if (listener != null)
+            leftIv2.setOnClickListener(listener);
+    }
+
     /**
-     * set actionbar right text resource and listener
+     * set actionbar rightIv text resource and listener
      *
      * @param rightResId
      * @param listener
@@ -224,10 +250,13 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
             rightTv.setOnClickListener(listener);
     }
 
-    public void changeActionBarRightText(int rightResId){
+    /**
+     * set actionbar right text invisibile
+     */
+    public void setActionBarRightTextGone() {
         if (rightTv == null)
             throw new RuntimeException("setupAction must first call!!!");
-        rightTv.setText(rightResId);
+        rightTv.setVisibility(View.GONE);
     }
 
     /**
@@ -243,6 +272,12 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         rightIv.setImageResource(rightResId);
         if (listener != null)
             rightIv.setOnClickListener(listener);
+    }
+
+    public void setActionBarRightIconHint() {
+        if (rightIv == null)
+            throw new RuntimeException("setupAction must first call!!!");
+        rightIv.setVisibility(View.GONE);
     }
 
     /**
@@ -272,15 +307,6 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
     }
 
     /**
-     * set actionbar right text invisibile
-     */
-    public void setActionBarRightTextGone() {
-        if (rightTv == null)
-            throw new RuntimeException("setupAction must first call!!!");
-        rightTv.setVisibility(View.GONE);
-    }
-
-    /**
      * set actionbar title
      *
      * @param titleStr
@@ -289,17 +315,6 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         if (title == null)
             throw new RuntimeException("setupAction must first call!!!");
         title.setText(titleStr);
-    }
-
-    /**
-     * set actionbar title
-     *
-     * @param colorResId
-     */
-    protected void setActionBarTitleColor(int colorResId) {
-        if (title == null)
-            throw new RuntimeException("setupAction must first call!!!");
-        title.setTextColor(getResources().getColor(colorResId));
     }
 
     /**
@@ -329,7 +344,6 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.detachView(false);
         unbinder.unbind();
         RxDisposableManager.unsubscribe(this);
     }
@@ -370,8 +384,9 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
 //        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+    @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        //        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

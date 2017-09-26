@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <TextView
+        android:id="@+id/tv_login"
+        style="@style/Btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_login_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_purple_btn"
+        android:text="@string/login" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_phoneNum"
+        style="@style/EditTextRl"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_phoneNum"
+            style="@style/EditTextTv"
+            android:paddingRight="14dp"
+            android:text="@string/phone_num" />
+
+        <EditText
+            android:id="@+id/et_phoneNum"
+            style="@style/EditTextEt"
+            android:layout_toRightOf="@id/tv_phoneNum"
+            android:hint="@string/phone_num_hint"
+            android:inputType="number"
+            android:maxLength="11" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_pswd"
+        style="@style/EditTextRl"
+        android:layout_below="@id/rl_phoneNum">
+
+        <include layout="@layout/line_divider" />
+
+        <TextView
+            android:id="@+id/tvPswd"
+            style="@style/EditTextTv"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/et_pasw"
+            style="@style/EditTextEt"
+            android:layout_width="150dp"
+            android:layout_toRightOf="@id/tvPswd"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/tv_forget_pswd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/et_pasw"
+            android:gravity="center"
+            android:text="@string/forget_password_mark"
+            android:textColor="@color/tv_green"
+            android:textSize="@dimen/text_size_tv_small" />
+    </RelativeLayout>
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/rl_pswd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/btn_height"
+        android:layout_alignTop="@id/space"
+        android:layout_toLeftOf="@id/space"
+        android:gravity="center"
+        android:text="@string/no_account"
+        android:textColor="@color/tv999" />
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/btn_height"
+        android:layout_alignTop="@id/space"
+        android:layout_toRightOf="@id/space"
+        android:gravity="center"
+        android:text="@string/register_immediately"
+        android:textColor="@color/tv_green" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="200dp"
+        android:layout_height="107dp"
+        android:layout_above="@id/rl_phoneNum"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="67dp"
+        android:scaleType="fitCenter" />
+</RelativeLayout>

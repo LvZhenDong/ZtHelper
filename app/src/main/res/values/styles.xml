@@ -6,6 +6,78 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="actionBarSize">@dimen/actionbarSize</item>
     </style>
+
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">7dp</item>
+        <item name="android:background">@color/bg_line</item>
+    </style>
+
+    <style name="EditTextRl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/btn_login_height</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="EditTextTv">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/padding_left_tv_normal</item>
+        <item name="android:paddingTop">@dimen/padding_top_bottom_tv_normal</item>
+        <item name="android:paddingBottom">@dimen/padding_top_bottom_tv_normal</item>
+        <item name="android:textColor">@color/tv333</item>
+        <item name="android:textSize">@dimen/text_size_tv</item>
+    </style>
+
+    <style name="EditTextEt">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/tv333</item>
+        <item name="android:textColorHint">@color/tv999</item>
+        <item name="android:textSize">@dimen/text_size_et</item>
+    </style>
+
+    <style name="Btn">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_btn</item>
+    </style>
+
+    <!--圆角紫色按钮-->
+    <style name="RadiusBtn" parent="Btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:layout_marginLeft">@dimen/padding_vertical</item>
+        <item name="android:layout_marginRight">@dimen/padding_vertical</item>
+        <item name="android:background">@drawable/bg_purple_btn_radius_selector</item>
+    </style>
+
+    <style name="RbHome">
+        <item name="android:button">@null</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/selector_home_rb_text</item>
+    </style>
+
+
 
 </resources>
