@@ -103,7 +103,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        baseStartActivity(FeedbackHistoryActivity.class);
                     }
                 });
                 break;

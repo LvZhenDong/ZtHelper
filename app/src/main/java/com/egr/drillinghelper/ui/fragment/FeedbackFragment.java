@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.ui.activity.CreateFeedbackActivity;
 import com.egr.drillinghelper.ui.adapter.QuestionAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
@@ -95,6 +96,6 @@ public class FeedbackFragment extends BaseFragment {
 
     @OnClick(R.id.ll_go_feedback)
     public void onClick() {
-        rvQuestion.refreshComplete(1);
+        baseStartActivity(CreateFeedbackActivity.class);
     }
 }

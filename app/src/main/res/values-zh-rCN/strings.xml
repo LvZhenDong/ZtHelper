@@ -39,8 +39,12 @@
     <string name="normal_question">常见问题</string>
     <string name="into_mall">进入商城</string>
     <string name="watch_more">查看更多</string>
-
-
+    <string name="create_feedback_hint">请详细描述您遇到的问题</string>
+    <string name="create_feedback_photo">拍摄/录像钻探照片</string>
+    <string name="create_feedback_photo_below">帮助我们更快解决问题</string>
+    <string name="wait_for_reply">待回复</string>
+    <string name="replied">已回复</string>
+    <string name="read_reply">查看回复</string>
 
 
 

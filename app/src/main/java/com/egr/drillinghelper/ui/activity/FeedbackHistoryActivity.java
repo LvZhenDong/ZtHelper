@@ -1,54 +1,57 @@
-package com.egr.drillinghelper.ui.fragment;
+package com.egr.drillinghelper.ui.activity;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.contract.FeedbackHistoryContract;
+import com.egr.drillinghelper.presenter.FeedbackHistoryPresenterImpl;
+import com.egr.drillinghelper.ui.adapter.FeedbackHistoryFragmentAdapter;
 import com.egr.drillinghelper.ui.adapter.HomeFragmentAdapter;
-import com.egr.drillinghelper.ui.base.BaseFragment;
-import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
-import com.egr.drillinghelper.utils.WindowUtils;
+import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * author lzd
- * date 2017/9/26 18:10
+ * date 2017/9/27 17:13
  * 类描述：
  */
 
-public class HomeFragment extends BaseFragment {
-    @BindView(R.id.tv_instructions)
-    TextView tvInstructions;
-    @BindView(R.id.tv_knowledge)
-    TextView tvKnowledge;
+public class FeedbackHistoryActivity extends BaseMVPActivity<FeedbackHistoryContract.View,
+        FeedbackHistoryPresenterImpl> implements FeedbackHistoryContract.View {
+    @BindView(R.id.tv_wait_for_reply)
+    TextView tvWaitForReply;
+    @BindView(R.id.tv_replied)
+    TextView tvReplied;
     @BindView(R.id.message_triangle)
     RelativeLayout messageTriangle;
-    @BindView(R.id.vp_home)
-    ViewPager vpHome;
-    HomeFragmentAdapter mAdapter;
+    @BindView(R.id.vp_feedback_history)
+    ViewPager vpFeedbackHistory;
+
     private int currentPosition;
+    FeedbackHistoryFragmentAdapter mAdapter;
 
     @Override
     public int returnLayoutID() {
-        return R.layout.fragment_home;
+        return R.layout.activity_feedback_history;
     }
 
     @Override
-    public void TODO(View view, Bundle savedInstanceState) {
-        mAdapter = new HomeFragmentAdapter(getChildFragmentManager());
-        vpHome.setOffscreenPageLimit(mAdapter.getCount());
-        vpHome.setAdapter(mAdapter);
-        vpHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    public void TODO(Bundle savedInstanceState) {
+        setupActionBar(R.string.feedback_histroy, true);
+        setActionbarBackground(R.color.white);
+
+        mAdapter = new FeedbackHistoryFragmentAdapter(getSupportFragmentManager());
+        vpFeedbackHistory.setOffscreenPageLimit(mAdapter.getCount());
+        vpFeedbackHistory.setAdapter(mAdapter);
+        vpFeedbackHistory.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -66,9 +69,25 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public FeedbackHistoryPresenterImpl createPresenter() {
+        return new FeedbackHistoryPresenterImpl();
+    }
+
+    @OnClick({R.id.tv_wait_for_reply, R.id.tv_replied})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_wait_for_reply:
+                startAnimation(0, false);
+                break;
+            case R.id.tv_replied:
+                startAnimation(1, false);
+                break;
+        }
+    }
 
     private void startAnimation(int position, boolean isScroll) {
-        int length = tvInstructions.getMeasuredWidth();
+        int length = tvWaitForReply.getMeasuredWidth();
         int x = (int) messageTriangle.getX();
         switch (position) {
             case 0:
@@ -85,7 +104,7 @@ public class HomeFragment extends BaseFragment {
                 break;
         }
         if (!isScroll)
-            vpHome.setCurrentItem(position);
+            vpFeedbackHistory.setCurrentItem(position);
     }
 
     /**
@@ -98,17 +117,5 @@ public class HomeFragment extends BaseFragment {
         animator.setDuration(100);
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
-    }
-
-    @OnClick({R.id.tv_instructions, R.id.tv_knowledge})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_instructions:
-                startAnimation(0,false);
-                break;
-            case R.id.tv_knowledge:
-                startAnimation(1,false);
-                break;
-        }
     }
 }

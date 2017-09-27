@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_primary"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/btn_height"
-        android:background="@drawable/bg_actionbar">
+        android:background="@color/white">
 
         <Space
             android:id="@+id/space"
@@ -16,35 +17,38 @@
             android:layout_centerInParent="true" />
 
         <TextView
-            android:id="@+id/tv_instructions"
+            android:id="@+id/tv_wait_for_reply"
             style="@style/TvHome"
+            android:textColor="@color/tv333"
             android:layout_toLeftOf="@id/space"
-            android:text="@string/instructions" />
+            android:text="@string/wait_for_reply" />
 
         <TextView
-            android:id="@+id/tv_knowledge"
+            android:id="@+id/tv_replied"
             style="@style/TvHome"
+            android:textColor="@color/tv333"
             android:layout_toRightOf="@id/space"
-            android:text="@string/ask_knowledge" />
+            android:text="@string/replied" />
 
         <RelativeLayout
             android:id="@+id/message_triangle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tv_instructions"
+            android:layout_alignLeft="@id/tv_wait_for_reply"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@id/tv_instructions">
+            android:layout_alignRight="@id/tv_wait_for_reply">
 
-            <com.egr.drillinghelper.ui.widgets.TriangleView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <View
+                android:layout_width="80dp"
+                android:layout_height="3dp"
+                android:background="@color/bg_btn_purple"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home"
+        android:id="@+id/vp_feedback_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

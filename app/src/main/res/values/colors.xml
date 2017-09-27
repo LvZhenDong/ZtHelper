@@ -17,4 +17,5 @@
     <color name="tv_green">#00BA43</color>
     <color name="bg_actionbar_start">#273FA6</color>
     <color name="bg_actionbar_end">#386CF1</color>
+    <color name="hint_b3">#B3B3B3</color>
 </resources>

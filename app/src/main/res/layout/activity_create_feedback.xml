@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <EditText
+        android:id="@+id/et_create_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="@dimen/margin_top"
+        android:background="@drawable/bg_white_et"
+        android:gravity="top|left"
+        android:hint="@string/create_feedback_hint"
+        android:padding="5dp"
+        android:textColorHint="@color/hint_b3"
+        android:textSize="@dimen/text_size_et" />
+
+    <ImageView
+        android:id="@+id/iv_add_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_create_feedback"
+        android:layout_marginLeft="@dimen/margin_top"
+        android:layout_marginRight="@dimen/margin_top"
+        android:background="@drawable/ic_add_img" />
+
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_add_photo"
+        android:layout_toRightOf="@id/iv_add_photo"
+        android:text="@string/create_feedback_photo_below"
+        android:textColor="@color/tv999"
+        android:textSize="@dimen/text_size_tv_small" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_hint"
+        android:layout_alignLeft="@id/tv_hint"
+        android:text="@string/create_feedback_photo"
+        android:textColor="@color/tv999"
+        android:textSize="@dimen/text_size_tv_small" />
+
+    <TextView
+        android:layout_below="@id/tv_hint"
+        android:id="@+id/tv_commit"
+        style="@style/RadiusBtn"
+        android:layout_marginTop="30dp"
+        android:text="@string/commit" />
+
+</RelativeLayout>
