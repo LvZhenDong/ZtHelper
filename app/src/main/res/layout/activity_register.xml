@@ -17,6 +17,46 @@
         <include layout="@layout/line_divider" />
 
         <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/EditTextEt"
+                android:layout_toRightOf="@id/tv_name"
+                android:hint="@string/register_name_hint" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_company"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/company" />
+
+            <EditText
+                android:id="@+id/et_company"
+                style="@style/EditTextEt"
+                android:layout_toRightOf="@id/tv_company"
+                android:hint="@string/register_company_hint" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
             android:id="@+id/rl_phoneNum"
             style="@style/EditTextRl">
 
@@ -73,49 +113,27 @@
             android:layout_centerVertical="true">
 
             <TextView
-                android:id="@+id/tv_new_pswd"
+                android:id="@+id/tv_pswd"
                 style="@style/EditTextTv"
                 android:paddingRight="14dp"
-                android:text="@string/new_pswd" />
+                android:text="@string/pswd" />
 
             <EditText
-                android:id="@+id/et_new_pswd"
+                android:id="@+id/et_pswd"
                 style="@style/EditTextEt"
-                android:layout_toRightOf="@id/tv_new_pswd"
+                android:layout_toRightOf="@id/tv_pswd"
                 android:hint="@string/forget_pswd_pswd_hint"
                 android:inputType="textPassword"
                 android:maxLength="16" />
 
         </RelativeLayout>
 
-        <include layout="@layout/line_divider_margin_left" />
-
-        <RelativeLayout
-            style="@style/EditTextRl"
-            android:layout_centerVertical="true">
-
-            <TextView
-                android:id="@+id/tv_ensure_pswd"
-                style="@style/EditTextTv"
-                android:paddingRight="14dp" />
-
-            <EditText
-                android:id="@+id/et_ensure_pswd"
-                style="@style/EditTextEt"
-                android:layout_toRightOf="@id/tv_ensure_pswd"
-                android:hint="@string/ensure_pswd_hint"
-                android:inputType="textPassword"
-                android:maxLength="16" />
-
-        </RelativeLayout>
-
         <include layout="@layout/line_divider" />
-
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_complete"
+        android:id="@+id/tv_commit"
         style="@style/RadiusBtn"
         android:layout_marginTop="30dp"
-        android:text="@string/complete" />
+        android:text="@string/commit" />
 </LinearLayout>

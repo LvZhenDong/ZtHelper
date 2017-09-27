@@ -48,6 +48,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     public void TODO(Bundle savedInstanceState) {
         setSwipeBackEnabled(false);//设置不可右滑关闭
         setupActionBar(ContextCompat.getDrawable(this,R.drawable.bg_home_logo), false);
+        setActionBarTitleColor(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,15 +79,39 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         switch (view.getId()) {
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
+                setActionBarTitleDrawable(R.drawable.bg_home_logo);
+                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case R.id.rb_parts:
                 vpHome.setCurrentItem(1);
+                setActionBarTitle(R.string.parts);
+                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case R.id.rb_feedback:
                 vpHome.setCurrentItem(2);
+                setActionBarTitle(R.string.feedback);
+                setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case R.id.rb_my:
                 vpHome.setCurrentItem(3);
+                setActionBarTitle(R.string.my);
+                setActionBarRightTextGone();
+                setActionBarRightIvGone();
                 break;
         }
     }

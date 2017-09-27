@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -245,6 +246,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         rightTv.setText(rightResId);
         if (listener != null)
             rightTv.setOnClickListener(listener);
+        setActionBarRightIvGone();
     }
 
     public void changeActionBarRightText(int rightResId){
@@ -266,6 +268,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         rightIv.setImageResource(rightResId);
         if (listener != null)
             rightIv.setOnClickListener(listener);
+        setActionBarRightTextGone();
     }
 
     /**
@@ -303,6 +306,12 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         rightTv.setVisibility(View.GONE);
     }
 
+    public void setActionBarRightIvGone() {
+        if (rightTv == null)
+            throw new RuntimeException("setupAction must first call!!!");
+        rightIv.setVisibility(View.GONE);
+    }
+
     /**
      * set actionbar title
      *
@@ -312,6 +321,18 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         if (title == null)
             throw new RuntimeException("setupAction must first call!!!");
         title.setText(titleStr);
+        title.setBackground(null);
+    }
+
+    protected void setActionBarTitle(int strId) {
+        setActionBarTitle(getString(strId));
+    }
+
+    protected void setActionBarTitleDrawable(int drawableId){
+        if (title == null)
+            throw new RuntimeException("setupAction must first call!!!");
+        title.setBackground(ContextCompat.getDrawable(this,drawableId));
+        title.setText("");
     }
 
     /**

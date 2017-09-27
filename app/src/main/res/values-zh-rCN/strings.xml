@@ -2,31 +2,44 @@
     <string name="app_name">框架</string>
 
     <string name="login">登录</string>
+    <string name="register">注册</string>
     <string name="phone_num">手机号码</string>
     <string name="phone_num_hint">请输入手机号码</string>
-    <string name="password">密码</string>
-    <string name="password_hint">请输入密码</string>
+    <string name="pswd">密码</string>
+    <string name="pswd_hint">请输入密码</string>
     <string name="forget_password_mark">忘记密码！</string>
     <string name="no_account">还没有账号，</string>
     <string name="register_immediately">立即注册</string>
     <string name="forget_password">忘记密码</string>
-    <string name="register_phone_num_hint">请输入注册手机号</string>
+    <string name="forget_pswd_phone_num_hint">请输入注册手机号</string>
     <string name="get_ver_code">获取验证码</string>
     <string name="ver_code">验证码</string>
     <string name="ver_code_hint">请输入验证码</string>
     <string name="new_pswd">新密码</string>
-    <string name="register_pswd_hint">请输入8-16位数的密码</string>
+    <string name="forget_pswd_pswd_hint">请输入8-16位数的密码</string>
     <string name="ensure_pswd_hint">再次输入密码</string>
     <string name="complete">完成</string>
-    <string name="rb_home">首页</string>
-    <string name="rb_parts">配件</string>
-    <string name="rb_feedback">意见反馈</string>
-    <string name="rb_my">个人中心</string>
+    <string name="home">首页</string>
+    <string name="parts">配件/钻探</string>
+    <string name="feedback">意见反馈</string>
+    <string name="my">个人中心</string>
     <string name="instructions">使用说明</string>
     <string name="ask_knowledge">知识问答</string>
+    <string name="feedback_histroy">历史反馈</string>
+    <string name="name">姓名</string>
+    <string name="register_name_hint">请输入您的真实姓名</string>
+    <string name="company">单位</string>
+    <string name="register_company_hint">请输入您的单位名称</string>
+    <string name="commit">提交</string>
+    <string name="contact_us">联系我们</string>
+    <string name="about_egr">关于英格尔</string>
+    <string name="share">分享</string>
+    <string name="quit">退出</string>
 
 
 
 
-    
+
+
+
 </resources>

@@ -2,11 +2,113 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/rb_my" />
+        android:background="@drawable/bg_actionbar"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_head" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:text="成都魔豆互动科技有限公司"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tv" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_contact_us"
+            style="@style/LvMy">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_contact_us" />
+
+            <TextView
+                style="@style/TvMy"
+                android:text="@string/contact_us" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line_divider_margin_left_15dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_about_egr"
+            style="@style/LvMy">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_about_egr" />
+
+            <TextView
+                style="@style/TvMy"
+                android:text="@string/about_egr" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line_divider_margin_left_15dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            style="@style/LvMy">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share" />
+
+            <TextView
+                style="@style/TvMy"
+                android:text="@string/share" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line_divider_margin_left_15dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_quit"
+            style="@style/LvMy">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_quit" />
+
+            <TextView
+                style="@style/TvMy"
+                android:text="@string/quit" />
+
+        </LinearLayout>
+
+        <include layout="@layout/line_divider" />
+    </LinearLayout>
+
+
 </LinearLayout>

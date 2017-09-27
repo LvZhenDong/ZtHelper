@@ -19,8 +19,8 @@ import butterknife.OnClick;
  * 类描述：忘记密码
  */
 
-public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View, ForgetPswdPresenterImpl>
-        implements ForgetPswdContract.View {
+public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
+        ForgetPswdPresenterImpl> implements ForgetPswdContract.View {
     @BindView(R.id.et_phoneNum)
     EditText etPhoneNum;
     @BindView(R.id.et_ver_code)
@@ -29,8 +29,8 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     EditText etNewPswd;
     @BindView(R.id.et_ensure_pswd)
     EditText etEnsurePswd;
-    @BindView(R.id.tv_register)
-    TextView tvRegister;
+    @BindView(R.id.tv_complete)
+    TextView tvComplete;
 
     @Override
     public int returnLayoutID() {
@@ -49,7 +49,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     }
 
 
-    @OnClick(R.id.tv_register)
+    @OnClick(R.id.tv_complete)
     public void onClick() {
         Logger.i("完成");
     }

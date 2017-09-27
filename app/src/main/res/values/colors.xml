@@ -5,6 +5,7 @@
     <color name="colorAccent">#2F318B</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="white_pressed">#DDDDDD</color>
     <color name="bg_primary">#F6FAFE</color>
     <color name="bg_btn_purple">#2F318B</color>
     <color name="bg_btn_purple_pressed">#AF2F318B</color>

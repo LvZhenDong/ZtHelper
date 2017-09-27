@@ -42,7 +42,7 @@
 
         <activity android:name="com.egr.drillinghelper.ui.activity.ForgetPswdActivity" />
         <activity android:name="com.egr.drillinghelper.ui.activity.HomeActivity" />
-
+        <activity android:name=".ui.activity.RegisterActivity" />
     </application>
 
 </manifest>
