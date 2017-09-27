@@ -43,8 +43,9 @@
         <activity android:name="com.egr.drillinghelper.ui.activity.ForgetPswdActivity" />
         <activity android:name="com.egr.drillinghelper.ui.activity.HomeActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.CreateFeedbackActivity"/>
-        <activity android:name=".ui.activity.FeedbackHistoryActivity"/>
+        <activity android:name=".ui.activity.CreateFeedbackActivity" />
+        <activity android:name=".ui.activity.FeedbackHistoryActivity" />
+        <activity android:name=".ui.activity.MessageActivity" />
     </application>
 
 </manifest>

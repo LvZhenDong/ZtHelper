@@ -53,6 +53,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             @Override
             public void onClick(View v) {
                 //点击消息按钮
+                baseStartActivity(MessageActivity.class);
             }
         });
         setActionbarBackground(ContextCompat.getDrawable(this,R.drawable.bg_actionbar));
@@ -103,6 +104,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //历史反馈
                         baseStartActivity(FeedbackHistoryActivity.class);
                     }
                 });
