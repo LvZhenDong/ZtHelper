@@ -11,6 +11,8 @@
     <color name="bg_btn_purple_pressed">#AF2F318B</color>
     <color name="tv333">#333333</color>
     <color name="tv999">#999999</color>
+    <color name="tv232">#333232</color>
+    <color name="tvcc232">#cc333232</color>
     <color name="bg_line">#E6E6E6</color>
     <color name="tv_green">#00BA43</color>
     <color name="bg_actionbar_start">#273FA6</color>

@@ -39,7 +39,7 @@ public class FeedbackFragment extends BaseFragment {
     LRecyclerView rvQuestion;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private QuestionAdapter mQuestionAdapter;
+    private QuestionAdapter mAdapter;
 
 
     @Override
@@ -53,8 +53,8 @@ public class FeedbackFragment extends BaseFragment {
     }
 
     private void initRv(){
-        mQuestionAdapter=new QuestionAdapter(getActivity());
-        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mQuestionAdapter);
+        mAdapter=new QuestionAdapter(getActivity());
+        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
         rvQuestion.setAdapter(mLRecyclerViewAdapter);
         DividerDecoration divider = new DividerDecoration.Builder(getActivity())
                 .setHeight(R.dimen.line_height)
@@ -90,7 +90,7 @@ public class FeedbackFragment extends BaseFragment {
         list.add("如果调节钻机的转速与扭力？");
         list.add("如何更换卡瓦？");
         list.add("钻探相关常规问题？");
-        mQuestionAdapter.setDataList(list);
+        mAdapter.setDataList(list);
     }
 
     @OnClick(R.id.ll_go_feedback)
