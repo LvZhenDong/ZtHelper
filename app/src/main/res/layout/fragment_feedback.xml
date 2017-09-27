@@ -2,11 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
+
+
+    <View
+        android:layout_marginTop="@dimen/margin_top"
+        style="@style/Line"/>
+
+    <LinearLayout
+        android:id="@+id/ll_go_feedback"
+        style="@style/LvMy">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_go_feedback" />
+
+        <TextView
+            style="@style/TvMy"
+            android:text="@string/go_feedback" />
+
+    </LinearLayout>
+
+    <include layout="@layout/line_divider" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/feedback" />
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_vertical"
+        android:text="@string/normal_question"
+        android:textColor="@color/tv999"
+        android:textSize="@dimen/text_size_tv_small" />
+
+    <include layout="@layout/line_divider" />
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/rv_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -23,4 +23,5 @@
     <dimen name="line_height">1dp</dimen>
     <dimen name="padding_vertical">10dp</dimen>
     <dimen name="radius">5dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
 </resources>
