@@ -39,7 +39,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        setupActionBar(getString(R.string.forget_password), true);
+        setupActionBar(R.string.forget_password, true);
         setActionbarBackground(R.color.white);
     }
 

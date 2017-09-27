@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -108,6 +109,10 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(bgResID)));
     }
 
+    protected void setActionbarBackground(Drawable drawable) {
+        actionBar.setBackgroundDrawable(drawable);
+    }
+
     /**
      * set actionbar title user resid
      *
@@ -119,6 +124,25 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         }
         loadView();
         title.setText(actionBarTitle);
+        rightIv.setVisibility(View.GONE);
+        if (displayHomeAsUpEnabled) {
+            leftIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        } else {
+            leftIv.setVisibility(View.GONE);
+        }
+    }
+
+    protected void setupActionBar(Drawable drawable, boolean displayHomeAsUpEnabled) {
+        if (actionBar == null) {
+            return;
+        }
+        loadView();
+        title.setBackground(drawable);
         rightIv.setVisibility(View.GONE);
         if (displayHomeAsUpEnabled) {
             leftIv.setOnClickListener(new View.OnClickListener() {

@@ -78,6 +78,13 @@
         <item name="android:textColor">@color/selector_home_rb_text</item>
     </style>
 
+    <style name="TvHome">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
 
 
 </resources>

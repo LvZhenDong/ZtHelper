@@ -8,14 +8,14 @@ import com.egr.drillinghelper.ui.base.BaseFragment;
 
 /**
  * author lzd
- * date 2017/9/26 18:10
+ * date 2017/9/27 10:19
  * 类描述：
  */
 
-public class MyFragment extends BaseFragment{
+public class KonwledgeFragment extends BaseFragment {
     @Override
     public int returnLayoutID() {
-        return R.layout.fragment_my;
+        return R.layout.fragment_knowledge;
     }
 
     @Override

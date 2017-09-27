@@ -4,15 +4,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.egr.drillinghelper.ui.fragment.FeedbackFragment;
+import com.egr.drillinghelper.ui.fragment.HomeFragment;
+import com.egr.drillinghelper.ui.fragment.InstructionsFragment;
+import com.egr.drillinghelper.ui.fragment.KonwledgeFragment;
+import com.egr.drillinghelper.ui.fragment.MyFragment;
+import com.egr.drillinghelper.ui.fragment.PartsFragment;
+
 /**
  * author lzd
  * date 2017/9/26 17:51
  * 类描述：
  */
 
-public class HomeAdapter extends FragmentPagerAdapter{
-    private Class[] fragments={};
-    public HomeAdapter(FragmentManager fm) {
+public class HomeFragmentAdapter extends FragmentPagerAdapter {
+    private Class[] fragments = {InstructionsFragment.class, KonwledgeFragment.class};
+
+    public HomeFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 

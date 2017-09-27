@@ -12,4 +12,6 @@
     <color name="tv999">#999999</color>
     <color name="bg_line">#E6E6E6</color>
     <color name="tv_green">#00BA43</color>
+    <color name="bg_actionbar_start">#273FA6</color>
+    <color name="bg_actionbar_end">#386CF1</color>
 </resources>

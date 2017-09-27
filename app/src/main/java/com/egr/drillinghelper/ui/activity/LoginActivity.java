@@ -62,6 +62,11 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @OnClick(R.id.tv_register)
     public void register() {
+
+    }
+
+    @OnClick(R.id.tv_register)
+    public void forgetPswd(){
         baseStartActivity(ForgetPswdActivity.class);
     }
 }

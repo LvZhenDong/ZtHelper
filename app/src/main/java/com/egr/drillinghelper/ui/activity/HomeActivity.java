@@ -1,16 +1,20 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
-import com.egr.drillinghelper.ui.adapter.HomeAdapter;
+import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author lzd
@@ -25,7 +29,15 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     RadioGroup rgHome;
     @BindView(R.id.vp_home)
     BanSlideViewPager vpHome;
-    private HomeAdapter homeAdapter;
+    @BindView(R.id.rb_home)
+    RadioButton rbHome;
+    @BindView(R.id.rb_parts)
+    RadioButton rbParts;
+    @BindView(R.id.rb_feedback)
+    RadioButton rbFeedback;
+    @BindView(R.id.rb_my)
+    RadioButton rbMy;
+    private HomeActivityAdapter homeAdapter;
 
     @Override
     public int returnLayoutID() {
@@ -35,12 +47,25 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @Override
     public void TODO(Bundle savedInstanceState) {
         setSwipeBackEnabled(false);//设置不可右滑关闭
-        setupActionBar("首页", false);
-        homeAdapter = new HomeAdapter(getSupportFragmentManager());
+        setupActionBar(ContextCompat.getDrawable(this,R.drawable.bg_home_logo), false);
+        setActionBarLeftIcon(R.drawable.ic_home_msg, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击消息按钮
+            }
+        });
+        setActionbarBackground(ContextCompat.getDrawable(this,R.drawable.bg_actionbar));
+        setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击搜索按钮
+            }
+        });
+        homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
         vpHome.setOffscreenPageLimit(homeAdapter.getCount());
         vpHome.setScrollEnable(false);
         vpHome.setAdapter(homeAdapter);
-        vpHome.setCurrentItem(0,false);
+        vpHome.setCurrentItem(0, false);
     }
 
     @Override
@@ -48,4 +73,21 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         return new HomePresenterImpl();
     }
 
+    @OnClick({R.id.rb_home, R.id.rb_parts, R.id.rb_feedback, R.id.rb_my})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rb_home:
+                vpHome.setCurrentItem(0);
+                break;
+            case R.id.rb_parts:
+                vpHome.setCurrentItem(1);
+                break;
+            case R.id.rb_feedback:
+                vpHome.setCurrentItem(2);
+                break;
+            case R.id.rb_my:
+                vpHome.setCurrentItem(3);
+                break;
+        }
+    }
 }

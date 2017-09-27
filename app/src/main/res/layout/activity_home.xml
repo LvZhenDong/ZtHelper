@@ -13,21 +13,26 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/rb_home"
             style="@style/RbHome"
+            android:checked="true"
             android:drawableTop="@drawable/bg_home_home_rb_selector"
             android:text="@string/rb_home" />
 
         <RadioButton
+            android:id="@+id/rb_parts"
             style="@style/RbHome"
             android:drawableTop="@drawable/bg_home_parts_rb_selector"
             android:text="@string/rb_parts" />
 
         <RadioButton
+            android:id="@+id/rb_feedback"
             style="@style/RbHome"
             android:drawableTop="@drawable/bg_home_feedback_rb_selector"
             android:text="@string/rb_feedback" />
 
         <RadioButton
+            android:id="@+id/rb_my"
             style="@style/RbHome"
             android:drawableTop="@drawable/bg_home_my_rb_selector"
             android:text="@string/rb_my" />

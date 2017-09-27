@@ -32,24 +32,23 @@
         android:layout_centerInParent="true"
         android:ellipsize="end"
         android:maxLength="8"
-        android:text="@string/app_name"
         android:textColor="@color/tv333"
         android:textSize="@dimen/actionbar_titlesize" />
 
     <FrameLayout
         android:id="@+id/anctionbar_right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp">
+        android:layout_centerVertical="true">
 
         <ImageView
             android:id="@+id/anctionbar_right_ic"
-            android:layout_width="@dimen/actionbarIconSize"
-            android:layout_height="@dimen/actionbarIconSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
             android:layout_gravity="center_vertical"
-            android:padding="4dp"
+            android:padding="10dp"
             android:visibility="gone" />
 
         <TextView
