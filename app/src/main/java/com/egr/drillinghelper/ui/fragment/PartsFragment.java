@@ -8,6 +8,10 @@ import android.view.View;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
+import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.contract.PartsContract;
+import com.egr.drillinghelper.mvp.BaseMVPFragment;
+import com.egr.drillinghelper.presenter.PartsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.InstructionAdapter;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
@@ -29,11 +33,18 @@ import butterknife.BindView;
  * 类描述：
  */
 
-public class PartsFragment extends BaseFragment{
+public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPresenterImpl>
+    implements PartsContract.View{
     @BindView(R.id.rv_parts)
     RecyclerView rvParts;
 
     private PartsAdapter mAdapter;
+
+    @Override
+    protected PartsPresenterImpl createPresenter() {
+        return new PartsPresenterImpl();
+    }
+
     @Override
     public int returnLayoutID() {
         return R.layout.fragment_parts;
@@ -50,39 +61,11 @@ public class PartsFragment extends BaseFragment{
 
         rvParts.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
-        List<Instruction> list=new ArrayList<>();
-        Instruction mall=new Instruction();
-        list.add(mall);
-        Instruction item1=new Instruction();
-        item1.setImgId(R.drawable.test);
-        item1.setTitle("钻杆油");
-        item1.setContent("英格尔钻具油脂");
-        list.add(item1);
-        Instruction item2=new Instruction();
-        item2.setImgId(R.drawable.test);
-        item2.setTitle("薄壁钻头");
-        item2.setContent("英格尔薄壁钻头");
-        list.add(item2);
-        Instruction item3=new Instruction();
-        item3.setImgId(R.drawable.test);
-        item3.setTitle("钻具总成");
-        item3.setContent("英格尔薄壁钻具系列钻");
-        list.add(item3);
-        Instruction item4=new Instruction();
-        item4.setImgId(R.drawable.test);
-        item4.setTitle("钻具总成");
-        item4.setContent("英格尔薄壁钻具系列钻");
-        list.add(item4);
-        Instruction item5=new Instruction();
-        item5.setImgId(R.drawable.test);
-        item5.setTitle("钻具总成");
-        item5.setContent("英格尔薄壁钻具系列钻");
-        list.add(item5);
-        Instruction item6=new Instruction();
-        item6.setImgId(R.drawable.test);
-        item6.setTitle("钻具总成");
-        item6.setContent("英格尔薄壁钻具系列钻");
-        list.add(item6);
+        presenter.getPartsList();
+    }
+
+    @Override
+    public void getPartsListSuccess(List<Store> list) {
         mAdapter.setDataList(list);
     }
 }

@@ -2,33 +2,20 @@ package com.egr.drillinghelper.factory;
 
 import android.text.TextUtils;
 
+import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.common.MySharePreferencesManager;
+import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ihsanbal.logging.Level;
-import com.ihsanbal.logging.LoggingInterceptor;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.egr.drillinghelper.BuildConfig;
-import com.egr.drillinghelper.app.MyApplication;
-import com.egr.drillinghelper.common.MyCookieManager;
-import com.egr.drillinghelper.utils.FileUtils;
-import com.orhanobut.logger.Logger;
 
-import java.io.File;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import okhttp3.internal.platform.Platform;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 public class APIServiceFactory {
@@ -91,7 +78,8 @@ public class APIServiceFactory {
                 @Override
                 public void log(String message) {
 
-                    Logger.json(message);
+
+                    L.printJson(message);
 
                 }
             });

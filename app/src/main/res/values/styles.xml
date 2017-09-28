@@ -103,4 +103,13 @@
         <item name="android:paddingRight">@dimen/padding_vertical</item>
         <item name="android:background">@drawable/bg_white_btn</item>
     </style>
+
+    <style name="TvContactUs">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tv333</item>
+        <item name="android:textSize">@dimen/text_size_tv</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:paddingLeft">@dimen/padding_vertical</item>
+    </style>
 </resources>

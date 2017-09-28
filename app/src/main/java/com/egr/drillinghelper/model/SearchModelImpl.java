@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.model;
 
+import com.egr.drillinghelper.contract.PartsContract;
+import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
@@ -10,7 +12,7 @@ import com.egr.drillinghelper.presenter.SearchPresenterImpl;
  * 类描述：
  */
 
-public class SearchModelImpl extends BaseModel<SearchPresenterImpl> {
+public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements SearchContract.Model{
     public SearchModelImpl(SearchPresenterImpl presenter) {
         super(presenter);
     }

@@ -1,9 +1,7 @@
 package com.egr.drillinghelper.ui.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,12 +10,10 @@ import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.MyPresenterImpl;
+import com.egr.drillinghelper.ui.activity.ContactUsActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.egr.drillinghelper.R.id.tv;
 
 /**
  * author lzd
@@ -60,6 +56,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_us:
+                baseStartActivity(ContactUsActivity.class);
                 break;
             case R.id.ll_about_egr:
                 break;

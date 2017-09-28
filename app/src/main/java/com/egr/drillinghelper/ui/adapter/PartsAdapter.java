@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
+import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class PartsAdapter extends BaseListAdapter<Instruction,
+public class PartsAdapter extends BaseListAdapter<Store,
         PartsAdapter.ViewHolder> {
 
     public PartsAdapter(Context context) {
@@ -40,16 +41,16 @@ public class PartsAdapter extends BaseListAdapter<Instruction,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Instruction item=getDataList().get(position);
-        if(item.getImgId() == 0){
+        Store item=getDataList().get(position);
+        if(position == 0){
+            //TODO LZD 第一个的处理
             holder.rlMall.setVisibility(View.VISIBLE);
             holder.llParts.setVisibility(View.GONE);
         }else {
             holder.rlMall.setVisibility(View.GONE);
             holder.llParts.setVisibility(View.VISIBLE);
-            holder.tvTitle.setText(item.getTitle());
-            holder.tvInfo.setText(item.getContent());
-            Glide.with(mContext).load(item.getImgId()).into(holder.ivImg);
+            holder.tvTitle.setText(item.getName());
+            holder.tvInfo.setText(item.getInformation());
         }
 
     }

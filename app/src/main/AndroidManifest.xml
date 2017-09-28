@@ -49,6 +49,7 @@
         <activity
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/NoActionBar" />
+        <activity android:name=".ui.activity.ContactUsActivity" />
     </application>
 
 </manifest>

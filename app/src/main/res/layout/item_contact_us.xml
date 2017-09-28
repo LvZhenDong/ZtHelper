@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:padding="@dimen/padding_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_white_radius"
+        android:layout_width="match_parent"
+        android:padding="@dimen/padding_vertical"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sys_message"
+            android:textColor="@color/tv333"
+            android:textSize="@dimen/text_size_big" />
+
+        <TextView
+            style="@style/TvContactUs"
+            android:id="@+id/tv_address" />
+
+        <TextView
+            style="@style/TvContactUs"
+            android:id="@+id/tv_phone" />
+
+        <TextView
+            style="@style/TvContactUs"
+            android:id="@+id/tv_web" />
+
+        <TextView
+            style="@style/TvContactUs"
+            android:id="@+id/tv_email" />
+    </LinearLayout>
+
+</LinearLayout>
