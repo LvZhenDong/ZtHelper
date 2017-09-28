@@ -1,8 +1,10 @@
 package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
+import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.bean.response.UserInfo;
 
 import java.util.HashMap;
 
@@ -34,6 +36,14 @@ public interface NetApi {
     @POST("user/register")
     Observable<BaseResponseBean<RegisterResponse>> register(@FieldMap HashMap<String,Object> options);
 
+    /**
+     * 忘记密码
+     * @param options
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/forget")
+    Observable<BaseResponseBean<ForgetPswdResponse>> forget(@FieldMap HashMap<String,Object> options);
 
     /**
      * 获取验证码
@@ -44,4 +54,12 @@ public interface NetApi {
     @GET("common/smscode")
     Observable<BaseResponseBean<String>> getVerCode(@Query("templateType")String type,
                                             @Query("phone")String phone);
+
+    /**
+     *
+     * @return
+     */
+    @GET("user/info")
+    Observable<BaseResponseBean<UserInfo>> userInfo();
+
 }

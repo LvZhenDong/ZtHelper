@@ -6,8 +6,10 @@ import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.contract.LoginContract;
+import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import cn.nekocode.rxlifecycle.RxLifecycle;
 import io.reactivex.Observable;
@@ -87,23 +89,23 @@ public class TransformersFactory {
         };
     }
 
-//    /**
-//     * 适用于单个请求
-//     *
-//     * @param fragment
-//     * @param <T>
-//     * @return
-//     */
-//    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final BaseMVPFragment fragment) {
-//        return new ObservableTransformer<BaseResponseBean<T>, T>() {
-//            @Override
-//            public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-//                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-//                        .map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>())
-//                        .compose(fragment.<T>bindUntilEvent(FragmentEvent.DESTROY));
-//            }
-//        };
-//    }
+    /**
+     * 适用于单个请求
+     *
+     * @param fragment
+     * @param <T>
+     * @return
+     */
+    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final BaseMVPFragment fragment) {
+        return new ObservableTransformer<BaseResponseBean<T>, T>() {
+            @Override
+            public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                        .map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>())
+                        .compose(fragment.<T>bindUntilEvent(FragmentEvent.DESTROY));
+            }
+        };
+    }
 //
 //    /**
 //     * 适用于两个请求顺序执行

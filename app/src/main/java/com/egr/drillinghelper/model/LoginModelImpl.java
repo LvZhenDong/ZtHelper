@@ -43,6 +43,7 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
 
                     @Override
                     public void onComplete(@NonNull LoginResponse loginResponse) {
+                        APIServiceFactory.setTOKEN(loginResponse.getToken());
                         presenter.getView().loginSuccess();
                     }
                 });

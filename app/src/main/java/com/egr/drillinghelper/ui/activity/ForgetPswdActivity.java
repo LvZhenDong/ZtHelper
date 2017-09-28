@@ -8,10 +8,12 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.ForgetPswdContract;
 import com.egr.drillinghelper.presenter.ForgetPswdPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.orhanobut.logger.Logger;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -32,6 +34,8 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     @BindView(R.id.tv_complete)
     TextView tvComplete;
 
+    private ACProgressFlower mDialog;
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_forget_pswd;
@@ -41,6 +45,8 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     public void TODO(Bundle savedInstanceState) {
         setupActionBar(R.string.forget_password, true);
         setActionbarBackground(R.color.white);
+
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
     }
 
     @Override
@@ -51,6 +57,47 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
 
     @OnClick(R.id.tv_complete)
     public void onClick() {
-        Logger.i("完成");
+        if (!mDialog.isShowing())
+            mDialog.show();
+        presenter.forgetPswd(etPhoneNum.getText().toString().trim(), etVerCode.getText().toString().trim(),
+                etNewPswd.getText().toString().trim(), etEnsurePswd.getText().toString().trim());
+    }
+
+    @OnClick(R.id.tv_get_ver_code)
+    public void getVerCode() {
+        if (!mDialog.isShowing())
+            mDialog.show();
+        presenter.getVerCode(etPhoneNum.getText().toString().trim());
+    }
+
+    @Override
+    public void inputError(int e) {
+        mDialog.dismiss();
+        ToastUtils.show(this, e);
+    }
+
+    @Override
+    public void forgetPswdFail(String msg) {
+        mDialog.dismiss();
+        ToastUtils.show(this, msg);
+    }
+
+    @Override
+    public void forgetPswdSuccess() {
+        mDialog.dismiss();
+        ToastUtils.show(this,R.string.reset_pswd_success);
+        finish();
+    }
+
+    @Override
+    public void getVerCodeSuccess(String code) {
+        mDialog.dismiss();
+        etVerCode.setText(code);
+    }
+
+    @Override
+    public void getVerCodeFail(String msg) {
+        mDialog.dismiss();
+        ToastUtils.show(this,msg);
     }
 }

@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="20dp"
@@ -19,18 +20,18 @@
             android:src="@drawable/ic_head" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_name" />
 
         <TextView
+            android:id="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
-            android:text="成都魔豆互动科技有限公司"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_tv" />
     </LinearLayout>

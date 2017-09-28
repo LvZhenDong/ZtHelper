@@ -1,5 +1,8 @@
 package com.egr.drillinghelper.factory;
 
+import android.text.TextUtils;
+
+import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ihsanbal.logging.Level;
@@ -9,6 +12,7 @@ import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.app.MyApplication;
 import com.egr.drillinghelper.common.MyCookieManager;
 import com.egr.drillinghelper.utils.FileUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.util.List;
@@ -20,8 +24,11 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.platform.Platform;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 
 public class APIServiceFactory {
@@ -72,15 +79,24 @@ public class APIServiceFactory {
 //        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
 //        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
-            LoggingInterceptor interceptor2=new LoggingInterceptor.Builder().setLevel(Level.BODY).build();
-            LoggingInterceptor interceptor = new LoggingInterceptor.Builder()
-                    .loggable(BuildConfig.DEBUG)
-                    .setLevel(Level.BASIC)
-                    .log(Platform.INFO)
-                    .request("EGR-Request")
-                    .response("EGR-Response")
-                    .build();
-            httpClientBuilder.addInterceptor(interceptor);
+//            LoggingInterceptor interceptor = new LoggingInterceptor.Builder()
+//                    .loggable(BuildConfig.DEBUG)
+//                    .setLevel(Level.BASIC)
+//                    .log(Platform.INFO)
+//                    .request("EGR-Request")
+//                    .response("EGR-Response")
+//                    .build();
+//            httpClientBuilder.addInterceptor(interceptor);
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                @Override
+                public void log(String message) {
+
+                    Logger.json(message);
+
+                }
+            });
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClientBuilder.addNetworkInterceptor(httpLoggingInterceptor);
         }
         //add cookie manage
 //        httpClientBuilder.cookieJar(new CookieJar() {
@@ -94,7 +110,21 @@ public class APIServiceFactory {
 //                return MyCookieManager.readCookie();
 //            }
 //        });
+        httpClientBuilder.addInterceptor(new HeaderInterceptor());
         return httpClientBuilder.build();
     }
 
+    public static String getTOKEN() {
+        if (TextUtils.isEmpty(sToken)) {
+            sToken = MySharePreferencesManager.getInstance().getString("token","");
+        }
+        return sToken;
+    }
+
+    private static String sToken;
+
+    public static void setTOKEN(String token) {
+        sToken = token;
+        MySharePreferencesManager.getInstance().putString("token",token);
+    }
 }
