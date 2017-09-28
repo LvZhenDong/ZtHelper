@@ -16,14 +16,14 @@ public abstract class LObserver<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        if (e instanceof ResponeThrowable) {
-            onError((ResponeThrowable) e);
+        if (e instanceof ResponseThrowable) {
+            onError((ResponseThrowable) e);
         } else {
-            onError(new ResponeThrowable(e, ERROR.UNKNOWN));
+            onError(new ResponseThrowable(e, ERROR.UNKNOWN));
         }
     }
 
-    public abstract void onError(ResponeThrowable e);
+    public abstract void onError(ResponseThrowable e);
 
     @Override
     public void onComplete() {

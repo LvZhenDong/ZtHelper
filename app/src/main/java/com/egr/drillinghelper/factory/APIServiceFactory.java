@@ -69,30 +69,31 @@ public class APIServiceFactory {
         httpClientBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         //设置缓存
-        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
-        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
+//        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
+//        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
+            LoggingInterceptor interceptor2=new LoggingInterceptor.Builder().setLevel(Level.BODY).build();
             LoggingInterceptor interceptor = new LoggingInterceptor.Builder()
                     .loggable(BuildConfig.DEBUG)
                     .setLevel(Level.BASIC)
                     .log(Platform.INFO)
-                    .request("KKLV-Request")
-                    .response("KKLV-Response")
+                    .request("EGR-Request")
+                    .response("EGR-Response")
                     .build();
             httpClientBuilder.addInterceptor(interceptor);
         }
         //add cookie manage
-        httpClientBuilder.cookieJar(new CookieJar() {
-            @Override
-            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                MyCookieManager.saveCookie(cookies);
-            }
-
-            @Override
-            public List<Cookie> loadForRequest(HttpUrl url) {
-                return MyCookieManager.readCookie();
-            }
-        });
+//        httpClientBuilder.cookieJar(new CookieJar() {
+//            @Override
+//            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+//                MyCookieManager.saveCookie(cookies);
+//            }
+//
+//            @Override
+//            public List<Cookie> loadForRequest(HttpUrl url) {
+//                return MyCookieManager.readCookie();
+//            }
+//        });
         return httpClientBuilder.build();
     }
 

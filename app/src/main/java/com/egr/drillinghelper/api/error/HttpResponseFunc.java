@@ -10,7 +10,7 @@ import io.reactivex.functions.Function;
 public class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
     @Override
     public Observable<T> apply(Throwable throwable) throws Exception {
-        if (throwable instanceof ResponeThrowable) {//避免throwable重复包装
+        if (throwable instanceof ResponseThrowable) {//避免throwable重复包装
             return Observable.error(throwable);
         }
         return Observable.error(ExceptionHandle.handleException(throwable));

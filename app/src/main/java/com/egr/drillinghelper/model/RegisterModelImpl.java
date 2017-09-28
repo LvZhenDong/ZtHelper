@@ -1,8 +1,26 @@
 package com.egr.drillinghelper.model;
 
+import com.egr.drillinghelper.api.NetApi;
+import com.egr.drillinghelper.api.error.EObserver;
+import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
+import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.contract.RegisterContract;
+import com.egr.drillinghelper.factory.APIServiceFactory;
+import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
+import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
+import java.util.HashMap;
+
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
+
+import static com.pgyersdk.c.a.e;
 
 
 /**
@@ -11,8 +29,60 @@ import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
  * 类描述：
  */
 
-public class RegisterModelImpl extends BaseModel<RegisterPresenterImpl> {
+public class RegisterModelImpl extends BaseModel<RegisterPresenterImpl>
+        implements RegisterContract.Model {
+
+    private NetApi api;
+
     public RegisterModelImpl(RegisterPresenterImpl registerPresenter) {
         super(registerPresenter);
+        api = APIServiceFactory.getInstance().createService(NetApi.class);
+    }
+
+    @Override
+    public void register(String name, String company, String phone, String verCode, String pswd) {
+        HashMap<String, Object> options = new HashMap<>();
+        options.put("name", name);
+        options.put("company", company);
+        options.put("phone", phone);
+        options.put("code", verCode);
+        options.put("password", pswd);
+        api.register(options)
+                .compose(TransformersFactory.<RegisterResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<RegisterResponse>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        if(eMsg.equals("未知错误")){
+                            presenter.getView().registerSuccess();
+                        }else {
+                            presenter.getView().registerFail(eMsg);
+                        }
+
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull RegisterResponse response) {
+                        presenter.getView().registerSuccess();
+                    }
+                });
+
+    }
+
+    @Override
+    public void getVerCode(String phone) {
+        api.getVerCode("register", phone)
+                .compose(TransformersFactory.<String>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<String>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getVerCodeFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull String s) {
+                        presenter.getView().getVerCodeSuccess(s);
+                    }
+                });
+
     }
 }

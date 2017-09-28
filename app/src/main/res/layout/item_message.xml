@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:padding="@dimen/padding_vertical"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_time"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_gray_e6_radius"
@@ -14,6 +17,7 @@
         android:textColor="@color/white" />
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:background="@drawable/bg_white_radius"
         android:layout_width="match_parent"
         android:padding="@dimen/padding_vertical"

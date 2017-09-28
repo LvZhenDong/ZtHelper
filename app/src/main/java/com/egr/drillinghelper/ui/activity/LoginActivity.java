@@ -10,10 +10,12 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.orhanobut.logger.Logger;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -36,6 +38,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     @BindView(R.id.tv_forget_pswd)
     TextView tvForgetPswd;
 
+    private ACProgressFlower mDialog;
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_login;
@@ -46,6 +50,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         setSwipeBackEnabled(false);//设置不可右滑关闭
 
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
     }
 
     @Override
@@ -55,9 +60,9 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @OnClick(R.id.tv_login)
     public void login() {
-        Logger.i(etPhoneNum.getText().toString().trim()+"  "+etPasw.getText().toString().trim());
-
-        baseStartActivity(HomeActivity.class);
+        if (!mDialog.isShowing())
+            mDialog.show();
+        presenter.login(etPhoneNum.getText().toString().trim(), etPasw.getText().toString().trim());
     }
 
     @OnClick(R.id.tv_register)
@@ -66,7 +71,26 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     }
 
     @OnClick(R.id.tv_forget_pswd)
-    public void forgetPswd(){
+    public void forgetPswd() {
         baseStartActivity(ForgetPswdActivity.class);
+    }
+
+
+    @Override
+    public void inputError(int e) {
+        mDialog.dismiss();
+        ToastUtils.show(this, e);
+    }
+
+    @Override
+    public void loginSuccess() {
+        mDialog.dismiss();
+        baseStartActivity(HomeActivity.class);
+    }
+
+    @Override
+    public void loginFail(String message) {
+        mDialog.dismiss();
+        ToastUtils.show(this, message);
     }
 }

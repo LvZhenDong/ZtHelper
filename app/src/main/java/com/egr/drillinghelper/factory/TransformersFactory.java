@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
+import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -60,7 +61,8 @@ public class TransformersFactory {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
                 return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                        .map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>())
+                        .map(new HandleFuc<T>())
+                        .onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(activity.<T>bindUntilEvent(ActivityEvent.DESTROY));
             }
         };
@@ -138,4 +140,6 @@ public class TransformersFactory {
             }
         };
     }
+
+
 }

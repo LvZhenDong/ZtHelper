@@ -12,12 +12,21 @@ import java.io.Serializable;
 public class BaseResponseBean<T> implements Serializable {
 
     private static final long serialVersionUID = 1000L;
-    @SerializedName("api_code")
+
+    protected boolean status;
     protected String code = "-1";//default
-    @SerializedName("api_message")
-    protected String message;
-    @SerializedName("api_data")
+    @SerializedName("msg")
+    protected String message = "";
+    @SerializedName("body")
     protected T data;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getCode() {
         return code;
@@ -49,6 +58,6 @@ public class BaseResponseBean<T> implements Serializable {
     }
 
     public boolean isSuccess() {
-        return code.equals("0");
+        return status;
     }
 }

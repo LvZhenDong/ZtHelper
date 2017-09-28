@@ -33,11 +33,11 @@ public class ExceptionHandle {
     private static final int SERVICE_UNAVAILABLE = 503;
     private static final int GATEWAY_TIMEOUT = 504;
 
-    public static ResponeThrowable handleException(Throwable e) {
-        ResponeThrowable ex;
+    public static ResponseThrowable handleException(Throwable e) {
+        ResponseThrowable ex;
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
-            ex = new ResponeThrowable(e, ERROR.HTTP_ERROR);
+            ex = new ResponseThrowable(e, ERROR.HTTP_ERROR);
             switch (httpException.code()) {
                 case UNAUTHORIZED:
                 case FORBIDDEN:
@@ -48,54 +48,54 @@ public class ExceptionHandle {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ex.message = "网络连接错误,请检查网络";
+                    ex.msg = "网络连接错误,请检查网络";
                     break;
             }
             return ex;
         } else if (e instanceof UnknownHostException) {
-            ex = new ResponeThrowable(e, ERROR.HTTP_ERROR);
-            ex.message = "网络连接错误,请检查网络";
+            ex = new ResponseThrowable(e, ERROR.HTTP_ERROR);
+            ex.msg = "网络连接错误,请检查网络";
             return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
-            ex = new ResponeThrowable(resultException, ERROR.SERVER_ERROR);
-            ex.message = resultException.message;
+            ex = new ResponseThrowable(resultException, ERROR.SERVER_ERROR);
+            ex.msg = resultException.message;
             return ex;
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
-            ex = new ResponeThrowable(e, ERROR.PARSE_ERROR);
-            ex.message = "解析错误";
+            ex = new ResponseThrowable(e, ERROR.PARSE_ERROR);
+            ex.msg = "解析错误";
             return ex;
         } else if (e instanceof ConnectException) {
-            ex = new ResponeThrowable(e, ERROR.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex = new ResponseThrowable(e, ERROR.NETWORD_ERROR);
+            ex.msg = "连接失败";
             return ex;
         } else if (e instanceof SSLHandshakeException) {
-            ex = new ResponeThrowable(e, ERROR.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex = new ResponseThrowable(e, ERROR.SSL_ERROR);
+            ex.msg = "证书验证失败";
             return ex;
         } else if (e instanceof ConnectTimeoutException) {
-            ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
+            ex.msg = "连接超时";
             return ex;
         } else if (e instanceof SocketTimeoutException) {
-            ex = new ResponeThrowable(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex = new ResponseThrowable(e, ERROR.TIMEOUT_ERROR);
+            ex.msg = "连接超时";
             return ex;
         } else if (e instanceof CompositeException) {
             for (Throwable throwable : ((CompositeException) e).getExceptions()) {
-                if (throwable instanceof ResponeThrowable) {
-                    ex = (ResponeThrowable) throwable;
+                if (throwable instanceof ResponseThrowable) {
+                    ex = (ResponseThrowable) throwable;
                     return ex;
                 }
             }
-            ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex = new ResponseThrowable(e, ERROR.UNKNOWN);
+            ex.msg = "未知错误";
             return ex;
         } else {
-            ex = new ResponeThrowable(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex = new ResponseThrowable(e, ERROR.UNKNOWN);
+            ex.msg = "未知错误";
             return ex;
         }
     }

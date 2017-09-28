@@ -61,6 +61,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             @Override
             public void onClick(View v) {
                 //点击搜索按钮
+                onSearchClick();
             }
         });
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
@@ -84,7 +85,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        onSearchClick();
                     }
                 });
                 break;
@@ -94,7 +95,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        onSearchClick();
                     }
                 });
                 break;
@@ -116,5 +117,9 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIvGone();
                 break;
         }
+    }
+
+    private void onSearchClick(){
+        baseStartActivity(SearchActivity.class);
     }
 }

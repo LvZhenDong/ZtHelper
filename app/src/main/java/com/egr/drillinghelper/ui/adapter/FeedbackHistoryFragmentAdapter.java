@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.egr.drillinghelper.ui.fragment.FeedbackHistoryRepliedFragment;
 import com.egr.drillinghelper.ui.fragment.FeedbackHistoryWaitFragment;
-import com.egr.drillinghelper.ui.fragment.InstructionsFragment;
-import com.egr.drillinghelper.ui.fragment.KonwledgeFragment;
 
 /**
  * author lzd

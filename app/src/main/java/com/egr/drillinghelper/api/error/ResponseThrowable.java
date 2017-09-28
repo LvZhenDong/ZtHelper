@@ -1,10 +1,10 @@
 package com.egr.drillinghelper.api.error;
 
-public class ResponeThrowable extends Exception {
+public class ResponseThrowable extends Exception {
     public int code;
-    public String message;
+    public String msg;
 
-    public ResponeThrowable(Throwable throwable, int code) {
+    public ResponseThrowable(Throwable throwable, int code) {
         super(throwable);
         this.code = code;
     }
@@ -15,6 +15,6 @@ public class ResponeThrowable extends Exception {
      * @return
      */
     public String getLMessage() {
-        return message;
+        return msg;
     }
 }

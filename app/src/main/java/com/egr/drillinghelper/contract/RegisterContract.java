@@ -12,14 +12,30 @@ import com.egr.drillinghelper.mvp.IView;
 
 public interface RegisterContract {
     interface Model extends IModel {
+        void register(String name,String company,String phone,
+                      String verCode,String pswd);
 
+        void getVerCode(String phone);
     }
 
     interface View extends IView {
 
+        void inputError(int e);
+
+        void registerSuccess();
+
+        void registerFail(String message);
+
+        void getVerCodeSuccess(String code);
+
+        void getVerCodeFail(String msg);
+
     }
 
     interface Presenter extends IPresenter<View> {
+        void register(String name,String company,String phone,
+                      String verCode,String pswd);
 
+        void getVerCode(String phone);
     }
 }

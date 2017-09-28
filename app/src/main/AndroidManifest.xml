@@ -46,6 +46,9 @@
         <activity android:name=".ui.activity.CreateFeedbackActivity" />
         <activity android:name=".ui.activity.FeedbackHistoryActivity" />
         <activity android:name=".ui.activity.MessageActivity" />
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>

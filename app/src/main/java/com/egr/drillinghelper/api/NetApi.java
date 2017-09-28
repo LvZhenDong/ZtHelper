@@ -1,18 +1,47 @@
 package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
-import com.egr.drillinghelper.bean.response.Resident;
+import com.egr.drillinghelper.bean.response.LoginResponse;
+import com.egr.drillinghelper.bean.response.RegisterResponse;
 
 import java.util.HashMap;
 
 import io.reactivex.Observable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface NetApi {
 
+    /**
+     * 登录
+     * @param options
+     * @return
+     */
     @FormUrlEncoded
-    @POST("jinen/api/account/login")
-    Observable<BaseResponseBean<Resident>> login(@FieldMap HashMap<String, Object> options);
+    @POST("user/login")
+    Observable<BaseResponseBean<LoginResponse>> login(@FieldMap HashMap<String,Object> options);
+
+
+    /**
+     * 注册
+     * @param options
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    Observable<BaseResponseBean<RegisterResponse>> register(@FieldMap HashMap<String,Object> options);
+
+
+    /**
+     * 获取验证码
+     * @param type 注册：register
+     * @param phone
+     * @return
+     */
+    @GET("common/smscode")
+    Observable<BaseResponseBean<String>> getVerCode(@Query("templateType")String type,
+                                            @Query("phone")String phone);
 }

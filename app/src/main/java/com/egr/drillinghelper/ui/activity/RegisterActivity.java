@@ -8,10 +8,13 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.RegisterContract;
 import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -36,6 +39,8 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @BindView(R.id.tv_commit)
     TextView tvCommit;
 
+    private ACProgressFlower mDialog;
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_register;
@@ -45,6 +50,8 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     public void TODO(Bundle savedInstanceState) {
         setupActionBar(R.string.register, true);
         setActionbarBackground(R.color.white);
+
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
     }
 
     @Override
@@ -55,5 +62,48 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
 
     @OnClick(R.id.tv_commit)
     public void onClick() {
+        if(!mDialog.isShowing())
+            mDialog.show();
+        presenter.register(etName.getText().toString().trim(),etCompany.getText().toString().trim(),
+                etPhoneNum.getText().toString().trim(),etVerCode.getText().toString().trim(),
+                etPswd.getText().toString().trim());
+    }
+
+    @OnClick(R.id.tv_get_ver_code)
+    public void getVerCode(){
+        if(!mDialog.isShowing())
+            mDialog.show();
+        presenter.getVerCode(etPhoneNum.getText().toString().trim());
+    }
+
+    @Override
+    public void inputError(int e) {
+        mDialog.dismiss();
+        ToastUtils.show(this,e);
+    }
+
+    @Override
+    public void registerSuccess() {
+        mDialog.dismiss();
+        ToastUtils.show(this,R.string.register_success);
+        finish();
+    }
+
+    @Override
+    public void registerFail(String message) {
+        mDialog.dismiss();
+        ToastUtils.show(this,message);
+    }
+
+    @Override
+    public void getVerCodeSuccess(String code) {
+        mDialog.dismiss();
+        etVerCode.setText(code);
+    }
+
+    @Override
+    public void getVerCodeFail(String msg) {
+        mDialog.dismiss();
+        ToastUtils.show(this,msg);
     }
 }

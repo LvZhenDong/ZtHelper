@@ -87,10 +87,13 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
 
         List<Instruction> list=new ArrayList<>();
         Instruction item1=new Instruction();
+        item1.setContent("尊敬的用户，您好！您发起的反馈我们已经恢复您了，请注意查看，有任何消息立即联系我们");
         list.add(item1);
         Instruction item2=new Instruction();
+        item2.setContent("尊敬的用户，您好！这是一段补充字数的系统消息，有任何疑问，请联系项目经理，这是一度补充字");
         list.add(item2);
         Instruction item3=new Instruction();
+        item3.setContent("尊敬的用户，您好！这是一段补充字数的系统消息，有任何疑问，请联系项目经理，这是一度补充字");
         list.add(item3);
         mAdapter.setDataList(list);
     }

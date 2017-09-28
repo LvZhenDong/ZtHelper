@@ -34,7 +34,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String","BASE_URL","\"http://api.ehuu.com/site-api/\""
+            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8080/egr/api/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -48,7 +48,7 @@ android {
         }
 
         debug{
-            buildConfigField "String","BASE_URL","\"http://101.201.222.160:8080/\""
+            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8080/egr/api/\""
             minifyEnabled false
 
             applicationVariants.all { variant ->
@@ -102,4 +102,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //    LRecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
+//    like iOS progress dialog
+    compile 'cc.cloudist.acplibrary:library:1.2.1'
 }

@@ -21,7 +21,7 @@ public class HandleFuc<T> implements Function<BaseResponseBean<T>, T> {
             //服务端返回需要重新登录的status
 //            if (UserStatus.isNeedReLogin(response) && !(LLAppManager.getInstance().currentActivity() instanceof LoginActivity)) {
 //                Logger.e("Server request user relogin!");
-                //如果当前不是登录界面,弹出重新登录对话框
+            //如果当前不是登录界面,弹出重新登录对话框
 //                DialogHelper.openReloginDialog(LLAppManager.getInstance().currentActivity());
 //            }
             String message = response.getMessage() != null ? response.getMessage() : "ErrorData unknow";
