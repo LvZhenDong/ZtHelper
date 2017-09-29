@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
-import com.egr.drillinghelper.ui.adapter.InstructionAdapter;
 import com.egr.drillinghelper.ui.adapter.WaitForReplyAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;

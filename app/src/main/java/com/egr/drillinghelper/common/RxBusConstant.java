@@ -6,5 +6,8 @@ package com.egr.drillinghelper.common;
  * 类描述：
  */
 
-public class RxBusConstant {
+public interface RxBusConstant {
+
+    //刷新个人中心userInfo
+    String UPDATE_MY_USER_INFO="updateMyUserInfo";
 }

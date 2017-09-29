@@ -2,7 +2,9 @@ package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.ContactUs;
+import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
+import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.RegisterResponse;
 import com.egr.drillinghelper.bean.response.Store;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,6 +25,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+
+import static com.pgyersdk.c.a.e;
 
 public interface NetApi {
 
@@ -91,8 +96,28 @@ public interface NetApi {
     @GET("store/list")
     Observable<BaseResponseBean<Store>> storeList(@QueryMap HashMap<String, Object> options);
 
+    /**
+     * 修改个人头像
+     * @param photo
+     * @return
+     */
     @Multipart
     @POST("user/photo")
     Observable<BaseResponseBean<RegisterResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
+
+    /**
+     * 说明书列表
+     * @param current
+     * @return
+     */
+    @GET("explain/getList")
+    Observable<BaseResponseBean<Explain>> explainList(@Query("current") String current);
+
+    /**
+     *
+     * @return
+     */
+    @DELETE("user/logout")
+    Observable<BaseResponseBean<RegisterResponse>> logout();
 
 }

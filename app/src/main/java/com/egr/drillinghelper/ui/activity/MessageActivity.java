@@ -8,7 +8,6 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.presenter.MessagePresenterImpl;
-import com.egr.drillinghelper.ui.adapter.InstructionAdapter;
 import com.egr.drillinghelper.ui.adapter.MessageAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * author lzd

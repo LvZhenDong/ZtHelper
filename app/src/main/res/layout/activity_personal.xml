@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:orientation="vertical">
+
+    <include layout="@layout/line_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/line_divider" />
+
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            style="@style/EditTextRl"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_phoneNum"
+                style="@style/EditTextTv"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/head" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="@dimen/padding_vertical"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_head" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_name_head"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/name" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TvPersonal"
+                android:layout_toRightOf="@id/tv_name_head" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_company_head"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/company" />
+
+            <TextView
+                android:id="@+id/tv_company"
+                style="@style/TvPersonal"
+                android:layout_toRightOf="@id/tv_company_head" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider_margin_left" />
+
+        <RelativeLayout
+            style="@style/EditTextRl"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_phone_head"
+                style="@style/EditTextTv"
+                android:paddingRight="14dp"
+                android:text="@string/phone_num" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/TvPersonal"
+                android:layout_toRightOf="@id/tv_phone_head" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_divider" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_complete"
+        style="@style/RadiusBtn"
+        android:layout_marginTop="30dp"
+        android:text="@string/commit" />
+</LinearLayout>

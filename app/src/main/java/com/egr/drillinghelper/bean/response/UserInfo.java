@@ -1,15 +1,26 @@
 package com.egr.drillinghelper.bean.response;
 
+import java.io.Serializable;
+
 /**
  * author lzd
  * date 2017/9/28 16:21
  * 类描述：
  */
 
-public class UserInfo {
+public class UserInfo implements Serializable{
     String name;
     String phone;
     String company;
+    String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public String getName() {
         return name;

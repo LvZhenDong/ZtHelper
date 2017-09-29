@@ -1,34 +1,33 @@
 package com.egr.drillinghelper.contract;
 
-import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
 
+import java.util.Map;
+
+import okhttp3.RequestBody;
+
 /**
  * author lzd
- * date 2017/9/26 10:05
+ * date 2017/9/26 15:09
  * 类描述：
  */
 
-public interface MyContract {
+public interface PersonalContract {
     interface Model extends IModel {
-        void userInfo();
-
-        void logout();
+        void userPhoto(Map<String, RequestBody> photo);
     }
 
     interface View extends IView {
-        void getUserInfoSuccess(UserInfo userInfo);
+        void changeHeadSuccess();
 
-        void logoutSuccess();
-
-        void logoutFail(String msg);
+        void changeHeadFail(String msg);
     }
 
     interface Presenter extends IPresenter<View> {
-        void userInfo();
+        void changeHead(String path);
 
-        void quit();
+        void changeHeadSuccess();
     }
 }

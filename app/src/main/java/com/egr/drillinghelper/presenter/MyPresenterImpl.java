@@ -24,4 +24,9 @@ public class MyPresenterImpl extends BasePresenter<MyContract.View,
     public void userInfo() {
         mModel.userInfo();
     }
+
+    @Override
+    public void quit() {
+        mModel.logout();
+    }
 }

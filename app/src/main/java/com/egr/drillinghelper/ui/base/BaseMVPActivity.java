@@ -30,6 +30,7 @@ import butterknife.Unbinder;
 public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> extends
         SwipeBackActivity implements IMvpBase<V> {
 
+    public final static String KEY_INTENT="intent data";
     protected ActionBar actionBar;
     protected TextView title, rightTv;
     protected ImageView leftIv, rightIv, rightIv2;
