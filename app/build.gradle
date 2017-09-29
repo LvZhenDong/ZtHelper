@@ -108,4 +108,5 @@ dependencies {
     compile 'com.lzy.widget:imagepicker:0.6.1'
     //    富文本解析器
     compile 'com.zzhoujay.richtext:richtext:2.5.4'
+    compile 'com.iceteck.silicompressorr:silicompressor:2.0'
 }

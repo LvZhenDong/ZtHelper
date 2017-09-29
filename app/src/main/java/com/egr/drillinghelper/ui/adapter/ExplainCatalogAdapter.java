@@ -14,6 +14,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.DensityUtils;
+import com.egr.drillinghelper.utils.video.VideoUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         ExplainCatalogAdapter.ViewHolder> {
+
+    private OnArticleChooseListener mListener;
 
     public ExplainCatalogAdapter(Context context) {
         super(context);
@@ -52,6 +55,22 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         holder.line.setLayoutParams(paramsLine);
     }
 
+    void getDetail(int position) {
+        ExplainCatalog item = getDataList().get(position);
+        if (!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")) {
+            if (mListener != null)
+                mListener.onArticleChoose(item.getArticleId());
+        }
+    }
+
+    public void setOnArticleChooseListener(OnArticleChooseListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnArticleChooseListener {
+        void onArticleChoose(String id);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.rl_catalog)
         RelativeLayout rlItem;
@@ -67,30 +86,21 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
             ButterKnife.bind(this, itemView);
 
             rlItem.setOnClickListener(this);
+            ivPlay.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            getDetail(getAdapterPosition());
+            switch (v.getId()) {
+                case R.id.rl_catalog:
+                    getDetail(getAdapterPosition());
+                    break;
+                case R.id.iv_play:
+                    VideoUtil.playByOtherApp(mContext, getDataList().get(getAdapterPosition()).getUrl());
+                    break;
+            }
+
         }
-    }
-
-    void getDetail(int position){
-        ExplainCatalog item=getDataList().get(position);
-        if(!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")){
-            if(mListener != null)
-                mListener.onArticleChoose(item.getArticleId());
-        }
-    }
-
-    private OnArticleChooseListener mListener;
-
-    public void setOnArticleChooseListener(OnArticleChooseListener listener){
-        this.mListener=listener;
-    }
-
-    public interface OnArticleChooseListener{
-        void onArticleChoose(String id);
     }
 
 

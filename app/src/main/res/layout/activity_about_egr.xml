@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary"
     android:orientation="vertical">
+    <include layout="@layout/line_divider" />
     <TextView
         android:padding="5dp"
         android:id="@+id/tv_content"

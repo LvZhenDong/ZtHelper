@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_primary"
     android:orientation="vertical">
-
+    <include layout="@layout/line_divider" />
     <!--搜索框-->
     <RelativeLayout
         android:id="@+id/rl_fast_register_search"
@@ -36,6 +36,7 @@
             android:maxLines="1"
             android:text="@string/search"/>
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_toLeftOf="@id/tv_search_cancel"
             android:layout_toRightOf="@id/iv_back"
             android:layout_marginTop="5dp"
@@ -67,6 +68,12 @@
                 android:hint="@string/search_hint"
                 android:singleLine="true"
                 android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/iv_cancel"
+                android:background="@drawable/ic_cancel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </RelativeLayout>
