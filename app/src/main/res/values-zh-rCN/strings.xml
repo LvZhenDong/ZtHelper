@@ -22,9 +22,9 @@
     <string name="complete">完成</string>
     <string name="home">首页</string>
     <string name="parts">配件/钻探</string>
-    <string name="feedback">意见反馈</string>
+    <string name="feedback">信息反馈</string>
     <string name="my">个人中心</string>
-    <string name="instructions">使用说明</string>
+    <string name="explain">使用说明</string>
     <string name="ask_knowledge">知识问答</string>
     <string name="feedback_histroy">历史反馈</string>
     <string name="name">姓名</string>

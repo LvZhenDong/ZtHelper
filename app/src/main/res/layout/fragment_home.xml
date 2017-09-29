@@ -19,7 +19,7 @@
             android:id="@+id/tv_instructions"
             style="@style/TvHome"
             android:layout_toLeftOf="@id/space"
-            android:text="@string/instructions" />
+            android:text="@string/explain" />
 
         <TextView
             android:id="@+id/tv_knowledge"

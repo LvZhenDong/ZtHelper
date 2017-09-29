@@ -3,6 +3,7 @@ package com.egr.drillinghelper.api;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.LoginResponse;
@@ -114,7 +115,15 @@ public interface NetApi {
     Observable<BaseResponseBean<Explain>> explainList(@Query("current") String current);
 
     /**
-     *
+     * 说明书目录
+     * @param id
+     * @return
+     */
+    @GET("explain/getById")
+    Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id")String id);
+
+    /**
+     *  退出登录
      * @return
      */
     @DELETE("user/logout")

@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
+import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -26,8 +28,8 @@ import butterknife.BindView;
  * 类描述：
  */
 
-public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,ExplainPresenterImpl>
-    implements ExplainContract.View{
+public class ExplainFragment extends BaseMVPFragment<ExplainContract.View, ExplainPresenterImpl>
+        implements ExplainContract.View {
     @BindView(R.id.rv_instruction)
     LRecyclerView rvInstruction;
 
@@ -49,9 +51,9 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,Explai
         initRv();
     }
 
-    private void initRv(){
-        mAdapter=new ExplainAdapter(getActivity());
-        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
+    private void initRv() {
+        mAdapter = new ExplainAdapter(getActivity());
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         rvInstruction.setAdapter(mLRecyclerViewAdapter);
 
         rvInstruction.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
@@ -71,7 +73,10 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,Explai
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                String id = mAdapter.getDataList().get(position).getId();
+                Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
+                intent.putExtra(KEY_INTENT, id);
+                startActivity(intent);
             }
         });
         presenter.getExplainList();
@@ -81,15 +86,15 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,Explai
     @Override
     public void getExplainFail(String msg) {
         rvInstruction.refreshComplete(10);
-        ToastUtils.show(getActivity(),msg);
+        ToastUtils.show(getActivity(), msg);
     }
 
     @Override
     public void getExplainListSuccess(Explain explain) {
         rvInstruction.refreshComplete(10);
-        if(explain.getCurrent() > 1){
+        if (explain.getCurrent() > 1) {
             mAdapter.addAll(explain.getRecords());
-        }else if(explain.getCurrent() == 1){
+        } else if (explain.getCurrent() == 1) {
             mAdapter.setDataList(explain.getRecords());
         }
     }
