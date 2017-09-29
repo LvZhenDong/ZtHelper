@@ -89,7 +89,7 @@ public interface NetApi {
      * @return
      */
     @GET("store/list")
-    Observable<BaseResponseBean<List<Store>>> storeList(@QueryMap HashMap<String, Object> options);
+    Observable<BaseResponseBean<Store>> storeList(@QueryMap HashMap<String, Object> options);
 
     @Multipart
     @POST("user/photo")

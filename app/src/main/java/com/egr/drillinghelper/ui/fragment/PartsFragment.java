@@ -21,6 +21,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static android.R.id.list;
+
 /**
  * author lzd
  * date 2017/9/26 18:10
@@ -80,12 +82,12 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     }
 
     @Override
-    public void getPartsListSuccess(List<Store> list) {
+    public void getPartsListSuccess(Store store) {
         rvParts.refreshComplete(10);
-        if(presenter.isLoadMore()){
-            mAdapter.addAll(list);
-        }else{
-            mAdapter.setDataList(list);
+        if(store.getCurrent() > 1){
+            mAdapter.addAll(store.getRecords());
+        }else if(store.getCurrent() == 1){
+            mAdapter.setDataList(store.getRecords());
         }
     }
 }

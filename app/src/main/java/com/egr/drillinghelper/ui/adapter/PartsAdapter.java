@@ -14,6 +14,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class PartsAdapter extends BaseListAdapter<Store,
+public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
         PartsAdapter.ViewHolder> {
 
     public PartsAdapter(Context context) {
@@ -39,17 +40,17 @@ public class PartsAdapter extends BaseListAdapter<Store,
     }
 
     @Override
-    public void setDataList(List<Store> list) {
+    public void setDataList(List<Store.RecordsBean> list) {
         //添加进入商城的item
-        Store mall = new Store();
-        mall.setInformation("进入商城");
-        list.add(0, mall);
+        Store.RecordsBean bean=new Store.RecordsBean();
+        bean.setInformation("进入商城");
+        list.add(0, bean);
         super.setDataList(list);
     }
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Store item = getDataList().get(position);
+        Store.RecordsBean item = getDataList().get(position);
         if ("进入商城".equals(item.getInformation())) { //进入商城的处理
             holder.rlMall.setVisibility(View.VISIBLE);
             holder.llParts.setVisibility(View.GONE);

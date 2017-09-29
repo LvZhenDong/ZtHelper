@@ -7,6 +7,8 @@ import com.egr.drillinghelper.mvp.IView;
 
 import java.util.List;
 
+import static android.R.id.list;
+
 /**
  * author lzd
  * date 2017/9/26 15:09
@@ -21,7 +23,7 @@ public interface PartsContract {
     interface View extends IView {
         void getPastsFail(String msg);
 
-        void getPartsListSuccess(List<Store> list);
+        void getPartsListSuccess(Store list);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -29,6 +31,6 @@ public interface PartsContract {
 
         void loadMore();
 
-        boolean isLoadMore();
+        void getPartsListSuccess(Store list);
     }
 }
