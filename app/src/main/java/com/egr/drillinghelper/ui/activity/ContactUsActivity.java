@@ -17,7 +17,6 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
@@ -32,11 +31,10 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     TextView tvServicePhone;
     @BindView(R.id.tv_sales_phone)
     TextView tvSalesPhone;
-    private ACProgressFlower mDialog;
-
     @BindView(R.id.rv_contact)
     LRecyclerView rvMessage;
     ContactUsAdapter mAdapter;
+    private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     @Override
@@ -86,8 +84,10 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     public void getListSuccess(ContactUs contactUs) {
         mDialog.dismiss();
         mAdapter.setDataList(contactUs.getContactList());
-        tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
-        tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+        if (contactUs.getAboutUs() != null) {
+            tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
+            tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+        }
     }
 
 }

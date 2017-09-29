@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
+import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
@@ -123,10 +124,19 @@ public interface NetApi {
     Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id")String id);
 
     /**
+     * 文章详情
+     * @param id
+     * @return
+     */
+    @GET("explain/getArticle")
+    Observable<BaseResponseBean<Article>> getArticle(@Query("articleId") String id);
+
+    /**
      *  退出登录
      * @return
      */
     @DELETE("user/logout")
     Observable<BaseResponseBean<RegisterResponse>> logout();
+
 
 }

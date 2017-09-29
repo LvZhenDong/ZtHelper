@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +76,8 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
 
     @Override
     public void onArticleChoose(String id) {
-
+        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+        intent.putExtra(KEY_INTENT, id);
+        startActivity(intent);
     }
 }
