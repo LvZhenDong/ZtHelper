@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -32,7 +31,7 @@ public class ExplainAdapter extends BaseListAdapter<Explain.RecordsBean,
 
     @Override
     public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_instruction,
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_explian,
                 parent, false));
     }
 
@@ -41,6 +40,7 @@ public class ExplainAdapter extends BaseListAdapter<Explain.RecordsBean,
         Explain.RecordsBean item=getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
         holder.tvInfo.setText(item.getDescription());
+        Glide.with(mContext).load(item.getPhoto()).into(holder.ivImg);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

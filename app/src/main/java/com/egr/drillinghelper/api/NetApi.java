@@ -1,12 +1,12 @@
 package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
+import com.egr.drillinghelper.bean.response.AboutEgr;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.RegisterResponse;
 import com.egr.drillinghelper.bean.response.Store;
@@ -27,8 +27,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-
-import static com.pgyersdk.c.a.e;
 
 public interface NetApi {
 
@@ -138,5 +136,6 @@ public interface NetApi {
     @DELETE("user/logout")
     Observable<BaseResponseBean<RegisterResponse>> logout();
 
-
+    @GET("about/detail")
+    Observable<BaseResponseBean<String>> getAbout();
 }

@@ -40,7 +40,7 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         ExplainCatalog item = getDataList().get(position);
-        holder.tvTitle.setText(item.getOrderNumber() +"  "+ item.getTitle());
+        holder.tvTitle.setText(item.getTitle());
         holder.ivPlay.setVisibility(TextUtils.isEmpty(item.getUrl()) ? View.GONE : View.VISIBLE);
 
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.tvTitle.getLayoutParams();

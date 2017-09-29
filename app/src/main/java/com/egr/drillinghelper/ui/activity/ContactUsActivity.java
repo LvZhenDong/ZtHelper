@@ -22,7 +22,7 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 /**
  * author lzd
  * date 2017/9/28 17:08
- * 类描述：
+ * 类描述：联系我们
  */
 
 public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,

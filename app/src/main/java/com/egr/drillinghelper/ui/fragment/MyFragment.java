@@ -13,6 +13,7 @@ import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.MyPresenterImpl;
+import com.egr.drillinghelper.ui.activity.AboutEgrActivity;
 import com.egr.drillinghelper.ui.activity.ContactUsActivity;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.PersonalActivity;
@@ -85,6 +86,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                 baseStartActivity(ContactUsActivity.class);
                 break;
             case R.id.ll_about_egr:
+                baseStartActivity(AboutEgrActivity.class);
                 break;
             case R.id.ll_share:
                 break;
