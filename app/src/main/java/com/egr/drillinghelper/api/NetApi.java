@@ -10,12 +10,16 @@ import com.egr.drillinghelper.bean.response.UserInfo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -79,7 +83,16 @@ public interface NetApi {
     @GET("contact/list")
     Observable<BaseResponseBean<ContactUs>> contactList();
 
+    /**
+     * 配件列表
+     * @param options
+     * @return
+     */
     @GET("store/list")
     Observable<BaseResponseBean<List<Store>>> storeList(@QueryMap HashMap<String, Object> options);
+
+    @Multipart
+    @POST("user/photo")
+    Observable<BaseResponseBean<RegisterResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
 
 }

@@ -1,9 +1,7 @@
 package com.egr.drillinghelper.presenter;
 
 import com.egr.drillinghelper.contract.PartsContract;
-import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.model.PartsModelImpl;
-import com.egr.drillinghelper.model.SearchModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
 import com.egr.drillinghelper.mvp.IModel;
 
@@ -14,7 +12,9 @@ import com.egr.drillinghelper.mvp.IModel;
  */
 
 public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
-        PartsModelImpl> implements PartsContract.Presenter{
+        PartsModelImpl> implements PartsContract.Presenter {
+    int pageNum = 1;
+
     @Override
     protected IModel createModel() {
         return new PartsModelImpl(this);
@@ -22,6 +22,17 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
 
     @Override
     public void getPartsList() {
-        mModel.getPartsList();
+        pageNum = 1;
+        mModel.getPartsList(1);
+    }
+
+    @Override
+    public void loadMore() {
+        mModel.getPartsList(pageNum++);
+    }
+
+    @Override
+    public boolean isLoadMore() {
+        return pageNum != 1;
     }
 }

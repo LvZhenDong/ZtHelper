@@ -13,6 +13,7 @@ import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,15 +36,20 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
     }
 
     @Override
-    public void getPartsList() {
+    public void getPartsList(int pageNum) {
         HashMap<String,Object> options=new HashMap<>();
-        options.put("pageNum",1);
+        options.put("pageNum",pageNum);
         api.storeList(options)
                 .compose(TransformersFactory.<List<Store>>commonTransformer((BaseMVPFragment) presenter.getView()))
                 .subscribe(new EObserver<List<Store>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
 
+                        if(eMsg.equals("未知错误")){
+                            presenter.getView().getPartsListSuccess(new ArrayList<Store>());
+                        }else {
+                            presenter.getView().getPastsFail(eMsg);
+                        }
                     }
 
                     @Override

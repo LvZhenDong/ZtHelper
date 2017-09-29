@@ -5,6 +5,8 @@
     android:background="@color/bg_primary">
 
     <RadioGroup
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         android:id="@+id/rg_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

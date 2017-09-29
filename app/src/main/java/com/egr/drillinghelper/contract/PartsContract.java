@@ -15,15 +15,20 @@ import java.util.List;
 
 public interface PartsContract {
     interface Model extends IModel {
-        void getPartsList();
+        void getPartsList(int pageNum);
     }
 
     interface View extends IView {
+        void getPastsFail(String msg);
 
         void getPartsListSuccess(List<Store> list);
     }
 
     interface Presenter extends IPresenter<View> {
         void getPartsList();
+
+        void loadMore();
+
+        boolean isLoadMore();
     }
 }

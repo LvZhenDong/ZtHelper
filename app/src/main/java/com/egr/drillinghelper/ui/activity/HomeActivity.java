@@ -12,6 +12,7 @@ import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,6 +39,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @BindView(R.id.rb_my)
     RadioButton rbMy;
     private HomeActivityAdapter homeAdapter;
+    private long mExitTime = 0;
 
     @Override
     public int returnLayoutID() {
@@ -121,5 +123,16 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     private void onSearchClick(){
         baseStartActivity(SearchActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {//如果两次按键时间间隔大于2000毫秒，则不退出
+            ToastUtils.show(this, getString(R.string.exit_app_pressback_again));
+            mExitTime = System.currentTimeMillis();// 更新mExitTime
+        } else {// 否则退出程序
+            finish();
+            System.exit(0);
+        }
     }
 }

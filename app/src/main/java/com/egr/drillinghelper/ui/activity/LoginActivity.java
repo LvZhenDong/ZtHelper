@@ -86,6 +86,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     public void loginSuccess() {
         mDialog.dismiss();
         baseStartActivity(HomeActivity.class);
+        finish();
     }
 
     @Override

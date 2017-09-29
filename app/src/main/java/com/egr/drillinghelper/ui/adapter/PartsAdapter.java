@@ -1,7 +1,6 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,13 +39,21 @@ public class PartsAdapter extends BaseListAdapter<Store,
     }
 
     @Override
+    public void setDataList(List<Store> list) {
+        //添加进入商城的item
+        Store mall = new Store();
+        mall.setInformation("进入商城");
+        list.add(0, mall);
+        super.setDataList(list);
+    }
+
+    @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Store item=getDataList().get(position);
-        if(position == 0){
-            //TODO LZD 第一个的处理
+        Store item = getDataList().get(position);
+        if ("进入商城".equals(item.getInformation())) { //进入商城的处理
             holder.rlMall.setVisibility(View.VISIBLE);
             holder.llParts.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.rlMall.setVisibility(View.GONE);
             holder.llParts.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(item.getName());

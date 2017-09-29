@@ -74,15 +74,27 @@
                 android:inputType="number"
                 android:maxLength="11" />
 
-            <TextView
-                android:id="@+id/tv_get_ver_code"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/et_phoneNum"
-                android:gravity="center"
-                android:text="@string/get_ver_code"
-                android:textColor="@color/tv_green"
-                android:textSize="@dimen/text_size_tv_small" />
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_get_ver_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_get_ver_code_btn_radius_selector"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/padding_vertical"
+                    android:paddingRight="@dimen/padding_vertical"
+                    android:paddingTop="5dp"
+                    android:text="@string/get_ver_code"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_tv" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <include layout="@layout/line_divider_margin_left" />

@@ -27,18 +27,18 @@ public class RegisterPresenterImpl extends BasePresenter<RegisterContract.View,
     @Override
     public void register(String name, String company, String phone, String verCode, String pswd) {
         if (isInputFormal(name, company, phone, verCode, pswd)) {
-            pswd= MD5Util.encodeByLower(pswd);
+            pswd = MD5Util.encodeByLower(pswd);
             mModel.register(name, company, phone, verCode, pswd);
         }
     }
 
     @Override
     public void getVerCode(String phone) {
-        if(TextUtils.isEmpty(phone)){
+        if (TextUtils.isEmpty(phone)) {
             getView().inputError(R.string.phone_empty);
             return;
         }
-        if(!StringUtils.isMobileNO(phone)){
+        if (!StringUtils.isMobileNO(phone)) {
             getView().inputError(R.string.is_not_phone_num);
             return;
         }
@@ -54,12 +54,14 @@ public class RegisterPresenterImpl extends BasePresenter<RegisterContract.View,
             getView().inputError(R.string.company_empty);
         } else if (TextUtils.isEmpty(phone)) {
             getView().inputError(R.string.phone_empty);
-        } else if(!StringUtils.isMobileNO(phone)){
+        } else if (!StringUtils.isMobileNO(phone)) {
             getView().inputError(R.string.is_not_phone_num);
         } else if (TextUtils.isEmpty(verCode)) {
             getView().inputError(R.string.ver_code_empty);
         } else if (TextUtils.isEmpty(pswd)) {
             getView().inputError(R.string.pswd_empty);
+        } else if (pswd.length() < 8) {
+            getView().inputError(R.string.pswd_too_short);
         } else {
             return true;
         }

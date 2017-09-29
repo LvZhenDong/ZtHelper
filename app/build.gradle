@@ -34,7 +34,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8080/egr/api/\""
+            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8081/egr/api/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -48,7 +48,7 @@ android {
         }
 
         debug{
-            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8080/egr/api/\""
+            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8081/egr/api/\""
             minifyEnabled false
 
             applicationVariants.all { variant ->
