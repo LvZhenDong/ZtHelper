@@ -17,7 +17,7 @@
     <string name="ver_code">验证码</string>
     <string name="ver_code_hint">请输入验证码</string>
     <string name="new_pswd">新密码</string>
-    <string name="forget_pswd_pswd_hint">请输入8-16位数的密码</string>
+    <string name="forget_pswd_pswd_hint">请输入8-16位数的字母或数字密码</string>
     <string name="ensure_pswd_hint">再次输入密码</string>
     <string name="complete">完成</string>
     <string name="home">首页</string>

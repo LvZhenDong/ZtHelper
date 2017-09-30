@@ -126,6 +126,7 @@
                 style="@style/EditTextEt"
                 android:layout_toRightOf="@id/tv_pswd"
                 android:hint="@string/forget_pswd_pswd_hint"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 android:inputType="textPassword"
                 android:maxLength="16" />
 
