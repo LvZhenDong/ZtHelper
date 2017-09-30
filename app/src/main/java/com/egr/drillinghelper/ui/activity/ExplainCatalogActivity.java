@@ -13,12 +13,10 @@ import com.egr.drillinghelper.ui.adapter.ExplainCatalogAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
@@ -47,7 +45,7 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);
 
-        mAdapter=new ExplainCatalogAdapter(this);
+        mAdapter = new ExplainCatalogAdapter(this);
         rvCatalog.setAdapter(mAdapter);
         rvCatalog.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.setOnArticleChooseListener(this);
@@ -65,7 +63,8 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
     @Override
     public void getCatalogSuccess(List<ExplainCatalog> catalogList) {
         mDialog.dismiss();
-        mAdapter.setDataList(catalogList);
+        if (catalogList != null)
+            mAdapter.setDataList(catalogList);
     }
 
     @Override

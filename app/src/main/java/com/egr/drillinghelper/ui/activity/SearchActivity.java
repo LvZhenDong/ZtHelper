@@ -32,8 +32,8 @@ import butterknife.OnClick;
 public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         SearchPresenterImpl> implements SearchContract.View {
 
-    @BindView(R.id.tv_search_cancel)
-    TextView tvSearchCancel;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
     @BindView(R.id.iv_search)
     ImageView ivSearch;
     @BindView(R.id.et_search)
@@ -44,6 +44,8 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     RelativeLayout rlFastRegisterSearch;
     @BindView(R.id.iv_back)
     ImageView ivBack;
+    @BindView(R.id.iv_cancel)
+    ImageView ivCancel;
     /**
      * 搜索图表动画前的marginLeft
      */
@@ -57,7 +59,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
      */
     int mResultLvPaddingLeft;
 
-    int backWidth;
+    int backWidth, searchWidth;
 
     @Override
     public int returnLayoutID() {
@@ -81,7 +83,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         ivBack.post(new Runnable() {
             @Override
             public void run() {
-                backWidth = (int) DensityUtils.px2dp(SearchActivity.this,ivBack.getWidth());
+                backWidth = (int) DensityUtils.px2dp(SearchActivity.this, ivBack.getWidth());
+                searchWidth = (int) DensityUtils.px2dp(SearchActivity.this, ivSearch.getWidth());
+
             }
         });
 
@@ -146,14 +150,22 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
         ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivBack, getActivity()), "width",
                 0).setDuration(mSearchAnimTime).start();
+        ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivSearch, getActivity()), "width",
+                0).setDuration(mSearchAnimTime).start();
+        ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivCancel, getActivity()), "width",
+                40).setDuration(mSearchAnimTime).start();
     }
 
 
-    @OnClick({R.id.tv_search_cancel, R.id.iv_search, R.id.et_search, R.id.ll_search, R.id.rl_fast_register_search})
+    @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
+            R.id.ll_search, R.id.rl_fast_register_search, R.id.iv_cancel})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_search_cancel:
-                cancelSearch();
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_search:
+
                 break;
             case R.id.iv_search:
                 break;
@@ -161,6 +173,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 break;
             case R.id.ll_search:
                 etSearch.requestFocus();
+                break;
+            case R.id.iv_cancel:
+                cancelSearch();
                 break;
             case R.id.rl_fast_register_search:
                 break;
@@ -183,12 +198,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     private void cancelAnim() {
         ObjectAnimator.ofInt(new AnimViewWrapper.MarginLeft(ivSearch, getActivity()),
                 "marginLeft", mOriginalMarginLeft).setDuration(mSearchAnimTime).start();
-        ObjectAnimator animator = ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivBack,
-                getActivity()), "width", backWidth);
-        animator.setDuration(mSearchAnimTime).start();
-    }
+        ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivBack,
+                getActivity()), "width", backWidth).setDuration(mSearchAnimTime).start();
+        ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivSearch,
+                getActivity()), "width", searchWidth).setDuration(mSearchAnimTime).start();
+        ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivCancel,
+                getActivity()), "width", 0).setDuration(mSearchAnimTime).start();
 
-    @OnClick(R.id.iv_back)
-    public void onClick() {
     }
 }

@@ -84,6 +84,8 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     @Override
     public void getPartsListSuccess(Store store) {
         rvParts.refreshComplete(10);
+        if(store == null)
+            return;
         if(store.getCurrent() > 1){
             mAdapter.addAll(store.getRecords());
         }else if(store.getCurrent() == 1){

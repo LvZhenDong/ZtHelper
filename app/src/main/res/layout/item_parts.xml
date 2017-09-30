@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/padding_vertical"
-    android:background="@drawable/bg_white_radius">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/CvList">
 
     <RelativeLayout
         android:id="@+id/rl_mall"
@@ -71,4 +70,4 @@
             android:textColor="@color/tv999"
             android:textSize="@dimen/text_size_tv" />
     </LinearLayout>
-</FrameLayout>
+</android.support.v7.widget.CardView>

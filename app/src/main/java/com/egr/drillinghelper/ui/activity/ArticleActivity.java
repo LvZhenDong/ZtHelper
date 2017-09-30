@@ -54,8 +54,11 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
     @Override
     public void getArticleSuccess(Article article) {
         mDialog.dismiss();
-        setActionBarTitle(article.getTitle());
-        RichText.fromHtml(article.getContent()).into(tvContent);
+        if(article != null){
+            setActionBarTitle(article.getTitle());
+            RichText.fromHtml(article.getContent()).into(tvContent);
+        }
+
     }
 
     @Override

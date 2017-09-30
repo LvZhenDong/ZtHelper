@@ -92,6 +92,8 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View, Expla
     @Override
     public void getExplainListSuccess(Explain explain) {
         rvInstruction.refreshComplete(10);
+        if(explain == null)
+            return;
         if (explain.getCurrent() > 1) {
             mAdapter.addAll(explain.getRecords());
         } else if (explain.getCurrent() == 1) {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.AboutEgr;
 import com.egr.drillinghelper.contract.AboutEgrContract;
 import com.egr.drillinghelper.presenter.AboutEgrPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -21,8 +20,8 @@ import cc.cloudist.acplibrary.ACProgressFlower;
  * 类描述：
  */
 
-public class AboutEgrActivity extends BaseMVPActivity <AboutEgrContract.View,
-        AboutEgrPresenterImpl> implements AboutEgrContract.View{
+public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
+        AboutEgrPresenterImpl> implements AboutEgrContract.View {
     @BindView(R.id.tv_content)
     TextView tvContent;
     private ACProgressFlower mDialog;
@@ -52,7 +51,8 @@ public class AboutEgrActivity extends BaseMVPActivity <AboutEgrContract.View,
     @Override
     public void getAboutSuccess(String aboutEgr) {
         mDialog.dismiss();
-        RichText.fromHtml(aboutEgr).into(tvContent);
+        if (aboutEgr != null)
+            RichText.fromHtml(aboutEgr).into(tvContent);
     }
 
     @Override

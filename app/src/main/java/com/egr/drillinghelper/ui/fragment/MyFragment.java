@@ -118,6 +118,8 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
 
     @Override
     public void getUserInfoSuccess(UserInfo userInfo) {
+        if(userInfo == null)
+            return;
         mUserInfo = userInfo;
         tvName.setText(userInfo.getName());
         tvCompany.setText(userInfo.getCompany());

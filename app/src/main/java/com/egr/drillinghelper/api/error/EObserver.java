@@ -10,18 +10,27 @@ import io.reactivex.disposables.Disposable;
  * 类描述：
  */
 
-public abstract class EObserver<T>  implements Observer<T> {
+public abstract class EObserver<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
         if (e instanceof ResponseThrowable) {
-            onError((ResponseThrowable) e,((ResponseThrowable) e).getLMessage());
+            if ("未知错误".equals(((ResponseThrowable) e).getLMessage())) {
+                onComplete(null);
+            } else {
+                onError((ResponseThrowable) e, ((ResponseThrowable) e).getLMessage());
+            }
+
         } else {
-            onError(new ResponseThrowable(e, ERROR.UNKNOWN),e.getMessage());
+            if ("未知错误".equals(e.getMessage())) {
+                onComplete(null);
+            } else {
+                onError(new ResponseThrowable(e, ERROR.UNKNOWN), e.getMessage());
+            }
         }
     }
 
-    public abstract void onError(ResponseThrowable e,String eMsg);
+    public abstract void onError(ResponseThrowable e, String eMsg);
 
     @Override
     public void onNext(@NonNull T t) {

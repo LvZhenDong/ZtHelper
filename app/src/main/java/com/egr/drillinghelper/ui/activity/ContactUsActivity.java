@@ -83,11 +83,14 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @Override
     public void getListSuccess(ContactUs contactUs) {
         mDialog.dismiss();
-        mAdapter.setDataList(contactUs.getContactList());
-        if (contactUs.getAboutUs() != null) {
-            tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
-            tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+        if(contactUs != null){
+            mAdapter.setDataList(contactUs.getContactList());
+            if (contactUs.getAboutUs() != null) {
+                tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
+                tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+            }
         }
+
     }
 
 }
