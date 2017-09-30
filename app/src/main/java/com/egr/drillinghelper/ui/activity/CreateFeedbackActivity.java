@@ -9,6 +9,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.CreateFeedbackContract;
 import com.egr.drillinghelper.presenter.CreateFeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.NumberLimitEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 public class CreateFeedbackActivity extends BaseMVPActivity<CreateFeedbackContract.View,
         CreateFeedbackPresenterImpl> implements CreateFeedbackContract.View {
     @BindView(R.id.et_create_feedback)
-    EditText etCreateFeedback;
+    NumberLimitEditText etCreateFeedback;
     @BindView(R.id.iv_add_photo)
     ImageView ivAddPhoto;
     @BindView(R.id.tv_commit)

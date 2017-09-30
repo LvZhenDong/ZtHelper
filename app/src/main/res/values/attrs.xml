@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CountDownTimerButton">
-        <attr name="time" format="integer"/>
+        <attr name="time" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="NumberLimitEditText">
+        <attr name="hint" format="reference|string" />
+        <attr name="textColorHint" format="reference|color" />
+        <attr name="textSize" format="reference|dimension" />
+        <attr name="limitNum" format="reference|integer"/>
+        <attr name="textSizeLimitNum" format="reference|dimension"/>
+        <attr name="textColorLimitNum" format="reference|color" />
     </declare-styleable>
 </resources>
