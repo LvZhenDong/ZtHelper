@@ -34,7 +34,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8081/egr/api/\""
+            buildConfigField "String","BASE_URL","\"http://101.201.222.160:8083/egr/api/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
@@ -42,20 +42,20 @@ android {
                 variant.outputs.each { output ->
                     output.outputFile = new File(
                             output.outputFile.parent,
-                            "kklv_release_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
+                            "egr_release_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
                 }
             }
         }
 
         debug{
-            buildConfigField "String","BASE_URL","\"http://192.168.31.232:8081/egr/api/\""
+            buildConfigField "String","BASE_URL","\"http://101.201.222.160:8083/egr/api/\""
             minifyEnabled false
 
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     output.outputFile = new File(
                             output.outputFile.parent,
-                            "kklv_debug_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
+                            "egr_debug_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
                 }
             }
         }
