@@ -34,7 +34,7 @@ public class FeedbackHistoryWaitFragment extends BaseFragment {
     private WaitForReplyAdapter mAdapter;
     @Override
     public int returnLayoutID() {
-        return R.layout.fragment_instructions;
+        return R.layout.fragment_list;
     }
 
     @Override

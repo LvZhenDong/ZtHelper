@@ -30,7 +30,7 @@ import butterknife.OnClick;
 /**
  * author lzd
  * date 2017/9/26 18:10
- * 类描述：
+ * 类描述：信息反馈
  */
 
 public class FeedbackFragment extends BaseFragment {
@@ -41,7 +41,6 @@ public class FeedbackFragment extends BaseFragment {
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private QuestionAdapter mAdapter;
-
 
     @Override
     public int returnLayoutID() {
@@ -65,18 +64,8 @@ public class FeedbackFragment extends BaseFragment {
         rvQuestion.addItemDecoration(divider);
         rvQuestion.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
         rvQuestion.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvQuestion.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
-        rvQuestion.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-
-            }
-        });
+        rvQuestion.setLoadMoreEnabled(false);
+        rvQuestion.setPullRefreshEnabled(false);
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

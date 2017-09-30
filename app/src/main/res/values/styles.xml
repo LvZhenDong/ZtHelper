@@ -114,16 +114,13 @@
         <item name="android:textColor">@color/tv333</item>
         <item name="android:textSize">@dimen/text_size_tv</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:paddingLeft">@dimen/padding_vertical</item>
     </style>
 
     <!--cardView通用style-->
     <style name="CvList">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/margin_top</item>
-        <item name="android:layout_marginRight">7dp</item>
-        <item name="android:layout_marginLeft">7dp</item>
+        <item name="cardUseCompatPadding">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="cardCornerRadius">@dimen/radius</item>
         <item name="cardElevation">@dimen/elevation</item>

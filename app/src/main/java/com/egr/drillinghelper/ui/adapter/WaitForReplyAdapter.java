@@ -40,9 +40,7 @@ public class WaitForReplyAdapter extends BaseListAdapter<Instruction,
     public void onBindItemHolder(ViewHolder holder, int position) {
         Instruction item=getDataList().get(position);
         holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getContent())?View.GONE:View.VISIBLE);
-//        holder.tvTime.setText(item.getTitle());
-//        holder.tvInfo.setText(item.getContent());
-//        Glide.with(mContext).load(item.getImgId()).into(holder.ivImg);
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

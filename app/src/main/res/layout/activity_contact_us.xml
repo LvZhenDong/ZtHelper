@@ -1,86 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/line_divider" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:orientation="vertical">
-
-        <include layout="@layout/line_divider" />
-        <com.github.jdsjlzx.recyclerview.LRecyclerView
-            android:id="@+id/rv_contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/padding_vertical"
-            android:layout_marginRight="@dimen/padding_vertical"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/bg_white_radius"
-            android:padding="@dimen/padding_vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="5dp"
-                    android:background="@color/colorAccent" />
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/rv_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                style="@style/CvList"
+                android:layout_marginBottom="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/service_phone"
-                    android:textColor="@color/tv666"
-                    android:textSize="@dimen/text_size_tv" />
+                    android:padding="@dimen/padding_vertical">
 
-                <TextView
-                    android:id="@+id/tv_service_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/tv666"
-                    android:textSize="@dimen/text_size_tv" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="5dp"
+                            android:background="@color/colorAccent" />
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="5dp"
-                    android:background="@color/tv_green" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/service_phone"
+                            android:textColor="@color/tv666"
+                            android:textSize="@dimen/text_size_tv" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/sales_phone"
-                    android:textColor="@color/tv666"
-                    android:textSize="@dimen/text_size_tv" />
+                        <TextView
+                            android:id="@+id/tv_service_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/tv666"
+                            android:textSize="@dimen/text_size_tv" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_sales_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/tv666"
-                    android:textSize="@dimen/text_size_tv" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="5dp"
+                            android:background="@color/tv_green" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/sales_phone"
+                            android:textColor="@color/tv666"
+                            android:textSize="@dimen/text_size_tv" />
+
+                        <TextView
+                            android:id="@+id/tv_sales_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/tv666"
+                            android:textSize="@dimen/text_size_tv" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

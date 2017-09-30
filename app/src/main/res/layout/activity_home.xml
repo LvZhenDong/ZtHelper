@@ -40,9 +40,14 @@
             android:text="@string/my" />
     </RadioGroup>
 
+    <View
+        android:id="@+id/line"
+        android:layout_above="@id/rg_home"
+        style="@style/Line"/>
+
     <com.egr.drillinghelper.ui.widgets.BanSlideViewPager
         android:id="@+id/vp_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rg_home" />
+        android:layout_above="@id/line" />
 </RelativeLayout>
