@@ -8,6 +8,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.RegisterContract;
 import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
@@ -31,7 +32,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @BindView(R.id.et_phoneNum)
     EditText etPhoneNum;
     @BindView(R.id.tv_get_ver_code)
-    TextView tvGetVerCode;
+    CountDownTimerButton btnGetVerCode;
     @BindView(R.id.et_ver_code)
     EditText etVerCode;
     @BindView(R.id.et_pswd)
@@ -97,6 +98,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
 
     @Override
     public void getVerCodeSuccess(String code) {
+        btnGetVerCode.startCountDownTimer();
         mDialog.dismiss();
         etVerCode.setText(code);
     }
@@ -105,5 +107,11 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     public void getVerCodeFail(String msg) {
         mDialog.dismiss();
         ToastUtils.show(this,msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        btnGetVerCode.stopCountDownTimer();
+        super.onDestroy();
     }
 }

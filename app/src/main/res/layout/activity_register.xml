@@ -81,19 +81,10 @@
                 android:layout_toRightOf="@id/et_phoneNum"
                 android:gravity="center">
 
-                <TextView
+                <com.egr.drillinghelper.ui.widgets.CountDownTimerButton
                     android:id="@+id/tv_get_ver_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_get_ver_code_btn_radius_selector"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="@dimen/padding_vertical"
-                    android:paddingRight="@dimen/padding_vertical"
-                    android:paddingTop="5dp"
-                    android:text="@string/get_ver_code"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_tv" />
+                    style="@style/CountDownTimerBtn"
+                    android:text="@string/get_ver_code" />
             </RelativeLayout>
         </RelativeLayout>
 

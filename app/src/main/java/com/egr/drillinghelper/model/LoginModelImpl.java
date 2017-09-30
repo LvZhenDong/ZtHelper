@@ -43,6 +43,11 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
 
                     @Override
                     public void onComplete(@NonNull LoginResponse loginResponse) {
+
+                        if(loginResponse == null){
+                            onError(null,"登录失败");
+                            return;
+                        }
                         APIServiceFactory.setTOKEN(loginResponse.getToken());
                         presenter.getView().loginSuccess();
                     }

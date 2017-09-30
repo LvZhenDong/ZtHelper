@@ -8,6 +8,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.ForgetPswdContract;
 import com.egr.drillinghelper.presenter.ForgetPswdPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
@@ -33,6 +34,8 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     EditText etEnsurePswd;
     @BindView(R.id.tv_complete)
     TextView tvComplete;
+    @BindView(R.id.tv_get_ver_code)
+    CountDownTimerButton btnGetVerCode;
 
     private ACProgressFlower mDialog;
 
@@ -91,6 +94,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
 
     @Override
     public void getVerCodeSuccess(String code) {
+        btnGetVerCode.startCountDownTimer();
         mDialog.dismiss();
         etVerCode.setText(code);
     }
@@ -99,5 +103,11 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     public void getVerCodeFail(String msg) {
         mDialog.dismiss();
         ToastUtils.show(this,msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        btnGetVerCode.stopCountDownTimer();
+        super.onDestroy();
     }
 }

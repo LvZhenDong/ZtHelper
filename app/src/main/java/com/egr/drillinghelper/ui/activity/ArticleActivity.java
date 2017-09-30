@@ -13,7 +13,6 @@ import com.egr.drillinghelper.utils.ToastUtils;
 import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
