@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.utils.GlideUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,6 +59,7 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
             holder.llParts.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(item.getName());
             holder.tvInfo.setText(item.getInformation());
+            GlideUtils.load(item.getPicture(),holder.ivImg);
         }
 
     }

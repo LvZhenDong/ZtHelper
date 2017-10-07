@@ -1,9 +1,11 @@
 package com.egr.drillinghelper.utils;
 
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.egr.drillinghelper.R;
 
 /**
  * author lzd
@@ -13,9 +15,33 @@ import com.bumptech.glide.Glide;
 
 public class GlideUtils {
 
-    public static void load(Context context, String url, ImageView view){
-        Glide.with(context)
+    public static void load(String url, ImageView view) {
+        RequestOptions requestOptions=new RequestOptions();
+        Glide.with(view.getContext().getApplicationContext())
                 .load(url)
+                .apply(requestOptions.placeholder(R.drawable.bg_waiting).error(R.drawable.bg_error)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(view);
+    }
+
+    public static void load(int resId,ImageView view){
+        RequestOptions requestOptions=new RequestOptions();
+
+        Glide.with(view.getContext().getApplicationContext())
+                .load(resId)
+                .apply(requestOptions.placeholder(R.drawable.bg_waiting).error(R.drawable.bg_error)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(view);
+    }
+
+    public static void loadCircleImg(String url,ImageView view){
+        Glide.with(view.getContext().getApplicationContext())
+                .load(url)
+                .apply(RequestOptions
+                        .circleCropTransform()
+                        .placeholder(R.drawable.bg_waiting)
+                        .error(R.drawable.bg_error)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
     }
 }

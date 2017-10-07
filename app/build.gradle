@@ -98,9 +98,8 @@ dependencies {
     //    AES加密
     compile 'com.scottyab:aes-crypto:0.0.4'
     //    Glide
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    //    circle image view
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.bumptech.glide:glide:4.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     //    LRecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
     //    like iOS progress dialog

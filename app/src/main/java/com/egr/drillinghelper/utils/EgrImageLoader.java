@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.egr.drillinghelper.R;
 import com.lzy.imagepicker.loader.ImageLoader;
 
 /**
@@ -18,8 +17,6 @@ public class EgrImageLoader implements ImageLoader {
     public void displayImage(Activity activity, String path, ImageView imageView, int width, int height) {
         Glide.with(activity)
                 .load(path)
-                .placeholder(R.drawable.ic_head)
-                .centerCrop()
                 .into(imageView);
     }
 

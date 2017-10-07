@@ -8,13 +8,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.PersonalContract;
 import com.egr.drillinghelper.presenter.PersonalPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * author lzd
@@ -37,7 +36,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
         PersonalPresenterImpl> implements PersonalContract.View {
     public final static int IMAGE_PICKER = 22;
     @BindView(R.id.iv_head)
-    CircleImageView ivHead;
+    ImageView ivHead;
     @BindView(R.id.rl_head)
     RelativeLayout rlHead;
     @BindView(R.id.tv_name)
@@ -67,7 +66,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
             tvName.setText(mUserInfo.getName());
             tvCompany.setText(mUserInfo.getCompany());
             tvPhone.setText(mUserInfo.getPhone());
-            Glide.with(getActivity()).load(mUserInfo.getPhoto()).centerCrop().into(ivHead);
+            GlideUtils.loadCircleImg(mUserInfo.getPhoto(),ivHead);
         }
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
@@ -103,9 +102,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra
                         (ImagePicker.EXTRA_RESULT_ITEMS);
                 mHeadPath = images.get(0).path;
-                Glide.with(this).
-                        load(mHeadPath)
-                        .centerCrop().into(ivHead);
+                GlideUtils.loadCircleImg(mHeadPath,ivHead);
             }
         }
     }

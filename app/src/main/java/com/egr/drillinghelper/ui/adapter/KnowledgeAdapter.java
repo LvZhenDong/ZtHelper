@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.utils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +39,7 @@ public class KnowledgeAdapter extends BaseListAdapter<Instruction,
     public void onBindItemHolder(ViewHolder holder, int position) {
         Instruction item=getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
-        Glide.with(mContext).load(item.getImgId()).into(holder.ivImg);
+        GlideUtils.load(item.getImgId(),holder.ivImg);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -3,10 +3,10 @@ package com.egr.drillinghelper.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.common.RxBusConstant;
@@ -19,12 +19,12 @@ import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.PersonalActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
+import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -49,7 +49,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.iv_head)
-    CircleImageView ivHead;
+    ImageView ivHead;
     UserInfo mUserInfo;
     private ACProgressFlower mDialog;
 
@@ -123,7 +123,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
         mUserInfo = userInfo;
         tvName.setText(userInfo.getName());
         tvCompany.setText(userInfo.getCompany());
-        Glide.with(getActivity()).load(userInfo.getPhoto()).centerCrop().into(ivHead);
+        GlideUtils.loadCircleImg(userInfo.getPhoto(),ivHead);
     }
 
     @Override
