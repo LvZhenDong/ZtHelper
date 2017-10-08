@@ -6,7 +6,7 @@ import android.content.Context;
 /**
  * author 边凌
  * date 2017/6/6 14:24
- * desc ${TODO}
+ * desc $
  */
 
 public class VideoCompressorImpl implements VideoCompressor {

@@ -50,7 +50,6 @@ import java.util.Set;
  * <p>
  * Recommended to use with user password, in which case the key will be derived from the password and not stored in the file.
  * <p>
- * TODO: Handle OnSharedPreferenceChangeListener
  */
 public class SecureSPUtils implements SharedPreferences {
 

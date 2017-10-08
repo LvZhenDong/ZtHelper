@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * author 边凌
  * date 2017/6/5 14:44
- * desc ${TODO}
+ * desc $
  */
 
 public class VideoUtil {

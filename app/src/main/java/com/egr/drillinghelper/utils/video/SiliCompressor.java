@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 /**
  * author 边凌
  * date 2017/6/6 17:21
- * desc ${TODO}
+ * desc $
  */
 
 class SiliCompressor implements VideoCompressor {

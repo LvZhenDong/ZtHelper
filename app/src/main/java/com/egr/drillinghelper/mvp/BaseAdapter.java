@@ -28,19 +28,16 @@ public abstract class BaseAdapter<Item> extends android.widget.BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return data == null ? 0 : data.size();
     }
 
     @Override
     public Object getItem(int arg0) {
-        // TODO Auto-generated method stub
         return data.get(arg0);
     }
 
     @Override
     public long getItemId(int arg0) {
-        // TODO Auto-generated method stub
         return arg0;
     }
 

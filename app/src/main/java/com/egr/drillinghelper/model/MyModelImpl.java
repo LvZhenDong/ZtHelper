@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -49,20 +49,15 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
     @Override
     public void logout() {
         api.logout()
-                .compose(TransformersFactory.<RegisterResponse>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<RegisterResponse>() {
+                .compose(TransformersFactory.nullBodyTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<NullBodyResponse>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-
-                        if(eMsg.equals("未知错误")){
-                            presenter.getView().logoutSuccess();
-                        }else {
-                            presenter.getView().logoutFail(eMsg);
-                        }
+                        presenter.getView().logoutFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull RegisterResponse data) {
+                    public void onComplete(@NonNull NullBodyResponse data) {
                         presenter.getView().logoutSuccess();
                     }
                 });

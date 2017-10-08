@@ -3,7 +3,7 @@ package com.egr.drillinghelper.utils.video;
 /**
  * author 边凌
  * date 2017/6/5 15:10
- * desc ${TODO}
+ * desc $
  */
 
 public class VideoConfig {

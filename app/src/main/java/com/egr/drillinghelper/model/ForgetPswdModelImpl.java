@@ -3,8 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
-import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.ForgetPswdContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -15,8 +14,6 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import java.util.HashMap;
 
 import io.reactivex.annotations.NonNull;
-
-import static com.egr.drillinghelper.R.string.company;
 
 /**
  * author lzd
@@ -42,20 +39,15 @@ public class ForgetPswdModelImpl extends BaseModel<ForgetPswdPresenterImpl>
         options.put("code", code);
         options.put("password", pswd);
         api.forget(options)
-                .compose(TransformersFactory.<ForgetPswdResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<ForgetPswdResponse>() {
+                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<NullBodyResponse>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        if(eMsg.equals("未知错误")){
-                            presenter.getView().forgetPswdSuccess();
-                        }else {
-                            presenter.getView().forgetPswdFail(eMsg);
-                        }
-
+                        presenter.getView().forgetPswdFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull ForgetPswdResponse response) {
+                    public void onComplete(@NonNull NullBodyResponse response) {
                         presenter.getView().forgetPswdSuccess();
                     }
                 });
@@ -64,7 +56,8 @@ public class ForgetPswdModelImpl extends BaseModel<ForgetPswdPresenterImpl>
     @Override
     public void getVerCode(String phone) {
         api.getVerCode("forget", phone)
-                .compose(TransformersFactory.<String>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .compose(TransformersFactory.<String>commonTransformer((BaseMVPActivity)
+                        presenter.getView()))
                 .subscribe(new EObserver<String>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {

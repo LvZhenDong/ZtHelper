@@ -3,8 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.base.BaseResponseBean;
-import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.RegisterContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -14,13 +13,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import java.util.HashMap;
 
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
-
-import static com.pgyersdk.c.a.e;
 
 
 /**
@@ -48,20 +41,15 @@ public class RegisterModelImpl extends BaseModel<RegisterPresenterImpl>
         options.put("code", verCode);
         options.put("password", pswd);
         api.register(options)
-                .compose(TransformersFactory.<RegisterResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<RegisterResponse>() {
+                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<NullBodyResponse>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        if(eMsg.equals("未知错误")){
-                            presenter.getView().registerSuccess();
-                        }else {
-                            presenter.getView().registerFail(eMsg);
-                        }
-
+                        presenter.getView().registerFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull RegisterResponse response) {
+                    public void onComplete(@NonNull NullBodyResponse response) {
                         presenter.getView().registerSuccess();
                     }
                 });

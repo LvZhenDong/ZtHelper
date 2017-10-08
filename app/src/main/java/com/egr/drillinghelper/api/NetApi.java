@@ -1,14 +1,12 @@
 package com.egr.drillinghelper.api;
 
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
-import com.egr.drillinghelper.bean.response.AboutEgr;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.ForgetPswdResponse;
 import com.egr.drillinghelper.bean.response.LoginResponse;
-import com.egr.drillinghelper.bean.response.RegisterResponse;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.UserInfo;
 
@@ -49,7 +47,7 @@ public interface NetApi {
      */
     @FormUrlEncoded
     @POST("user/register")
-    Observable<BaseResponseBean<RegisterResponse>> register(@FieldMap HashMap<String, Object> options);
+    Observable<BaseResponseBean<NullBodyResponse>> register(@FieldMap HashMap<String, Object> options);
 
     /**
      * 忘记密码
@@ -59,7 +57,7 @@ public interface NetApi {
      */
     @FormUrlEncoded
     @POST("user/forget")
-    Observable<BaseResponseBean<ForgetPswdResponse>> forget(@FieldMap HashMap<String, Object> options);
+    Observable<BaseResponseBean<NullBodyResponse>> forget(@FieldMap HashMap<String, Object> options);
 
     /**
      * 获取验证码
@@ -103,7 +101,7 @@ public interface NetApi {
      */
     @Multipart
     @POST("user/photo")
-    Observable<BaseResponseBean<RegisterResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
+    Observable<BaseResponseBean<NullBodyResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
 
     /**
      * 说明书列表
@@ -134,7 +132,7 @@ public interface NetApi {
      * @return
      */
     @DELETE("user/logout")
-    Observable<BaseResponseBean<RegisterResponse>> logout();
+    Observable<BaseResponseBean<NullBodyResponse>> logout();
 
     @GET("about/detail")
     Observable<BaseResponseBean<String>> getAbout();

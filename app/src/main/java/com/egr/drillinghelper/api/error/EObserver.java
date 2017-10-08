@@ -15,19 +15,9 @@ public abstract class EObserver<T> implements Observer<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         if (e instanceof ResponseThrowable) {
-            //TODO LZD 这里一定要改
-            if ("未知错误".equals(((ResponseThrowable) e).getLMessage())) {
-                onComplete(null);
-            } else {
-                onError((ResponseThrowable) e, ((ResponseThrowable) e).getLMessage());
-            }
-
+            onError((ResponseThrowable) e,((ResponseThrowable) e).getLMessage());
         } else {
-            if ("未知错误".equals(e.getMessage())) {
-                onComplete(null);
-            } else {
-                onError(new ResponseThrowable(e, ERROR.UNKNOWN), e.getMessage());
-            }
+            onError(new ResponseThrowable(e, ERROR.UNKNOWN),e.getMessage());
         }
     }
 

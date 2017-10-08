@@ -4,8 +4,9 @@ import android.app.Activity;
 
 import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
+import com.egr.drillinghelper.api.error.NullResponseFuc;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
-import com.egr.drillinghelper.contract.LoginContract;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -28,7 +29,8 @@ public class TransformersFactory {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io());
             }
         };
     }
@@ -46,7 +48,8 @@ public class TransformersFactory {
         return new ObservableTransformer<BaseResponseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-                return (Observable<T>) upstream.map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
+                return (Observable<T>) upstream.map(new HandleFuc<T>()).onErrorResumeNext(new
+                        HttpResponseFunc<T>());
             }
         };
     }
@@ -58,14 +61,58 @@ public class TransformersFactory {
      * @param <T>
      * @return
      */
-    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final BaseMVPActivity activity) {
+    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final
+                                                                                      BaseMVPActivity activity) {
         return new ObservableTransformer<BaseResponseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
                         .map(new HandleFuc<T>())
                         .onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(activity.<T>bindUntilEvent(ActivityEvent.DESTROY));
+            }
+        };
+    }
+
+    /**
+     * 适用于返回body为null的情况
+     *
+     * @param activity
+     * @return
+     */
+    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
+    nullBodyTransformer(final BaseMVPActivity activity) {
+        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
+            @Override
+            public ObservableSource<NullBodyResponse> apply(@NonNull
+                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
+                        .map(new NullResponseFuc())
+                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>())
+                        .compose(activity.<NullBodyResponse>bindUntilEvent(ActivityEvent.DESTROY));
+            }
+        };
+    }
+
+    /**
+     * 适用于返回body为null的情况
+     *
+     * @param fragment
+     * @return
+     */
+    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
+    nullBodyTransformer(final BaseMVPFragment fragment) {
+        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
+            @Override
+            public ObservableSource<NullBodyResponse> apply(@NonNull
+                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
+                        .map(new NullResponseFuc())
+                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>())
+                        .compose(fragment.<NullBodyResponse>bindUntilEvent(FragmentEvent.DESTROY));
             }
         };
     }
@@ -78,11 +125,14 @@ public class TransformersFactory {
      * @param <T>
      * @return
      */
-    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final Activity activity) {
+    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final
+                                                                                      Activity
+                                                                                              activity) {
         return new ObservableTransformer<BaseResponseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
                         .map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(RxLifecycle.bind(activity).<T>withObservable());
             }
@@ -96,12 +146,15 @@ public class TransformersFactory {
      * @param <T>
      * @return
      */
-    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final BaseMVPFragment fragment) {
+    public static <T> ObservableTransformer<BaseResponseBean<T>, T> commonTransformer(final
+                                                                                      BaseMVPFragment fragment) {
         return new ObservableTransformer<BaseResponseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                        .map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>())
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
+                        .map(new HandleFuc<T>())
+                        .onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(fragment.<T>bindUntilEvent(FragmentEvent.DESTROY));
             }
         };
@@ -114,11 +167,13 @@ public class TransformersFactory {
 //     * @param <T>
 //     * @return
 //     */
-//    public static <T> ObservableTransformer<T, T> otherTransformer(final BaseMVPFragment fragment) {
+//    public static <T> ObservableTransformer<T, T> otherTransformer(final BaseMVPFragment
+// fragment) {
 //        return new ObservableTransformer<T, T>() {
 //            @Override
 //            public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
-//                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+//                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn
+// (Schedulers.io())
 //                        .onErrorResumeNext(new HttpResponseFunc<T>())
 //                        .compose(fragment.<T>bindUntilEvent(FragmentEvent.DESTROY));
 //            }
@@ -136,7 +191,8 @@ public class TransformersFactory {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
                         .onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(activity.<T>bindUntilEvent(ActivityEvent.DESTROY));
             }

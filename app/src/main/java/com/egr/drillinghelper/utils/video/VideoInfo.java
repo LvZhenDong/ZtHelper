@@ -14,7 +14,7 @@ import android.provider.MediaStore;
 /**
  * author 边凌
  * date 2017/6/5 15:07
- * desc ${TODO}
+ * desc $
  */
 
 public class VideoInfo implements Parcelable {
