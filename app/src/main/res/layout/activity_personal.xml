@@ -28,15 +28,14 @@
                 android:layout_centerVertical="true"
                 android:text="@string/head" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_head"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="@dimen/padding_vertical"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_head" />
+                android:layout_marginTop="5dp" />
 
         </RelativeLayout>
 

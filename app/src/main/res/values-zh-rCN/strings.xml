@@ -81,6 +81,33 @@
     <string name="tag_website">网址：</string>
     <string name="tag_tel">电话：</string>
     <string name="tag_address">地址：</string>
+    <string name="share_to">分享到</string>
+    <string name="weibo">微博</string>
+    <string name="weixin">微信</string>
+    <string name="QQ">QQ</string>
+    <string name="Qzone">QQ空间</string>
+    <string name="weixin_moments">朋友圈</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>

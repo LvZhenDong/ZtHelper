@@ -35,10 +35,10 @@ public class GlideUtils {
     }
 
     public static void loadCircleImg(String url,ImageView view){
+        RequestOptions requestOptions=RequestOptions.circleCropTransform();
         Glide.with(view.getContext().getApplicationContext())
                 .load(url)
-                .apply(RequestOptions
-                        .circleCropTransform()
+                .apply(requestOptions
                         .placeholder(R.drawable.bg_waiting)
                         .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))

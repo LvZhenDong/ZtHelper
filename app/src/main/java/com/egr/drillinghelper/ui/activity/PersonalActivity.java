@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * author lzd
@@ -36,7 +37,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
         PersonalPresenterImpl> implements PersonalContract.View {
     public final static int IMAGE_PICKER = 22;
     @BindView(R.id.iv_head)
-    ImageView ivHead;
+    CircleImageView ivHead;
     @BindView(R.id.rl_head)
     RelativeLayout rlHead;
     @BindView(R.id.tv_name)

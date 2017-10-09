@@ -19,6 +19,7 @@ import com.egr.drillinghelper.ui.activity.ContactUsActivity;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.PersonalActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.ui.widgets.ShareDialog;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
@@ -26,6 +27,7 @@ import com.egr.drillinghelper.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -52,7 +54,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.iv_head)
-    ImageView ivHead;
+    CircleImageView ivHead;
     UserInfo mUserInfo;
     private ACProgressFlower mDialog;
 
@@ -92,6 +94,8 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                 baseStartActivity(AboutEgrActivity.class);
                 break;
             case R.id.ll_share:
+                ShareDialog shareDialog=new ShareDialog();
+                shareDialog.show(getChildFragmentManager());
                 break;
             case R.id.ll_quit:
                 //弹出确认退出dialog
