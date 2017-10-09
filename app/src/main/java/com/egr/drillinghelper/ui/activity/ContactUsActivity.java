@@ -1,6 +1,8 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.egr.drillinghelper.presenter.ContactUsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ContactUsAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.PhoneUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -34,8 +37,24 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @BindView(R.id.rv_contact)
     LRecyclerView rvMessage;
     ContactUsAdapter mAdapter;
+    ContactUs mContactUs;
     private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    String phone;
+    private View.OnClickListener onPhoneClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_sales_phone:
+                    phone = mContactUs.getAboutUs().getSalesTel();
+                    break;
+                case R.id.tv_service_phone:
+                    phone = mContactUs.getAboutUs().getServiceTel();
+                    break;
+            }
+            PhoneUtils.callPhone(ContactUsActivity.this, phone);
+        }
+    };
 
     @Override
     public int returnLayoutID() {
@@ -83,14 +102,37 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @Override
     public void getListSuccess(ContactUs contactUs) {
         mDialog.dismiss();
-        if(contactUs != null){
+        if (contactUs != null) {
+            mContactUs = contactUs;
+
             mAdapter.setDataList(contactUs.getContactList());
             if (contactUs.getAboutUs() != null) {
                 tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
                 tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+
+                tvSalesPhone.setOnClickListener(onPhoneClickListener);
+                tvServicePhone.setOnClickListener(onPhoneClickListener);
             }
         }
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case PhoneUtils.MY_PERMISSIONS_REQUEST_CALL_PHONE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the phone call
+                    PhoneUtils.startPhoneIntent(this,phone);
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
+    }
 }
