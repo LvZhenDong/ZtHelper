@@ -24,6 +24,8 @@ public interface PartsContract {
         void getPastsFail(String msg);
 
         void getPartsListSuccess(Store list);
+
+        void noMoreData();
     }
 
     interface Presenter extends IPresenter<View> {

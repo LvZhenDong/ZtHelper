@@ -106,8 +106,7 @@ dependencies {
     compile 'cc.cloudist.acplibrary:library:1.2.1'
     //    ImagePicker
     compile 'com.lzy.widget:imagepicker:0.6.1'
-    //    富文本解析器
-    compile 'com.zzhoujay.richtext:richtext:2.5.4'
+    //    A powerful, flexible and easy to use Video and Image compression library for Android.
     compile 'com.iceteck.silicompressorr:silicompressor:2.0'
     //    IP修改器
     compile 'com.github.Rickwan:IPManagerUtils:V1.0.7'

@@ -12,12 +12,16 @@ import com.egr.drillinghelper.presenter.ExplainCatalogPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ExplainCatalogAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;
+
+import static android.R.attr.id;
+import static com.pgyersdk.c.a.m;
 
 /**
  * author lzd
@@ -26,7 +30,7 @@ import cc.cloudist.acplibrary.ACProgressFlower;
  */
 
 public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContract.View,
-        ExplainCatalogPresenterImpl> implements ExplainCatalogContract.View, ExplainCatalogAdapter.OnArticleChooseListener {
+        ExplainCatalogPresenterImpl> implements ExplainCatalogContract.View {
     @BindView(R.id.rv_catalog)
     RecyclerView rvCatalog;
     private ACProgressFlower mDialog;
@@ -48,7 +52,6 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         mAdapter = new ExplainCatalogAdapter(this);
         rvCatalog.setAdapter(mAdapter);
         rvCatalog.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter.setOnArticleChooseListener(this);
 
         if (!mDialog.isShowing())
             mDialog.show();
@@ -63,8 +66,11 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
     @Override
     public void getCatalogSuccess(List<ExplainCatalog> catalogList) {
         mDialog.dismiss();
-        if (catalogList != null)
+        if (CollectionUtil.isListEmpty(catalogList)){
+            ToastUtils.show(this,R.string.no_data);
+        } else {
             mAdapter.setDataList(catalogList);
+        }
     }
 
     @Override
@@ -73,10 +79,4 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         ToastUtils.show(this, msg);
     }
 
-    @Override
-    public void onArticleChoose(String id) {
-        Intent intent = new Intent(getActivity(), ArticleActivity.class);
-        intent.putExtra(KEY_INTENT, id);
-        startActivity(intent);
-    }
 }

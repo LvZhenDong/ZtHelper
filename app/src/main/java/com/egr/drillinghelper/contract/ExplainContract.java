@@ -21,6 +21,8 @@ public interface ExplainContract {
         void getExplainFail(String msg);
 
         void getExplainListSuccess(Explain explain);
+
+        void noMoreData();
     }
 
     interface Presenter extends IPresenter<View> {

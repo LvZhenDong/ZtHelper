@@ -5,6 +5,7 @@ import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.model.PartsModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
 import com.egr.drillinghelper.mvp.IModel;
+import com.egr.drillinghelper.utils.CollectionUtil;
 
 /**
  * author lzd
@@ -34,8 +35,13 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
 
     @Override
     public void getPartsListSuccess(Store store) {
-        current = store.getCurrent();
-        getView().getPartsListSuccess(store);
+        if (store == null || CollectionUtil.isListEmpty(store.getRecords())) {
+            getView().noMoreData();
+        } else {
+            current = store.getCurrent();
+            getView().getPartsListSuccess(store);
+        }
+
     }
 
 

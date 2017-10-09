@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,12 +38,16 @@ public class WaitForReplyAdapter extends BaseListAdapter<Instruction,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Instruction item=getDataList().get(position);
-        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getContent())?View.GONE:View.VISIBLE);
-
+        Instruction item = getDataList().get(position);
+        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getContent()) ? View.INVISIBLE : View.VISIBLE);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    void showReply(int position) {
+        if(mListener != null)
+            mListener.onReplyClick(getDataList().get(position).getContent());
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.iv_img)
         ImageView ivImg;
@@ -57,6 +61,21 @@ public class WaitForReplyAdapter extends BaseListAdapter<Instruction,
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            tvReadReply.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            showReply(getAdapterPosition()-1);  //有下拉刷新，所以-1
         }
     }
+    OnReplyClickListener mListener;
+    public void setOnReplyClickListener(OnReplyClickListener listener){
+        mListener=listener;
+    }
+    public interface OnReplyClickListener{
+        void onReplyClick(String reply);
+    }
+
 }

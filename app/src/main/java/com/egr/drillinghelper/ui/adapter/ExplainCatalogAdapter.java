@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,12 +13,16 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.ui.activity.ArticleActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.DensityUtils;
 import com.egr.drillinghelper.utils.video.VideoUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.R.attr.id;
 
 /**
  * author lzd
@@ -27,8 +32,6 @@ import butterknife.ButterKnife;
 
 public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         ExplainCatalogAdapter.ViewHolder> {
-
-    private OnArticleChooseListener mListener;
 
     public ExplainCatalogAdapter(Context context) {
         super(context);
@@ -58,17 +61,10 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
     void getDetail(int position) {
         ExplainCatalog item = getDataList().get(position);
         if (!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")) {
-            if (mListener != null)
-                mListener.onArticleChoose(item.getArticleId());
+            Intent intent = new Intent(mContext, ArticleActivity.class);
+            intent.putExtra(BaseMVPActivity.KEY_INTENT, item.getArticleId());
+            mContext.startActivity(intent);
         }
-    }
-
-    public void setOnArticleChooseListener(OnArticleChooseListener listener) {
-        this.mListener = listener;
-    }
-
-    public interface OnArticleChooseListener {
-        void onArticleChoose(String id);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

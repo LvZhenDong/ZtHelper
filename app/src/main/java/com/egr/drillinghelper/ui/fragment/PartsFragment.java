@@ -26,7 +26,7 @@ import static android.R.id.list;
 /**
  * author lzd
  * date 2017/9/26 18:10
- * 类描述：
+ * 类描述：配件/钻探
  */
 
 public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPresenterImpl>
@@ -84,12 +84,17 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     @Override
     public void getPartsListSuccess(Store store) {
         rvParts.refreshComplete(10);
-        if(store == null)
-            return;
+
         if(store.getCurrent() > 1){
             mAdapter.addAll(store.getRecords());
         }else if(store.getCurrent() == 1){
             mAdapter.setDataList(store.getRecords());
         }
+    }
+
+    @Override
+    public void noMoreData() {
+        rvParts.refreshComplete(10);
+        ToastUtils.show(getActivity(), R.string.no_more_data);
     }
 }

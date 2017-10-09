@@ -1,7 +1,7 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.AboutEgrContract;
@@ -9,7 +9,6 @@ import com.egr.drillinghelper.presenter.AboutEgrPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -22,8 +21,8 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 
 public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
         AboutEgrPresenterImpl> implements AboutEgrContract.View {
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+    @BindView(R.id.wv)
+    WebView webView;
     private ACProgressFlower mDialog;
 
     @Override
@@ -52,7 +51,7 @@ public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
     public void getAboutSuccess(String aboutEgr) {
         mDialog.dismiss();
         if (aboutEgr != null)
-            RichText.fromHtml(aboutEgr).into(tvContent);
+            webView.loadDataWithBaseURL(null, aboutEgr, null, "utf-8", null);
     }
 
     @Override

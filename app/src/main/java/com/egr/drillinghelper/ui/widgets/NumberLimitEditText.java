@@ -102,12 +102,14 @@ public class NumberLimitEditText extends RelativeLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(ALIGN_PARENT_BOTTOM);
         params.addRule(ALIGN_PARENT_RIGHT);
-        mTv.setText("还可以输入" + limitNum + "字");
+        mTv.setText(getResources().getString(R.string.number_limit_et_hint) + limitNum
+                + getResources().getString(R.string.number_limit_et_hint2));
         mTv.setLayoutParams(params);
         addView(mTv);
     }
 
     private void showLeftNum(int num) {
-        mTv.setText("还可以输入" + (limitNum - num) + "字");
+        mTv.setText(getResources().getString(R.string.number_limit_et_hint) + (limitNum - num)
+                + getResources().getString(R.string.number_limit_et_hint2));
     }
 }

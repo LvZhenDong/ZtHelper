@@ -12,6 +12,7 @@ import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -25,7 +26,7 @@ import butterknife.BindView;
 /**
  * author lzd
  * date 2017/9/27 10:17
- * 类描述：
+ * 类描述：使用说明
  */
 
 public class ExplainFragment extends BaseMVPFragment<ExplainContract.View, ExplainPresenterImpl>
@@ -92,12 +93,17 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View, Expla
     @Override
     public void getExplainListSuccess(Explain explain) {
         rvInstruction.refreshComplete(10);
-        if(explain == null)
-            return;
+
         if (explain.getCurrent() > 1) {
             mAdapter.addAll(explain.getRecords());
         } else if (explain.getCurrent() == 1) {
             mAdapter.setDataList(explain.getRecords());
         }
+    }
+
+    @Override
+    public void noMoreData() {
+        rvInstruction.refreshComplete(10);
+        ToastUtils.show(getActivity(), R.string.no_more_data);
     }
 }
