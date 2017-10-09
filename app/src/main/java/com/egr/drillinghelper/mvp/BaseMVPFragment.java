@@ -31,6 +31,7 @@ import io.reactivex.subjects.BehaviorSubject;
 public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> extends Fragment
         implements LifecycleProvider<FragmentEvent>, IView, IMvpBase<V>, FragmentUserVisibleController.UserVisibleCallback {
     public static final String KEY_INTENT= BaseMVPActivity.KEY_INTENT;
+    public static final String KEY_INTENT_BOOLEAN= BaseMVPActivity.KEY_INTENT_BOOLEAN;
     protected ViewGroup view;
     Unbinder unbinder;
     protected P presenter;

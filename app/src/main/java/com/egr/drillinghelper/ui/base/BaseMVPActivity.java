@@ -31,6 +31,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         SwipeBackActivity implements IMvpBase<V> {
 
     public final static String KEY_INTENT="intent data";
+    public final static String KEY_INTENT_BOOLEAN="intent data boolean";
     protected ActionBar actionBar;
     protected TextView title, rightTv;
     protected ImageView leftIv, rightIv, rightIv2;

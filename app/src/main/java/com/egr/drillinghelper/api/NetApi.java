@@ -120,6 +120,21 @@ public interface NetApi {
     Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id")String id);
 
     /**
+     * 知识问答列表
+     * @param current
+     * @return
+     */
+    @GET("know/list")
+    Observable<BaseResponseBean<Explain>> knowList(@Query("current") String current);
+
+    /**
+     * 知识问答目录
+     * @param id
+     * @return
+     */
+    @GET("know/knowList")
+    Observable<BaseResponseBean<List<ExplainCatalog>>> knowCatalog(@Query("id")String id);
+    /**
      * 文章详情
      * @param id
      * @return
