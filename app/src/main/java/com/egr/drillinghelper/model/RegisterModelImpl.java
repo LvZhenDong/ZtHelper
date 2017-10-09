@@ -29,7 +29,7 @@ public class RegisterModelImpl extends BaseModel<RegisterPresenterImpl>
 
     public RegisterModelImpl(RegisterPresenterImpl registerPresenter) {
         super(registerPresenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

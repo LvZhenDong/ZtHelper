@@ -24,7 +24,7 @@ public class ArticleModelImpl extends BaseModel<ArticlePresenterImpl> implements
 
     public ArticleModelImpl(ArticlePresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

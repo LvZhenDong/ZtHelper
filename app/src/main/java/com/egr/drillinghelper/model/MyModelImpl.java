@@ -26,7 +26,7 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
 
     public MyModelImpl(MyPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

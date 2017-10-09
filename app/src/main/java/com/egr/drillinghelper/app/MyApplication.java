@@ -1,9 +1,11 @@
 package com.egr.drillinghelper.app;
 
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
 import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.common.MySharePreferencesManager;
+import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.utils.EgrImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
@@ -12,6 +14,8 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.pgyersdk.crash.PgyCrashManager;
+
+import cn.magicbeans.android.ipmanager.utils.MBIPUtils;
 
 public class MyApplication extends MultiDexApplication {
     private static MyApplication sApplication;
@@ -49,6 +53,14 @@ public class MyApplication extends MultiDexApplication {
 
     private void initOther(){
         MySharePreferencesManager.getInstance().init(this);//secure sp init
+
+        if(BuildConfig.DEBUG){
+            String ip = MBIPUtils.getInstance(this).getIPPort();
+            if (!TextUtils.isEmpty(ip)) {
+                APIServiceFactory.setBaseUrl(ip);
+            }
+        }
+
     }
 
     private void initImagePicker(){

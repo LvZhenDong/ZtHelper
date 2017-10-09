@@ -40,10 +40,10 @@ public class ContactUsAdapter extends BaseListAdapter<ContactUs.ContactListBean,
     public void onBindItemHolder(ViewHolder holder, int position) {
         ContactUs.ContactListBean item = getDataList().get(position);
         holder.tvTitle.setText(item.getName());
-        TextViewUtil.setText(holder.tvAddress,"地址：",item.getAddress());
-        TextViewUtil.setText(holder.tvPhone,"电话：",item.getTel());
-        TextViewUtil.setText(holder.tvWeb,"网址：",item.getWebsite());
-        TextViewUtil.setText(holder.tvEmail,"邮箱：",item.getEmail());
+        TextViewUtil.setText(holder.tvAddress,mContext.getString(R.string.tag_address),item.getAddress());
+        TextViewUtil.setText(holder.tvPhone,mContext.getString(R.string.tag_tel),item.getTel());
+        TextViewUtil.setText(holder.tvWeb,mContext.getString(R.string.tag_website),item.getWebsite());
+        TextViewUtil.setText(holder.tvEmail,mContext.getString(R.string.tag_email),item.getEmail());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

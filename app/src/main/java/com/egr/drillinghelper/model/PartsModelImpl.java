@@ -27,7 +27,7 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
 
     public PartsModelImpl(PartsPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

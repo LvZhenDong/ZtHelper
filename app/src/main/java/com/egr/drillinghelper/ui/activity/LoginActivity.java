@@ -1,21 +1,28 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.LoginContract;
+import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import cn.magicbeans.android.ipmanager.module.MBIPInfo;
+import cn.magicbeans.android.ipmanager.utils.FloatWindowUtils;
+import cn.magicbeans.android.ipmanager.utils.MBIPContant;
 
 /**
  * author lzd
@@ -54,6 +61,11 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
         etPhoneNum.setText("18202806302");
         etPasw.setText("12345678");
+
+        if(BuildConfig.DEBUG){
+            FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
+            floatWindowUtils.init(this);
+        }
     }
 
     @Override
@@ -96,5 +108,16 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     public void loginFail(String message) {
         mDialog.dismiss();
         ToastUtils.show(this, message);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == MBIPContant.RESULT_CODE && requestCode == MBIPContant.REQUEST_CODE) {
+            MBIPInfo info = (MBIPInfo) data.getSerializableExtra(MBIPContant.IP);
+            APIServiceFactory.setBaseUrl(info.getIp()+":"+info.getPort());
+        }
+
     }
 }

@@ -109,4 +109,6 @@ dependencies {
     //    富文本解析器
     compile 'com.zzhoujay.richtext:richtext:2.5.4'
     compile 'com.iceteck.silicompressorr:silicompressor:2.0'
+    //    IP修改器
+    compile 'com.github.Rickwan:IPManagerUtils:V1.0.7'
 }

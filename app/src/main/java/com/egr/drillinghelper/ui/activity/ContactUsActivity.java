@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -20,6 +21,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
@@ -38,6 +40,10 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     LRecyclerView rvMessage;
     ContactUsAdapter mAdapter;
     ContactUs mContactUs;
+    @BindView(R.id.ll_service)
+    LinearLayout llService;
+    @BindView(R.id.ll_sales)
+    LinearLayout llSales;
     private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     String phone;
@@ -45,10 +51,10 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.tv_sales_phone:
+                case R.id.ll_sales:
                     phone = mContactUs.getAboutUs().getSalesTel();
                     break;
-                case R.id.tv_service_phone:
+                case R.id.ll_service:
                     phone = mContactUs.getAboutUs().getServiceTel();
                     break;
             }
@@ -110,8 +116,8 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
                 tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
                 tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
 
-                tvSalesPhone.setOnClickListener(onPhoneClickListener);
-                tvServicePhone.setOnClickListener(onPhoneClickListener);
+                llSales.setOnClickListener(onPhoneClickListener);
+                llService.setOnClickListener(onPhoneClickListener);
             }
         }
 
@@ -120,13 +126,13 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case PhoneUtils.MY_PERMISSIONS_REQUEST_CALL_PHONE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted, yay! Do the phone call
-                    PhoneUtils.startPhoneIntent(this,phone);
+                    PhoneUtils.startPhoneIntent(this, phone);
                 } else {
 
                     // permission denied, boo! Disable the

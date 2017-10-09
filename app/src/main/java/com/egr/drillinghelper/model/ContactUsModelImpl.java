@@ -28,7 +28,7 @@ public class ContactUsModelImpl extends BaseModel<ContactUsPresenterImpl>
 
     public ContactUsModelImpl(ContactUsPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

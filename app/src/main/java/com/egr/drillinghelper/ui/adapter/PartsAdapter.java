@@ -43,15 +43,17 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
     public void setDataList(List<Store.RecordsBean> list) {
         //添加进入商城的item
         Store.RecordsBean bean=new Store.RecordsBean();
-        bean.setInformation("进入商城");
+        bean.setId(INTO_MALL);
         list.add(0, bean);
         super.setDataList(list);
     }
 
+    private final static String INTO_MALL="-1";
+
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         Store.RecordsBean item = getDataList().get(position);
-        if ("进入商城".equals(item.getInformation())) { //进入商城的处理
+        if (INTO_MALL.equals(item.getId())) { //进入商城的处理
             holder.rlMall.setVisibility(View.VISIBLE);
             holder.llParts.setVisibility(View.GONE);
         } else {

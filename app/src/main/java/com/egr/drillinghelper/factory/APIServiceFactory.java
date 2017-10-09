@@ -3,6 +3,7 @@ package com.egr.drillinghelper.factory;
 import android.text.TextUtils;
 
 import com.egr.drillinghelper.BuildConfig;
+import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
@@ -22,6 +23,7 @@ public class APIServiceFactory {
 
     private final static long DEFAULT_TIMEOUT = 10;
     private final Gson mGsonDateFormat;
+    static String baseUrl;
 
     private APIServiceFactory() {
         mGsonDateFormat = new GsonBuilder()
@@ -37,22 +39,27 @@ public class APIServiceFactory {
         return SingletonHolder.INSTANCE;
     }
 
+    NetApi netApi;
     /**
      * create a service
      *
-     * @param serviceClass
-     * @param <S>
      * @return
      */
-    public <S> S createService(Class<S> serviceClass) {
-        String baseUrl = BuildConfig.BASE_URL;
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(getOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        return retrofit.create(serviceClass);
+    public NetApi createService() {
+        if(netApi == null){
+            if(TextUtils.isEmpty(baseUrl))
+                baseUrl = BuildConfig.BASE_URL;
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(getOkHttpClient())
+                    .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+            return retrofit.create(NetApi.class);
+        }else {
+            return netApi;
+        }
+
     }
 
     private OkHttpClient getOkHttpClient() {
@@ -114,5 +121,9 @@ public class APIServiceFactory {
     public static void setTOKEN(String token) {
         sToken = token;
         MySharePreferencesManager.getInstance().putString("token",token);
+    }
+
+    public static void setBaseUrl(String url){
+        baseUrl="http://" + url + "/egr/api/";
     }
 }

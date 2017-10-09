@@ -76,20 +76,11 @@
     <string name="confirm_dialog_title_phone">拨打电话</string>
     <string name="confirm_dialog_content_phone">您确定拨打电话：</string>
     <string name="confirm_dialog_content_phone2">吗？</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <string name="goto_mall">进入商城</string>
+    <string name="tag_email">邮箱：</string>
+    <string name="tag_website">网址：</string>
+    <string name="tag_tel">电话：</string>
+    <string name="tag_address">地址：</string>
 
 
 </resources>

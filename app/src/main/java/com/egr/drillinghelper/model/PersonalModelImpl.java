@@ -26,7 +26,7 @@ public class PersonalModelImpl extends BaseModel<PersonalPresenterImpl> implemen
     private NetApi api;
     public PersonalModelImpl(PersonalPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.egr.drillinghelper.model;
 
-import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.LoginResponse;
@@ -32,7 +31,7 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
         options.put("phone",phone);
         options.put("password",password);
 
-        APIServiceFactory.getInstance().createService(NetApi.class)
+        APIServiceFactory.getInstance().createService()
                 .login(options)
                 .compose(TransformersFactory.<LoginResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
                 .subscribe(new EObserver<LoginResponse>() {

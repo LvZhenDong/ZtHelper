@@ -24,7 +24,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
 
     public ExplainModelImpl(ExplainPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

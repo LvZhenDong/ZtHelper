@@ -28,7 +28,7 @@ public class ForgetPswdModelImpl extends BaseModel<ForgetPswdPresenterImpl>
 
     public ForgetPswdModelImpl(ForgetPswdPresenterImpl forgetPswdPresenter) {
         super(forgetPswdPresenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override

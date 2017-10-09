@@ -23,7 +23,7 @@ import io.reactivex.annotations.NonNull;
 public class AboutEgrModelImpl extends BaseModel<AboutEgrPresenterImpl> implements AboutEgrContract.Model{
     public AboutEgrModelImpl(AboutEgrPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
     private NetApi api;
     @Override

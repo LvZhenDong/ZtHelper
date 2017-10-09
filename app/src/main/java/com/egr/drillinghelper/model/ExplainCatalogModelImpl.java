@@ -26,7 +26,7 @@ public class ExplainCatalogModelImpl extends BaseModel<ExplainCatalogPresenterIm
     private NetApi api;
     public ExplainCatalogModelImpl(ExplainCatalogPresenterImpl presenter) {
         super(presenter);
-        api = APIServiceFactory.getInstance().createService(NetApi.class);
+        api = APIServiceFactory.getInstance().createService();
     }
 
     @Override
