@@ -138,4 +138,11 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_tv</item>
     </style>
+
+    <style name="LLDialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

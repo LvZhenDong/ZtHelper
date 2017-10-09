@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,8 @@ import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
+
+import static com.egr.drillinghelper.ui.widgets.DialogHelper.openConfirmDialog;
 
 /**
  * author lzd
@@ -91,9 +94,23 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
             case R.id.ll_share:
                 break;
             case R.id.ll_quit:
-                if (!mDialog.isShowing())
-                    mDialog.show();
-                presenter.quit();
+                //弹出确认退出dialog
+                Dialog ensureDialog =DialogHelper.openConfirmDialog(getActivity(), R.string.ensure_quit_title,
+                        R.string.ensure_quit_content, new DialogHelper.OnDialogClickListener() {
+                            @Override
+                            public void onEnsureClick() {
+                                if (!mDialog.isShowing())
+                                    mDialog.show();
+                                presenter.quit();
+                            }
+
+                            @Override
+                            public void onCancelClick() {
+
+                            }
+                        });
+                ensureDialog.show();
+
                 break;
             case R.id.iv_head:
                 goToPersonal();
