@@ -30,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * author lzd
  * date 2017/9/29 16:41
- * 类描述：
+ * 类描述：个人信息
  */
 
 public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,

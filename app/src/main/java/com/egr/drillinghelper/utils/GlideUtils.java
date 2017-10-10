@@ -44,4 +44,16 @@ public class GlideUtils {
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
     }
+
+    public static void loadLocalImg(int resId,ImageView view){
+        Glide.with(view.getContext())
+                .load(resId)
+                .into(view);
+    }
+
+    public static void loadLocalImg(String path,ImageView view){
+        Glide.with(view.getContext())
+                .load(path)
+                .into(view);
+    }
 }

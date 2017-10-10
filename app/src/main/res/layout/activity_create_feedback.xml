@@ -4,38 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_primary">
-    <include layout="@layout/line_divider" />
 
+    <include layout="@layout/line_divider" />
 
 
     <com.egr.drillinghelper.ui.widgets.NumberLimitEditText
         android:id="@+id/et_create_feedback"
         android:layout_width="match_parent"
-        android:background="@drawable/bg_white_et"
-        android:layout_margin="@dimen/margin_top"
-        android:padding="5dp"
         android:layout_height="120dp"
+        android:layout_margin="@dimen/margin_top"
+        android:background="@drawable/bg_white_et"
+        android:padding="5dp"
         app:hint="@string/create_feedback_hint"
-        app:textColorHint="@color/hint_b3"
-        app:textSize="@dimen/text_size_et"
         app:limitNum="200"
+        app:textColorHint="@color/hint_b3"
         app:textColorLimitNum="@color/tv999"
-        app:textSizeLimitNum="@dimen/text_size_tv_small"/>
+        app:textSize="@dimen/text_size_et"
+        app:textSizeLimitNum="@dimen/text_size_tv_small" />
 
-    <ImageView
-        android:id="@+id/iv_add_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.RecyclerView
         android:layout_below="@id/et_create_feedback"
-        android:layout_marginLeft="@dimen/margin_top"
-        android:layout_marginRight="@dimen/margin_top"
-        android:background="@drawable/ic_add_img" />
+        android:id="@+id/rv_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <TextView
-        android:layout_below="@id/iv_add_photo"
         android:id="@+id/tv_commit"
         style="@style/RadiusBtn"
+        android:layout_below="@id/rv_img"
         android:layout_marginTop="30dp"
         android:text="@string/commit" />
+
 
 </RelativeLayout>
