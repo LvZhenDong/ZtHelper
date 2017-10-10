@@ -2,11 +2,17 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,14 +20,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.response.SearchResult;
 import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
+import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.AnimViewWrapper;
 import com.egr.drillinghelper.utils.DensityUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.pgyersdk.c.a.g;
 
 /**
  * author lzd
@@ -40,14 +53,17 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     EditText etSearch;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
-    @BindView(R.id.rl_fast_register_search)
-    RelativeLayout rlFastRegisterSearch;
+    @BindView(R.id.rl_search)
+    RelativeLayout rlSearch;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.iv_cancel)
     ImageView ivCancel;
+    @BindView(R.id.rv_result)
+    RecyclerView rvResult;
+
     /**
-     * 搜索图表动画前的marginLeft
+     * 搜索图标动画前的marginLeft
      */
     int mOriginalMarginLeft;
     /**
@@ -61,6 +77,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     int backWidth, searchWidth;
 
+    SearchResultAdapter mAdapter;
+
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_search;
@@ -68,7 +87,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        init();
+        initSearchRl();
+
+        mAdapter = new SearchResultAdapter(this);
+        mAdapter.setDataList(mList);
+        rvResult.setLayoutManager(new LinearLayoutManager(this));
+        rvResult.setAdapter(mAdapter);
     }
 
     @Override
@@ -76,7 +100,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         return new SearchPresenterImpl();
     }
 
-    private void init() {
+    private void initSearchRl() {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) ivSearch.getLayoutParams();
 
         mOriginalMarginLeft = (int) DensityUtils.px2dp(getActivity(), params.leftMargin);
@@ -102,9 +126,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s)) {
-//                    getProductList(s.toString());
+                    getProductList(s.toString());
                 } else {
-//                    dismissPW();
+
                 }
             }
         });
@@ -117,6 +141,54 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             }
         });
     }
+
+    List<SearchResult> mList=new ArrayList<>();
+    private void getProductList(String keyWords) {
+        SearchResult result=new SearchResult();
+        result.setTitle(keyWords);
+
+        mAdapter.add(result);
+    }
+
+    private void clearResult() {
+
+    }
+
+
+    @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
+            R.id.ll_search, R.id.rl_search, R.id.iv_cancel})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_search:
+
+                break;
+            case R.id.iv_search:
+                break;
+            case R.id.et_search:
+                break;
+            case R.id.ll_search:
+                etSearch.requestFocus();
+                break;
+            case R.id.iv_cancel:
+                cancelSearch();
+                break;
+            case R.id.rl_search:
+                break;
+        }
+    }
+
+    /**
+     * 点击取消
+     */
+    private void cancelSearch() {
+        etSearch.clearFocus();
+        etSearch.setText("");
+        cancelAnim();
+    }
+
 
     /**
      * 点击搜索动画
@@ -132,8 +204,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                //设置搜索结果ListView的左边距
-                mResultLvPaddingLeft = (int) (etSearch.getX() - llSearch.getX());
+                //设置搜索结果ListView的paddingLeft
+                int[] pos=new int[2];
+                etSearch.getLocationInWindow(pos);
+
+                if(mAdapter != null)
+                    mAdapter.setPaddingLeft(pos[0]+DensityUtils.dp2px(SearchActivity.this,10));
             }
 
             @Override
@@ -156,42 +232,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 40).setDuration(mSearchAnimTime).start();
     }
 
-
-    @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
-            R.id.ll_search, R.id.rl_fast_register_search, R.id.iv_cancel})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.tv_search:
-
-                break;
-            case R.id.iv_search:
-                break;
-            case R.id.et_search:
-                break;
-            case R.id.ll_search:
-                etSearch.requestFocus();
-                break;
-            case R.id.iv_cancel:
-                cancelSearch();
-                break;
-            case R.id.rl_fast_register_search:
-                break;
-        }
-    }
-
-    /**
-     * 点击取消
-     */
-    private void cancelSearch() {
-//        dismissPW();
-        etSearch.clearFocus();
-        etSearch.setText("");
-        cancelAnim();
-    }
-
     /**
      * 取消搜索的动画
      */
@@ -204,6 +244,62 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 getActivity()), "width", searchWidth).setDuration(mSearchAnimTime).start();
         ObjectAnimator.ofInt(new AnimViewWrapper.Width(ivCancel,
                 getActivity()), "width", 0).setDuration(mSearchAnimTime).start();
-
     }
+
+    /**
+     * 实现点击空白处，软键盘消失事件
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                hideSoftInput(v.getWindowToken());
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+                    + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击EditText的事件，忽略它。
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 多种隐藏软件盘方法的其中一种
+     *
+     * @param token
+     */
+    private void hideSoftInput(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token,
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 }

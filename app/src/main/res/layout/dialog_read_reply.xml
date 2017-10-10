@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bg_primary"
@@ -13,11 +14,23 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_close" />
 
-    <TextView
-        android:id="@+id/tv_reply_content"
-        android:textColor="@color/tv333"
-        android:textSize="@dimen/text_size_tv"
+    <com.egr.drillinghelper.ui.widgets.MaxHeightScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:maxHeight="400dp"
+        android:minHeight="100dp"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/tv_reply_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_vertical"
+            android:textColor="@color/tv333"
+            android:textSize="@dimen/text_size_tv" />
+
+    </com.egr.drillinghelper.ui.widgets.MaxHeightScrollView>
+
 
 </LinearLayout>
