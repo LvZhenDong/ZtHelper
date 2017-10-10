@@ -24,6 +24,8 @@ import butterknife.Unbinder;
 
 
 public abstract class BaseActivity extends SwipeBackActivity {
+    public static final String KEY_INTENT= BaseMVPActivity.KEY_INTENT;
+    public static final String KEY_INTENT_BOOLEAN= BaseMVPActivity.KEY_INTENT_BOOLEAN;
 
     protected ActionBar actionBar;
     protected TextView title, rightTv;

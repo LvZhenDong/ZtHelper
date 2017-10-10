@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -9,6 +10,8 @@ import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
+import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
+import com.egr.drillinghelper.ui.activity.KnowCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.KnowledgeAdapter;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -72,7 +75,11 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                //TODO 知识问答目录
+
+                String id = mAdapter.getDataList().get(position).getId();
+                Intent intent = new Intent(getActivity(), KnowCatalogActivity.class);
+                intent.putExtra(KEY_INTENT, id);
+                startActivity(intent);
             }
         });
         presenter.getKnowList();

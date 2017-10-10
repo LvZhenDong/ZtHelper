@@ -5,6 +5,7 @@ import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Store;
@@ -133,7 +134,7 @@ public interface NetApi {
      * @return
      */
     @GET("know/knowList")
-    Observable<BaseResponseBean<List<ExplainCatalog>>> knowCatalog(@Query("id")String id);
+    Observable<BaseResponseBean<List<KnowCatalog>>> knowCatalog(@Query("id")String id);
     /**
      * 文章详情
      * @param id

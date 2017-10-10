@@ -23,6 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="10dp"
+        android:visibility="invisible"
         android:scaleType="centerInside"
         android:src="@drawable/ic_play" />
 

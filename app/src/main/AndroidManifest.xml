@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!--蒲公英 start-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取网络状态 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络通信-->
@@ -52,9 +52,11 @@
             android:theme="@style/NoActionBar" />
         <activity android:name=".ui.activity.ContactUsActivity" />
         <activity android:name=".ui.activity.PersonalActivity" />
-        <activity android:name=".ui.activity.ExplainCatalogActivity"/>
-        <activity android:name=".ui.activity.ArticleActivity"/>
-        <activity android:name=".ui.activity.AboutEgrActivity"/>
+        <activity android:name=".ui.activity.ExplainCatalogActivity" />
+        <activity android:name=".ui.activity.ArticleActivity" />
+        <activity android:name=".ui.activity.AboutEgrActivity" />
+        <activity android:name=".ui.activity.KnowCatalogActivity" />
+        <activity android:name=".ui.activity.KnowArticleActivity" />
     </application>
 
 </manifest>
