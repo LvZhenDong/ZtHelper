@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.GlideUtils;
 
@@ -66,7 +68,7 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
 
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.ll_parts)
         LinearLayout llParts;
@@ -82,6 +84,21 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            llParts.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            goPartsDetail(getAdapterPosition());
+        }
+    }
+
+    void goPartsDetail(int position){
+        Store.RecordsBean item = getDataList().get(position);
+
+        Intent intent=new Intent(mContext, CommBrowserActivity.class);
+        intent.putExtra("url",item.getUrl());
+        mContext.startActivity(intent);
     }
 }

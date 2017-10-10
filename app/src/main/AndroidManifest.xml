@@ -57,6 +57,7 @@
         <activity android:name=".ui.activity.AboutEgrActivity" />
         <activity android:name=".ui.activity.KnowCatalogActivity" />
         <activity android:name=".ui.activity.KnowArticleActivity" />
+        <activity android:name=".hybrid.CommBrowserActivity" />
     </application>
 
 </manifest>

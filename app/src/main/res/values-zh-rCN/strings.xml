@@ -91,7 +91,8 @@
     <string name="weixin_moments">朋友圈</string>
     <string name="number_limit_et_hint">还可以输入</string>
     <string name="number_limit_et_hint2">字</string>
-
+    <string name="browser_title_default">正在努力加载中...</string>
+    <string name="choose_img">图片选择</string>
 
 
 
