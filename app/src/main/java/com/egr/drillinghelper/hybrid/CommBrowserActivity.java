@@ -36,10 +36,11 @@ public class CommBrowserActivity extends BaseActivity {
     private String mCameraPhotoPath;
     private final int INPUT_FILE_REQUEST_CODE = 1;
     private final int FILECHOOSER_RESULTCODE = 2;
-    private String url;
+    private String url,title;
     private Intent intent;
     private WebSettings webSettings;
     private boolean isActionbarEnable;
+
 
     @Override
     public int returnLayoutID() {
@@ -50,6 +51,7 @@ public class CommBrowserActivity extends BaseActivity {
     public void TODO(Bundle savedInstanceState) {
         intent = getIntent();
         url = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
         isActionbarEnable = intent.getBooleanExtra("isActionbarEnable", false);
 
         initActionBar();
@@ -61,6 +63,7 @@ public class CommBrowserActivity extends BaseActivity {
 
     private void initActionBar() {
         setupActionBar(R.string.browser_title_default);
+        setActionBarTitle(title);
         setActionBarLeftIcon(R.drawable.ic_arrow_back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +114,7 @@ public class CommBrowserActivity extends BaseActivity {
 
         @Override
         public void onReceivedTitle(WebView webView, String s) {
-            setActionBarTitle(s);
+
         }
 
         @Override

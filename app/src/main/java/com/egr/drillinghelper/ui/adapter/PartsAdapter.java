@@ -90,7 +90,7 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
 
         @Override
         public void onClick(View v) {
-            goPartsDetail(getAdapterPosition());
+            goPartsDetail(getAdapterPosition()-1);
         }
     }
 
@@ -99,6 +99,7 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
 
         Intent intent=new Intent(mContext, CommBrowserActivity.class);
         intent.putExtra("url",item.getUrl());
+        intent.putExtra("title",item.getName());
         mContext.startActivity(intent);
     }
 }

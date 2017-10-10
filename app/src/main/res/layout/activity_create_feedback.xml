@@ -16,7 +16,7 @@
         android:background="@drawable/bg_white_et"
         android:padding="5dp"
         app:hint="@string/create_feedback_hint"
-        app:limitNum="200"
+        app:limitNum="150"
         app:textColorHint="@color/hint_b3"
         app:textColorLimitNum="@color/tv999"
         app:textSize="@dimen/text_size_et"
