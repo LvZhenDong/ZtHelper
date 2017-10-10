@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class QuestionAdapter extends BaseListAdapter<String, QuestionAdapter.ViewHolder> {
+public class QuestionAdapter extends BaseListAdapter<Feedback, QuestionAdapter.ViewHolder> {
 
     public QuestionAdapter(Context context) {
         super(context);
@@ -33,7 +34,7 @@ public class QuestionAdapter extends BaseListAdapter<String, QuestionAdapter.Vie
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        holder.tvItemQuestion.setText(getDataList().get(position));
+        holder.tvItemQuestion.setText(getDataList().get(position).getQuestion());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

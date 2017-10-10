@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/tv_item_question"
         style="@style/TvMy"
+        android:singleLine="true"
         android:text="@string/go_feedback" />
 
 </LinearLayout>

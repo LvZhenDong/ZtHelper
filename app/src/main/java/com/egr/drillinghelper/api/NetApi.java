@@ -5,9 +5,11 @@ import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.UserInfo;
 
@@ -152,4 +154,19 @@ public interface NetApi {
 
     @GET("about/detail")
     Observable<BaseResponseBean<String>> getAbout();
+
+    /**
+     * 查询常见问题
+     * @return
+     */
+    @GET("feedback/getList")
+    Observable<BaseResponseBean<List<Feedback>>> getFeedbackList();
+
+    /**
+     * 历史反馈
+     * @param status
+     * @return
+     */
+    @GET("feedback/list")
+    Observable<BaseResponseBean<Reply>> getReplyList(@Query("status") String status,@Query("current") String current);
 }

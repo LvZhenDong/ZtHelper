@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.zzhoujay.richtext.RichText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +44,7 @@ public class ReadReplyDialog extends BaseBottomDialog {
                 dismiss();
             }
         });
-        tvReplyContent.setText(mContent);
+        RichText.fromHtml(mContent).into(tvReplyContent);
     }
 
     public void showReply(FragmentManager manager,String content){

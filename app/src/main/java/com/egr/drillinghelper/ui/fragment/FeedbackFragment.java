@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.response.Feedback;
+import com.egr.drillinghelper.contract.FeedbackContract;
+import com.egr.drillinghelper.mvp.BaseMVPFragment;
+import com.egr.drillinghelper.presenter.FeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.activity.CreateFeedbackActivity;
+import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
 import com.egr.drillinghelper.ui.adapter.QuestionAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
+import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -33,7 +39,8 @@ import butterknife.OnClick;
  * 类描述：信息反馈
  */
 
-public class FeedbackFragment extends BaseFragment {
+public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
+        FeedbackPresenterImpl> implements FeedbackContract.View{
     @BindView(R.id.ll_go_feedback)
     LinearLayout llGoFeedback;
     @BindView(R.id.rv_question)
@@ -41,6 +48,11 @@ public class FeedbackFragment extends BaseFragment {
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private QuestionAdapter mAdapter;
+
+    @Override
+    protected FeedbackPresenterImpl createPresenter() {
+        return new FeedbackPresenterImpl();
+    }
 
     @Override
     public int returnLayoutID() {
@@ -73,18 +85,21 @@ public class FeedbackFragment extends BaseFragment {
             }
         });
 
-        List<String> list=new ArrayList<>();
-        list.add("钻机在钻孔过程中为什么会偏孔？");
-        list.add("如何使用密封件维修包？");
-        list.add("如何更换发动机机油？");
-        list.add("如果调节钻机的转速与扭力？");
-        list.add("如何更换卡瓦？");
-        list.add("钻探相关常规问题？");
-        mAdapter.setDataList(list);
+        presenter.getFeedbackList();
     }
 
     @OnClick(R.id.ll_go_feedback)
     public void onClick() {
         baseStartActivity(CreateFeedbackActivity.class);
+    }
+
+    @Override
+    public void getFeedbackListSuccess(List<Feedback> list) {
+        mAdapter.setDataList(list);
+    }
+
+    @Override
+    public void getFeedbackFail(String msg) {
+        ToastUtils.show(getActivity(),msg);
     }
 }

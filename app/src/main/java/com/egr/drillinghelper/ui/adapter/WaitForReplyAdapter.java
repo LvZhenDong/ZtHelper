@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Instruction;
+import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.utils.CollectionUtil;
+import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -23,7 +26,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class WaitForReplyAdapter extends BaseListAdapter<Instruction,
+public class WaitForReplyAdapter extends BaseListAdapter<Reply.RecordsBean,
         WaitForReplyAdapter.ViewHolder> {
 
     public WaitForReplyAdapter(Context context) {
@@ -38,13 +41,21 @@ public class WaitForReplyAdapter extends BaseListAdapter<Instruction,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Instruction item = getDataList().get(position);
-        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getContent()) ? View.INVISIBLE : View.VISIBLE);
+        Reply.RecordsBean item = getDataList().get(position);
+        holder.tvTime.setText(item.getUpdatetime());
+        holder.tvInfo.setText(item.getQuestion());
+        if(CollectionUtil.isListEmpty(item.getAttachments())){
+            holder.ivImg.setVisibility(View.GONE);
+        }else {
+            holder.ivImg.setVisibility(View.VISIBLE);
+            GlideUtils.load(item.getAttachments().get(0),holder.ivImg);
+        }
+        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getAnswer()) ? View.INVISIBLE : View.VISIBLE);
     }
 
     void showReply(int position) {
         if(mListener != null)
-            mListener.onReplyClick(getDataList().get(position).getContent());
+            mListener.onReplyClick(getDataList().get(position).getAnswer());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

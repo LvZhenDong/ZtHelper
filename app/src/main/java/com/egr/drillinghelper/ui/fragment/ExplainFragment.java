@@ -29,7 +29,8 @@ import butterknife.BindView;
  * 类描述：使用说明
  */
 
-public class ExplainFragment extends BaseMVPFragment<ExplainContract.View, ExplainPresenterImpl>
+public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
+        ExplainPresenterImpl>
         implements ExplainContract.View {
     @BindView(R.id.rv_instruction)
     LRecyclerView rvInstruction;
