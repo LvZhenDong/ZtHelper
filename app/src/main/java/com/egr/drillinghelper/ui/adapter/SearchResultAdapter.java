@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * 类描述：搜索结果
  */
 
-public class SearchResultAdapter extends BaseListAdapter<SearchResult,
+public class SearchResultAdapter extends BaseListAdapter<String,
         SearchResultAdapter.ViewHolder> {
 
     private int paddingLeft;
@@ -42,10 +42,10 @@ public class SearchResultAdapter extends BaseListAdapter<SearchResult,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        SearchResult item=getDataList().get(position);
+        String item=getDataList().get(position);
         holder.tvTitle.setPadding(paddingLeft,holder.tvTitle.getPaddingTop(),
                 DensityUtils.dp2px(mContext, 10),holder.tvTitle.getPaddingBottom());
-        holder.tvTitle.setText(item.getTitle());
+        holder.tvTitle.setText(item);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

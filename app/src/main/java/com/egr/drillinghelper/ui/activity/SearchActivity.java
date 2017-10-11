@@ -3,13 +3,11 @@ package com.egr.drillinghelper.ui.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,21 +18,31 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.SearchResult;
+import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.KnowCatalog;
+import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.contract.SearchContract;
+import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.AnimViewWrapper;
 import com.egr.drillinghelper.utils.DensityUtils;
+import com.egr.drillinghelper.utils.ToastUtils;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.github.jdsjlzx.recyclerview.ProgressStyle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.pgyersdk.c.a.g;
+import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -44,6 +52,10 @@ import static com.pgyersdk.c.a.g;
 
 public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         SearchPresenterImpl> implements SearchContract.View {
+
+    public final static int SEARCH_TYPE_EXPLAIN = 0;
+    public final static int SEARCH_TYPE_KNOWLEDGE = 1;
+    public final static int SEARCH_TYPE_PARTS = 2;
 
     @BindView(R.id.tv_search)
     TextView tvSearch;
@@ -60,8 +72,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     @BindView(R.id.iv_cancel)
     ImageView ivCancel;
     @BindView(R.id.rv_result)
-    RecyclerView rvResult;
-
+    LRecyclerView rvResult;
     /**
      * 搜索图标动画前的marginLeft
      */
@@ -70,15 +81,17 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
      * 动画时间
      */
     int mSearchAnimTime = 300;
-    /**
-     * 搜索结果的左边距，用于与搜索框对齐
-     */
-    int mResultLvPaddingLeft;
-
     int backWidth, searchWidth;
-
+    int type;
     SearchResultAdapter mAdapter;
+    List<String> mList = new ArrayList<>();
+    List<KnowCatalog> mKnowCatalogs;
+    List<Parts> mParts;
+    List<ExplainCatalog> mExplainCatalogs;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
+    private ACProgressFlower mDialog;
+    private String keyword;
 
     @Override
     public int returnLayoutID() {
@@ -88,11 +101,37 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     @Override
     public void TODO(Bundle savedInstanceState) {
         initSearchRl();
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
+        type = getIntent().getIntExtra(KEY_INTENT, SEARCH_TYPE_EXPLAIN);
 
         mAdapter = new SearchResultAdapter(this);
-        mAdapter.setDataList(mList);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+
+        rvResult.setAdapter(mLRecyclerViewAdapter);
+        rvResult.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
         rvResult.setLayoutManager(new LinearLayoutManager(this));
-        rvResult.setAdapter(mAdapter);
+        rvResult.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!TextUtils.isEmpty(keyword)){
+                    presenter.search(keyword,type);
+                }
+            }
+        });
+        rvResult.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                presenter.loadMore();
+            }
+        });
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showDetail(position);
+            }
+        });
+
+        mAdapter.setDataList(mList);
     }
 
     @Override
@@ -113,25 +152,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             }
         });
 
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s)) {
-                    getProductList(s.toString());
-                } else {
-
-                }
-            }
-        });
         etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -142,18 +162,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         });
     }
 
-    List<SearchResult> mList=new ArrayList<>();
-    private void getProductList(String keyWords) {
-        SearchResult result=new SearchResult();
-        result.setTitle(keyWords);
-
-        mAdapter.add(result);
-    }
-
     private void clearResult() {
 
     }
-
 
     @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
             R.id.ll_search, R.id.rl_search, R.id.iv_cancel})
@@ -163,7 +174,10 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 finish();
                 break;
             case R.id.tv_search:
-
+                keyword=etSearch.getText().toString().trim();
+                if(!TextUtils.isEmpty(keyword)){
+                    presenter.search(keyword,type);
+                }
                 break;
             case R.id.iv_search:
                 break;
@@ -178,6 +192,70 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             case R.id.rl_search:
                 break;
         }
+    }
+
+    private void showDetail(int position) {
+        switch (type) {
+            case SEARCH_TYPE_EXPLAIN:   //使用说明
+                ExplainCatalog explainCatalog=mExplainCatalogs.get(position);
+                if (!TextUtils.isEmpty(explainCatalog.getArticleId()) && !explainCatalog.getArticleId().equals("0")) {
+                    Intent intentExplain = new Intent(this, ArticleActivity.class);
+                    intentExplain.putExtra(BaseMVPActivity.KEY_INTENT, explainCatalog.getArticleId());
+                    startActivity(intentExplain);
+                }
+                break;
+            case SEARCH_TYPE_KNOWLEDGE: //知识问答
+                Intent intentKnow = new Intent(this, KnowArticleActivity.class);
+                intentKnow.putExtra(BaseMVPActivity.KEY_INTENT, mKnowCatalogs.get(position).getContent());
+                startActivity(intentKnow);
+                break;
+            case SEARCH_TYPE_PARTS: //配件
+                Intent intentPart = new Intent(this, CommBrowserActivity.class);
+                Parts part = mParts.get(position);
+                intentPart.putExtra("url", part.getUrl());
+                intentPart.putExtra("title", part.getName());
+                startActivity(intentPart);
+                break;
+        }
+    }
+
+    @Override
+    public void searchFail(String msg) {
+        mDialog.dismiss();
+        rvResult.refreshComplete(10);
+        ToastUtils.show(this, msg);
+    }
+
+    @Override
+    public void noMoreData() {
+        rvResult.refreshComplete(10);
+        mDialog.dismiss();
+        ToastUtils.show(this, R.string.no_more_data);
+    }
+
+    @Override
+    public void searchKnowSuccess(List<KnowCatalog> knowCatalogs,
+                                  List<String> titles) {
+        rvResult.refreshComplete(10);
+        mDialog.dismiss();
+        mAdapter.setDataList(titles);
+        mKnowCatalogs = knowCatalogs;
+    }
+
+    @Override
+    public void searchParts(List<Parts> parts, List<String> titles) {
+        rvResult.refreshComplete(10);
+        mDialog.dismiss();
+        mAdapter.setDataList(titles);
+        mParts = parts;
+    }
+
+    @Override
+    public void searchExplainCatalog(List<ExplainCatalog> explainCatalogs, List<String> titles) {
+        rvResult.refreshComplete(10);
+        mDialog.dismiss();
+        mAdapter.setDataList(titles);
+        mExplainCatalogs = explainCatalogs;
     }
 
     /**
@@ -205,11 +283,11 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             @Override
             public void onAnimationEnd(Animator animation) {
                 //设置搜索结果ListView的paddingLeft
-                int[] pos=new int[2];
+                int[] pos = new int[2];
                 etSearch.getLocationInWindow(pos);
 
-                if(mAdapter != null)
-                    mAdapter.setPaddingLeft(pos[0]+DensityUtils.dp2px(SearchActivity.this,10));
+                if (mAdapter != null)
+                    mAdapter.setPaddingLeft(pos[0] + DensityUtils.dp2px(SearchActivity.this, 10));
             }
 
             @Override
@@ -301,5 +379,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 
 }

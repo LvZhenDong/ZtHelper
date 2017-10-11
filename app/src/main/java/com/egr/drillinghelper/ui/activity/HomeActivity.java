@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -11,11 +12,16 @@ import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.fragment.HomeFragment;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_EXPLAIN;
+import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_KNOWLEDGE;
+import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_PARTS;
 
 /**
  * author lzd
@@ -25,6 +31,7 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         HomePresenterImpl> implements HomeContract.View {
+
 
     @BindView(R.id.rg_home)
     RadioGroup rgHome;
@@ -39,6 +46,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @BindView(R.id.rb_my)
     RadioButton rbMy;
     private HomeActivityAdapter homeAdapter;
+    private HomeFragment mHomeFragment;
     private long mExitTime = 0;
 
     @Override
@@ -49,7 +57,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @Override
     public void TODO(Bundle savedInstanceState) {
         setSwipeBackEnabled(false);//设置不可右滑关闭
-        setupActionBar(ContextCompat.getDrawable(this,R.drawable.bg_home_logo), false);
+        setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
         setActionBarTitleColor(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg, new View.OnClickListener() {
             @Override
@@ -58,12 +66,14 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 baseStartActivity(MessageActivity.class);
             }
         });
-        setActionbarBackground(ContextCompat.getDrawable(this,R.drawable.bg_actionbar));
+        setActionbarBackground(ContextCompat.getDrawable(this, R.drawable.bg_actionbar));
         setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击搜索按钮
-                onSearchClick();
+                mHomeFragment= (HomeFragment) homeAdapter.getItem(0);
+
+                onSearchClick(mHomeFragment.isExplain()?SEARCH_TYPE_EXPLAIN:SEARCH_TYPE_KNOWLEDGE);
             }
         });
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
@@ -87,7 +97,9 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onSearchClick();
+                        mHomeFragment= (HomeFragment) homeAdapter.getItem(0);
+
+                        onSearchClick(mHomeFragment.isExplain()?SEARCH_TYPE_EXPLAIN:SEARCH_TYPE_KNOWLEDGE);
                     }
                 });
                 break;
@@ -97,7 +109,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onSearchClick();
+                        onSearchClick(SEARCH_TYPE_PARTS);
                     }
                 });
                 break;
@@ -121,8 +133,10 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         }
     }
 
-    private void onSearchClick(){
-        baseStartActivity(SearchActivity.class);
+    private void onSearchClick(int type) {
+        Intent intent=new Intent(this,SearchActivity.class);
+        intent.putExtra(KEY_INTENT,type);
+        startActivity(intent);
     }
 
     @Override

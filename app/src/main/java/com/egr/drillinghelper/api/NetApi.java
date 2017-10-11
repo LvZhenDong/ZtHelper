@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.api;
 
+import com.egr.drillinghelper.bean.base.BasePageResponse;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
@@ -11,7 +12,9 @@ import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
+import com.egr.drillinghelper.bean.response.SearchResult;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.UserInfo;
 
@@ -201,4 +204,31 @@ public interface NetApi {
     @POST("feedback/save")
     Observable<BaseResponseBean<List<CreateFeedbackResponse>>> createFeedback(@Query("question") String id,
                                                         @PartMap Map<String, RequestBody> photo);
+
+    /**
+     * 搜索知识问答
+     * @param keyword
+     * @return
+     */
+    @GET("search/know")
+    Observable<BaseResponseBean<BasePageResponse<KnowCatalog>>> searchKnow(@Query("keyword") String keyword,
+                                                                           @Query("current") String current);
+
+    /**
+     * 搜索使用说明
+     * @param keyword
+     * @return
+     */
+    @GET("search/explain")
+    Observable<BaseResponseBean<BasePageResponse<ExplainCatalog>>> searchExplain(@Query("keyword") String keyword,
+                                                                                 @Query("current") String current);
+
+    /**
+     *
+     * @param keyword
+     * @return
+     */
+    @GET("search/product")
+    Observable<BaseResponseBean<BasePageResponse<Parts>>> searchProduct(@Query("keyword") String keyword,
+                                                                        @Query("current") String current);
 }

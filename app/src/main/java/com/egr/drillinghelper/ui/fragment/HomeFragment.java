@@ -3,9 +3,7 @@ package com.egr.drillinghelper.ui.fragment;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,11 +11,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.ui.adapter.HomeFragmentAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
-import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
-import com.egr.drillinghelper.utils.WindowUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -36,7 +31,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.vp_home)
     ViewPager vpHome;
     HomeFragmentAdapter mAdapter;
-    private int currentPosition;
+    private static int currentPosition;
 
     @Override
     public int returnLayoutID() {
@@ -56,7 +51,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                startAnimation(position, true);
+                startAnimation(position);
             }
 
             @Override
@@ -66,8 +61,12 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    public boolean isExplain(){
+        return currentPosition == 0;
+    }
 
-    private void startAnimation(int position, boolean isScroll) {
+
+    private void startAnimation(int position) {
         int length = tvInstructions.getMeasuredWidth();
         int x = (int) messageTriangle.getX();
         switch (position) {
@@ -84,8 +83,6 @@ public class HomeFragment extends BaseFragment {
                 currentPosition = 1;
                 break;
         }
-        if (!isScroll)
-            vpHome.setCurrentItem(position);
     }
 
     /**
@@ -104,10 +101,10 @@ public class HomeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_instructions:
-                startAnimation(0,false);
+                vpHome.setCurrentItem(0);
                 break;
             case R.id.tv_knowledge:
-                startAnimation(1,false);
+                vpHome.setCurrentItem(1);
                 break;
         }
     }
