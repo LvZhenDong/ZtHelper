@@ -7,6 +7,7 @@ import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.CreateFeedbackResponse;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.ExplainOut;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
@@ -192,7 +193,7 @@ public interface NetApi {
      * @return
      */
     @POST("feedback/save")
-    Observable<BaseResponseBean<List<CreateFeedbackResponse>>> createFeedback(@Query("question") String id);
+    Observable<BaseResponseBean<List<Feedback>>> createFeedback(@Query("question") String id);
 
     /**
      * 信息反馈有图
@@ -202,7 +203,7 @@ public interface NetApi {
      */
     @Multipart
     @POST("feedback/save")
-    Observable<BaseResponseBean<List<CreateFeedbackResponse>>> createFeedback(@Query("question") String id,
+    Observable<BaseResponseBean<List<Feedback>>> createFeedback(@Query("question") String id,
                                                         @PartMap Map<String, RequestBody> photo);
 
     /**
@@ -220,8 +221,8 @@ public interface NetApi {
      * @return
      */
     @GET("search/explain")
-    Observable<BaseResponseBean<BasePageResponse<ExplainCatalog>>> searchExplain(@Query("keyword") String keyword,
-                                                                                 @Query("current") String current);
+    Observable<BaseResponseBean<BasePageResponse<ExplainOut>>> searchExplain(@Query("keyword") String keyword,
+                                                                             @Query("current") String current);
 
     /**
      *

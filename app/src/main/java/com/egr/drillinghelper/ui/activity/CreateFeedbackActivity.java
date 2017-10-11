@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.contract.CreateFeedbackContract;
 import com.egr.drillinghelper.presenter.CreateFeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.CreateFeedbackImgAdapter;
@@ -132,9 +133,13 @@ public class CreateFeedbackActivity extends BaseMVPActivity<CreateFeedbackContra
     }
 
     @Override
-    public void commitSuccess() {
+    public void commitSuccess(List<Feedback> list) {
         mDialog.dismiss();
         ToastUtils.show(this,R.string.commit_success);
         finish();
+        Bundle bundle=new Bundle();
+        ArrayList<Feedback> feedback=new ArrayList<>(list);
+        bundle.putSerializable(KEY_INTENT,feedback);
+        baseStartActivity(CreateFeedbackSuccessActivity.class,bundle);
     }
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.ExplainOut;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.contract.SearchContract;
@@ -87,7 +88,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     List<String> mList = new ArrayList<>();
     List<KnowCatalog> mKnowCatalogs;
     List<Parts> mParts;
-    List<ExplainCatalog> mExplainCatalogs;
+    List<ExplainOut> mExplainCatalogs;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     private ACProgressFlower mDialog;
@@ -176,6 +177,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
             case R.id.tv_search:
                 keyword=etSearch.getText().toString().trim();
                 if(!TextUtils.isEmpty(keyword)){
+                    mDialog.show();
                     presenter.search(keyword,type);
                 }
                 break;
@@ -197,12 +199,11 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     private void showDetail(int position) {
         switch (type) {
             case SEARCH_TYPE_EXPLAIN:   //使用说明
-                ExplainCatalog explainCatalog=mExplainCatalogs.get(position);
-                if (!TextUtils.isEmpty(explainCatalog.getArticleId()) && !explainCatalog.getArticleId().equals("0")) {
-                    Intent intentExplain = new Intent(this, ArticleActivity.class);
-                    intentExplain.putExtra(BaseMVPActivity.KEY_INTENT, explainCatalog.getArticleId());
-                    startActivity(intentExplain);
-                }
+                ExplainOut explainOut=mExplainCatalogs.get(position);
+                String id = explainOut.getId();
+                Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
+                intent.putExtra(KEY_INTENT, id);
+                startActivity(intent);
                 break;
             case SEARCH_TYPE_KNOWLEDGE: //知识问答
                 Intent intentKnow = new Intent(this, KnowArticleActivity.class);
@@ -251,7 +252,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     }
 
     @Override
-    public void searchExplainCatalog(List<ExplainCatalog> explainCatalogs, List<String> titles) {
+    public void searchExplainCatalog(List<ExplainOut> explainCatalogs, List<String> titles) {
         rvResult.refreshComplete(10);
         mDialog.dismiss();
         mAdapter.setDataList(titles);

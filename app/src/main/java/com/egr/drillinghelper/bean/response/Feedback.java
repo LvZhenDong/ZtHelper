@@ -1,12 +1,14 @@
 package com.egr.drillinghelper.bean.response;
 
+import java.io.Serializable;
+
 /**
  * author lzd
  * date 2017/10/10 17:25
  * 类描述：
  */
 
-public class Feedback {
+public class Feedback implements Serializable{
 
     /**
      * id : 8a31b7bc3e8e4bf4b8807edd711176da

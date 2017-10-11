@@ -2,6 +2,7 @@ package com.egr.drillinghelper.presenter;
 
 import com.egr.drillinghelper.bean.base.BasePageResponse;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.ExplainOut;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.contract.SearchContract;
@@ -86,7 +87,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     }
 
     @Override
-    public void searchExplainCatalogSuccess(BasePageResponse<ExplainCatalog> data) {
+    public void searchExplainCatalogSuccess(BasePageResponse<ExplainOut> data) {
         if(CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         }else {
@@ -115,9 +116,9 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         return titles;
     }
 
-    private List<String> getExplainTitles(List<ExplainCatalog> list){
+    private List<String> getExplainTitles(List<ExplainOut> list){
         List<String> titles = new ArrayList<>();
-        for (ExplainCatalog item : list) {
+        for (ExplainOut item : list) {
             titles.add(item.getTitle());
         }
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_white_btn"
+    android:id="@+id/ll_question"
     style="@style/LvMy">
 
     <TextView
@@ -8,5 +10,11 @@
         style="@style/TvMy"
         android:singleLine="true"
         android:text="@string/go_feedback" />
+
+
+    <View
+        android:id="@+id/line"
+        style="@style/Line"
+        android:layout_alignParentBottom="true" />
 
 </LinearLayout>

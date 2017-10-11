@@ -4,6 +4,7 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.CreateFeedbackResponse;
+import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.CreateFeedbackContract;
@@ -41,16 +42,16 @@ public class CreateFeedbackModelImpl extends BaseModel<CreateFeedbackPresenterIm
     @Override
     public void createFeedback(String question) {
         api.createFeedback(question)
-                .compose(TransformersFactory.<List<CreateFeedbackResponse>>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<List<CreateFeedbackResponse>>() {
+                .compose(TransformersFactory.<List<Feedback>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<List<Feedback>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().commitFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull List<CreateFeedbackResponse> userInfo) {
-                        presenter.getView().commitSuccess();
+                    public void onComplete(@NonNull List<Feedback> userInfo) {
+                        presenter.getView().commitSuccess(userInfo);
                     }
                 });
     }
@@ -58,16 +59,16 @@ public class CreateFeedbackModelImpl extends BaseModel<CreateFeedbackPresenterIm
     @Override
     public void createFeedback(String question, Map<String, RequestBody> photos) {
         api.createFeedback(question,photos)
-                .compose(TransformersFactory.<List<CreateFeedbackResponse>>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<List<CreateFeedbackResponse>>() {
+                .compose(TransformersFactory.<List<Feedback>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<List<Feedback>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().commitFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull List<CreateFeedbackResponse> userInfo) {
-                        presenter.getView().commitSuccess();
+                    public void onComplete(@NonNull List<Feedback> userInfo) {
+                        presenter.getView().commitSuccess(userInfo);
                     }
                 });
     }

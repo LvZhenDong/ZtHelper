@@ -5,6 +5,7 @@ import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePageResponse;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.bean.response.ExplainOut;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.SearchResult;
@@ -70,15 +71,15 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
     @Override
     public void searchExplain(String keyword,int current) {
         api.searchExplain(keyword,current+"")
-                .compose(TransformersFactory.<BasePageResponse<ExplainCatalog>>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<BasePageResponse<ExplainCatalog>>() {
+                .compose(TransformersFactory.<BasePageResponse<ExplainOut>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BasePageResponse<ExplainOut>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().searchFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull BasePageResponse<ExplainCatalog> data) {
+                    public void onComplete(@NonNull BasePageResponse<ExplainOut> data) {
                         presenter.searchExplainCatalogSuccess(data);
                     }
                 });

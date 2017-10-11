@@ -45,11 +45,14 @@ public class ExceptionHandle {
                 case REQUEST_TIMEOUT:
                 case GATEWAY_TIMEOUT:
                 case INTERNAL_SERVER_ERROR:
+                    ex.msg = "服务器异常，请稍后重试";
+                    break;
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
                     ex.msg = "网络连接错误,请检查网络";
                     break;
+
             }
             return ex;
         } else if (e instanceof UnknownHostException) {

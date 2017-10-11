@@ -46,9 +46,8 @@ public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
     @BindView(R.id.ll_go_feedback)
     LinearLayout llGoFeedback;
     @BindView(R.id.rv_question)
-    LRecyclerView rvQuestion;
+    RecyclerView rvQuestion;
 
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private QuestionAdapter mAdapter;
 
     @Override
@@ -68,26 +67,8 @@ public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
 
     private void initRv(){
         mAdapter=new QuestionAdapter(getActivity());
-        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
-        rvQuestion.setAdapter(mLRecyclerViewAdapter);
-        DividerDecoration divider = new DividerDecoration.Builder(getActivity())
-                .setHeight(R.dimen.line_height)
-                .setPadding(R.dimen.padding_vertical)
-                .setColorResource(R.color.bg_line)
-                .build();
-        rvQuestion.addItemDecoration(divider);
-        rvQuestion.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvQuestion.setAdapter(mAdapter);
         rvQuestion.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvQuestion.setLoadMoreEnabled(false);
-        rvQuestion.setPullRefreshEnabled(false);
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getActivity(), FeedbackDetailActivity.class);
-                intent.putExtra(KEY_INTENT,mAdapter.getDataList().get(position).getId());
-                startActivity(intent);
-            }
-        });
 
         presenter.getFeedbackList();
     }

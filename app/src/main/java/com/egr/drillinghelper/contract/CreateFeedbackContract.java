@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
@@ -26,7 +27,7 @@ public interface CreateFeedbackContract {
     interface View extends IView {
         void commitFail(String msg);
 
-        void commitSuccess();
+        void commitSuccess(List<Feedback> list);
     }
 
     interface Presenter extends IPresenter<View> {
