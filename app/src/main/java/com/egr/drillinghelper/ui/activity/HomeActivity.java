@@ -12,7 +12,6 @@ import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.fragment.HomeFragment;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 import com.egr.drillinghelper.utils.ToastUtils;
 
@@ -46,7 +45,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @BindView(R.id.rb_my)
     RadioButton rbMy;
     private HomeActivityAdapter homeAdapter;
-    private HomeFragment mHomeFragment;
     private long mExitTime = 0;
 
     @Override
@@ -71,9 +69,8 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             @Override
             public void onClick(View v) {
                 //点击搜索按钮
-                mHomeFragment= (HomeFragment) homeAdapter.getItem(0);
-
-                onSearchClick(mHomeFragment.isExplain()?SEARCH_TYPE_EXPLAIN:SEARCH_TYPE_KNOWLEDGE);
+                onSearchClick(homeAdapter.getHomeFragment().isExplain()
+                        ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
             }
         });
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
@@ -97,9 +94,9 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mHomeFragment= (HomeFragment) homeAdapter.getItem(0);
 
-                        onSearchClick(mHomeFragment.isExplain()?SEARCH_TYPE_EXPLAIN:SEARCH_TYPE_KNOWLEDGE);
+                        onSearchClick(homeAdapter.getHomeFragment().isExplain()
+                                ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
                     }
                 });
                 break;
@@ -134,8 +131,8 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private void onSearchClick(int type) {
-        Intent intent=new Intent(this,SearchActivity.class);
-        intent.putExtra(KEY_INTENT,type);
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(KEY_INTENT, type);
         startActivity(intent);
     }
 

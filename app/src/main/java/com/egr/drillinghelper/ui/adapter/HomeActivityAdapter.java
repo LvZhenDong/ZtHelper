@@ -23,10 +23,21 @@ public class HomeActivityAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+    HomeFragment homeFragment;
+
+    public HomeFragment getHomeFragment(){
+        return homeFragment;
+    }
     @Override
     public Fragment getItem(int position) {
         try {
-            return (Fragment) fragments[position].newInstance();
+            if(position == 0){
+                homeFragment= (HomeFragment) fragments[position].newInstance();
+                return homeFragment;
+            }else {
+                return (Fragment) fragments[position].newInstance();
+            }
+
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

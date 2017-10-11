@@ -31,7 +31,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.vp_home)
     ViewPager vpHome;
     HomeFragmentAdapter mAdapter;
-    private static int currentPosition;
+    private int currentPosition;
 
     @Override
     public int returnLayoutID() {
@@ -62,7 +62,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     public boolean isExplain(){
-        return currentPosition == 0;
+        return vpHome.getCurrentItem() == 0;
     }
 
 
