@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.egr.drillinghelper.contract.FeedbackContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.FeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.activity.CreateFeedbackActivity;
+import com.egr.drillinghelper.ui.activity.FeedbackDetailActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
 import com.egr.drillinghelper.ui.adapter.QuestionAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
@@ -81,7 +83,9 @@ public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                Intent intent=new Intent(getActivity(), FeedbackDetailActivity.class);
+                intent.putExtra(KEY_INTENT,mAdapter.getDataList().get(position).getId());
+                startActivity(intent);
             }
         });
 

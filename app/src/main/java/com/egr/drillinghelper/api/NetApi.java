@@ -3,9 +3,11 @@ package com.egr.drillinghelper.api;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
+import com.egr.drillinghelper.bean.response.CreateFeedbackResponse;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.Feedback;
+import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
@@ -28,6 +30,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+
+import static android.R.attr.id;
 
 public interface NetApi {
 
@@ -163,10 +167,38 @@ public interface NetApi {
     Observable<BaseResponseBean<List<Feedback>>> getFeedbackList();
 
     /**
+     * 常见问题详情
+     * @param id
+     * @return
+     */
+    @GET("feedback/getById")
+    Observable<BaseResponseBean<FeedbackDetail>> getFeedbackDetail(@Query("id") String id);
+
+    /**
      * 历史反馈
      * @param status
      * @return
      */
     @GET("feedback/list")
-    Observable<BaseResponseBean<Reply>> getReplyList(@Query("status") String status,@Query("current") String current);
+    Observable<BaseResponseBean<Reply>> getReplyList(@Query("status") String status,
+                                                     @Query("current") String current);
+
+    /**
+     * 信息反馈无图
+     * @param id
+     * @return
+     */
+    @POST("feedback/save")
+    Observable<BaseResponseBean<List<CreateFeedbackResponse>>> createFeedback(@Query("question") String id);
+
+    /**
+     * 信息反馈有图
+     * @param id
+     * @param photo
+     * @return
+     */
+    @Multipart
+    @POST("feedback/save")
+    Observable<BaseResponseBean<List<CreateFeedbackResponse>>> createFeedback(@Query("question") String id,
+                                                        @PartMap Map<String, RequestBody> photo);
 }

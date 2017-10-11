@@ -112,4 +112,8 @@ public class NumberLimitEditText extends RelativeLayout {
         mTv.setText(getResources().getString(R.string.number_limit_et_hint) + (limitNum - num)
                 + getResources().getString(R.string.number_limit_et_hint2));
     }
+
+    public Editable getText(){
+        return mEt.getText();
+    }
 }
