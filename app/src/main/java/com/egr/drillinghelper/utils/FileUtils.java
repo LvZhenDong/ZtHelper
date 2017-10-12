@@ -5,6 +5,8 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -68,6 +70,7 @@ public class FileUtils {
     }
 
     public static File writeFile(String path, String content, String encoding, boolean isOverride) throws Exception {
+        Logger.i("path:"+path+"\ncontent:"+content);
         if (TextUtils.isEmpty(encoding)) {
             encoding = FILE_WRITING_ENCODING;
         }

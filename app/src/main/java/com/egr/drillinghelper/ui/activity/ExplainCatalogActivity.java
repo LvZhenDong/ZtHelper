@@ -49,7 +49,7 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);
 
-        mAdapter = new ExplainCatalogAdapter(this);
+        mAdapter = new ExplainCatalogAdapter(this,id);
         rvCatalog.setAdapter(mAdapter);
         rvCatalog.setLayoutManager(new LinearLayoutManager(this));
 

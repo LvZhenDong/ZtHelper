@@ -41,4 +41,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.View,LoginMo
         pswd= MD5Util.encodeByLower(pswd);
         mModel.login(phone,pswd);
     }
+
+    @Override
+    public void readCache() {
+        mModel.readCache();
+    }
 }

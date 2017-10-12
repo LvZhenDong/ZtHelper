@@ -5,6 +5,8 @@ import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
 
+import static android.R.attr.id;
+
 /**
  * author lzd
  * date 2017/9/26 15:09
@@ -13,7 +15,7 @@ import com.egr.drillinghelper.mvp.IView;
 
 public interface ArticleContract {
     interface Model extends IModel {
-        void getArticle(String id);
+        void getArticle(String catalogId,String id);
     }
 
     interface View extends IView {
@@ -23,6 +25,6 @@ public interface ArticleContract {
     }
 
     interface Presenter extends IPresenter<View> {
-        void getArticle(String id);
+        void getArticle(String catalogId,String id);
     }
 }

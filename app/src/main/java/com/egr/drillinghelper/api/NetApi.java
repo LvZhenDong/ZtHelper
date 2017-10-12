@@ -109,8 +109,12 @@ public interface NetApi {
     @POST("user/photo")
     Observable<BaseResponseBean<NullBodyResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
 
-//    @GET("cache/getCache")
-//    Observable<BasePage>
+    /**
+     * 获取说明书cache
+     * @return
+     */
+    @GET("cache/getCache")
+    Observable<BaseResponseBean<List<Explain>>> getExplainCache();
 
     /**
      * 说明书列表
@@ -127,6 +131,9 @@ public interface NetApi {
      */
     @GET("explain/getById")
     Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id")String id);
+
+    @GET("cache/getKnowledgeCache")
+    Observable<BaseResponseBean<List<Explain>>> getKnowCache();
 
     /**
      * 知识问答列表

@@ -32,9 +32,11 @@ import static android.R.attr.id;
 
 public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         ExplainCatalogAdapter.ViewHolder> {
+    String catalogId;
 
-    public ExplainCatalogAdapter(Context context) {
+    public ExplainCatalogAdapter(Context context,String catalogId) {
         super(context);
+        this.catalogId=catalogId;
     }
 
     @Override
@@ -63,6 +65,7 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         if (!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")) {
             Intent intent = new Intent(mContext, ArticleActivity.class);
             intent.putExtra(BaseMVPActivity.KEY_INTENT, item.getArticleId());
+            intent.putExtra("catalogId",catalogId);
             mContext.startActivity(intent);
         }
     }

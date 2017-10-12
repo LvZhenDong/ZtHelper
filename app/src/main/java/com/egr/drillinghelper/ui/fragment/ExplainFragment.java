@@ -21,6 +21,8 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -82,6 +84,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
             }
         });
         presenter.getExplainList();
+        presenter.getExplainCache();
     }
 
 
@@ -106,5 +109,12 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
     public void noMoreData() {
         rvInstruction.refreshComplete(10);
         ToastUtils.show(getActivity(), R.string.no_more_data);
+    }
+
+    @Override
+    public void showExplainCache(List<Explain> explains) {
+        rvInstruction.refreshComplete(10);
+
+        mAdapter.setDataList(explains);
     }
 }

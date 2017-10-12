@@ -19,7 +19,7 @@ public class ArticlePresenterImpl extends BasePresenter<ArticleContract.View,
     }
 
     @Override
-    public void getArticle(String id) {
-        mModel.getArticle(id);
+    public void getArticle(String catalogId,String id) {
+        mModel.getArticle(catalogId,id);
     }
 }

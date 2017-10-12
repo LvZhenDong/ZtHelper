@@ -25,6 +25,11 @@ public class KnowPresenterImpl extends BasePresenter<KnowContract.View,
     }
 
     @Override
+    public void getKnowCache() {
+        mModel.getKnowCache();
+    }
+
+    @Override
     public void getKnowList() {
         current = 1;
         mModel.getKnowList(current);

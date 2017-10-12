@@ -1,7 +1,9 @@
 package com.egr.drillinghelper.model;
 
+import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -9,10 +11,16 @@ import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.utils.CacheUtils;
+import com.egr.drillinghelper.utils.CollectionUtil;
+import com.egr.drillinghelper.utils.NetworkUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
+
+import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
 /**
  * author lzd
@@ -27,29 +35,56 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
 
     @Override
     public void login(String phone, String password) {
-        HashMap<String,Object> options=new HashMap<>();
-        options.put("phone",phone);
-        options.put("password",password);
+        if(NetworkUtils.isNetworkConnected(getContext())){
+            HashMap<String,Object> options=new HashMap<>();
+            options.put("phone",phone);
+            options.put("password",password);
 
-        APIServiceFactory.getInstance().createService()
-                .login(options)
-                .compose(TransformersFactory.<LoginResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<LoginResponse>() {
-                    @Override
-                    public void onError(ResponseThrowable e,String eMsg) {
-                        presenter.getView().loginFail(eMsg);
-                    }
-
-                    @Override
-                    public void onComplete(@NonNull LoginResponse loginResponse) {
-
-                        if(loginResponse == null){
-                            onError(null,"登录失败");
-                            return;
+            APIServiceFactory.getInstance().createService()
+                    .login(options)
+                    .compose(TransformersFactory.<LoginResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
+                    .subscribe(new EObserver<LoginResponse>() {
+                        @Override
+                        public void onError(ResponseThrowable e,String eMsg) {
+                            if (e.code == TIMEOUT_ERROR)
+                                showCache();
+                            else
+                                presenter.getView().loginFail(eMsg);
                         }
-                        APIServiceFactory.setTOKEN(loginResponse.getToken());
-                        presenter.getView().loginSuccess();
-                    }
-                });
+
+                        @Override
+                        public void onComplete(@NonNull LoginResponse loginResponse) {
+
+                            if(loginResponse == null){
+                                onError(null,"登录失败");
+                                return;
+                            }
+                            APIServiceFactory.setTOKEN(loginResponse.getToken());
+                            presenter.getView().loginSuccess();
+                        }
+                    });
+        }else {
+            showCache();
+        }
+
+    }
+
+    @Override
+    public void readCache() {
+        if(!NetworkUtils.isNetworkConnected(getContext())){
+            showCache();
+        }
+    }
+
+    private void showCache(){
+        try {
+            List<Explain> explain= CacheUtils.getExplains();
+            if(!CollectionUtil.isListEmpty(explain))
+                presenter.getView().loginSuccess();
+            else
+                presenter.getView().loginFail(getContext().getString(R.string.net_error));
+        } catch (Exception e) {
+            presenter.getView().loginFail(getContext().getString(R.string.net_error));
+        }
     }
 }

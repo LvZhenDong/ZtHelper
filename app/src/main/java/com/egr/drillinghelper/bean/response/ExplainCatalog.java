@@ -17,6 +17,18 @@ public class ExplainCatalog {
     String explainId;
     String articleId;
     String url;
+    List<ExplainCatalog> childs;
+
+    Article article;
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
     int deep;
 
     public int getDeep() {
@@ -26,8 +38,6 @@ public class ExplainCatalog {
     public void setDeep(int deep) {
         this.deep = deep;
     }
-
-    List<ExplainCatalog> childs;
 
     public String getId() {
         return id;

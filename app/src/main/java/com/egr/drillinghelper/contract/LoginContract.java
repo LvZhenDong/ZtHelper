@@ -13,6 +13,8 @@ import com.egr.drillinghelper.mvp.IView;
 public interface LoginContract {
     interface Model extends IModel {
         void login(String phone, String password);
+
+        void readCache();
     }
 
     interface View extends IView {
@@ -25,5 +27,7 @@ public interface LoginContract {
 
     interface Presenter extends IPresenter<View> {
         void login(String phone, String password);
+
+        void readCache();
     }
 }

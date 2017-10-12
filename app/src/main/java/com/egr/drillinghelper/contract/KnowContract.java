@@ -6,6 +6,8 @@ import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
 
+import java.util.List;
+
 /**
  * author lzd
  * date 2017/9/26 16:39
@@ -15,6 +17,8 @@ import com.egr.drillinghelper.mvp.IView;
 public interface KnowContract {
     interface Model extends IModel {
         void getKnowList(int current);
+
+        void getKnowCache();
     }
 
     interface View extends IView {
@@ -23,9 +27,13 @@ public interface KnowContract {
         void getKnowListSuccess(BasePage<Explain> data);
 
         void noMoreData();
+
+        void showKnowCache(List<Explain> knows);
     }
 
     interface Presenter extends IPresenter<View> {
+        void getKnowCache();
+
         void getKnowList();
 
         void loadMore();

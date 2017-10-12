@@ -66,6 +66,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
             floatWindowUtils.init(this);
         }
+
+        presenter.readCache();
     }
 
     @Override

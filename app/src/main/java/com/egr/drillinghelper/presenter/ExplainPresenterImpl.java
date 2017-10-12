@@ -24,6 +24,11 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
     }
 
     @Override
+    public void getExplainCache() {
+        mModel.getExplainCache();
+    }
+
+    @Override
     public void getExplainList() {
         current = 1;
         mModel.getExplainList(current);

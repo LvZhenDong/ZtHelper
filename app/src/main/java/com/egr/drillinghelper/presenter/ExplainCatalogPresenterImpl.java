@@ -5,6 +5,7 @@ import com.egr.drillinghelper.contract.ExplainCatalogContract;
 import com.egr.drillinghelper.model.ExplainCatalogModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
 import com.egr.drillinghelper.mvp.IModel;
+import com.egr.drillinghelper.utils.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,8 @@ public class ExplainCatalogPresenterImpl extends BasePresenter<ExplainCatalogCon
     }
 
     private void getList(List<ExplainCatalog> catalogList) {
+        if(CollectionUtil.isListEmpty(catalogList))
+            return;
         deep++;
         for (ExplainCatalog item : catalogList) {
             item.setDeep(deep);

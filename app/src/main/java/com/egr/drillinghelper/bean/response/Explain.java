@@ -1,5 +1,9 @@
 package com.egr.drillinghelper.bean.response;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * author lzd
  * date 2017/10/11 16:23
@@ -19,9 +23,29 @@ public class Explain {
     private String id;
     private String createTime;
     private String updateTime;
+    @SerializedName(value = "title", alternate = {"bookTitle"})
     private String title;
     private String description;
+    @SerializedName(value = "photo", alternate = {"bookPhoto"})
     private String photo;
+    private List<ExplainCatalog> catalogs;
+    private List<KnowCatalog> knows;
+
+    public List<KnowCatalog> getKnows() {
+        return knows;
+    }
+
+    public void setKnows(List<KnowCatalog> knows) {
+        this.knows = knows;
+    }
+
+    public List<ExplainCatalog> getCatalogs() {
+        return catalogs;
+    }
+
+    public void setCatalogs(List<ExplainCatalog> catalogs) {
+        this.catalogs = catalogs;
+    }
 
     public String getId() {
         return id;

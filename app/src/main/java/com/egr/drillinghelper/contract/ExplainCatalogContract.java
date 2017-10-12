@@ -22,8 +22,6 @@ public interface ExplainCatalogContract {
         void getCatalogSuccess(List<ExplainCatalog> catalogList);
 
         void getCatalogFail(String msg);
-
-
     }
 
     interface Presenter extends IPresenter<View> {

@@ -38,10 +38,11 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);
+        String catalogId=getIntent().getStringExtra("catalogId");
 
         if (!mDialog.isShowing())
             mDialog.show();
-        presenter.getArticle(id);
+        presenter.getArticle(catalogId,id);
     }
 
     @Override
