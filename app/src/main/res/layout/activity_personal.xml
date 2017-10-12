@@ -103,6 +103,7 @@
     <TextView
         android:id="@+id/tv_complete"
         style="@style/RadiusBtn"
+        android:visibility="gone"
         android:layout_marginTop="30dp"
         android:text="@string/commit" />
 </LinearLayout>

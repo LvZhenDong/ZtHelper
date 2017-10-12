@@ -86,11 +86,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
                 startActivityForResult(intent, IMAGE_PICKER);
                 break;
             case R.id.tv_complete:
-                if (TextUtils.isEmpty(mHeadPath))
-                    return;
-                if(!mDialog.isShowing())
-                    mDialog.show();
-                presenter.changeHead(mHeadPath);
+
                 break;
         }
     }
@@ -104,8 +100,17 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
                         (ImagePicker.EXTRA_RESULT_ITEMS);
                 mHeadPath = images.get(0).path;
                 GlideUtils.loadCircleImg(mHeadPath,ivHead);
+                commit();
             }
         }
+    }
+
+    private void commit(){
+        if (TextUtils.isEmpty(mHeadPath))
+            return;
+        if(!mDialog.isShowing())
+            mDialog.show();
+        presenter.changeHead(mHeadPath);
     }
 
     @Override

@@ -54,7 +54,8 @@
     </style>
 
     <style name="TvPersonal" parent="EditTextEt">
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:paddingRight">@dimen/padding_vertical</item>
     </style>
 
     <style name="Btn">
