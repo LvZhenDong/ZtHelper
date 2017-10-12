@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':version'
+project(':version').projectDir = new File('library_version')

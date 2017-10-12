@@ -7,13 +7,17 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.HomeContract;
+import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 import com.egr.drillinghelper.utils.ToastUtils;
+import com.shelwee.update.UpdateHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,6 +82,14 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         vpHome.setScrollEnable(false);
         vpHome.setAdapter(homeAdapter);
         vpHome.setCurrentItem(0, false);
+
+        String url = BuildConfig.BASE_URL+ MyConstants.API.Version;
+        UpdateHelper updateHelper=new UpdateHelper.Builder(this)
+                .checkUrl(url)
+                .isHintNewVersion(false)
+                .build();
+        updateHelper.check();
+
     }
 
     @Override

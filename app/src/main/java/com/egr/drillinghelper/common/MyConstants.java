@@ -7,4 +7,8 @@ package com.egr.drillinghelper.common;
 public interface MyConstants {
 
     String TAG_COOKIE = "Cookie";
+
+    public interface API{
+        String Version="feedback/getList";
+    }
 }

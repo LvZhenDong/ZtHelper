@@ -73,14 +73,7 @@ public class APIServiceFactory {
 //        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
 //        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
-//            LoggingInterceptor interceptor = new LoggingInterceptor.Builder()
-//                    .loggable(BuildConfig.DEBUG)
-//                    .setLevel(Level.BASIC)
-//                    .log(Platform.INFO)
-//                    .request("EGR-Request")
-//                    .response("EGR-Response")
-//                    .build();
-//            httpClientBuilder.addInterceptor(interceptor);
+
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {

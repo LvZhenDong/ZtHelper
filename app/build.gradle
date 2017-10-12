@@ -116,4 +116,5 @@ dependencies {
     compile 'me.shaohui:bottomdialog:1.1.9'
     //    富文本解析器
     compile 'com.zzhoujay.richtext:richtext:2.5.4'
+    compile project(':version')
 }
