@@ -58,7 +58,7 @@ public class FeedbackHistoryRepliedFragment extends BaseMVPFragment<ReplyContrac
         mAdapter.setOnReplyClickListener(this);
         rvInstruction.setAdapter(mLRecyclerViewAdapter);
 
-        rvInstruction.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvInstruction.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvInstruction.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvInstruction.setOnRefreshListener(new OnRefreshListener() {
             @Override

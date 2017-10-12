@@ -60,7 +60,7 @@ public class FeedbackHistoryWaitFragment extends BaseMVPFragment<ReplyContract.V
         mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
         rvInstruction.setAdapter(mLRecyclerViewAdapter);
 
-        rvInstruction.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvInstruction.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvInstruction.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvInstruction.setOnRefreshListener(new OnRefreshListener() {
             @Override

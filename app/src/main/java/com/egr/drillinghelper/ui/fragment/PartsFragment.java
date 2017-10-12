@@ -56,7 +56,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         mAdapter=new PartsAdapter(getActivity());
         mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
 
-        rvParts.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvParts.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvParts.setLayoutManager(new GridLayoutManager(getActivity(),2));
         rvParts.setAdapter(mLRecyclerViewAdapter);  //LZD
         rvParts.setOnRefreshListener(new OnRefreshListener() {

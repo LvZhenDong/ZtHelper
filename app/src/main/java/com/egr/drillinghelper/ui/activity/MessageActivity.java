@@ -5,11 +5,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Instruction;
+import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.presenter.MessagePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.MessageAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -29,7 +34,7 @@ import butterknife.BindView;
  */
 
 public class MessageActivity extends BaseMVPActivity<MessageContract.View,
-        MessagePresenterImpl> implements MessageContract.View {
+        MessagePresenterImpl> implements MessageContract.View, MessageAdapter.SwipeListener {
 
 
     @BindView(R.id.rv_message)
@@ -37,6 +42,7 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
 
     MessageAdapter mAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private ACProgressFlower mDialog;
 
 
     @Override
@@ -49,7 +55,11 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
         setupActionBar(R.string.my_message, true);
         setActionbarBackground(R.color.white);
 
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         initRv();
+
+        mDialog.show();
+        presenter.getMsgList();
     }
 
     @Override
@@ -62,38 +72,57 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
         mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
         rvMessage.setAdapter(mLRecyclerViewAdapter);
 
-        rvMessage.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvMessage.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvMessage.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvMessage.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                presenter.getMsgList();
             }
         });
         rvMessage.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
-            }
-        });
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
+                presenter.loadMore();
             }
         });
 
-        List<Instruction> list=new ArrayList<>();
-        Instruction item1=new Instruction();
-        item1.setContent("尊敬的用户，您好！您发起的反馈我们已经恢复您了，请注意查看，有任何消息立即联系我们");
-        list.add(item1);
-        Instruction item2=new Instruction();
-        item2.setContent("尊敬的用户，您好！这是一段补充字数的系统消息，有任何疑问，请联系项目经理，这是一度补充字");
-        list.add(item2);
-        Instruction item3=new Instruction();
-        item3.setContent("尊敬的用户，您好！这是一段补充字数的系统消息，有任何疑问，请联系项目经理，这是一度补充字");
-        list.add(item3);
-        mAdapter.setDataList(list);
+        mAdapter.setListener(this);
     }
 
+    @Override
+    public void getMsgListSuccess(BasePage<Message> data) {
+        mDialog.dismiss();
+        rvMessage.refreshComplete(10);
+
+        if (data.getCurrent() > 1) {
+            mAdapter.addAll(data.getRecords());
+        } else if (data.getCurrent() == 1) {
+            mAdapter.setDataList(data.getRecords());
+        }
+    }
+
+    @Override
+    public void getMsgListFail(String msg) {
+        mDialog.dismiss();
+        rvMessage.refreshComplete(10);
+        ToastUtils.show(getActivity(), msg);
+    }
+
+    @Override
+    public void noMoreData() {
+        mDialog.dismiss();
+        rvMessage.refreshComplete(10);
+        ToastUtils.show(this, R.string.no_more_data);
+    }
+
+    @Override
+    public void onDelete(int position) {
+        mAdapter.remove(position);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

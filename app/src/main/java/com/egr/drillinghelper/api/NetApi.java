@@ -10,6 +10,7 @@ import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.LoginResponse;
+import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
@@ -230,11 +231,31 @@ public interface NetApi {
                                                                   @Query("current") String current);
 
     /**
-     *
+     * 搜索配件
      * @param keyword
      * @return
      */
     @GET("search/product")
     Observable<BaseResponseBean<BasePage<Parts>>> searchProduct(@Query("keyword") String keyword,
                                                                 @Query("current") String current);
+    /**
+     * 获取消息列表
+     */
+    @GET("message/list")
+    Observable<BaseResponseBean<BasePage<Message>>> getMsgList(@Query("current") String current);
+
+    /**
+     * 获取未读消息数
+     * @return
+     */
+    @GET("message/noRead")
+    Observable<BaseResponseBean<String>> getNoReadMsg();
+
+    /**
+     * 删指定消息
+     * @param id
+     * @return
+     */
+    @GET("message/delete")
+    Observable<BaseResponseBean<NullBodyResponse>> deleteMsg(@Query("messageIds") String id);
 }

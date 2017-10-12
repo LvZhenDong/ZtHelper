@@ -16,26 +16,28 @@ import com.egr.drillinghelper.R;
 public class GlideUtils {
 
     public static void load(String url, ImageView view) {
-        RequestOptions requestOptions=new RequestOptions();
+        RequestOptions requestOptions = new RequestOptions();
         Glide.with(view.getContext().getApplicationContext())
                 .load(url)
-                .apply(requestOptions.placeholder(R.drawable.bg_waiting).error(R.drawable.bg_error)
+                .apply(requestOptions.placeholder(R.drawable.bg_waiting)
+                        .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
     }
 
-    public static void load(int resId,ImageView view){
-        RequestOptions requestOptions=new RequestOptions();
+    public static void load(int resId, ImageView view) {
+        RequestOptions requestOptions = new RequestOptions();
 
         Glide.with(view.getContext().getApplicationContext())
                 .load(resId)
-                .apply(requestOptions.placeholder(R.drawable.bg_waiting).error(R.drawable.bg_error)
+                .apply(requestOptions.placeholder(R.drawable.bg_waiting)
+                        .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
     }
 
-    public static void loadCircleImg(String url,ImageView view){
-        RequestOptions requestOptions=RequestOptions.circleCropTransform();
+    public static void loadCircleImg(String url, ImageView view) {
+        RequestOptions requestOptions = RequestOptions.circleCropTransform();
         Glide.with(view.getContext().getApplicationContext())
                 .load(url)
                 .apply(requestOptions
@@ -45,13 +47,13 @@ public class GlideUtils {
                 .into(view);
     }
 
-    public static void loadLocalImg(int resId,ImageView view){
+    public static void loadLocalImg(int resId, ImageView view) {
         Glide.with(view.getContext())
                 .load(resId)
                 .into(view);
     }
 
-    public static void loadLocalImg(String path,ImageView view){
+    public static void loadLocalImg(String path, ImageView view) {
         Glide.with(view.getContext())
                 .load(path)
                 .into(view);

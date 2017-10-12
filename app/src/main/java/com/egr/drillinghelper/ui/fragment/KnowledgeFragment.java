@@ -60,7 +60,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         rvKnowledge.setAdapter(mLRecyclerViewAdapter);
 
-        rvKnowledge.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvKnowledge.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvKnowledge.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvKnowledge.setOnRefreshListener(new OnRefreshListener() {
             @Override

@@ -33,6 +33,7 @@
     <string name="company">单位</string>
     <string name="register_company_hint">请输入您的单位名称</string>
     <string name="commit">提交</string>
+    <string name="delete">删除</string>
     <string name="contact_us">联系我们</string>
     <string name="about_egr">关于英格尔</string>
     <string name="share">分享</string>

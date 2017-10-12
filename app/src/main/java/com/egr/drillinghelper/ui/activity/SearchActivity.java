@@ -108,7 +108,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
 
         rvResult.setAdapter(mLRecyclerViewAdapter);
-        rvResult.setRefreshProgressStyle(ProgressStyle.TriangleSkewSpin);
+        rvResult.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         rvResult.setLayoutManager(new LinearLayoutManager(this));
         rvResult.setOnRefreshListener(new OnRefreshListener() {
             @Override

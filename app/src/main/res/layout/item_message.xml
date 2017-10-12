@@ -1,46 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.egr.drillinghelper.ui.widgets.SwipeMenuView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sw_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="@drawable/bg_gray_e6_radius"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/white" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_msg"
+            style="@style/CvList"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sys_message"
+                    android:textColor="@color/tv333"
+                    android:textSize="@dimen/text_size_big" />
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/tv666"
+                    android:textSize="@dimen/text_size_tv" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
 
     <TextView
-        android:layout_marginTop="@dimen/margin_top"
-        android:id="@+id/tv_time"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:id="@+id/tv_delete"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_gray_e6_radius"
-        android:text="2017/09/24 11:06"
-        android:textColor="@color/white" />
-
-    <android.support.v7.widget.CardView
-        style="@style/CvList"
-        android:layout_marginTop="5dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:padding="@dimen/padding_vertical"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sys_message"
-                android:textColor="@color/tv333"
-                android:textSize="@dimen/text_size_big" />
-
-            <TextView
-                android:id="@+id/tv_info"
-                android:textSize="@dimen/text_size_tv"
-                android:textColor="@color/tv666"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/padding_vertical"
+        android:background="@drawable/bg_purple_btn_radius_selector"
+        android:gravity="center"
+        android:padding="@dimen/padding_vertical"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_tv" />
+</com.egr.drillinghelper.ui.widgets.SwipeMenuView>
