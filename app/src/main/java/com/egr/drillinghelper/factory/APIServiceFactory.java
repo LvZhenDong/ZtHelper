@@ -4,14 +4,18 @@ import android.text.TextUtils;
 
 import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.api.NetApi;
+import com.egr.drillinghelper.app.MyApplication;
 import com.egr.drillinghelper.common.MySharePreferencesManager;
+import com.egr.drillinghelper.utils.FileUtils;
 import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -70,8 +74,8 @@ public class APIServiceFactory {
         httpClientBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         //设置缓存
-//        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
-//        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
+        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
+        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
 
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {

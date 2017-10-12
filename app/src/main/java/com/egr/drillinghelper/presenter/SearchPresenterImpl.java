@@ -1,8 +1,7 @@
 package com.egr.drillinghelper.presenter;
 
-import com.egr.drillinghelper.bean.base.BasePageResponse;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.ExplainOut;
+import com.egr.drillinghelper.bean.base.BasePage;
+import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.contract.SearchContract;
@@ -14,7 +13,6 @@ import com.egr.drillinghelper.utils.CollectionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.id.list;
 import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_EXPLAIN;
 import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_KNOWLEDGE;
 import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_PARTS;
@@ -63,7 +61,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     }
 
     @Override
-    public void searchKnowSuccess(BasePageResponse<KnowCatalog> data) {
+    public void searchKnowSuccess(BasePage<KnowCatalog> data) {
         if(CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         }else {
@@ -75,7 +73,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     }
 
     @Override
-    public void searchPartsSuccess(BasePageResponse<Parts> data) {
+    public void searchPartsSuccess(BasePage<Parts> data) {
         if(CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         }else {
@@ -87,7 +85,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     }
 
     @Override
-    public void searchExplainCatalogSuccess(BasePageResponse<ExplainOut> data) {
+    public void searchExplainCatalogSuccess(BasePage<Explain> data) {
         if(CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         }else {
@@ -116,9 +114,9 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         return titles;
     }
 
-    private List<String> getExplainTitles(List<ExplainOut> list){
+    private List<String> getExplainTitles(List<Explain> list){
         List<String> titles = new ArrayList<>();
-        for (ExplainOut item : list) {
+        for (Explain item : list) {
             titles.add(item.getTitle());
         }
 

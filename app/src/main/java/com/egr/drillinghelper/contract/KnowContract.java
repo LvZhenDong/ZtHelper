@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
@@ -19,7 +20,7 @@ public interface KnowContract {
     interface View extends IView {
         void getKnowFail(String msg);
 
-        void getKnowListSuccess(Explain explain);
+        void getKnowListSuccess(BasePage<Explain> data);
 
         void noMoreData();
     }
@@ -29,6 +30,6 @@ public interface KnowContract {
 
         void loadMore();
 
-        void getKnowListSuccess(Explain explain);
+        void getKnowListSuccess(BasePage<Explain> data);
     }
 }

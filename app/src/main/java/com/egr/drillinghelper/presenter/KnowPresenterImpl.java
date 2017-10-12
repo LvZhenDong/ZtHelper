@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.presenter;
 
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.model.KnowModelImpl;
@@ -35,12 +36,12 @@ public class KnowPresenterImpl extends BasePresenter<KnowContract.View,
     }
 
     @Override
-    public void getKnowListSuccess(Explain Know) {
-        if (Know == null || CollectionUtil.isListEmpty(Know.getRecords())){
+    public void getKnowListSuccess(BasePage<Explain> data) {
+        if (data == null || CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         } else{
-            current = Know.getCurrent();
-            getView().getKnowListSuccess(Know);
+            current = data.getCurrent();
+            getView().getKnowListSuccess(data);
         }
 
     }

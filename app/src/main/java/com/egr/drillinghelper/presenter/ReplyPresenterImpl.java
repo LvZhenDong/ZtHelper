@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.presenter;
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.contract.ReplyContract;
 import com.egr.drillinghelper.model.ReplyModelImpl;
@@ -35,12 +36,12 @@ public class ReplyPresenterImpl extends BasePresenter<ReplyContract.View,
     }
 
     @Override
-    public void getReplySuccess(Reply reply) {
-        if (reply == null || CollectionUtil.isListEmpty(reply.getRecords())){
+    public void getReplySuccess(BasePage<Reply> data) {
+        if (data == null || CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         } else{
-            current = reply.getCurrent();
-            getView().getReplySuccess(reply);
+            current = data.getCurrent();
+            getView().getReplySuccess(data);
         }
     }
 }

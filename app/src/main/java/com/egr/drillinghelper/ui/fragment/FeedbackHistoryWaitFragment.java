@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.contract.ReplyContract;
@@ -91,7 +92,7 @@ public class FeedbackHistoryWaitFragment extends BaseMVPFragment<ReplyContract.V
     }
 
     @Override
-    public void getReplySuccess(Reply reply) {
+    public void getReplySuccess(BasePage<Reply> reply) {
         rvInstruction.refreshComplete(10);
 
         if (reply.getCurrent() > 1) {

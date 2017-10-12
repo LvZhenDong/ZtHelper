@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
@@ -19,7 +20,7 @@ public interface ReplyContract {
     interface View extends IView {
         void getReplyFail(String msg);
 
-        void getReplySuccess(Reply reply);
+        void getReplySuccess(BasePage<Reply> data);
 
         void noMoreData();
     }
@@ -29,6 +30,6 @@ public interface ReplyContract {
 
         void loadMore(String status);
 
-        void getReplySuccess(Reply reply);
+        void getReplySuccess(BasePage<Reply> data);
     }
 }

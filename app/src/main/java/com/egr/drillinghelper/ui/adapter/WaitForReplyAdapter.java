@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class WaitForReplyAdapter extends BaseListAdapter<Reply.RecordsBean,
+public class WaitForReplyAdapter extends BaseListAdapter<Reply,
         WaitForReplyAdapter.ViewHolder> {
 
     public WaitForReplyAdapter(Context context) {
@@ -41,7 +42,7 @@ public class WaitForReplyAdapter extends BaseListAdapter<Reply.RecordsBean,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Reply.RecordsBean item = getDataList().get(position);
+        Reply item = getDataList().get(position);
         holder.tvTime.setText(item.getUpdatetime());
         holder.tvInfo.setText(item.getQuestion());
         if(CollectionUtil.isListEmpty(item.getAttachments())){

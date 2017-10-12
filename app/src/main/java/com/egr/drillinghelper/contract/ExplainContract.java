@@ -1,7 +1,7 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
@@ -15,12 +15,14 @@ import com.egr.drillinghelper.mvp.IView;
 public interface ExplainContract {
     interface Model extends IModel {
         void getExplainList(int current);
+
+        void getExplainCache();
     }
 
     interface View extends IView {
         void getExplainFail(String msg);
 
-        void getExplainListSuccess(Explain explain);
+        void getExplainListSuccess(BasePage<Explain> data);
 
         void noMoreData();
     }
@@ -30,6 +32,6 @@ public interface ExplainContract {
 
         void loadMore();
 
-        void getExplainListSuccess(Explain explain);
+        void getExplainListSuccess(BasePage<Explain> data);
     }
 }

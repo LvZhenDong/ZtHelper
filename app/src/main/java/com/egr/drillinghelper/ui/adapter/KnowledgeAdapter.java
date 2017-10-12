@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.GlideUtils;
 
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
  * 类描述：知识问答adapter
  */
 
-public class KnowledgeAdapter extends BaseListAdapter<Explain.RecordsBean,
+public class KnowledgeAdapter extends BaseListAdapter<Explain,
         KnowledgeAdapter.ViewHolder> {
 
     public KnowledgeAdapter(Context context) {
@@ -38,7 +37,7 @@ public class KnowledgeAdapter extends BaseListAdapter<Explain.RecordsBean,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Explain.RecordsBean item=getDataList().get(position);
+        Explain item=getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
         GlideUtils.load(item.getPhoto(),holder.ivImg);
     }

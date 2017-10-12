@@ -3,7 +3,6 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.contract.FeedbackContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -11,15 +10,12 @@ import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.FeedbackPresenterImpl;
-import com.egr.drillinghelper.presenter.FeedbackPresenterImpl;
 
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 
-import static com.egr.drillinghelper.R.string.explain;
 import static com.egr.drillinghelper.factory.TransformersFactory.commonTransformer;
-import static com.pgyersdk.c.a.e;
 
 /**
  * author lzd

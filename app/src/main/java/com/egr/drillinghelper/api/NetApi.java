@@ -1,13 +1,11 @@
 package com.egr.drillinghelper.api;
 
-import com.egr.drillinghelper.bean.base.BasePageResponse;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
-import com.egr.drillinghelper.bean.response.CreateFeedbackResponse;
-import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.ExplainOut;
+import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
@@ -15,7 +13,6 @@ import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
-import com.egr.drillinghelper.bean.response.SearchResult;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.UserInfo;
 
@@ -34,8 +31,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-
-import static android.R.attr.id;
 
 public interface NetApi {
 
@@ -114,13 +109,16 @@ public interface NetApi {
     @POST("user/photo")
     Observable<BaseResponseBean<NullBodyResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
 
+//    @GET("cache/getCache")
+//    Observable<BasePage>
+
     /**
      * 说明书列表
      * @param current
      * @return
      */
     @GET("explain/getList")
-    Observable<BaseResponseBean<Explain>> explainList(@Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Explain>>> explainList(@Query("current") String current);
 
     /**
      * 说明书目录
@@ -136,7 +134,7 @@ public interface NetApi {
      * @return
      */
     @GET("know/list")
-    Observable<BaseResponseBean<Explain>> knowList(@Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Explain>>> knowList(@Query("current") String current);
 
     /**
      * 知识问答目录
@@ -184,7 +182,7 @@ public interface NetApi {
      * @return
      */
     @GET("feedback/list")
-    Observable<BaseResponseBean<Reply>> getReplyList(@Query("status") String status,
+    Observable<BaseResponseBean<BasePage<Reply>>> getReplyList(@Query("status") String status,
                                                      @Query("current") String current);
 
     /**
@@ -212,8 +210,8 @@ public interface NetApi {
      * @return
      */
     @GET("search/know")
-    Observable<BaseResponseBean<BasePageResponse<KnowCatalog>>> searchKnow(@Query("keyword") String keyword,
-                                                                           @Query("current") String current);
+    Observable<BaseResponseBean<BasePage<KnowCatalog>>> searchKnow(@Query("keyword") String keyword,
+                                                                   @Query("current") String current);
 
     /**
      * 搜索使用说明
@@ -221,8 +219,8 @@ public interface NetApi {
      * @return
      */
     @GET("search/explain")
-    Observable<BaseResponseBean<BasePageResponse<ExplainOut>>> searchExplain(@Query("keyword") String keyword,
-                                                                             @Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Explain>>> searchExplain(@Query("keyword") String keyword,
+                                                                  @Query("current") String current);
 
     /**
      *
@@ -230,6 +228,6 @@ public interface NetApi {
      * @return
      */
     @GET("search/product")
-    Observable<BaseResponseBean<BasePageResponse<Parts>>> searchProduct(@Query("keyword") String keyword,
-                                                                        @Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Parts>>> searchProduct(@Query("keyword") String keyword,
+                                                                @Query("current") String current);
 }

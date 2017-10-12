@@ -151,8 +151,7 @@ public class TransformersFactory {
         return new ObservableTransformer<BaseResponseBean<T>, T>() {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<BaseResponseBean<T>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
-                        .io())
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                         .map(new HandleFuc<T>())
                         .onErrorResumeNext(new HttpResponseFunc<T>())
                         .compose(fragment.<T>bindUntilEvent(FragmentEvent.DESTROY));

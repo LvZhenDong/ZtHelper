@@ -6,13 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
-import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -92,13 +92,13 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
     }
 
     @Override
-    public void getExplainListSuccess(Explain explain) {
+    public void getExplainListSuccess(BasePage<Explain> data) {
         rvInstruction.refreshComplete(10);
 
-        if (explain.getCurrent() > 1) {
-            mAdapter.addAll(explain.getRecords());
-        } else if (explain.getCurrent() == 1) {
-            mAdapter.setDataList(explain.getRecords());
+        if (data.getCurrent() > 1) {
+            mAdapter.addAll(data.getRecords());
+        } else if (data.getCurrent() == 1) {
+            mAdapter.setDataList(data.getRecords());
         }
     }
 

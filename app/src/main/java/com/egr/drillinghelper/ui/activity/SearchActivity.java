@@ -18,8 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.ExplainOut;
+import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.contract.SearchContract;
@@ -88,7 +87,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     List<String> mList = new ArrayList<>();
     List<KnowCatalog> mKnowCatalogs;
     List<Parts> mParts;
-    List<ExplainOut> mExplainCatalogs;
+    List<Explain> mExplainCatalogs;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     private ACProgressFlower mDialog;
@@ -199,7 +198,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     private void showDetail(int position) {
         switch (type) {
             case SEARCH_TYPE_EXPLAIN:   //使用说明
-                ExplainOut explainOut=mExplainCatalogs.get(position);
+                Explain explainOut=mExplainCatalogs.get(position);
                 String id = explainOut.getId();
                 Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
                 intent.putExtra(KEY_INTENT, id);
@@ -252,7 +251,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     }
 
     @Override
-    public void searchExplainCatalog(List<ExplainOut> explainCatalogs, List<String> titles) {
+    public void searchExplainCatalog(List<Explain> explainCatalogs, List<String> titles) {
         rvResult.refreshComplete(10);
         mDialog.dismiss();
         mAdapter.setDataList(titles);

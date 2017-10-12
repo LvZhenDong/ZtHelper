@@ -6,11 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
-import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.activity.KnowCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.KnowledgeAdapter;
 import com.egr.drillinghelper.utils.ToastUtils;
@@ -93,13 +93,13 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
     }
 
     @Override
-    public void getKnowListSuccess(Explain explain) {
+    public void getKnowListSuccess(BasePage<Explain> data) {
         rvKnowledge.refreshComplete(10);
 
-        if (explain.getCurrent() > 1) {
-            mAdapter.addAll(explain.getRecords());
-        } else if (explain.getCurrent() == 1) {
-            mAdapter.setDataList(explain.getRecords());
+        if (data.getCurrent() > 1) {
+            mAdapter.addAll(data.getRecords());
+        } else if (data.getCurrent() == 1) {
+            mAdapter.setDataList(data.getRecords());
         }
     }
 

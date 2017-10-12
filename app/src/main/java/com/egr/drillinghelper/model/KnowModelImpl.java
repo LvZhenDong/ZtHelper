@@ -3,6 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -30,16 +31,16 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
     @Override
     public void getKnowList(int current) {
         api.knowList(current + "")
-                .compose(TransformersFactory.<Explain>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<Explain>() {
+                .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Explain>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().getKnowFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull Explain Know) {
-                        presenter.getKnowListSuccess(Know);
+                    public void onComplete(@NonNull BasePage<Explain> data) {
+                        presenter.getKnowListSuccess(data);
                     }
                 });
     }

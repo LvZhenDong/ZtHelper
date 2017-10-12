@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.contract.ReplyContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -31,16 +31,16 @@ public class ReplyModelImpl extends BaseModel<ReplyPresenterImpl>
     @Override
     public void getReply(String status,int current) {
         api.getReplyList(status,current+"")
-                .compose(TransformersFactory.<Reply>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<Reply>() {
+                .compose(TransformersFactory.<BasePage<Reply>>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Reply>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().getReplyFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull Reply reply) {
-                        presenter.getReplySuccess(reply);
+                    public void onComplete(@NonNull BasePage<Reply> data) {
+                        presenter.getReplySuccess(data);
                     }
                 });
     }

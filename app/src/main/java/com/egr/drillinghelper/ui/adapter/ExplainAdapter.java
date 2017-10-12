@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class ExplainAdapter extends BaseListAdapter<Explain.RecordsBean,
+public class ExplainAdapter extends BaseListAdapter<Explain,
         ExplainAdapter.ViewHolder> {
 
     public ExplainAdapter(Context context) {
@@ -37,7 +37,7 @@ public class ExplainAdapter extends BaseListAdapter<Explain.RecordsBean,
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Explain.RecordsBean item = getDataList().get(position);
+        Explain item = getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
         holder.tvInfo.setText(item.getDescription());
         GlideUtils.load(item.getPhoto(),holder.ivImg);

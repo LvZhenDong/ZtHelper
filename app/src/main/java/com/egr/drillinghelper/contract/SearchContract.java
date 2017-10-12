@@ -1,9 +1,7 @@
 package com.egr.drillinghelper.contract;
 
-import com.egr.drillinghelper.bean.base.BasePageResponse;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.ExplainOut;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.mvp.IModel;
@@ -36,7 +34,7 @@ public interface SearchContract {
 
         void searchParts(List<Parts> parts,List<String> titles);
 
-        void searchExplainCatalog(List<ExplainOut> explainCatalogs, List<String> titles);
+        void searchExplainCatalog(List<Explain> explainCatalogs, List<String> titles);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -44,11 +42,11 @@ public interface SearchContract {
 
         void loadMore();
 
-        void searchKnowSuccess(BasePageResponse<KnowCatalog> data);
+        void searchKnowSuccess(BasePage<KnowCatalog> data);
 
-        void searchPartsSuccess(BasePageResponse<Parts> data);
+        void searchPartsSuccess(BasePage<Parts> data);
 
-        void searchExplainCatalogSuccess(BasePageResponse<ExplainOut> data);
+        void searchExplainCatalogSuccess(BasePage<Explain> data);
 
     }
 }

@@ -3,6 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -30,17 +31,22 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
     @Override
     public void getExplainList(int current) {
         api.explainList(current + "")
-                .compose(TransformersFactory.<Explain>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<Explain>() {
+                .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Explain>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().getExplainFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull Explain explain) {
-                        presenter.getExplainListSuccess(explain);
+                    public void onComplete(@NonNull BasePage<Explain> data) {
+                        presenter.getExplainListSuccess(data);
                     }
                 });
+    }
+
+    @Override
+    public void getExplainCache() {
+//        api.
     }
 }

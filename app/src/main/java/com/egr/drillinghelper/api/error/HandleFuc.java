@@ -16,7 +16,7 @@ import io.reactivex.functions.Function;
 public class HandleFuc<T> implements Function<BaseResponseBean<T>, T> {
     @Override
     public T apply(BaseResponseBean<T> response) throws Exception {
-        //response中code码不为0 出现错误
+
         if (!response.isSuccess()) {
             String message = response.getMessage() != null ? response.getMessage() : "ErrorData unknow";
             ServerException serverException = new ServerException();

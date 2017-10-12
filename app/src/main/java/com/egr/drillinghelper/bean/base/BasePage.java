@@ -8,7 +8,7 @@ import java.util.List;
  * 类描述：
  */
 
-public class BasePageResponse<T> {
+public class BasePage<T> {
 
     /**
      * records : [{"id":"7cfedbee1b25491f957aee7570a6f54e","createtime":"2017-09-30 23:35:04","updatetime":"2017-09-30 14:26:09","title":"EP200便携式全液压钻机","description":"EP200便携式全液压钻机使用说明书","photo":"user/19677510966819.png","version":3}]

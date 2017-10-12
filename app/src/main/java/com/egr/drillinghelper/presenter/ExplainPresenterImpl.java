@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.presenter;
 
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.model.ExplainModelImpl;
@@ -34,12 +35,12 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
     }
 
     @Override
-    public void getExplainListSuccess(Explain explain) {
-        if (explain == null || CollectionUtil.isListEmpty(explain.getRecords())){
+    public void getExplainListSuccess(BasePage<Explain> data) {
+        if (data == null || CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         } else{
-            current = explain.getCurrent();
-            getView().getExplainListSuccess(explain);
+            current = data.getCurrent();
+            getView().getExplainListSuccess(data);
         }
 
     }
