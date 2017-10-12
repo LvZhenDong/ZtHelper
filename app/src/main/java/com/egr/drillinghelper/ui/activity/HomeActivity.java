@@ -12,10 +12,12 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.contract.MyContract;
+import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
+import com.egr.drillinghelper.utils.ApkUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.shelwee.update.UpdateHelper;
 
@@ -83,7 +85,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         vpHome.setAdapter(homeAdapter);
         vpHome.setCurrentItem(0, false);
 
-        String url = BuildConfig.BASE_URL+ MyConstants.API.Version;
+        String url = APIServiceFactory.getBaseUrl()+ MyConstants.API.Version+ ApkUtils.getVersionCode(this);
         UpdateHelper updateHelper=new UpdateHelper.Builder(this)
                 .checkUrl(url)
                 .isHintNewVersion(false)

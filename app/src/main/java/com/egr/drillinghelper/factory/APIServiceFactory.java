@@ -123,4 +123,8 @@ public class APIServiceFactory {
     public static void setBaseUrl(String url){
         baseUrl="http://" + url + "/egr/api/";
     }
+
+    public static String getBaseUrl(){
+        return baseUrl;
+    }
 }

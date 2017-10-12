@@ -22,16 +22,16 @@ public class JSONHandler {
         String byteData = new String(readStream(is));
         is.close();
         JSONObject jsonObject = new JSONObject(byteData);
-        //jsonObject = jsonObject.getJSONObject("data");  //取data
+        jsonObject = jsonObject.getJSONObject("body");  //取data
         UpdateInfo updateInfo = new UpdateInfo();
         Log.d("update", jsonObject.toString());
         //TODO
-        if(jsonObject.has("apkUrl")) updateInfo.setApkUrl(jsonObject.getString("apkUrl"));
-        if(jsonObject.has("appName")) updateInfo.setAppName(jsonObject.getString("appName"));
-        if(jsonObject.has("versionCode")) updateInfo.setVersionCode(jsonObject.getString("versionCode"));
+        if(jsonObject.has("url")) updateInfo.setApkUrl(jsonObject.getString("url"));
+        if(jsonObject.has("name")) updateInfo.setAppName(jsonObject.getString("name"));
+        if(jsonObject.has("code")) updateInfo.setVersionCode(jsonObject.getString("code"));
         if(jsonObject.has("versionName")) updateInfo.setVersionName(jsonObject.getString("versionName"));
 //        if(jsonObject.has("changeLog")) updateInfo.setChangeLog(jsonObject.getString("changeLog").replaceAll("<br />", "\n").replaceAll("<br/>", "\n").replaceAll("<br >", "\n").replaceAll("<br>", "\n"));
-        if(jsonObject.has("changeLog")) updateInfo.setChangeLog(URLUtils.replaceBlank(jsonObject.getString("changeLog")).replaceAll("<br\\s*/?>", "\n"));
+        if(jsonObject.has("description")) updateInfo.setChangeLog(URLUtils.replaceBlank(jsonObject.getString("description")).replaceAll("<br\\s*/?>", "\n"));
         if(jsonObject.has("updateTips")) updateInfo.setUpdateTips(jsonObject.getString("updateTips"));
         if(jsonObject.has("status")) updateInfo.setStatus(jsonObject.getInt("status"));
         if(jsonObject.has("created_at")) updateInfo.setCreated_at(jsonObject.getString("created_at"));

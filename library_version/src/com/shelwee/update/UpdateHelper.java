@@ -266,7 +266,7 @@ public class UpdateHelper {
     private void showUpdateUI(final UpdateInfo updateInfo) {
         if (updateInfo.getIsForce() == 0) {
             //普通更新
-            final VersionDialog dialog = new VersionDialog(mContext, updateInfo.getChangeLog(), updateInfo.getSize(), "V" + updateInfo.getVersionName(), "立刻更新", "我再想想", VersionDialog.STYLE_UPDATE_NOMAL);
+            final VersionDialog dialog = new VersionDialog(mContext, updateInfo.getChangeLog(), updateInfo.getAppName(), updateInfo.getAppName(), "立刻更新", "我再想想", VersionDialog.STYLE_UPDATE_NOMAL);
             dialog.setOnPositiveListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -284,7 +284,7 @@ public class UpdateHelper {
             dialog.show();
         } else {
             //强制更新
-            final VersionDialog dialog = new VersionDialog(mContext, updateInfo.getChangeLog(), updateInfo.getSize(), "V" + updateInfo.getVersionName(), "立刻更新", "退出应用", VersionDialog.STYLE_UPDATE_FORCE);
+            final VersionDialog dialog = new VersionDialog(mContext, updateInfo.getChangeLog(), updateInfo.getSize(), updateInfo.getAppName(), "立刻更新", "退出应用", VersionDialog.STYLE_UPDATE_FORCE);
             dialog.setOnPositiveListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -16,6 +16,6 @@ public interface MyConstants {
     String PATH_KNOW = PATH + "know.txt";
 
     interface API {
-        String Version = "feedback/getList";
+        String Version = "version/check?code=";
     }
 }

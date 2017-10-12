@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 
 import com.shelwee.update.utils.MoreTextUtil;
 import com.shelwee.updater.R;
+
+import static android.R.attr.name;
+
 /**
  * @Function: 自定义对话框
  * @Date: 2013-10-28
@@ -90,9 +94,9 @@ public class VersionDialog extends Dialog{
             
             text_log.setText(msg==null||"".equals(msg)?"这一秒不放弃，下一秒有奇迹！":msg);
             MoreTextUtil.setMore(text_log);
-            SpannableString strSpan = new SpannableString(size+"\n"+version);
-    		strSpan.setSpan(new RelativeSizeSpan(0.7f), size.length(),strSpan.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//放大用户名字体
-            text_size.setText(strSpan);
+//            SpannableString strSpan = new SpannableString(size+"\n"+version);
+//    		strSpan.setSpan(new RelativeSizeSpan(0.7f), size.length(),strSpan.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//放大用户名字体
+            if(!TextUtils.isEmpty(version))text_size.setText(version);
             
             positiveButton.setText(positiveStr==null||"".equals(positiveStr)?"立刻更新":positiveStr);
             negativeButton.setText(negativeStr==null||"".equals(negativeStr)?"我再想想":negativeStr);
