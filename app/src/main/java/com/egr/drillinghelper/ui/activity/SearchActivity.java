@@ -44,6 +44,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
+import static com.egr.drillinghelper.R.string.parts;
+
 /**
  * author lzd
  * date 2017/9/28 9:45
@@ -210,11 +212,8 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 startActivity(intentKnow);
                 break;
             case SEARCH_TYPE_PARTS: //配件
-                Intent intentPart = new Intent(this, CommBrowserActivity.class);
                 Parts part = mParts.get(position);
-                intentPart.putExtra("url", part.getUrl());
-                intentPart.putExtra("title", part.getName());
-                startActivity(intentPart);
+                CommBrowserActivity.start(this,part.getUrl(),part.getName());
                 break;
         }
     }

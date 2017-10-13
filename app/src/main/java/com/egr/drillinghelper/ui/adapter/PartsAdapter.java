@@ -44,13 +44,13 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
     @Override
     public void setDataList(List<Store.RecordsBean> list) {
         //添加进入商城的item
-        Store.RecordsBean bean=new Store.RecordsBean();
-        bean.setId(INTO_MALL);
-        list.add(0, bean);
+//        Store.RecordsBean bean=new Store.RecordsBean();
+//        bean.setId(INTO_MALL);
+//        list.add(0, bean);
         super.setDataList(list);
     }
 
-    private final static String INTO_MALL="-1";
+    public final static String INTO_MALL="-1";
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
@@ -86,6 +86,7 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
             ButterKnife.bind(this, itemView);
 
             llParts.setOnClickListener(this);
+            rlMall.setOnClickListener(this);
         }
 
         @Override
@@ -97,9 +98,6 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
     void goPartsDetail(int position){
         Store.RecordsBean item = getDataList().get(position);
 
-        Intent intent=new Intent(mContext, CommBrowserActivity.class);
-        intent.putExtra("url",item.getUrl());
-        intent.putExtra("title",item.getName());
-        mContext.startActivity(intent);
+        CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
     }
 }

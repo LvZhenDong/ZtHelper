@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.hybrid;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -41,6 +43,12 @@ public class CommBrowserActivity extends BaseActivity {
     private WebSettings webSettings;
     private boolean isActionbarEnable;
 
+    public static void start(Context context,String url,String title){
+        Intent intent=new Intent(context, CommBrowserActivity.class);
+        intent.putExtra("url",url);
+        intent.putExtra("title",title);
+        context.startActivity(intent);
+    }
 
     @Override
     public int returnLayoutID() {
@@ -79,6 +87,7 @@ public class CommBrowserActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("JavascriptInterface")
     protected void initWebView() {
         webSettings = commbrowserWebview.getSetting();
         commbrowserWebview.getmWebView().addJavascriptInterface(new JSInterfaceSO(this), "JSInterfaceSO");

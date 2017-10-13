@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.contract;
 
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
@@ -18,6 +19,8 @@ import static android.R.id.list;
 public interface PartsContract {
     interface Model extends IModel {
         void getPartsList(int pageNum);
+
+        void getMall();
     }
 
     interface View extends IView {
@@ -34,5 +37,7 @@ public interface PartsContract {
         void loadMore();
 
         void getPartsListSuccess(Store list);
+
+        void getMallSuccess();
     }
 }

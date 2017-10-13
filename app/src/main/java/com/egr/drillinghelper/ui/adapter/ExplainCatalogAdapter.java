@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.activity.ArticleActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -70,6 +71,11 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         }
     }
 
+    void showVideo(int position){
+        ExplainCatalog item=getDataList().get(position);
+        CommBrowserActivity.start(mContext,item.getUrl(),item.getTitle());
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.rl_catalog)
         RelativeLayout rlItem;
@@ -95,7 +101,7 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
                     getDetail(getAdapterPosition());
                     break;
                 case R.id.iv_play:
-                    VideoUtil.playByOtherApp(mContext, getDataList().get(getAdapterPosition()).getUrl());
+                    showVideo(getAdapterPosition());
                     break;
             }
 

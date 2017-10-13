@@ -38,6 +38,7 @@
     <string name="about_egr">关于英格尔</string>
     <string name="share">分享</string>
     <string name="quit">退出</string>
+    <string name="mall">商城</string>
     <string name="go_feedback">我要反馈</string>
     <string name="normal_question">常见问题</string>
     <string name="feedback_detail">问题详情</string>
@@ -83,7 +84,6 @@
     <string name="confirm_dialog_title_phone">拨打电话</string>
     <string name="confirm_dialog_content_phone">您确定拨打电话：</string>
     <string name="confirm_dialog_content_phone2">吗？</string>
-    <string name="goto_mall">进入商城</string>
     <string name="tag_email">邮箱：</string>
     <string name="tag_website">网址：</string>
     <string name="tag_tel">电话：</string>

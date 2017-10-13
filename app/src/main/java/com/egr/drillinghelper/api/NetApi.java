@@ -15,6 +15,7 @@ import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.bean.response.UserInfo;
 
 import java.util.HashMap;
@@ -93,6 +94,12 @@ public interface NetApi {
     @GET("contact/list")
     Observable<BaseResponseBean<ContactUs>> contactList();
 
+    /**
+     * 进入商城链接
+     * @return
+     */
+    @GET("store/more")
+    Observable<BaseResponseBean<StoreMore>> getStoreMore();
     /**
      * 配件列表
      * @param options

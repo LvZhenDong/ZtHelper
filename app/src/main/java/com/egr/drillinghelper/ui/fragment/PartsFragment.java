@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
