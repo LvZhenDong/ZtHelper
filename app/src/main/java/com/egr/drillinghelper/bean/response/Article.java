@@ -25,6 +25,15 @@ public class Article {
     private String title;
     private String content;
     private int version;
+    private boolean isCache;
+
+    public boolean isCache() {
+        return isCache;
+    }
+
+    public void setCache(boolean cache) {
+        isCache = cache;
+    }
 
     public String getId() {
         return id;

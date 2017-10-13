@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.utils;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -57,5 +58,13 @@ public class GlideUtils {
         Glide.with(view.getContext())
                 .load(path)
                 .into(view);
+    }
+
+    public static void perLoadImg(Context context,String url){
+        RequestOptions requestOptions = new RequestOptions();
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE))
+                .preload();
     }
 }

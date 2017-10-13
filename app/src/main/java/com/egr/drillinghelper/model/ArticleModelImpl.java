@@ -75,7 +75,9 @@ public class ArticleModelImpl extends BaseModel<ArticlePresenterImpl> implements
                 if (!CollectionUtil.isListEmpty(list)) {
                     for (ExplainCatalog item : list) {
                         if (item.getArticleId().equals(id)) {
-                            presenter.getView().getArticleSuccess(item.getArticle());
+                            Article article=item.getArticle();
+                            article.setCache(true);
+                            presenter.getView().getArticleSuccess(article);
                             return;
                         }
                     }

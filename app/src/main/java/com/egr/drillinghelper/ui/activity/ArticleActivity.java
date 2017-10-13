@@ -1,7 +1,9 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Article;
@@ -10,6 +12,9 @@ import com.egr.drillinghelper.presenter.ArticlePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
+import com.zzhoujay.richtext.CacheType;
+import com.zzhoujay.richtext.RichText;
+import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -24,6 +29,8 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         ArticlePresenterImpl> implements ArticleContract.View {
     @BindView(R.id.wv)
     WebView webView;
+    @BindView(R.id.tv_content)
+    TextView tvContent;
     private ACProgressFlower mDialog;
 
     @Override
@@ -55,7 +62,13 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         mDialog.dismiss();
         if(article != null){
             setActionBarTitle(article.getTitle());
-            webView.loadDataWithBaseURL(null,article.getContent(),null,"utf-8",null);
+            if(!article.isCache()){
+                webView.loadDataWithBaseURL(null,article.getContent(),null,"utf-8",null);
+            } else {
+                webView.setVisibility(View.GONE);
+                tvContent.setVisibility(View.VISIBLE);
+                RichText.fromHtml(article.getContent()).cache(CacheType.ALL).into(tvContent);
+            }
         }
 
     }

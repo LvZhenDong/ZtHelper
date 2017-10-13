@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.model;
 
+import android.text.TextUtils;
+
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
@@ -14,6 +16,7 @@ import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
 import com.egr.drillinghelper.utils.CacheUtils;
+import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 
 import java.util.List;
@@ -80,7 +83,21 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
                     @Override
                     public void onComplete(@NonNull List<Explain> data) {
                         CacheUtils.saveKnows(data);
+                        saveImg();
                     }
                 });
+    }
+
+    private void saveImg(){
+        try {
+            List<Explain> explains=CacheUtils.getKnows();
+            for (Explain item:explains) {
+                if(!TextUtils.isEmpty(item.getPhoto())){
+                    GlideUtils.perLoadImg(getContext(),item.getPhoto());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
