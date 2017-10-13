@@ -52,6 +52,7 @@ public class KnowCatalogModelImpl extends BaseModel<KnowCatalogPresenterImpl>
 
                         @Override
                         public void onComplete(@NonNull List<KnowCatalog> data) {
+                            addNumber(data);
                             presenter.getCatalogSuccess(data);
                         }
                     });
@@ -63,12 +64,21 @@ public class KnowCatalogModelImpl extends BaseModel<KnowCatalogPresenterImpl>
     private void showCache(String id){
         try {
             Explain explain= CacheUtils.getKnow(id);
-            if(explain != null)
-                presenter.getCatalogSuccess(explain.getKnows());
-            else
+            if(explain != null){
+                List<KnowCatalog> list=explain.getKnows();
+                addNumber(list);
+                presenter.getCatalogSuccess(list);
+            } else
                 presenter.getView().getCatalogFail(getContext().getString(R.string.no_data));
         } catch (Exception e) {
             presenter.getView().getCatalogFail(getContext().getString(R.string.net_error));
+        }
+    }
+
+    private void addNumber(List<KnowCatalog> list){
+        for(int i=1;i<list.size()+1;i++){
+            KnowCatalog item=list.get(i-1);
+            item.setTitle((i+"."+item.getTitle()));
         }
     }
 }

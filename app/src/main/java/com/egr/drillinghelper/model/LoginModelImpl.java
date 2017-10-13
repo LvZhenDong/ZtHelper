@@ -79,7 +79,8 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
     private void showCache(){
         try {
             List<Explain> explain= CacheUtils.getExplains();
-            if(!CollectionUtil.isListEmpty(explain))
+            List<Explain> know=CacheUtils.getKnows();
+            if(!CollectionUtil.isListEmpty(explain) || !CollectionUtil.isListEmpty(know))
                 presenter.getView().loginSuccess();
             else
                 presenter.getView().loginFail(getContext().getString(R.string.net_error));

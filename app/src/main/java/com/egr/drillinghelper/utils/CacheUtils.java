@@ -7,9 +7,11 @@ import com.egr.drillinghelper.common.MyConstants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.id;
+import static android.R.id.list;
 
 /**
  * author lzd
@@ -112,5 +114,29 @@ public class CacheUtils {
         }
 
         return null;
+    }
+
+    /**
+     * 获取展开的使用说明目录
+     */
+    public static List<ExplainCatalog> getExpandedExplainCatalogList(String id) throws Exception{
+        Explain explain=getExplain(id);
+        list=new ArrayList<>();
+        getList(explain.getCatalogs());
+
+        return list;
+    }
+
+    static List<ExplainCatalog> list;
+
+    private static void getList(List<ExplainCatalog> catalogList) {
+        if(CollectionUtil.isListEmpty(catalogList))
+            return;
+        for (ExplainCatalog item : catalogList) {
+            list.add(item);
+            if (item.getChilds() != null && item.getChilds().size() != 0)
+                getList(item.getChilds());
+
+        }
     }
 }

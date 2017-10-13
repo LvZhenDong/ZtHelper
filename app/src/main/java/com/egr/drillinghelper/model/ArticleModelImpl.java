@@ -23,6 +23,7 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 
 import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
+import static com.pgyersdk.views.b.p;
 
 /**
  * author lzd
@@ -49,6 +50,8 @@ public class ArticleModelImpl extends BaseModel<ArticlePresenterImpl> implements
                         public void onError(ResponseThrowable e, String eMsg) {
                             if (e.code == TIMEOUT_ERROR)
                                 showCache(catalogId, id);
+                            else if(eMsg.equals("未知错误"))
+                                presenter.getView().getArticleSuccess(null);
                             else
                                 presenter.getView().getArticleFail(eMsg);
                         }

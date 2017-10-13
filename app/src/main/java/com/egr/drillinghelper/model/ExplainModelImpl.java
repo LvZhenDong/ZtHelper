@@ -82,7 +82,12 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                     @Override
                     public void onComplete(@NonNull List<Explain> data) {
                         CacheUtils.saveExplains(data);
+                        saveImg();
                     }
                 });
+    }
+
+    private void saveImg(){
+        
     }
 }

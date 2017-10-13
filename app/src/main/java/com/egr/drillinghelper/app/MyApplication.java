@@ -54,12 +54,12 @@ public class MyApplication extends MultiDexApplication {
     private void initOther(){
         MySharePreferencesManager.getInstance().init(this);//secure sp init
 
-        if(BuildConfig.DEBUG){
-            String ip = MBIPUtils.getInstance(this).getIPPort();
-            if (!TextUtils.isEmpty(ip)) {
-                APIServiceFactory.setBaseUrl(ip);
-            }
-        }
+//        if(BuildConfig.DEBUG){
+//            String ip = MBIPUtils.getInstance(this).getIPPort();
+//            if (!TextUtils.isEmpty(ip)) {
+//                APIServiceFactory.setBaseUrl(ip);
+//            }
+//        }
 
     }
 

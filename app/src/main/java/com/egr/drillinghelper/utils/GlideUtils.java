@@ -19,7 +19,7 @@ public class GlideUtils {
         RequestOptions requestOptions = new RequestOptions();
         Glide.with(view.getContext().getApplicationContext())
                 .load(url)
-                .apply(requestOptions.placeholder(R.drawable.bg_waiting)
+                .apply(requestOptions.placeholder(R.drawable.bg_place_holder)
                         .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
@@ -30,7 +30,7 @@ public class GlideUtils {
 
         Glide.with(view.getContext().getApplicationContext())
                 .load(resId)
-                .apply(requestOptions.placeholder(R.drawable.bg_waiting)
+                .apply(requestOptions.placeholder(R.drawable.bg_place_holder)
                         .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
@@ -41,7 +41,7 @@ public class GlideUtils {
         Glide.with(view.getContext().getApplicationContext())
                 .load(url)
                 .apply(requestOptions
-                        .placeholder(R.drawable.bg_waiting)
+                        .placeholder(R.drawable.bg_place_holder)
                         .error(R.drawable.bg_error)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(view);
