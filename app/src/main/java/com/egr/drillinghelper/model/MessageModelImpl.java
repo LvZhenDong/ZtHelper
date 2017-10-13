@@ -6,6 +6,7 @@ import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Message;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -44,6 +45,23 @@ public class MessageModelImpl extends BaseModel<MessagePresenterImpl> implements
                     @Override
                     public void onComplete(@NonNull BasePage<Message> data) {
                         presenter.getMsgListSuccess(data);
+                    }
+                });
+    }
+
+    @Override
+    public void deleteMsg(String id) {
+        api.deleteMsg(id)
+                .compose(TransformersFactory.<NullBodyResponse>nullBodyTransformer((BaseMVPActivity)presenter.getView()))
+                .subscribe(new EObserver<NullBodyResponse>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().deleteMsgFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull NullBodyResponse data) {
+                        presenter.getView().deleteMsgSuccess();
                     }
                 });
     }

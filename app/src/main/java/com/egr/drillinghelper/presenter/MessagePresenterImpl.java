@@ -43,4 +43,9 @@ public class MessagePresenterImpl extends BasePresenter<MessageContract.View,
     public void loadMore() {
         mModel.getMsgList(current + 1);
     }
+
+    @Override
+    public void deleteMsg(String id) {
+        mModel.deleteMsg(id);
+    }
 }

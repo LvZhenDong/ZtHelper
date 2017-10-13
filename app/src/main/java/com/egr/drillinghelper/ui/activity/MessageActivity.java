@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -117,12 +118,32 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
     }
 
     @Override
+    public void deleteMsgSuccess() {
+        mDialog.dismiss();
+        if(deletePos != -1)
+            mAdapter.remove(deletePos);
+    }
+
+    @Override
+    public void deleteMsgFail(String msg) {
+        deletePos=-1;
+        mDialog.dismiss();
+        ToastUtils.show(getActivity(), msg);
+    }
+
+    private int deletePos=-1;
+    @Override
     public void onDelete(int position) {
-        mAdapter.remove(position);
+        mDialog.show();
+        deletePos=position;
+        presenter.deleteMsg(mAdapter.getDataList().get(position).getId());
     }
 
     @Override
     public void onItemClick(int position) {
-
+        Intent intent=new Intent(this,MessageDetailActivity.class);
+        intent.putExtra(KEY_INTENT,mAdapter.getDataList().get(position).getId());
+        intent.putExtra("title",mAdapter.getDataList().get(position).getTitle());
+        startActivity(intent);
     }
 }

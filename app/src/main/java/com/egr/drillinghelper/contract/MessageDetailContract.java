@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
@@ -10,16 +11,18 @@ import com.egr.drillinghelper.mvp.IView;
  * 类描述：
  */
 
-public interface HomeContract {
+public interface MessageDetailContract {
     interface Model extends IModel {
-        void getNoReadMsg();
+        void getMsgDetail(String id);
     }
 
     interface View extends IView {
-        void getNoReadMsgSuccess(int counts);
+        void getMsgSuccess(Message msg);
+
+        void getMsgFail(String msg);
     }
 
     interface Presenter extends IPresenter<View> {
-        void getNoReadMsg();
+        void getMsgDetail(String id);
     }
 }

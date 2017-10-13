@@ -15,6 +15,8 @@ import com.egr.drillinghelper.mvp.IView;
 public interface MessageContract {
     interface Model extends IModel {
         void getMsgList(int current);
+
+        void deleteMsg(String id);
     }
 
     interface View extends IView {
@@ -23,6 +25,10 @@ public interface MessageContract {
         void getMsgListFail(String msg);
 
         void noMoreData();
+
+        void deleteMsgSuccess();
+
+        void deleteMsgFail(String msg);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -31,5 +37,7 @@ public interface MessageContract {
         void getMsgListSuccess(BasePage<Message> data);
 
         void loadMore();
+
+        void deleteMsg(String id);
     }
 }

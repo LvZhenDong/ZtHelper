@@ -17,4 +17,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,
     protected IModel createModel() {
         return new HomeModelImpl(this);
     }
+
+    @Override
+    public void getNoReadMsg() {
+        mModel.getNoReadMsg();
+    }
 }

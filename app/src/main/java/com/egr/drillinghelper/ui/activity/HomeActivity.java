@@ -7,22 +7,24 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.common.MyConstants;
+import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.contract.HomeContract;
-import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 import com.egr.drillinghelper.utils.ApkUtils;
+import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.shelwee.update.UpdateHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_EXPLAIN;
 import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_KNOWLEDGE;
@@ -85,13 +87,26 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         vpHome.setAdapter(homeAdapter);
         vpHome.setCurrentItem(0, false);
 
+        EgrRxBus.subscribe(this, String.class, new Consumer<String>() {
+            @Override
+            public void accept(@NonNull String s) throws Exception {
+                if (s.equals(RxBusConstant.UPDATE_MSG_NO_READ))
+                    presenter.getNoReadMsg();
+            }
+        });
+
+        checkVersion();
+        presenter.getNoReadMsg();
+
+    }
+
+    private void checkVersion(){
         String url = APIServiceFactory.getBaseUrl()+ MyConstants.API.Version+ ApkUtils.getVersionCode(this);
         UpdateHelper updateHelper=new UpdateHelper.Builder(this)
                 .checkUrl(url)
                 .isHintNewVersion(false)
                 .build();
         updateHelper.check();
-
     }
 
     @Override
@@ -160,4 +175,13 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             System.exit(0);
         }
     }
+
+    @Override
+    public void getNoReadMsgSuccess(int counts) {
+        if(counts>0)
+            showRedDot();
+        else
+            hideRedDot();
+    }
+
 }

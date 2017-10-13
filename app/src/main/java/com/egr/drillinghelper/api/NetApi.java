@@ -244,18 +244,21 @@ public interface NetApi {
     @GET("message/list")
     Observable<BaseResponseBean<BasePage<Message>>> getMsgList(@Query("current") String current);
 
+    @GET("message/detail")
+    Observable<BaseResponseBean<Message>> getMsgDetail(@Query("messageId") String id);
+
     /**
      * 获取未读消息数
      * @return
      */
     @GET("message/noRead")
-    Observable<BaseResponseBean<String>> getNoReadMsg();
+    Observable<BaseResponseBean<Integer>> getNoReadMsg();
 
     /**
      * 删指定消息
      * @param id
      * @return
      */
-    @GET("message/delete")
+    @DELETE("message/delete")
     Observable<BaseResponseBean<NullBodyResponse>> deleteMsg(@Query("messageIds") String id);
 }

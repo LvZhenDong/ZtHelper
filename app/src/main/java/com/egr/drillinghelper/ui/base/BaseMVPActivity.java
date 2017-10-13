@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.egr.drillinghelper.mvp.IMvpBase;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
 import com.egr.drillinghelper.ui.widgets.swipeback.SwipeBackActivity;
+import com.egr.drillinghelper.utils.DensityUtils;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 
 import butterknife.ButterKnife;
@@ -30,13 +32,15 @@ import butterknife.Unbinder;
 public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> extends
         SwipeBackActivity implements IMvpBase<V> {
 
-    public final static String KEY_INTENT="intent data";
-    public final static String KEY_INTENT_BOOLEAN="intent data boolean";
+    public final static String KEY_INTENT = "intent data";
+    public final static String KEY_INTENT_BOOLEAN = "intent data boolean";
     protected ActionBar actionBar;
     protected TextView title, rightTv;
     protected ImageView leftIv, rightIv, rightIv2;
-    private Unbinder unbinder;
     protected P presenter;
+    ViewGroup actionbarLayout;
+    ImageView mRedDotIV;
+    private Unbinder unbinder;
 
     public abstract int returnLayoutID();
 
@@ -208,7 +212,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_HORIZONTAL;
-        View actionbarLayout = LayoutInflater.from(this).inflate(R.layout.view_cusactionbar, null);
+        actionbarLayout = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.view_cusactionbar, null);
         actionBar.setCustomView(actionbarLayout, layoutParams);
         Toolbar parent = (Toolbar) actionbarLayout.getParent();
         parent.setContentInsetsAbsolute(0, 0);
@@ -251,7 +255,7 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         setActionBarRightIvGone();
     }
 
-    public void changeActionBarRightText(int rightResId){
+    public void changeActionBarRightText(int rightResId) {
         if (rightTv == null)
             throw new RuntimeException("setupAction must first call!!!");
         rightTv.setText(rightResId);
@@ -330,10 +334,10 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
         setActionBarTitle(getString(strId));
     }
 
-    protected void setActionBarTitleDrawable(int drawableId){
+    protected void setActionBarTitleDrawable(int drawableId) {
         if (title == null)
             throw new RuntimeException("setupAction must first call!!!");
-        title.setBackground(ContextCompat.getDrawable(this,drawableId));
+        title.setBackground(ContextCompat.getDrawable(this, drawableId));
         title.setText("");
     }
 
@@ -419,5 +423,34 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
     public void finish() {
         super.finish();
 //        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    /**
+     * 设置消息红点提示的位置
+     */
+    private void setRedDotLocation() {
+        int width = rightIv.getWidth();
+        int height = rightIv.getHeight();
+
+        mRedDotIV.setX(width / 2 + DensityUtils.dp2px(this, 2));
+        mRedDotIV.setY(height / 4);
+    }
+
+
+    public void showRedDot() {
+        if (mRedDotIV == null) {
+            mRedDotIV = new ImageView(this);
+            actionbarLayout.addView(mRedDotIV);
+        }
+        mRedDotIV.setVisibility(View.VISIBLE);
+        setRedDotLocation();
+        mRedDotIV.setImageResource(R.drawable.shape_oval_red);
+    }
+
+
+    public void hideRedDot() {
+        if (mRedDotIV != null) {
+            mRedDotIV.setVisibility(View.GONE);
+        }
     }
 }
