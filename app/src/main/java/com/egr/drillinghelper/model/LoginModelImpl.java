@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.model;
 
+import android.os.Build;
+
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
@@ -39,6 +41,8 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
             HashMap<String,Object> options=new HashMap<>();
             options.put("phone",phone);
             options.put("password",password);
+            options.put("deviceCode", Build.MODEL); //设备型号
+            options.put("deviceType",0);    //0-android 1-iOS
 
             APIServiceFactory.getInstance().createService()
                     .login(options)

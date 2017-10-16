@@ -48,7 +48,7 @@ public class CreateFeedbackPresenterImpl extends BasePresenter<CreateFeedbackCon
             String path=item.path;
             File file = new File(path);
             RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-            images.put("photo\";filename=\"" + file.getName() + "\"", requestFile);
+            images.put("files\";filename=\"" + file.getName() + "\"", requestFile);
         }
 
         return images;
