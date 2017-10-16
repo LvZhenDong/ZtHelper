@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.Share;
+import com.egr.drillinghelper.bean.ShareIcon;
 import com.egr.drillinghelper.ui.adapter.ShareAdapter;
 
 import java.util.ArrayList;
@@ -49,12 +49,12 @@ public class ShareDialog extends BaseBottomDialog {
         rvShare.setLayoutManager(new GridLayoutManager(getContext(),5));
         rvShare.setAdapter(adapter);
 
-        List<Share> list=new ArrayList<>();
-        list.add(new Share(R.drawable.ic_weixin,R.string.weixin));
-        list.add(new Share(R.drawable.ic_weixin_moments,R.string.weixin_moments));
-        list.add(new Share(R.drawable.ic_qq,R.string.QQ));
-        list.add(new Share(R.drawable.ic_qzone,R.string.Qzone));
-        list.add(new Share(R.drawable.ic_weibo,R.string.weibo));
+        List<ShareIcon> list=new ArrayList<>();
+        list.add(new ShareIcon(R.drawable.ic_weixin,R.string.weixin));
+        list.add(new ShareIcon(R.drawable.ic_weixin_moments,R.string.weixin_moments));
+        list.add(new ShareIcon(R.drawable.ic_qq,R.string.QQ));
+        list.add(new ShareIcon(R.drawable.ic_qzone,R.string.Qzone));
+        list.add(new ShareIcon(R.drawable.ic_weibo,R.string.weibo));
         adapter.setDataList(list);
         adapter.notifyDataSetChanged();
     }

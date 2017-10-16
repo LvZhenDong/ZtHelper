@@ -4,6 +4,7 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -59,6 +60,23 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
                     @Override
                     public void onComplete(@NonNull NullBodyResponse data) {
                         presenter.getView().logoutSuccess();
+                    }
+                });
+    }
+
+    @Override
+    public void getShareContent() {
+        api.share()
+                .compose(TransformersFactory.<Share>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<Share>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull Share share) {
+                        presenter.getView().getShareContentSuccess();
                     }
                 });
     }

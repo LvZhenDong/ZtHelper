@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.contract.MyContract;
@@ -94,8 +95,9 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                 baseStartActivity(AboutEgrActivity.class);
                 break;
             case R.id.ll_share:
-                ShareDialog shareDialog=new ShareDialog();
-                shareDialog.show(getChildFragmentManager());
+                mDialog.show();
+                presenter.getShareContent();
+
                 break;
             case R.id.ll_quit:
                 //弹出确认退出dialog
@@ -158,6 +160,13 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     public void logoutFail(String msg) {
         mDialog.dismiss();
         ToastUtils.show(getActivity(), msg);
+    }
+
+    @Override
+    public void getShareContentSuccess(Share share) {
+        mDialog.dismiss();
+        ShareDialog shareDialog=new ShareDialog();
+        shareDialog.show(getChildFragmentManager());
     }
 
 }

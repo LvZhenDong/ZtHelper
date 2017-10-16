@@ -14,6 +14,7 @@ import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
+import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.bean.response.UserInfo;
@@ -268,4 +269,7 @@ public interface NetApi {
      */
     @DELETE("message/delete")
     Observable<BaseResponseBean<NullBodyResponse>> deleteMsg(@Query("messageIds") String id);
+
+    @GET("about/share")
+    Observable<BaseResponseBean<Share>> share();
 }

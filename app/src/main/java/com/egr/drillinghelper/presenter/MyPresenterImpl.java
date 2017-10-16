@@ -29,4 +29,9 @@ public class MyPresenterImpl extends BasePresenter<MyContract.View,
     public void quit() {
         mModel.logout();
     }
+
+    @Override
+    public void getShareContent() {
+        mModel.getShareContent();
+    }
 }

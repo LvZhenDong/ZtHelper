@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.Share;
+import com.egr.drillinghelper.bean.ShareIcon;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class ShareAdapter extends BaseListAdapter<Share,ShareAdapter.ViewHolder> {
+public class ShareAdapter extends BaseListAdapter<ShareIcon,ShareAdapter.ViewHolder> {
 
     public ShareAdapter(Context context) {
         super(context);
@@ -36,7 +36,7 @@ public class ShareAdapter extends BaseListAdapter<Share,ShareAdapter.ViewHolder>
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Share item=getDataList().get(position);
+        ShareIcon item=getDataList().get(position);
         holder.tvShare.setText(item.getName());
         Drawable top= ContextCompat.getDrawable(mContext,item.getIconId());
         holder.tvShare.setCompoundDrawablesWithIntrinsicBounds(null,top,null,null);

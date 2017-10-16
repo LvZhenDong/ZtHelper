@@ -98,10 +98,12 @@ public class CommBrowserActivity extends BaseActivity {
         webSettings.setAppCacheEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        webSettings.setSupportZoom(false);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
+//        设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true);  //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // chromium, enable hardware acceleration
             commbrowserWebview.getmWebView().setLayerType(View.LAYER_TYPE_HARDWARE, null);

@@ -6,9 +6,9 @@ package com.egr.drillinghelper.bean;
  * 类描述：
  */
 
-public class Share {
+public class ShareIcon {
 
-    public Share(int iconId, int name) {
+    public ShareIcon(int iconId, int name) {
         this.iconId = iconId;
         this.name = name;
     }

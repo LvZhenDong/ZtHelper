@@ -69,7 +69,6 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
             String content = article.getContent();
             if (article.isCache()) {
                 content = StringUtils.updateHtmlTag(content, "img", "src");
-                Logger.i("change:" + content);
             }
             webView.loadDataWithBaseURL("", content, "text/html", "utf-8", "");
         }

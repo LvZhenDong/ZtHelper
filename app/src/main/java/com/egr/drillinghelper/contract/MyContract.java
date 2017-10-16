@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.contract;
 
+import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
@@ -16,6 +17,8 @@ public interface MyContract {
         void userInfo();
 
         void logout();
+
+        void getShareContent();
     }
 
     interface View extends IView {
@@ -24,11 +27,15 @@ public interface MyContract {
         void logoutSuccess();
 
         void logoutFail(String msg);
+
+        void getShareContentSuccess(Share share);
     }
 
     interface Presenter extends IPresenter<View> {
         void userInfo();
 
         void quit();
+
+        void getShareContent();
     }
 }
