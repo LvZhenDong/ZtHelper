@@ -2,6 +2,7 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -41,8 +42,6 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
         setActionbarBackground(R.color.white);
 
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        setActionBarTitle(title);
         String id = intent.getStringExtra(KEY_INTENT);
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
@@ -59,6 +58,7 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
     public void getMsgSuccess(Message msg) {
         mDialog.dismiss();
         tvMsg.setText(msg.getMsg());
+        setActionBarTitle(msg.getTitle());
         EgrRxBus.post(RxBusConstant.UPDATE_MSG_NO_READ);
     }
 

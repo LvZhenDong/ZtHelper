@@ -1,17 +1,20 @@
 package com.egr.drillinghelper.model;
 
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.LoginResponse;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
+import com.egr.drillinghelper.receiver.AppReceiver;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
@@ -41,7 +44,9 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
             HashMap<String,Object> options=new HashMap<>();
             options.put("phone",phone);
             options.put("password",password);
-            options.put("deviceCode", Build.MODEL); //设备型号
+            String deviceCode= UserManager.getsJPushId(getContext());
+            if(!TextUtils.isEmpty(deviceCode))
+                options.put("deviceCode", deviceCode);
             options.put("deviceType",0);    //0-android 1-iOS
 
             APIServiceFactory.getInstance().createService()

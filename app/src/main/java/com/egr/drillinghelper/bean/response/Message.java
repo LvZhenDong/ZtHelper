@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.bean.response;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * author lzd
  * date 2017/10/12 16:30
@@ -19,7 +21,7 @@ public class Message {
      * createtime : 2017-10-12 11:51:19
      * updatetime : 2017-10-12 11:51:19
      */
-
+    @SerializedName(value = "id", alternate = {"messageId"})
     private String id;
     private String title;
     private String msg;
@@ -28,6 +30,7 @@ public class Message {
     private boolean isShow;
     private String code;
     private String createtime;
+    @SerializedName(value = "updatetime", alternate = {"date"})
     private String updatetime;
 
     public String getId() {

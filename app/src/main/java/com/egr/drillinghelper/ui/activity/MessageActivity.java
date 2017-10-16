@@ -143,7 +143,6 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
     public void onItemClick(int position) {
         Intent intent=new Intent(this,MessageDetailActivity.class);
         intent.putExtra(KEY_INTENT,mAdapter.getDataList().get(position).getId());
-        intent.putExtra("title",mAdapter.getDataList().get(position).getTitle());
         startActivity(intent);
     }
 }

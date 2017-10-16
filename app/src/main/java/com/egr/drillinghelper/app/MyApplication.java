@@ -15,6 +15,7 @@ import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.pgyersdk.crash.PgyCrashManager;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.magicbeans.android.ipmanager.utils.MBIPUtils;
 
 public class MyApplication extends MultiDexApplication {
@@ -60,6 +61,9 @@ public class MyApplication extends MultiDexApplication {
                 APIServiceFactory.setBaseUrl(ip);
             }
         }
+
+
+        JPushInterface.init(this);
 
     }
 
