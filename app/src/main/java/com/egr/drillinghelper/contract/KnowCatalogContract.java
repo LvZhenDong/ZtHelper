@@ -24,7 +24,7 @@ public interface KnowCatalogContract {
 
         void getCatalogFail(String msg);
 
-
+        void getCatalogCache(List<KnowCatalog> catalogList);
     }
 
     interface Presenter extends IPresenter<View> {

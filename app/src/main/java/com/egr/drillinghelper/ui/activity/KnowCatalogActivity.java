@@ -76,4 +76,10 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
         mDialog.dismiss();
         ToastUtils.show(this, msg);
     }
+
+    @Override
+    public void getCatalogCache(List<KnowCatalog> catalogList) {
+        getCatalogSuccess(catalogList);
+        mAdapter.setCache(true);
+    }
 }

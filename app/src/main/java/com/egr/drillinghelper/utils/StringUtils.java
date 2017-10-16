@@ -4,6 +4,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 
+import com.egr.drillinghelper.common.MyConstants;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,41 @@ public class StringUtils {
             result.add(r);
         }
         return result;
+    }
+
+    /**
+     * @param htmlStr  html文本
+     * @param searchTag  要修改的目标标签
+     * @param searchAttrib  目标标签中的属性
+     */
+    public static String updateHtmlTag(String htmlStr, String searchTag,
+                                       String searchAttrib) {
+        String regxpForTag ="<\\s*" + searchTag + "\\s+([^>]*)\\s*>";
+        String regxpForTagAttrib = searchAttrib + "\\s*=\\s*[\"|']http://([^\"|']+)[\"|']";//"=[\"|']([^[\"|']]+)[\"|']";
+        Pattern patternForTag = Pattern.compile(regxpForTag);
+        Pattern patternForAttrib = Pattern.compile(regxpForTagAttrib);
+        Matcher matcherForTag = patternForTag.matcher(htmlStr);
+        StringBuffer sb = new StringBuffer();
+        boolean result = matcherForTag.find();
+        while (result) {
+            StringBuffer sbreplace = new StringBuffer("<"+searchTag +" ");
+            System.out.println(matcherForTag.group(1));
+            Matcher matcherForAttrib = patternForAttrib.matcher(matcherForTag
+                    .group(1));
+
+            if (matcherForAttrib.find()) {
+                String path=matcherForAttrib.group(1);
+                String[] strs=path.split("/");
+                String name= MyConstants.PATH+strs[strs.length-1];
+                matcherForAttrib.appendReplacement(sbreplace, searchAttrib+"=\"" +"file://"+name+"\"");
+            }
+//            matcherForTag.appendReplacement(sb, sbreplace.toString());
+            matcherForAttrib.appendTail(sbreplace);
+            matcherForTag.appendReplacement(sb, sbreplace.toString()+">");
+            result = matcherForTag.find();
+        }
+        matcherForTag.appendTail(sb);
+        return sb.toString();
     }
 
 }

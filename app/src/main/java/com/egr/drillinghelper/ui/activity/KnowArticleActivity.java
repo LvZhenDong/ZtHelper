@@ -5,6 +5,8 @@ import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.ui.base.BaseActivity;
+import com.egr.drillinghelper.utils.StringUtils;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 
@@ -28,8 +30,17 @@ public class KnowArticleActivity extends BaseActivity {
         setupActionBar(R.string.ask_knowledge_detail, true);
         setActionbarBackground(R.color.white);
 
-        String content = getIntent().getStringExtra(KEY_INTENT);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
 
+        String content = getIntent().getStringExtra(KEY_INTENT);
+        boolean isCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);
+
+        if (isCache) {
+            content = StringUtils.updateHtmlTag(content, "img", "src");
+            Logger.i("change:" + content);
+        }
         webView.loadDataWithBaseURL(null,content,null,"utf-8",null);
     }
 }

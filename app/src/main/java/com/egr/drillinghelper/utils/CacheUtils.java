@@ -139,4 +139,8 @@ public class CacheUtils {
 
         }
     }
+
+    public String getCacheBitmap(String url){
+        return "";
+    }
 }

@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -70,7 +71,7 @@ public class FileUtils {
     }
 
     public static File writeFile(String path, String content, String encoding, boolean isOverride) throws Exception {
-        Logger.i("path:"+path+"\ncontent:"+content);
+
         if (TextUtils.isEmpty(encoding)) {
             encoding = FILE_WRITING_ENCODING;
         }
@@ -286,5 +287,24 @@ public class FileUtils {
             }
         }
         return file;
+    }
+
+    public static void saveImg(Bitmap bmp,String path){
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(path);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

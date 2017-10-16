@@ -28,6 +28,11 @@ import butterknife.ButterKnife;
 
 public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
         KnowCatalogAdapter.ViewHolder> {
+    private boolean isCache;
+
+    public void setCache(boolean cache) {
+        isCache = cache;
+    }
 
     public KnowCatalogAdapter(Context context) {
         super(context);
@@ -74,6 +79,7 @@ public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
         if (!TextUtils.isEmpty(item.getContent())) {
             Intent intent = new Intent(mContext, KnowArticleActivity.class);
             intent.putExtra(BaseMVPActivity.KEY_INTENT, item.getContent());
+            intent.putExtra(BaseMVPActivity.KEY_INTENT_BOOLEAN,isCache);
             mContext.startActivity(intent);
         }
     }

@@ -2,12 +2,15 @@ package com.egr.drillinghelper.model;
 
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
+import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -16,8 +19,12 @@ import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
 import com.egr.drillinghelper.utils.CacheUtils;
+import com.egr.drillinghelper.utils.CollectionUtil;
+import com.egr.drillinghelper.utils.EgrTarget;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
+import com.egr.drillinghelper.utils.StringUtils;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -90,10 +97,24 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
 
     private void saveImg(){
         try {
-            List<Explain> explains=CacheUtils.getKnows();
-            for (Explain item:explains) {
+            List<Explain> knows=CacheUtils.getKnows();
+            for (Explain item:knows) {
                 if(!TextUtils.isEmpty(item.getPhoto())){
                     GlideUtils.perLoadImg(getContext(),item.getPhoto());
+                }
+                List<KnowCatalog> knowCatalogs=item.getKnows();
+                for(KnowCatalog knowCatalog:knowCatalogs){
+                    String content=knowCatalog.getContent();
+                    List<String> imgs= StringUtils.match(content,"img","src");
+                    if(!CollectionUtil.isListEmpty(imgs)){  //下载图片
+                        for (String path:imgs) {
+                            String[] strs=path.split("/");
+                            String name=strs[strs.length-1];
+                            if (!TextUtils.isEmpty(name))
+                                Glide.with(getContext()).load(path).into(new EgrTarget(name));
+                        }
+
+                    }
                 }
             }
         } catch (Exception e) {

@@ -78,10 +78,10 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         etPhoneNum.setText("18202806302");
         etPasw.setText("12345678");
 
-//        if(BuildConfig.DEBUG){
-//            FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
-//            floatWindowUtils.init(this);
-//        }
+        if(BuildConfig.DEBUG){
+            FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
+            floatWindowUtils.init(this);
+        }
 
         getWritePermission();
     }

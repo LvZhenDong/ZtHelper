@@ -1,7 +1,11 @@
 package com.egr.drillinghelper.model;
 
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
@@ -18,6 +22,7 @@ import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
+import com.egr.drillinghelper.utils.EgrTarget;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 import com.egr.drillinghelper.utils.StringUtils;
@@ -110,8 +115,10 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                         List<String> imgs= StringUtils.match(content,"img","src");
                         if(!CollectionUtil.isListEmpty(imgs)){  //下载图片
                             for (String path:imgs) {
-                                Logger.i("path:"+path);
-                                GlideUtils.perLoadImg(getContext(),path);
+                                String[] strs=path.split("/");
+                                String name=strs[strs.length-1];
+                                if (!TextUtils.isEmpty(name))
+                                    Glide.with(getContext()).load(path).into(new EgrTarget(name));
                             }
 
                         }

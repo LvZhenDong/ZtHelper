@@ -67,7 +67,8 @@ public class KnowCatalogModelImpl extends BaseModel<KnowCatalogPresenterImpl>
             if(explain != null){
                 List<KnowCatalog> list=explain.getKnows();
                 addNumber(list);
-                presenter.getCatalogSuccess(list);
+
+                presenter.getView().getCatalogCache(list);
             } else
                 presenter.getView().getCatalogFail(getContext().getString(R.string.no_data));
         } catch (Exception e) {
