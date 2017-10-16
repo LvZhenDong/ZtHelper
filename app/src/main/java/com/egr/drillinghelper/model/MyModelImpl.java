@@ -76,7 +76,7 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
 
                     @Override
                     public void onComplete(@NonNull Share share) {
-                        presenter.getView().getShareContentSuccess();
+                        presenter.getView().getShareContentSuccess(share);
                     }
                 });
     }

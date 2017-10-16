@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -166,6 +165,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     public void getShareContentSuccess(Share share) {
         mDialog.dismiss();
         ShareDialog shareDialog=new ShareDialog();
+        shareDialog.setContent(getActivity(),share);
         shareDialog.show(getChildFragmentManager());
     }
 
