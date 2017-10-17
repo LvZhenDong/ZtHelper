@@ -102,7 +102,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
             case R.id.ll_quit:
                 //弹出确认退出dialog
                 Dialog ensureDialog =DialogHelper.openConfirmDialog(getActivity(), R.string.ensure_quit_title,
-                        R.string.ensure_quit_content, new DialogHelper.OnDialogClickListener() {
+                        R.string.ensure_quit_content,false, new DialogHelper.OnDialogClickListener() {
                             @Override
                             public void onEnsureClick() {
                                 if (!mDialog.isShowing())

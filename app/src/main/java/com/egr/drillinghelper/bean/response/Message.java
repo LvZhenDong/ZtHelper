@@ -37,6 +37,10 @@ public class Message {
         return id;
     }
 
+    public boolean isLoginConflict(){
+        return code.equals("TS0002");
+    }
+
     public void setId(String id) {
         this.id = id;
     }

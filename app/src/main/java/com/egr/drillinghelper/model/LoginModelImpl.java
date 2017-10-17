@@ -53,10 +53,7 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
                     .subscribe(new EObserver<LoginResponse>() {
                         @Override
                         public void onError(ResponseThrowable e,String eMsg) {
-                            if (e.code == TIMEOUT_ERROR)
-                                showCache();
-                            else
-                                presenter.getView().loginFail(eMsg);
+                            presenter.getView().loginFail(eMsg);
                         }
 
                         @Override

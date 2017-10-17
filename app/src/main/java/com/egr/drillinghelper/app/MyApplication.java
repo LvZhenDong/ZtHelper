@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.app;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
@@ -30,6 +32,7 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
         sApplication = this;
 
+        registerActivityLifecycle();
         initPgy();
         initLogger();
         initImagePicker();
@@ -79,5 +82,42 @@ public class MyApplication extends MultiDexApplication {
         imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
         imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
         imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+    }
+
+    private void registerActivityLifecycle() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle bundle) {
+                EgrAppManager.getInstance().addActivity(activity);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                EgrAppManager.getInstance().removeActivity(activity);
+            }
+        });
     }
 }

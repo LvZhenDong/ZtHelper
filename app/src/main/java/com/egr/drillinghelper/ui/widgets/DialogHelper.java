@@ -59,7 +59,7 @@ public class DialogHelper {
      * @param content
      * @return
      */
-    public static Dialog openConfirmDialog(Context context, String title, String content,
+    public static Dialog openConfirmDialog(Context context, String title, String content,boolean singleBtn,
                                            final OnDialogClickListener listener) {
         String left=context.getString(R.string.cancel);
         String right=context.getString(R.string.sure);
@@ -69,6 +69,7 @@ public class DialogHelper {
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
         lp.width = WindowUtils.dpToPx(context, 260);
         dialog.getWindow().setAttributes(lp);
+        dialog.setCancelable(true);
         TextView titleTv = (TextView) layout.findViewById(R.id.dialog_confirm_title);
         TextView contentTv = (TextView) layout.findViewById(R.id.dialog_confirm_content);
         TextView leftTv = (TextView) layout.findViewById(R.id.dialog_confirm_left_bt);
@@ -76,9 +77,11 @@ public class DialogHelper {
         View divider = layout.findViewById(R.id.dialog_confirm_divider);
         titleTv.setText(title);
         contentTv.setText(content);
-        if (left == null) {//隐藏left
+        if (singleBtn) {//隐藏left
             leftTv.setVisibility(View.GONE);
             divider.setVisibility(View.GONE);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
         } else {
             leftTv.setText(left);
                 leftTv.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +102,7 @@ public class DialogHelper {
                         listener.onEnsureClick();
                 }
             });
-        dialog.setCancelable(true);
+
         return dialog;
     }
 
@@ -109,11 +112,11 @@ public class DialogHelper {
         void onCancelClick();
     }
 
-    public static Dialog openConfirmDialog(Context context, int title, int content,
+    public static Dialog openConfirmDialog(Context context, int title, int content,boolean singleBtn,
                                            OnDialogClickListener listener) {
         return openConfirmDialog(context,
                 context.getResources().getString(title),
-                context.getResources().getString(content),
+                context.getResources().getString(content),singleBtn,
                 listener);
     }
 //

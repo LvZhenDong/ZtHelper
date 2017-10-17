@@ -65,7 +65,6 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         mDialog.dismiss();
 
         if (article != null) {
-            setActionBarTitle(article.getTitle());
             String content = article.getContent();
             if (article.isCache()) {
                 content = StringUtils.updateHtmlTag(content, "img", "src");

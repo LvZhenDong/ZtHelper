@@ -32,7 +32,7 @@ public class PhoneUtils {
 
         if (!TextUtils.isEmpty(phone)) {
             Dialog dialog = DialogHelper.openConfirmDialog(activity, activity.getString(R.string.confirm_dialog_title_phone),
-                    activity.getString(R.string.confirm_dialog_content_phone) + phone + activity.getString(R.string.confirm_dialog_content_phone2),
+                    activity.getString(R.string.confirm_dialog_content_phone) + phone + activity.getString(R.string.confirm_dialog_content_phone2),false,
                     new DialogHelper.OnDialogClickListener() {
                         @Override
                         public void onEnsureClick() {
