@@ -14,6 +14,29 @@ import cn.jpush.android.api.JPushInterface;
 public class UserManager {
 
     private static String sJPushId;
+    private static String userId;
+    private static String sToken;
+
+    public static boolean isLogined(){
+        return !TextUtils.isEmpty(userId);
+    }
+
+    public static void quit(){
+        sJPushId=null;
+        userId=null;
+        setTOKEN("");
+    }
+    public static String getTOKEN() {
+        if (TextUtils.isEmpty(sToken)) {
+            sToken = MySharePreferencesManager.getInstance().getString("token", "");
+        }
+        return sToken;
+    }
+
+    public static void setTOKEN(String token) {
+        sToken = token;
+        MySharePreferencesManager.getInstance().putString("token", token);
+    }
 
     public static String getsJPushId(Context context) {
         if (TextUtils.isEmpty(sJPushId)) {
@@ -22,7 +45,15 @@ public class UserManager {
         return sJPushId;
     }
 
-    public static void setJPushId(String id){
-        sJPushId=id;
+    public static void setJPushId(String id) {
+        sJPushId = id;
+    }
+
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        UserManager.userId = userId;
     }
 }

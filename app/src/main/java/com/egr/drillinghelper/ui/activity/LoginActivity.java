@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
@@ -54,6 +55,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     TextView tvForgetPswd;
 
     private ACProgressFlower mDialog;
+    private boolean notReadCache;
 
     @Override
     public int returnLayoutID() {
@@ -84,7 +86,10 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             floatWindowUtils.init(this);
         }
 
-        getWritePermission();
+        notReadCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);
+        if(!notReadCache)
+            getWritePermission();
+        Logger.i(UserManager.getUserId());
     }
     public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0X98;
     private void getWritePermission(){
@@ -167,5 +172,11 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             APIServiceFactory.setBaseUrl(info.getIp()+":"+info.getPort());
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        UserManager.quit();
+        super.onBackPressed();
     }
 }

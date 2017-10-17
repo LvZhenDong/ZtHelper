@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.common.RxBusConstant;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
@@ -69,6 +70,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             @Override
             public void onClick(View v) {
                 //点击消息按钮
+                if (!isLogin()) return;
                 baseStartActivity(MessageActivity.class);
             }
         });
@@ -100,9 +102,9 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     }
 
-    private void checkVersion(){
-        String url = APIServiceFactory.getBaseUrl()+ MyConstants.API.Version+ ApkUtils.getVersionCode(this);
-        UpdateHelper updateHelper=new UpdateHelper.Builder(this)
+    private void checkVersion() {
+        String url = APIServiceFactory.getBaseUrl() + MyConstants.API.Version + ApkUtils.getVersionCode(this);
+        UpdateHelper updateHelper = new UpdateHelper.Builder(this)
                 .checkUrl(url)
                 .isHintNewVersion(false)
                 .build();
@@ -116,6 +118,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     @OnClick({R.id.rb_home, R.id.rb_parts, R.id.rb_feedback, R.id.rb_my})
     public void onClick(View view) {
+        if (view.getId() != R.id.rb_home && !isLogin())return;
         switch (view.getId()) {
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
@@ -160,6 +163,8 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private void onSearchClick(int type) {
+        if(!isLogin())return;
+
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(KEY_INTENT, type);
         startActivity(intent);
@@ -178,10 +183,23 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     @Override
     public void getNoReadMsgSuccess(int counts) {
-        if(counts>0)
+        if (counts > 0)
             showRedDot();
         else
             hideRedDot();
+    }
+
+    private boolean isLogin() {
+        if (!UserManager.isLogined()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra(KEY_INTENT_BOOLEAN, true);
+            startActivity(intent);
+            finish();
+
+            return false;
+        }
+
+        return true;
     }
 
 }

@@ -38,6 +38,8 @@ public interface PartsContract {
 
         void getPartsListSuccess(Store list);
 
+        void getPastsFail(String msg);
+
         void getMallSuccess();
     }
 }

@@ -11,6 +11,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.common.RxBusConstant;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.MyPresenterImpl;
@@ -151,14 +152,22 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @Override
     public void logoutSuccess() {
         mDialog.dismiss();
+        UserManager.quit();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(KEY_INTENT_BOOLEAN, true);
+        startActivity(intent);
         finish();
-        baseStartActivity(LoginActivity.class);
     }
 
     @Override
     public void logoutFail(String msg) {
         mDialog.dismiss();
-        ToastUtils.show(getActivity(), msg);
+        UserManager.quit();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(KEY_INTENT_BOOLEAN, true);
+        startActivity(intent);
+        finish();
+
     }
 
     @Override

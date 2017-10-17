@@ -9,16 +9,26 @@ package com.egr.drillinghelper.bean.response;
 public class LoginResponse {
 
     /**
+     * "id": "f7ec427ce8fd4fefa2fa70b80f662262"
      * name : 王伍
      * phone : 13207077777
      * company : xxx机械租赁公司
      * token : ea0b2ed8-efb3-4bb3-bc0b-0508c9ea3206
      */
 
+    private String id;
     private String name;
     private String phone;
     private String company;
     private String token;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

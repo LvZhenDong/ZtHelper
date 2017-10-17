@@ -44,7 +44,7 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
                 .subscribe(new EObserver<Store>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().getPastsFail(eMsg);
+                        presenter.getPastsFail(eMsg);
                     }
 
                     @Override

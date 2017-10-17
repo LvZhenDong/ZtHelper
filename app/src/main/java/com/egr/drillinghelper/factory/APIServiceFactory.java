@@ -106,20 +106,6 @@ public class APIServiceFactory {
         return httpClientBuilder.build();
     }
 
-    public static String getTOKEN() {
-        if (TextUtils.isEmpty(sToken)) {
-            sToken = MySharePreferencesManager.getInstance().getString("token","");
-        }
-        return sToken;
-    }
-
-    private static String sToken;
-
-    public static void setTOKEN(String token) {
-        sToken = token;
-        MySharePreferencesManager.getInstance().putString("token",token);
-    }
-
     public static void setBaseUrl(String url){
         baseUrl="http://" + url + "/egr/api/";
     }

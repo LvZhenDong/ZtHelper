@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.presenter;
 
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.FeedbackContract;
 import com.egr.drillinghelper.model.FeedbackModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
@@ -21,5 +22,11 @@ public class FeedbackPresenterImpl extends BasePresenter<FeedbackContract.View,
     @Override
     public void getFeedbackList() {
         mModel.getFeedbackList();
+    }
+
+    @Override
+    public void getFeedbackFail(String msg) {
+        if(UserManager.isLogined())
+            getView().getFeedbackFail(msg);
     }
 }

@@ -2,6 +2,7 @@ package com.egr.drillinghelper.presenter;
 
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.model.ExplainModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
@@ -48,5 +49,11 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
             getView().getExplainListSuccess(data);
         }
 
+    }
+
+    @Override
+    public void getExplainFail(String msg) {
+        if(UserManager.isLogined())
+            getView().getExplainFail(msg);
     }
 }

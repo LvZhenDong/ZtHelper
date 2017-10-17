@@ -38,7 +38,7 @@ public class FeedbackModelImpl extends BaseModel<FeedbackPresenterImpl> implemen
                 .subscribe(new EObserver<List<Feedback>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().getFeedbackFail(eMsg);
+                        presenter.getFeedbackFail(eMsg);
                     }
 
                     @Override

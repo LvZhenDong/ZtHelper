@@ -3,6 +3,7 @@ package com.egr.drillinghelper.presenter;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.model.PartsModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
@@ -49,6 +50,12 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
             current = store.getCurrent();
             getView().getPartsListSuccess(store);
         }
+    }
+
+    @Override
+    public void getPastsFail(String msg) {
+        if(UserManager.isLogined())
+            getView().getPastsFail(msg);
     }
 
 

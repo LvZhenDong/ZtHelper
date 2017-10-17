@@ -26,5 +26,7 @@ public interface FeedbackContract {
 
     interface Presenter extends IPresenter<View> {
         void getFeedbackList();
+
+        void getFeedbackFail(String msg);
     }
 }

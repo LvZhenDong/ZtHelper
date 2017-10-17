@@ -1,6 +1,5 @@
 package com.egr.drillinghelper.model;
 
-import android.os.Build;
 import android.text.TextUtils;
 
 import com.egr.drillinghelper.R;
@@ -14,7 +13,6 @@ import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
-import com.egr.drillinghelper.receiver.AppReceiver;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
@@ -68,7 +66,8 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
                                 onError(null,"登录失败");
                                 return;
                             }
-                            APIServiceFactory.setTOKEN(loginResponse.getToken());
+                            UserManager.setTOKEN(loginResponse.getToken());
+                            UserManager.setUserId(loginResponse.getId());
                             presenter.getView().loginSuccess();
                         }
                     });

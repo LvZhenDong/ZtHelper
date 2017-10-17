@@ -60,7 +60,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                             if (e.code == TIMEOUT_ERROR)
                                 showCache();
                             else
-                                presenter.getView().getExplainFail(eMsg);
+                                presenter.getExplainFail(eMsg);
                         }
 
                         @Override
@@ -78,7 +78,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
         try {
             presenter.getView().showExplainCache(CacheUtils.getExplains());
         } catch (Exception e) {
-            presenter.getView().getExplainFail(getContext().getString(R.string.net_error));
+            presenter.getExplainFail(getContext().getString(R.string.net_error));
         }
     }
 

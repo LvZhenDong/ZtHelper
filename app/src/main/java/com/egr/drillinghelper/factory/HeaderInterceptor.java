@@ -2,6 +2,8 @@ package com.egr.drillinghelper.factory;
 
 import android.text.TextUtils;
 
+import com.egr.drillinghelper.common.UserManager;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -18,7 +20,7 @@ class HeaderInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
-        String token = APIServiceFactory.getTOKEN();
+        String token = UserManager.getTOKEN();
         Request.Builder builder = original.newBuilder();
         if (!TextUtils.isEmpty(token)){
             builder.addHeader("token",token);

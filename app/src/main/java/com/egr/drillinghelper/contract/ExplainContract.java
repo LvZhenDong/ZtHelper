@@ -39,5 +39,7 @@ public interface ExplainContract {
         void loadMore();
 
         void getExplainListSuccess(BasePage<Explain> data);
+
+        void getExplainFail(String msg);
     }
 }

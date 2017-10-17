@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.common.UserManager;
+import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.MessageDetailActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.google.gson.Gson;
@@ -42,6 +43,7 @@ public class AppReceiver extends BroadcastReceiver {
         String string = bundle.getString(JPushInterface.EXTRA_MESSAGE);
         Logger.i("接受到推送消息:" + string);
         Message message = new Gson().fromJson(string, Message.class);
+        if(TextUtils.isEmpty(UserManager.getUserId()) || message.getId() != UserManager.getUserId())return;
         JPushLocalNotification ln = new JPushLocalNotification();
         ln.setBuilderId(0);
         ln.setContent(message.getMsg());
@@ -55,6 +57,14 @@ public class AppReceiver extends BroadcastReceiver {
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
         Message message = new Gson().fromJson(extras, Message.class);
         if (message == null || TextUtils.isEmpty(message.getId())) return;
+        if(TextUtils.isEmpty(UserManager.getUserId()) || message.getId() != UserManager.getUserId()){
+            Intent mIntent = new Intent(context, LoginActivity.class);
+            mIntent.putExtra(BaseMVPActivity.KEY_INTENT_BOOLEAN, true);
+            context.startActivity(mIntent);
+
+            return;
+        }
+
 
         Intent mIntent = new Intent(context, MessageDetailActivity.class);
         mIntent.putExtra(BaseMVPActivity.KEY_INTENT, message.getId());
