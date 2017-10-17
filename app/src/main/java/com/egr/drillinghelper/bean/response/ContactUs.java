@@ -42,10 +42,19 @@ public class ContactUs {
          * updatetime : 2017-09-26 16:23:33
          */
 
+        private String qrcode;
         private String salesTel;
         private String serviceTel;
         private String createtime;
         private String updatetime;
+
+        public String getQrcode() {
+            return qrcode;
+        }
+
+        public void setQrcode(String qrcode) {
+            this.qrcode = qrcode;
+        }
 
         public String getSalesTel() {
             return salesTel;

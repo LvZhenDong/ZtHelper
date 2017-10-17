@@ -17,6 +17,10 @@
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="MaxHeightWebView">
+        <attr name="maxWebHeight" format="dimension" />
+    </declare-styleable>
+
     <declare-styleable name="SwipeMenuView">
         <attr name="swipeEnable" format="boolean"/>
         <attr name="ios" format="boolean"/>

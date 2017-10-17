@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +26,8 @@ import me.shaohui.bottomdialog.BaseBottomDialog;
 public class ReadReplyDialog extends BaseBottomDialog {
     @BindView(R.id.iv_close)
     ImageView ivClose;
-    @BindView(R.id.tv_reply_content)
-    TextView tvReplyContent;
+    @BindView(R.id.wv)
+    WebView webView;
 
     String mContent;
 
@@ -38,13 +40,16 @@ public class ReadReplyDialog extends BaseBottomDialog {
     public void bindView(View v) {
         ButterKnife.bind(this, v);
 
+        WebSettings webSettings=webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        RichText.fromHtml(mContent).into(tvReplyContent);
+        webView.loadDataWithBaseURL("", mContent, "text/html", "utf-8", "");
     }
 
     public void showReply(FragmentManager manager,String content){

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.egr.drillinghelper.presenter.ContactUsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ContactUsAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.PhoneUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -44,6 +46,8 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     LinearLayout llService;
     @BindView(R.id.ll_sales)
     LinearLayout llSales;
+    @BindView(R.id.iv_qr)
+    ImageView ivQr;
     private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     String phone;
@@ -118,6 +122,8 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
 
                 llSales.setOnClickListener(onPhoneClickListener);
                 llService.setOnClickListener(onPhoneClickListener);
+
+                GlideUtils.load(contactUs.getAboutUs().getQrcode(),ivQr);
             }
         }
 

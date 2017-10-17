@@ -89,7 +89,6 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         notReadCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);
         if(!notReadCache)
             getWritePermission();
-        Logger.i(UserManager.getUserId());
     }
     public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0X98;
     private void getWritePermission(){

@@ -14,23 +14,20 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_close" />
 
-    <com.egr.drillinghelper.ui.widgets.MaxHeightScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:maxHeight="400dp"
-        android:minHeight="100dp"
-        android:fillViewport="true">
-
-        <TextView
-            android:id="@+id/tv_reply_content"
+        android:layout_height="match_parent">
+        <com.egr.drillinghelper.ui.widgets.MaxHeightWebView
+            android:id="@+id/wv"
+            app:maxWebHeight="400dp"
+            android:minHeight="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/padding_vertical"
             android:paddingRight="@dimen/padding_vertical"
-            android:textColor="@color/tv333"
-            android:textSize="@dimen/text_size_tv" />
-
-    </com.egr.drillinghelper.ui.widgets.MaxHeightScrollView>
+            android:layout_marginBottom="@dimen/margin_top"
+            android:layout_marginTop="@dimen/margin_top" />
+    </LinearLayout>
 
 
 </LinearLayout>
