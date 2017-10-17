@@ -31,7 +31,7 @@ public class MessagePresenterImpl extends BasePresenter<MessageContract.View,
 
     @Override
     public void getMsgListSuccess(BasePage<Message> data) {
-        if (data == null || CollectionUtil.isListEmpty(data.getRecords())) {
+        if (data != null && CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1) {
             getView().noMoreData();
         } else {
             current = data.getCurrent();

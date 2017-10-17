@@ -37,7 +37,7 @@ public class ReplyPresenterImpl extends BasePresenter<ReplyContract.View,
 
     @Override
     public void getReplySuccess(BasePage<Reply> data) {
-        if (data == null || CollectionUtil.isListEmpty(data.getRecords())){
+        if (CollectionUtil.isListEmpty(data.getRecords())){
             getView().noMoreData();
         } else{
             current = data.getCurrent();

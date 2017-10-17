@@ -62,7 +62,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
 
     @Override
     public void searchKnowSuccess(BasePage<KnowCatalog> data) {
-        if(CollectionUtil.isListEmpty(data.getRecords())){
+        if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
             getView().noMoreData();
         }else {
             current=data.getCurrent();
@@ -86,7 +86,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
 
     @Override
     public void searchExplainCatalogSuccess(BasePage<Explain> data) {
-        if(CollectionUtil.isListEmpty(data.getRecords())){
+        if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
             getView().noMoreData();
         }else {
             current=data.getCurrent();

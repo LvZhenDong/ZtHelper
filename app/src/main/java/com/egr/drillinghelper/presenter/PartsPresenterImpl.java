@@ -44,7 +44,7 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
 
     @Override
     public void getPartsListSuccess(Store store) {
-        if (store == null || CollectionUtil.isListEmpty(store.getRecords())) {
+        if (CollectionUtil.isListEmpty(store.getRecords()) && store.getCurrent() != 1) {
             getView().noMoreData();
         } else {
             current = store.getCurrent();

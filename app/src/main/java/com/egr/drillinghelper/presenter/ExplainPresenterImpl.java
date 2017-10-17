@@ -42,7 +42,7 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
 
     @Override
     public void getExplainListSuccess(BasePage<Explain> data) {
-        if (data == null || CollectionUtil.isListEmpty(data.getRecords())){
+        if (CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
             getView().noMoreData();
         } else{
             current = data.getCurrent();
