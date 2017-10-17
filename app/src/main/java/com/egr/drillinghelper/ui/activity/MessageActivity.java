@@ -3,11 +3,9 @@ package com.egr.drillinghelper.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.presenter.MessagePresenterImpl;
@@ -15,15 +13,11 @@ import com.egr.drillinghelper.ui.adapter.MessageAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;

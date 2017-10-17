@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.ui.widgets.SwipeMenuView;
