@@ -6,13 +6,11 @@ import android.view.View;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.contract.ReplyContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ReplyPresenterImpl;
-import com.egr.drillinghelper.ui.adapter.WaitForReplyAdapter;
-import com.egr.drillinghelper.ui.base.BaseFragment;
+import com.egr.drillinghelper.ui.adapter.ReplyAdapter;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -20,9 +18,6 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -38,7 +33,7 @@ public class FeedbackHistoryWaitFragment extends BaseMVPFragment<ReplyContract.V
     LRecyclerView rvInstruction;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private WaitForReplyAdapter mAdapter;
+    private ReplyAdapter mAdapter;
 
     @Override
     protected ReplyPresenterImpl createPresenter() {
@@ -56,7 +51,7 @@ public class FeedbackHistoryWaitFragment extends BaseMVPFragment<ReplyContract.V
     }
 
     private void initRv(){
-        mAdapter=new WaitForReplyAdapter(getActivity());
+        mAdapter=new ReplyAdapter(getActivity());
         mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
         rvInstruction.setAdapter(mLRecyclerViewAdapter);
 

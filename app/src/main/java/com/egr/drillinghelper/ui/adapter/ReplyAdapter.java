@@ -1,6 +1,8 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,13 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Reply;
+import com.egr.drillinghelper.ui.activity.GalleryActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
-import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +28,12 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class WaitForReplyAdapter extends BaseListAdapter<Reply,
-        WaitForReplyAdapter.ViewHolder> {
+public class ReplyAdapter extends BaseListAdapter<Reply,
+        ReplyAdapter.ViewHolder> {
 
-    public WaitForReplyAdapter(Context context) {
+    OnReplyClickListener mListener;
+
+    public ReplyAdapter(Context context) {
         super(context);
     }
 
@@ -45,18 +48,32 @@ public class WaitForReplyAdapter extends BaseListAdapter<Reply,
         Reply item = getDataList().get(position);
         holder.tvTime.setText(item.getUpdatetime());
         holder.tvInfo.setText(item.getQuestion());
-        if(CollectionUtil.isListEmpty(item.getAttachments())){
+        if (CollectionUtil.isListEmpty(item.getAttachments())) {
             holder.ivImg.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.ivImg.setVisibility(View.VISIBLE);
-            GlideUtils.load(item.getAttachments().get(0),holder.ivImg);
+            GlideUtils.load(item.getAttachments().get(0), holder.ivImg);
         }
         holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getAnswer()) ? View.INVISIBLE : View.VISIBLE);
     }
 
     void showReply(int position) {
-        if(mListener != null)
+        if (mListener != null)
             mListener.onReplyClick(getDataList().get(position).getAnswer());
+    }
+
+    void showImgs(int position) {
+        Intent intent=new Intent(mContext, GalleryActivity.class);
+        intent.putExtra(BaseMVPActivity.KEY_INTENT,getDataList().get(position).getAttachments());
+        mContext.startActivity(intent);
+    }
+
+    public void setOnReplyClickListener(OnReplyClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnReplyClickListener {
+        void onReplyClick(String reply);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,19 +92,21 @@ public class WaitForReplyAdapter extends BaseListAdapter<Reply,
             ButterKnife.bind(this, itemView);
 
             tvReadReply.setOnClickListener(this);
+            ivImg.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            showReply(getAdapterPosition()-1);  //有下拉刷新，所以-1
+            switch (v.getId()) {
+                case R.id.tv_read_reply:
+                    showReply(getAdapterPosition() - 1);  //有下拉刷新，所以-1
+                    break;
+                case R.id.iv_img:
+                    showImgs(getAdapterPosition() - 1);
+                    break;
+            }
+
         }
-    }
-    OnReplyClickListener mListener;
-    public void setOnReplyClickListener(OnReplyClickListener listener){
-        mListener=listener;
-    }
-    public interface OnReplyClickListener{
-        void onReplyClick(String reply);
     }
 
 }

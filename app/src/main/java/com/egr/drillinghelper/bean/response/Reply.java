@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.bean.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class Reply {
     private String photos;
     private String answer;
     private int status;
-    private List<String> attachments;
+    private ArrayList<String> attachments;
 
     public String getAnswer() {
         return answer;
@@ -86,11 +87,11 @@ public class Reply {
         this.status = status;
     }
 
-    public List<String> getAttachments() {
+    public ArrayList<String> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<String> attachments) {
+    public void setAttachments(ArrayList<String> attachments) {
         this.attachments = attachments;
     }
 

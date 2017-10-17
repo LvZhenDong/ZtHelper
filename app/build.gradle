@@ -131,6 +131,7 @@ dependencies {
     //    极光推送
     compile 'cn.jiguang.sdk:jpush:3.0.9'
     compile 'cn.jiguang.sdk:jcore:1.1.7'
+    compile 'com.github.ybq:parallaxviewpager:2.0.0'
     compile project(':version')
 
 }

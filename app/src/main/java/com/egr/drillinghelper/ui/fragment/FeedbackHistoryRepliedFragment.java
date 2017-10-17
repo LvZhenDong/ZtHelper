@@ -10,7 +10,7 @@ import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.contract.ReplyContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ReplyPresenterImpl;
-import com.egr.drillinghelper.ui.adapter.WaitForReplyAdapter;
+import com.egr.drillinghelper.ui.adapter.ReplyAdapter;
 import com.egr.drillinghelper.ui.widgets.ReadReplyDialog;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -30,12 +30,12 @@ import butterknife.BindView;
 
 public class FeedbackHistoryRepliedFragment extends BaseMVPFragment<ReplyContract.View,
         ReplyPresenterImpl> implements ReplyContract.View,
-        WaitForReplyAdapter.OnReplyClickListener {
+        ReplyAdapter.OnReplyClickListener {
     @BindView(R.id.rv_instruction)
     LRecyclerView rvInstruction;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private WaitForReplyAdapter mAdapter;
+    private ReplyAdapter mAdapter;
 
     @Override
     protected ReplyPresenterImpl createPresenter() {
@@ -53,7 +53,7 @@ public class FeedbackHistoryRepliedFragment extends BaseMVPFragment<ReplyContrac
     }
 
     private void initRv(){
-        mAdapter=new WaitForReplyAdapter(getActivity());
+        mAdapter=new ReplyAdapter(getActivity());
         mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
         mAdapter.setOnReplyClickListener(this);
         rvInstruction.setAdapter(mLRecyclerViewAdapter);
