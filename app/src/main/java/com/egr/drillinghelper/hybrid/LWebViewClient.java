@@ -18,16 +18,10 @@ public class LWebViewClient extends WebViewClient {
 
 
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (url.startsWith("tel:")) {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(url));
-            view.getContext().startActivity(intent);
-            return true;
-        }
-        view.loadUrl(url);
-        return true;
+    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        return super.shouldOverrideUrlLoading(view, request);
     }
+
 
     /**
      * API 21 以上用shouldInterceptRequest(WebView view, WebResourceRequest request)
