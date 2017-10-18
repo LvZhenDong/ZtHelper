@@ -14,12 +14,15 @@ import com.egr.drillinghelper.interfaces.OnItemClickListener;
 import com.egr.drillinghelper.ui.adapter.ShareAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -42,10 +45,13 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
     ShareAdapter adapter;
     Context mContent;
     Share share;
+    String text,url;
 
     public void setContent(Context mContent, Share share) {
         this.mContent = mContent;
         this.share = share;
+        url=share.getQrcode();
+        text=TextUtils.isEmpty(share.getContent())?getString(R.string.app_name):share.getContent();
     }
 
     @Override
@@ -79,43 +85,18 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
         adapter.setListener(this);
     }
 
-    private void showShare(Share share, String type) {
+    private void showShare(String type) {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         oks.setPlatform(type);
 
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-//        oks.setTitle(getString(R.string.share));
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-//        oks.setTitleUrl(share.getQrcode());
-        // text是分享文本，所有平台都需要这个字段
-//        oks.setText(share.getContent());
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-//        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-//        oks.setImageUrl(share.getQrcode());
-        // url仅在微信（包括好友和朋友圈）中使用
-//        oks.setUrl("http://sharesdk.cn");
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-//        oks.setComment("我是测试评论文本");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-//        oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-//        oks.setSiteUrl(share.getQrcode());
-
         // 启动分享GUI
-
-        String url=share.getQrcode();
         oks.setTitle(getString(R.string.app_name));
         oks.setTitleUrl(url);
-        String text=TextUtils.isEmpty(share.getContent())?getString(R.string.app_name):share.getContent();
         oks.setText(text);
         oks.setImageUrl(url);      //如果图片不能加载出来，则微博分享会失败
-        oks.setImagePath(url);
-        oks.setUrl(url); //微信不绕过审核分享链接
-        oks.setSite(getString(R.string.app_name));  //QZone分享完之后返回应用时提示框上显示的名称
-        oks.setSiteUrl(url);//QZone分享参数
+        oks.setUrl(url);
 
         // 启动分享
         oks.show(mContent);
@@ -141,7 +122,7 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
                 type = SinaWeibo.NAME;
                 break;
         }
-        showShare(share, type);
+        showShare(type);
         dismiss();
     }
 }
