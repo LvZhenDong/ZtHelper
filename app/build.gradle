@@ -44,6 +44,8 @@ android {
         ]
     }
 
+
+
     buildTypes {
         release {
             buildConfigField "String","BASE_URL","\"http://101.201.222.160:8083/egr/api/\""
@@ -76,6 +78,24 @@ android {
     lintOptions{
         checkReleaseBuilds false
         abortOnError false
+    }
+
+    signingConfigs {
+
+        debug {
+            storeFile file('./egr.jks')
+            storePassword "123456"
+            keyAlias "egr"
+            keyPassword "123456"
+        }
+
+        release {
+            storeFile file('./egr.jks')
+            storePassword "123456"
+            keyAlias "egr"
+            keyPassword "123456"
+        }
+
     }
 }
 
