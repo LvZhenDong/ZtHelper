@@ -2,7 +2,6 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -16,7 +15,6 @@ import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
@@ -59,7 +57,7 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
         mDialog.dismiss();
         tvMsg.setText(msg.getMsg());
         setActionBarTitle(msg.getTitle());
-        EgrRxBus.post(RxBusConstant.UPDATE_MSG_NO_READ);
+        EgrRxBus.post(RxBusConstant.UPDATE_MSG);
     }
 
     @Override

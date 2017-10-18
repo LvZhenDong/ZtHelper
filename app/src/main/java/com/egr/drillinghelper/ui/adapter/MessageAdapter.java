@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.Instruction;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.ui.widgets.SwipeMenuView;
@@ -25,6 +25,8 @@ import butterknife.ButterKnife;
 
 public class MessageAdapter extends BaseListAdapter<Message,
         MessageAdapter.ViewHolder> {
+
+    private SwipeListener listener;
 
     public MessageAdapter(Context context) {
         super(context);
@@ -42,10 +44,24 @@ public class MessageAdapter extends BaseListAdapter<Message,
         holder.tvInfo.setText(item.getMsg());
         holder.tvTitle.setText(item.getTitle());
         holder.tvTime.setText(item.getUpdatetime());
+        holder.tvTitle.setTextColor(ContextCompat.getColor(mContext,
+                item.isIsRead() ? R.color.tv999 : R.color.tv333));
+        holder.tvInfo.setTextColor(ContextCompat.getColor(mContext,
+                item.isIsRead() ? R.color.tv999 : R.color.tv666));
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void setListener(SwipeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SwipeListener {
+        void onDelete(int position);
+
+        void onItemClick(int position);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.tv_time)
         TextView tvTime;
@@ -59,6 +75,7 @@ public class MessageAdapter extends BaseListAdapter<Message,
         TextView tvDelete;
         @BindView(R.id.cv_msg)
         CardView cvMsg;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -69,28 +86,16 @@ public class MessageAdapter extends BaseListAdapter<Message,
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.cv_msg:
-                    if(listener != null)
-                        listener.onItemClick(getAdapterPosition()-1);
+                    if (listener != null)
+                        listener.onItemClick(getAdapterPosition() - 1);
                     break;
                 case R.id.tv_delete:
-                    if(listener != null)
-                        listener.onDelete(getAdapterPosition()-1);
+                    if (listener != null)
+                        listener.onDelete(getAdapterPosition() - 1);
                     break;
             }
         }
-    }
-
-    private SwipeListener listener;
-
-    public void setListener(SwipeListener listener) {
-        this.listener = listener;
-    }
-
-    public interface SwipeListener{
-        void onDelete(int position);
-
-        void onItemClick(int position);
     }
 }

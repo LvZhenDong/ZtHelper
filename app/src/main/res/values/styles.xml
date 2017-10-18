@@ -106,7 +106,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/padding_vertical</item>
         <item name="android:paddingRight">@dimen/padding_vertical</item>
-        <item name="android:background">@drawable/bg_white_btn</item>
+        <item name="android:background">@drawable/bg_white_selector</item>
     </style>
 
     <style name="TvContactUs">

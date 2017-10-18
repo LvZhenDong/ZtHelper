@@ -92,7 +92,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         EgrRxBus.subscribe(this, String.class, new Consumer<String>() {
             @Override
             public void accept(@NonNull String s) throws Exception {
-                if (s.equals(RxBusConstant.UPDATE_MSG_NO_READ))
+                if (s.equals(RxBusConstant.UPDATE_MSG))
                     presenter.getNoReadMsg();
             }
         });

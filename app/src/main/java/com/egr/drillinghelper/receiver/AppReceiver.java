@@ -12,7 +12,6 @@ import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
-import com.egr.drillinghelper.ui.activity.HomeActivity;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.MessageDetailActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -23,8 +22,6 @@ import com.orhanobut.logger.Logger;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
-
-import static android.R.id.message;
 
 /**
  * author lzd
@@ -53,8 +50,9 @@ public class AppReceiver extends BroadcastReceiver {
         Logger.i("接受到推送消息:" + string);
         Message message = new Gson().fromJson(string, Message.class);
         Logger.i("userId:"+UserManager.getUserId());
-        if(TextUtils.isEmpty(UserManager.getUserId()) || !message.getUserId().equals(UserManager.getUserId()))return;
-        if(!message.isLoginConflict()){
+        if(TextUtils.isEmpty(UserManager.getUserId()) ||
+                !TextUtils.equals(UserManager.getUserId(),message.getUserId()))return;
+        if(message.isLoginConflict()){
             showLoginConflictDialog(message);
         }else {
             showMessage(context,message,string);
@@ -88,6 +86,7 @@ public class AppReceiver extends BroadcastReceiver {
     }
 
     private void showMessage(Context context,Message message,String string){
+        EgrRxBus.post(RxBusConstant.UPDATE_MSG);
         JPushLocalNotification ln = new JPushLocalNotification();
         ln.setBuilderId(0);
         ln.setContent(message.getMsg());

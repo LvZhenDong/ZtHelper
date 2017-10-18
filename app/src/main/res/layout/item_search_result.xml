@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/rl_catalog"
-    android:background="@drawable/bg_white_selector"
-    android:orientation="vertical">
+    android:background="@drawable/bg_white_selector">
 
     <TextView
         android:id="@+id/tv_title"

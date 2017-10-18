@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_white_btn"
     android:id="@+id/ll_question"
-    style="@style/LvMy">
+    style="@style/LvMy"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_item_question"
@@ -15,6 +15,6 @@
     <View
         android:id="@+id/line"
         style="@style/Line"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="2px" />
 
 </LinearLayout>
