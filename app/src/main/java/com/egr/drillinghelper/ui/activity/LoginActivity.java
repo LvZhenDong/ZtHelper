@@ -78,8 +78,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 
-//        etPhoneNum.setText("18202806302");
-//        etPasw.setText("12345678");
+        etPhoneNum.setText("18202806302");
+        etPasw.setText("12345678");
 
         if(BuildConfig.DEBUG){
             FloatWindowUtils floatWindowUtils = new FloatWindowUtils();

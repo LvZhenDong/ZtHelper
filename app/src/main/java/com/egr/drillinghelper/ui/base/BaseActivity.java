@@ -39,7 +39,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         setContentView(returnLayoutID());
         actionBar = getSupportActionBar();
         unbinder = ButterKnife.bind(this);

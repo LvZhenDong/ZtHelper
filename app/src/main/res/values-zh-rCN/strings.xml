@@ -79,6 +79,7 @@
     <string name="commit_success">提交成功</string>
     <string name="ensure_quit_title">确定退出</string>
     <string name="ensure_quit_content">您确定要退出登录吗？</string>
+    <string name="quit_login">退出登录</string>
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
     <string name="confirm_dialog_title_phone">拨打电话</string>

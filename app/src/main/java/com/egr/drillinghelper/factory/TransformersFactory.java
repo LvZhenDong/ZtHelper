@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.factory;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
@@ -92,6 +93,20 @@ public class TransformersFactory {
                         .map(new NullResponseFuc())
                         .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>())
                         .compose(activity.<NullBodyResponse>bindUntilEvent(ActivityEvent.DESTROY));
+            }
+        };
+    }
+
+    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
+    nullBodyTransformer() {
+        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
+            @Override
+            public ObservableSource<NullBodyResponse> apply(@NonNull
+                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
+                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
+                        .io())
+                        .map(new NullResponseFuc())
+                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>());
             }
         };
     }

@@ -30,6 +30,7 @@ android {
         versionName "1.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -80,12 +81,12 @@ android {
 
     signingConfigs {
 
-        debug {
-            storeFile file('./egr.jks')
-            storePassword "123456"
-            keyAlias "egr"
-            keyPassword "123456"
-        }
+//        debug {
+//            storeFile file('./egr.jks')
+//            storePassword "123456"
+//            keyAlias "egr"
+//            keyPassword "123456"
+//        }
 
         release {
             storeFile file('./egr.jks')

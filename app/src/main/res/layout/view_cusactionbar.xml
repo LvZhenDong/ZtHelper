@@ -11,7 +11,7 @@
         android:layout_centerVertical="true"
         android:padding="10dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_arrow_back"
+        android:src="@drawable/ic_egr_back"
         android:visibility="visible" />
 
     <ImageView

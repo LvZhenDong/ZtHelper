@@ -235,6 +235,11 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     @Override
     public void searchKnowSuccess(List<KnowCatalog> knowCatalogs,
                                   List<String> titles) {
+        int[] pos = new int[2];
+        etSearch.getLocationInWindow(pos);
+        if (mAdapter != null)
+            mAdapter.setPaddingLeft(pos[0] + DensityUtils.dp2px(SearchActivity.this, 10));
+
         rvResult.refreshComplete(10);
         mDialog.dismiss();
         mAdapter.setDataList(titles);
@@ -243,6 +248,11 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     @Override
     public void searchParts(List<Parts> parts, List<String> titles) {
+        int[] pos = new int[2];
+        etSearch.getLocationInWindow(pos);
+        if (mAdapter != null)
+            mAdapter.setPaddingLeft(pos[0] + DensityUtils.dp2px(SearchActivity.this, 10));
+
         rvResult.refreshComplete(10);
         mDialog.dismiss();
         mAdapter.setDataList(titles);
@@ -251,6 +261,11 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     @Override
     public void searchExplainCatalog(List<Explain> explainCatalogs, List<String> titles) {
+        int[] pos = new int[2];
+        etSearch.getLocationInWindow(pos);
+        if (mAdapter != null)
+            mAdapter.setPaddingLeft(pos[0] + DensityUtils.dp2px(SearchActivity.this, 10));
+
         rvResult.refreshComplete(10);
         mDialog.dismiss();
         mAdapter.setDataList(titles);

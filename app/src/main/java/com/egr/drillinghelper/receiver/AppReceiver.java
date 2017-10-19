@@ -8,10 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.api.error.EObserver;
+import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.response.Message;
+import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
+import com.egr.drillinghelper.factory.APIServiceFactory;
+import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.MessageDetailActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -22,6 +28,9 @@ import com.orhanobut.logger.Logger;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
+import io.reactivex.annotations.NonNull;
+
+import static android.R.id.message;
 
 /**
  * author lzd
@@ -53,7 +62,7 @@ public class AppReceiver extends BroadcastReceiver {
         if(TextUtils.isEmpty(UserManager.getUserId()) ||
                 !TextUtils.equals(UserManager.getUserId(),message.getUserId()))return;
         if(message.isLoginConflict()){
-            showLoginConflictDialog(message);
+            showLoginConflictDialog(context,message);
         }else {
             showMessage(context,message,string);
         }
@@ -63,10 +72,11 @@ public class AppReceiver extends BroadcastReceiver {
      * 弹出登录冲突dialog
      * @param message
      */
-    private void showLoginConflictDialog(Message message){
+    private void showLoginConflictDialog(Context context,Message message){
         final Activity activity= EgrAppManager.getInstance().currentActivity();
+        String ensure=context.getString(R.string.quit_login);
         Dialog dialog= DialogHelper.openConfirmDialog(activity, message.getTitle(), message.getMsg(),
-                true, new DialogHelper.OnDialogClickListener() {
+                true,ensure, new DialogHelper.OnDialogClickListener() {
                     @Override
                     public void onEnsureClick() {
                         UserManager.quit();
@@ -83,6 +93,27 @@ public class AppReceiver extends BroadcastReceiver {
                 });
 
         dialog.show();
+        readLoginConflictMsg(message.getId());
+    }
+
+    /**
+     * 将登录冲突消息标记为已读
+     */
+    private void readLoginConflictMsg(String messageId){
+        APIServiceFactory.getInstance().createService()
+                .readMsg(messageId)
+                .compose(TransformersFactory.<NullBodyResponse>nullBodyTransformer())
+                .subscribe(new EObserver<NullBodyResponse>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull NullBodyResponse data) {
+
+                    }
+                });
     }
 
     private void showMessage(Context context,Message message,String string){
