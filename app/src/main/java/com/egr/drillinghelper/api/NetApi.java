@@ -175,6 +175,10 @@ public interface NetApi {
     @DELETE("user/logout")
     Observable<BaseResponseBean<NullBodyResponse>> logout();
 
+    /**
+     * 关于EGR
+     * @return
+     */
     @GET("about/detail")
     Observable<BaseResponseBean<String>> getAbout();
 
