@@ -25,6 +25,7 @@ import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.AnimViewWrapper;
@@ -43,8 +44,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
-
-import static com.egr.drillinghelper.R.string.parts;
 
 /**
  * author lzd
@@ -208,7 +207,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 break;
             case SEARCH_TYPE_KNOWLEDGE: //知识问答
                 Intent intentKnow = new Intent(this, KnowArticleActivity.class);
-                intentKnow.putExtra(BaseMVPActivity.KEY_INTENT, mKnowCatalogs.get(position).getContent());
+                intentKnow.putExtra(BaseActivity.KEY_INTENT, mKnowCatalogs.get(position).getContent());
                 startActivity(intentKnow);
                 break;
             case SEARCH_TYPE_PARTS: //配件

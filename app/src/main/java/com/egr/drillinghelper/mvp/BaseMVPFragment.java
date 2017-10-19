@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.FragmentUserVisibleController;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -30,8 +30,8 @@ import io.reactivex.subjects.BehaviorSubject;
  */
 public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> extends Fragment
         implements LifecycleProvider<FragmentEvent>, IView, IMvpBase<V>, FragmentUserVisibleController.UserVisibleCallback {
-    public static final String KEY_INTENT= BaseMVPActivity.KEY_INTENT;
-    public static final String KEY_INTENT_BOOLEAN= BaseMVPActivity.KEY_INTENT_BOOLEAN;
+    public static final String KEY_INTENT= BaseActivity.KEY_INTENT;
+    public static final String KEY_INTENT_BOOLEAN= BaseActivity.KEY_INTENT_BOOLEAN;
     protected ViewGroup view;
     Unbinder unbinder;
     protected P presenter;

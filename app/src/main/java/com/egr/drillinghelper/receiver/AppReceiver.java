@@ -20,7 +20,7 @@ import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.MessageDetailActivity;
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.google.gson.Gson;
@@ -29,8 +29,6 @@ import com.orhanobut.logger.Logger;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
 import io.reactivex.annotations.NonNull;
-
-import static android.R.id.message;
 
 /**
  * author lzd
@@ -82,7 +80,7 @@ public class AppReceiver extends BroadcastReceiver {
                         UserManager.quit();
                         EgrAppManager.getInstance().finishAllActivity();
                         Intent intent = new Intent(activity, LoginActivity.class);
-                        intent.putExtra(BaseMVPActivity.KEY_INTENT_BOOLEAN, true);
+                        intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, true);
                         activity.startActivity(intent);
                     }
 
@@ -133,7 +131,7 @@ public class AppReceiver extends BroadcastReceiver {
         if (message == null || TextUtils.isEmpty(message.getId())) return;
         if(TextUtils.isEmpty(UserManager.getUserId()) || !message.getUserId().equals(UserManager.getUserId())){
             Intent mIntent = new Intent(context, LoginActivity.class);
-            mIntent.putExtra(BaseMVPActivity.KEY_INTENT_BOOLEAN, true);
+            mIntent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, true);
             context.startActivity(mIntent);
 
             return;
@@ -141,7 +139,7 @@ public class AppReceiver extends BroadcastReceiver {
 
 
         Intent mIntent = new Intent(context, MessageDetailActivity.class);
-        mIntent.putExtra(BaseMVPActivity.KEY_INTENT, message.getId());
+        mIntent.putExtra(BaseActivity.KEY_INTENT, message.getId());
         context.startActivity(mIntent);
     }
 

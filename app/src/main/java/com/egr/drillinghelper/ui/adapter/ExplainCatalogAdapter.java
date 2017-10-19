@@ -15,15 +15,12 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.activity.ArticleActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.DensityUtils;
-import com.egr.drillinghelper.utils.video.VideoUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.R.attr.id;
 
 /**
  * author lzd
@@ -65,7 +62,7 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         ExplainCatalog item = getDataList().get(position);
         if (!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")) {
             Intent intent = new Intent(mContext, ArticleActivity.class);
-            intent.putExtra(BaseMVPActivity.KEY_INTENT, item.getArticleId());
+            intent.putExtra(BaseActivity.KEY_INTENT, item.getArticleId());
             intent.putExtra("catalogId",catalogId);
             mContext.startActivity(intent);
         }
