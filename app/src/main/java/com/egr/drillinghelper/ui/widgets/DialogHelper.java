@@ -3,6 +3,7 @@ package com.egr.drillinghelper.ui.widgets;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -51,6 +52,10 @@ public class DialogHelper {
 //    }
 //
 
+    public static Dialog openConfirmDialog(Context context, String title, String content,boolean singleBtn,
+                                           final OnDialogClickListener listener) {
+        return openConfirmDialog(context, title, content, singleBtn,null, listener);
+    }
     /**
      * open a confirm and cancel dialog
      *
@@ -59,10 +64,10 @@ public class DialogHelper {
      * @param content
      * @return
      */
-    public static Dialog openConfirmDialog(Context context, String title, String content,boolean singleBtn,
+    public static Dialog openConfirmDialog(Context context, String title, String content,boolean singleBtn,String ensure,
                                            final OnDialogClickListener listener) {
         String left=context.getString(R.string.cancel);
-        String right=context.getString(R.string.sure);
+        String right= TextUtils.isEmpty(ensure)?context.getString(R.string.sure):ensure;
         View layout = View.inflate(context, R.layout.dialog_confirm, null);
         final Dialog dialog = new Dialog(context, R.style.LLDialog);
         dialog.setContentView(layout);

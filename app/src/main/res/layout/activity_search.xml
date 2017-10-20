@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             android:padding="10dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_arrow_back" />
+            android:src="@drawable/ic_egr_back" />
 
         <TextView
             android:id="@+id/tv_search"

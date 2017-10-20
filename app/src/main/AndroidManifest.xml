@@ -182,7 +182,8 @@
         <activity android:name=".ui.activity.ForgetPswdActivity" />
         <activity android:name=".ui.activity.HomeActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.CreateFeedbackActivity" />
+        <activity android:name=".ui.activity.CreateFeedbackActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity android:name=".ui.activity.FeedbackHistoryActivity" />
         <activity android:name=".ui.activity.MessageActivity" />
         <activity

@@ -2,6 +2,7 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
@@ -42,9 +43,13 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
 
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
+        WebSettings settings=webView.getSettings();
+        settings.setAllowFileAccess(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false); //不显示webview缩放按钮
+//        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);

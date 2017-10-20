@@ -1,7 +1,6 @@
 package com.egr.drillinghelper.bean.response;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * author lzd

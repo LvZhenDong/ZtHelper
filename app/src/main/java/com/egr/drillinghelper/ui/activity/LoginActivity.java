@@ -82,6 +82,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         SharePreHelper.getIns().initialize(this,"");
         etPhoneNum.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_NAME));
         etPasw.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_PSW));
+        etPhoneNum.setSelection(etPhoneNum.length());
+
 
 
         if(BuildConfig.DEBUG){

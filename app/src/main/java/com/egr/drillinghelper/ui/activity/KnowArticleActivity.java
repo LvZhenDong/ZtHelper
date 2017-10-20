@@ -33,6 +33,7 @@ public class KnowArticleActivity extends BaseActivity {
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false); //不显示webview缩放按钮
 
         String content = getIntent().getStringExtra(KEY_INTENT);
         boolean isCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);

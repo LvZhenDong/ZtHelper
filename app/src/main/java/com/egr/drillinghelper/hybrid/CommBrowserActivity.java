@@ -72,7 +72,7 @@ public class CommBrowserActivity extends BaseActivity {
     private void initActionBar() {
         setupActionBar(R.string.browser_title_default);
         setActionBarTitle(title);
-        setActionBarLeftIcon(R.drawable.ic_arrow_back, new View.OnClickListener() {
+        setActionBarLeftIcon(R.drawable.ic_egr_back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pressBack();

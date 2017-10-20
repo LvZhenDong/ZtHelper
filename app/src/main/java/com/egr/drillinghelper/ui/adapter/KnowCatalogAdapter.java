@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.ui.activity.KnowArticleActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,8 +78,8 @@ public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
         KnowCatalog item = getDataList().get(position);
         if (!TextUtils.isEmpty(item.getContent())) {
             Intent intent = new Intent(mContext, KnowArticleActivity.class);
-            intent.putExtra(BaseMVPActivity.KEY_INTENT, item.getContent());
-            intent.putExtra(BaseMVPActivity.KEY_INTENT_BOOLEAN,isCache);
+            intent.putExtra(BaseActivity.KEY_INTENT, item.getContent());
+            intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN,isCache);
             mContext.startActivity(intent);
         }
     }

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.ui.activity.FeedbackDetailActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +62,7 @@ public class QuestionAdapter extends BaseListAdapter<Feedback, QuestionAdapter.V
 
     private void getDetail(int position){
         Intent intent=new Intent(mContext, FeedbackDetailActivity.class);
-        intent.putExtra(BaseMVPActivity.KEY_INTENT,getDataList().get(position).getId());
+        intent.putExtra(BaseActivity.KEY_INTENT,getDataList().get(position).getId());
         mContext.startActivity(intent);
     }
 }

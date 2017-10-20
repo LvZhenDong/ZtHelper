@@ -31,6 +31,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -174,6 +175,10 @@ public interface NetApi {
     @DELETE("user/logout")
     Observable<BaseResponseBean<NullBodyResponse>> logout();
 
+    /**
+     * 关于EGR
+     * @return
+     */
     @GET("about/detail")
     Observable<BaseResponseBean<String>> getAbout();
 
@@ -269,6 +274,14 @@ public interface NetApi {
      */
     @DELETE("message/delete")
     Observable<BaseResponseBean<NullBodyResponse>> deleteMsg(@Query("messageIds") String id);
+
+    /**
+     * 将消息标记为已读
+     * @param id
+     * @return
+     */
+    @PUT("message/read")
+    Observable<BaseResponseBean<NullBodyResponse>> readMsg(@Query("messageIds") String id); //多条用,隔开
 
     @GET("about/share")
     Observable<BaseResponseBean<Share>> share();

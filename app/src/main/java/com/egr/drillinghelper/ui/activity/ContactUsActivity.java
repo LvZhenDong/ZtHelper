@@ -83,7 +83,12 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     private void initRv() {
         mAdapter = new ContactUsAdapter(getActivity());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        rvMessage.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvMessage.setLayoutManager(new LinearLayoutManager(getActivity()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;   //解决滑动卡顿问题，禁止recyclerView滑动
+            }
+        });
         rvMessage.setAdapter(mLRecyclerViewAdapter);
         rvMessage.setLoadMoreEnabled(false);
         rvMessage.setPullRefreshEnabled(false);

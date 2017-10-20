@@ -43,6 +43,7 @@ public class ReadReplyDialog extends BaseBottomDialog {
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false); //不显示webview缩放按钮
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

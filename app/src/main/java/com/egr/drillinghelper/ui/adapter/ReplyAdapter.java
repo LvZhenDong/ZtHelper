@@ -2,7 +2,6 @@ package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.ui.activity.GalleryActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
-import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
 
@@ -64,7 +63,7 @@ public class ReplyAdapter extends BaseListAdapter<Reply,
 
     void showImgs(int position) {
         Intent intent=new Intent(mContext, GalleryActivity.class);
-        intent.putExtra(BaseMVPActivity.KEY_INTENT,getDataList().get(position).getAttachments());
+        intent.putExtra(BaseActivity.KEY_INTENT,getDataList().get(position).getAttachments());
         mContext.startActivity(intent);
     }
 
