@@ -23,6 +23,7 @@ import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.ShareDialog;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.GlideUtils;
+import com.egr.drillinghelper.utils.SharePreHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -107,6 +108,10 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                             public void onEnsureClick() {
                                 if (!mDialog.isShowing())
                                     mDialog.show();
+
+                                SharePreHelper.getIns().initialize(getContext(),"");
+                                SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_NAME,"");
+                                SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,"");
                                 presenter.quit();
                             }
 

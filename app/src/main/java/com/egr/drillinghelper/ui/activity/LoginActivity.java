@@ -21,6 +21,7 @@ import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.PhoneUtils;
+import com.egr.drillinghelper.utils.SharePreHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.orhanobut.logger.Logger;
 
@@ -78,8 +79,10 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 
-//        etPhoneNum.setText("18202806302");
-//        etPasw.setText("12345678");
+        SharePreHelper.getIns().initialize(this,"");
+        etPhoneNum.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_NAME));
+        etPasw.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_PSW));
+
 
         if(BuildConfig.DEBUG){
             FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
@@ -151,6 +154,9 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @Override
     public void loginSuccess() {
+
+        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_NAME,etPhoneNum.getText().toString());
+        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,etPasw.getText().toString());
         mDialog.dismiss();
         baseStartActivity(HomeActivity.class);
         finish();
