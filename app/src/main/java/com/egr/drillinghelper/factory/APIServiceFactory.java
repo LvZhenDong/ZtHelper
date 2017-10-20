@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.app.MyApplication;
-import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.egr.drillinghelper.utils.FileUtils;
 import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
@@ -22,12 +21,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
 public class APIServiceFactory {
 
     private final static long DEFAULT_TIMEOUT = 10;
-    private final Gson mGsonDateFormat;
     static String baseUrl;
+    private final Gson mGsonDateFormat;
+    NetApi netApi;
 
     private APIServiceFactory() {
         mGsonDateFormat = new GsonBuilder()
@@ -35,34 +34,37 @@ public class APIServiceFactory {
                 .create();
     }
 
-    private static class SingletonHolder {
-        private static final APIServiceFactory INSTANCE = new APIServiceFactory();
-    }
-
     public static APIServiceFactory getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    NetApi netApi;
-    HeaderInterceptor headerInterceptor;
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public static void setBaseUrl(String url) {
+        baseUrl = "http://" + url + "/egr/api/";
+    }
+
     /**
      * create a service
      *
      * @return
      */
     public NetApi createService() {
-        if(netApi == null){
-            if(TextUtils.isEmpty(baseUrl))
+
+        if (netApi == null) {
+            if (TextUtils.isEmpty(baseUrl))
                 baseUrl = BuildConfig.BASE_URL;
-            if(headerInterceptor == null)headerInterceptor=new HeaderInterceptor();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(getOkHttpClient())
                     .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
-            return retrofit.create(NetApi.class);
-        }else {
+            netApi = retrofit.create(NetApi.class);
+            return netApi;
+        } else {
             return netApi;
         }
 
@@ -79,29 +81,21 @@ public class APIServiceFactory {
         File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getInstance()), "OkHttpCache");
         httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
         if (BuildConfig.DEBUG) {
-
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
-
-
                     L.printJson(message);
-
                 }
             });
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addNetworkInterceptor(httpLoggingInterceptor);
         }
 
-        httpClientBuilder.addInterceptor(headerInterceptor);
+        httpClientBuilder.addInterceptor(new HeaderInterceptor());
         return httpClientBuilder.build();
     }
 
-    public static void setBaseUrl(String url){
-        baseUrl="http://" + url + "/egr/api/";
-    }
-
-    public static String getBaseUrl(){
-        return baseUrl;
+    private static class SingletonHolder {
+        private static final APIServiceFactory INSTANCE = new APIServiceFactory();
     }
 }
