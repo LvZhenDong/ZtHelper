@@ -44,6 +44,7 @@ public class APIServiceFactory {
     }
 
     NetApi netApi;
+    HeaderInterceptor headerInterceptor;
     /**
      * create a service
      *
@@ -53,6 +54,7 @@ public class APIServiceFactory {
         if(netApi == null){
             if(TextUtils.isEmpty(baseUrl))
                 baseUrl = BuildConfig.BASE_URL;
+            if(headerInterceptor == null)headerInterceptor=new HeaderInterceptor();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(getOkHttpClient())
@@ -90,19 +92,8 @@ public class APIServiceFactory {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClientBuilder.addNetworkInterceptor(httpLoggingInterceptor);
         }
-        //add cookie manage
-//        httpClientBuilder.cookieJar(new CookieJar() {
-//            @Override
-//            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-//                MyCookieManager.saveCookie(cookies);
-//            }
-//
-//            @Override
-//            public List<Cookie> loadForRequest(HttpUrl url) {
-//                return MyCookieManager.readCookie();
-//            }
-//        });
-        httpClientBuilder.addInterceptor(new HeaderInterceptor());
+
+        httpClientBuilder.addInterceptor(headerInterceptor);
         return httpClientBuilder.build();
     }
 
