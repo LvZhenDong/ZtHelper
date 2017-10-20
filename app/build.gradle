@@ -141,7 +141,7 @@ dependencies {
     //    like iOS progress dialog
     compile 'cc.cloudist.acplibrary:library:1.2.1'
     //    ImagePicker
-    compile 'com.lzy.widget:imagepicker:0.6.1'
+//    compile 'com.lzy.widget:imagepicker:0.6.1'
     //    A powerful, flexible and easy to use Video and Image compression library for Android.
     compile 'com.iceteck.silicompressorr:silicompressor:2.0'
     //    IP修改器
@@ -157,5 +157,5 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.7'
     compile 'com.github.ybq:parallaxviewpager:2.0.0'
     compile project(':version')
-
+    compile project(':pickerImage')
 }

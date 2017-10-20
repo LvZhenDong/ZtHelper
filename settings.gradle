@@ -1,2 +1,3 @@
-include ':app', ':version'
+include ':app', ':version', ':pickerImage'
 project(':version').projectDir = new File('library_version')
+project(':pickerImage').projectDir = new File('imagepicker')
