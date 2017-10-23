@@ -16,11 +16,9 @@ import java.util.List;
 
 public interface ExplainContract {
     interface Model extends IModel {
-        void getExplainList(int current);
+        void getExplainList(String keyword,int current);
 
         void getExplainCache();
-
-        void search(String keyword,int current);
     }
 
     interface View extends IView {
@@ -36,14 +34,12 @@ public interface ExplainContract {
     interface Presenter extends IPresenter<View> {
         void getExplainCache();
 
-        void getExplainList();
+        void getExplainList(String keyword);
 
         void loadMore();
 
         void getExplainListSuccess(BasePage<Explain> data);
 
         void getExplainFail(String msg);
-
-        void search(String keyword);
     }
 }

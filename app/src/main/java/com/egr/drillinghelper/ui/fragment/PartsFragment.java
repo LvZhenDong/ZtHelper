@@ -2,9 +2,15 @@ package com.egr.drillinghelper.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.bean.rxbus.SearchKey;
@@ -24,6 +30,7 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -39,6 +46,10 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     implements PartsContract.View{
     @BindView(R.id.rv_parts)
     LRecyclerView rvParts;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.et_search)
+    EditText etSearch;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private PartsAdapter mAdapter;
@@ -55,7 +66,9 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        initSearchEt();
         initRv();
+        presenter.getPartsList("");
     }
 
     private void initRv(){
@@ -68,7 +81,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         rvParts.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.getPartsList();
+                presenter.getPartsList(keyword);
             }
         });
         rvParts.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -78,15 +91,35 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
             }
         });
 
-        EgrRxBus.subscribe(this, SearchKey.class, new Consumer<SearchKey>() {
-            @Override
-            public void accept(@NonNull SearchKey searchKey) throws Exception {
-                if(searchKey.getType() == MyConstants.SEARCH_TYPE_PARTS){
 
+    }
+
+    String keyword;
+
+    private void initSearchEt() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    //处理事件
+                    keyword = etSearch.getText().toString().trim();
+                    presenter.getPartsList(keyword);
                 }
+                return false;
             }
         });
-        presenter.getPartsList();
+    }
+
+    @OnClick({R.id.tv_search})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_search:
+                keyword = etSearch.getText().toString().trim();
+                presenter.getPartsList(keyword);
+                break;
+        }
     }
 
     @Override
@@ -96,7 +129,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     }
 
     @Override
-    public void getPartsListSuccess(Store store) {
+    public void getPartsListSuccess(BasePage<Store> store) {
         rvParts.refreshComplete(10);
 
         if(store.getCurrent() > 1){

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/line_divider" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:id="@+id/iv"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="@dimen/padding_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:paddingLeft="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_vertical"
+            android:textColor="@color/tv333"
+            android:textSize="@dimen/text_size_tv" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:paddingLeft="@dimen/padding_vertical"
+            android:paddingRight="@dimen/padding_vertical"
+            android:textColor="@color/tv999"
+            android:textSize="@dimen/text_size_tv" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_buy"
+        style="@style/Btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_purple_btn"
+        android:text="@string/buy_immediately" />
+</LinearLayout>

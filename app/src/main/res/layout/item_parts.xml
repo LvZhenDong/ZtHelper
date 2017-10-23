@@ -51,9 +51,9 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
             android:paddingLeft="@dimen/padding_vertical"
             android:paddingRight="@dimen/padding_vertical"
-            android:layout_marginTop="@dimen/margin_top"
             android:singleLine="true"
             android:textColor="@color/tv333"
             android:textSize="@dimen/text_size_tv" />

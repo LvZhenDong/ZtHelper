@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
+import com.egr.drillinghelper.ui.activity.PartsDetailActivity;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.GlideUtils;
 
@@ -28,7 +30,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
+public class PartsAdapter extends BaseListAdapter<Store,
         PartsAdapter.ViewHolder> {
 
     public PartsAdapter(Context context) {
@@ -41,20 +43,11 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
                 parent, false));
     }
 
-    @Override
-    public void setDataList(List<Store.RecordsBean> list) {
-        //添加进入商城的item
-//        Store.RecordsBean bean=new Store.RecordsBean();
-//        bean.setId(INTO_MALL);
-//        list.add(0, bean);
-        super.setDataList(list);
-    }
-
     public final static String INTO_MALL="-1";
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Store.RecordsBean item = getDataList().get(position);
+        Store item = getDataList().get(position);
         if (INTO_MALL.equals(item.getId())) { //进入商城的处理
             holder.rlMall.setVisibility(View.VISIBLE);
             holder.llParts.setVisibility(View.GONE);
@@ -96,8 +89,11 @@ public class PartsAdapter extends BaseListAdapter<Store.RecordsBean,
     }
 
     void goPartsDetail(int position){
-        Store.RecordsBean item = getDataList().get(position);
-
-        CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
+        Store item = getDataList().get(position);
+//
+//        CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
+        Intent intent=new Intent(mContext, PartsDetailActivity.class);
+        intent.putExtra(BaseActivity.KEY_INTENT,item);
+        mContext.startActivity(intent);
     }
 }

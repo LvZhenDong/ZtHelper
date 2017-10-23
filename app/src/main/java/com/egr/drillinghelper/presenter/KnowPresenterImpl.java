@@ -18,7 +18,7 @@ import com.egr.drillinghelper.utils.CollectionUtil;
 public class KnowPresenterImpl extends BasePresenter<KnowContract.View,
         KnowModelImpl> implements KnowContract.Presenter {
     int current;
-
+    String keyword;
     @Override
     protected IModel createModel() {
         return new KnowModelImpl(this);
@@ -30,14 +30,15 @@ public class KnowPresenterImpl extends BasePresenter<KnowContract.View,
     }
 
     @Override
-    public void getKnowList() {
+    public void getKnowList(String keyword) {
         current = 1;
-        mModel.getKnowList(current);
+        this.keyword=keyword;
+        mModel.getKnowList(keyword,current);
     }
 
     @Override
     public void loadMore() {
-        mModel.getKnowList(current + 1);
+        mModel.getKnowList(keyword,current + 1);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.contract.PartsContract;
@@ -36,26 +37,24 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
     }
 
     @Override
-    public void getPartsList(int current) {
-        HashMap<String, Object> options = new HashMap<>();
-        options.put("current", current);
-        api.storeList(options)
-                .compose(TransformersFactory.<Store>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<Store>() {
+    public void getPartsList(String keyword,int current) {
+        api.storeList(keyword,current+"")
+                .compose(TransformersFactory.<BasePage<Store>>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Store>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getPastsFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull Store data) {
+                    public void onComplete(@NonNull BasePage<Store> data) {
                         int current = data.getCurrent();
                         if (current == 1 && more != null) {
-                            Store.RecordsBean mall = new Store.RecordsBean();
+                            Store mall = new Store();
                             mall.setUrl(more.getUrl());
                             mall.setName(getContext().getString(R.string.mall));
                             mall.setId(PartsAdapter.INTO_MALL);
-                            List<Store.RecordsBean> list = data.getRecords();
+                            List<Store> list = data.getRecords();
                             if (list != null)
                                 list.add(0, mall);
                         }

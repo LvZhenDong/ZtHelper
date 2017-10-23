@@ -18,6 +18,7 @@ import com.egr.drillinghelper.utils.CollectionUtil;
 public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
         ExplainModelImpl> implements ExplainContract.Presenter {
     int current;
+    String keyword;
 
     @Override
     protected IModel createModel() {
@@ -30,14 +31,15 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
     }
 
     @Override
-    public void getExplainList() {
+    public void getExplainList(String keyword) {
         current = 1;
-        mModel.getExplainList(current);
+        this.keyword=keyword;
+        mModel.getExplainList(keyword,current);
     }
 
     @Override
     public void loadMore() {
-        mModel.getExplainList(current + 1);
+        mModel.getExplainList(keyword,current + 1);
     }
 
     @Override
@@ -57,8 +59,4 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
             getView().getExplainFail(msg);
     }
 
-    @Override
-    public void search(String keyword) {
-        mModel.search(keyword,1);
-    }
 }

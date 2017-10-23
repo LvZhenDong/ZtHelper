@@ -104,11 +104,12 @@ public interface NetApi {
     Observable<BaseResponseBean<StoreMore>> getStoreMore();
     /**
      * 配件列表
-     * @param options
+     * @param
      * @return
      */
     @GET("store/list")
-    Observable<BaseResponseBean<Store>> storeList(@QueryMap HashMap<String, Object> options);
+    Observable<BaseResponseBean<BasePage<Store>>> storeList(@Query("keyword") String keyword,
+                                                  @Query("current") String current);
 
     /**
      * 修改个人头像
@@ -132,7 +133,8 @@ public interface NetApi {
      * @return
      */
     @GET("explain/getList")
-    Observable<BaseResponseBean<BasePage<Explain>>> explainList(@Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Explain>>> explainList(@Query("keyword") String keyword,
+                                                                @Query("current") String current);
 
     /**
      * 说明书目录
@@ -151,7 +153,8 @@ public interface NetApi {
      * @return
      */
     @GET("know/list")
-    Observable<BaseResponseBean<BasePage<Explain>>> knowList(@Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Explain>>> knowList(@Query("keyword") String keyword,
+                                                             @Query("current") String current);
 
     /**
      * 知识问答目录

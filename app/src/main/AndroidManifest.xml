@@ -211,10 +211,10 @@
         <activity android:name=".ui.activity.FeedbackDetailActivity" />
         <activity android:name=".ui.activity.CreateFeedbackSuccessActivity" />
         <activity android:name=".ui.activity.MessageDetailActivity" />
+        <activity android:name=".ui.activity.PartsDetailActivity"/>
         <activity
             android:name=".ui.activity.GalleryActivity"
             android:theme="@style/NoActionBar" />
-
 
         <activity
             android:name=".hybrid.CommBrowserActivity"

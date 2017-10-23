@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface KnowContract {
     interface Model extends IModel {
-        void getKnowList(int current);
+        void getKnowList(String keyword,int current);
 
         void getKnowCache();
     }
@@ -34,7 +34,7 @@ public interface KnowContract {
     interface Presenter extends IPresenter<View> {
         void getKnowCache();
 
-        void getKnowList();
+        void getKnowList(String keyword);
 
         void loadMore();
 

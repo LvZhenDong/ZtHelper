@@ -47,9 +47,9 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
     }
 
     @Override
-    public void getKnowList(int current) {
+    public void getKnowList(String keyword,int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
-            api.knowList(current + "")
+            api.knowList(keyword,current + "")
                     .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
                     .subscribe(new EObserver<BasePage<Explain>>() {
                         @Override

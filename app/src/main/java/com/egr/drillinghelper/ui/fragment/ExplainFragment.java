@@ -3,19 +3,20 @@ package com.egr.drillinghelper.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.rxbus.SearchKey;
-import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
-import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -27,10 +28,7 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-
-import static android.R.attr.data;
+import butterknife.OnClick;
 
 /**
  * author lzd
@@ -43,7 +41,11 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
         implements ExplainContract.View {
     @BindView(R.id.rv_instruction)
     LRecyclerView rvInstruction;
-
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    String keyword;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private ExplainAdapter mAdapter;
 
@@ -59,7 +61,10 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        initSearchEt();
         initRv();
+        presenter.getExplainList("");
+        presenter.getExplainCache();
     }
 
     private void initRv() {
@@ -72,7 +77,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
         rvInstruction.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.getExplainList();
+                presenter.getExplainList(keyword);
             }
         });
         rvInstruction.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -91,18 +96,33 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
             }
         });
 
-        EgrRxBus.subscribe(this, SearchKey.class, new Consumer<SearchKey>() {
-            @Override
-            public void accept(@NonNull SearchKey searchKey) throws Exception {
-                if(searchKey.getType() == MyConstants.SEARCH_TYPE_EXPLAIN){
-                    presenter.search(searchKey.getKey());
-                }
-            }
-        });
-        presenter.getExplainList();
-        presenter.getExplainCache();
     }
 
+    private void initSearchEt() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    //处理事件
+                    keyword = etSearch.getText().toString().trim();
+                    presenter.getExplainList(keyword);
+                }
+                return false;
+            }
+        });
+    }
+
+    @OnClick({R.id.tv_search})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_search:
+                keyword = etSearch.getText().toString().trim();
+                presenter.getExplainList(keyword);
+                break;
+        }
+    }
 
     @Override
     public void getExplainFail(String msg) {

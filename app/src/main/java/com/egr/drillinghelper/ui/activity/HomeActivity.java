@@ -79,14 +79,13 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
         setActionbarBackground(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
-//        setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //点击搜索按钮
-//                onSearchClick(homeAdapter.getHomeFragment().isExplain()
-//                        ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
-//            }
-//        });
+        setActionBarRightIcon(R.drawable.ic_home_search_gray, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击搜索按钮
+                onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
+            }
+        });
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
         vpHome.setOffscreenPageLimit(homeAdapter.getCount());
         vpHome.setScrollEnable(false);
@@ -127,14 +126,12 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
                 setActionBarTitleDrawable(R.drawable.bg_home_logo);
-//                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        onSearchClick(homeAdapter.getHomeFragment().isExplain()
-//                                ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
-//                    }
-//                });
+                setActionBarRightIcon(R.drawable.ic_home_search_gray, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
+                    }
+                });
                 setActionBarRightTextGone();
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
@@ -150,6 +147,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 //                    }
 //                });
                 setActionBarRightTextGone();
+                setActionBarRightIvGone();
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
                 changeLeftIcon(R.drawable.ic_home_msg_gray);

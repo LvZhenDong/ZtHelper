@@ -50,9 +50,9 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
     }
 
     @Override
-    public void getExplainList(int current) {
+    public void getExplainList(String keyword,int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
-            api.explainList(current + "")
+            api.explainList(keyword,current + "")
                     .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
                     .subscribe(new EObserver<BasePage<Explain>>() {
                         @Override
@@ -96,23 +96,6 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                     public void onComplete(@NonNull List<Explain> data) {
                         CacheUtils.saveExplains(data);
                         saveImg();
-                    }
-                });
-    }
-
-    @Override
-    public void search(String keyword, int current) {
-        api.searchExplain(keyword,current+"")
-                .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<BasePage<Explain>>() {
-                    @Override
-                    public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().getExplainFail(eMsg);
-                    }
-
-                    @Override
-                    public void onComplete(@NonNull BasePage<Explain> data) {
-                        presenter.getExplainListSuccess(data);
                     }
                 });
     }
