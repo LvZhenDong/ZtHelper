@@ -8,11 +8,14 @@ import android.view.View;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.rxbus.SearchKey;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
 import com.egr.drillinghelper.ui.activity.KnowCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.KnowledgeAdapter;
+import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -24,6 +27,8 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 /**
  * author lzd
@@ -82,6 +87,14 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
                 Intent intent = new Intent(getActivity(), KnowCatalogActivity.class);
                 intent.putExtra(KEY_INTENT, id);
                 startActivity(intent);
+            }
+        });
+        EgrRxBus.subscribe(this, SearchKey.class, new Consumer<SearchKey>() {
+            @Override
+            public void accept(@NonNull SearchKey searchKey) throws Exception {
+                if(searchKey.getType() == MyConstants.SEARCH_TYPE_KNOWLEDGE){
+
+                }
             }
         });
         presenter.getKnowList();

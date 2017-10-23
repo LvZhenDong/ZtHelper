@@ -59,7 +59,7 @@
             android:paddingLeft="5dp"
             android:gravity="center"
             android:layout_gravity="center_vertical"
-            android:textColor="@android:color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/actionbar_title_rightsize"
             android:visibility="gone" />
     </FrameLayout>

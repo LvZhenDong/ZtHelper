@@ -4,6 +4,7 @@ import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.model.SearchModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
@@ -13,10 +14,6 @@ import com.egr.drillinghelper.utils.CollectionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_EXPLAIN;
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_KNOWLEDGE;
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_PARTS;
-
 /**
  * author lzd
  * date 2017/9/26 16:41
@@ -25,6 +22,8 @@ import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_PART
 
 public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         SearchModelImpl> implements SearchContract.Presenter {
+
+
     int current;
     String keyword;
     int type;
@@ -43,13 +42,13 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
 
     void startSearch(String keyword,int type,int current){
         switch (type) {
-            case SEARCH_TYPE_EXPLAIN:
+            case MyConstants.SEARCH_TYPE_EXPLAIN:
                 mModel.searchExplain(keyword,current);
                 break;
-            case SEARCH_TYPE_KNOWLEDGE:
+            case MyConstants.SEARCH_TYPE_KNOWLEDGE:
                 mModel.searchKnow(keyword,current);
                 break;
-            case SEARCH_TYPE_PARTS:
+            case MyConstants.SEARCH_TYPE_PARTS:
                 mModel.searchParts(keyword,current);
                 break;
         }

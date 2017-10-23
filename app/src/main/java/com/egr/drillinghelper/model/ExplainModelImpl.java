@@ -100,6 +100,23 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                 });
     }
 
+    @Override
+    public void search(String keyword, int current) {
+        api.searchExplain(keyword,current+"")
+                .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Explain>>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getExplainFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull BasePage<Explain> data) {
+                        presenter.getExplainListSuccess(data);
+                    }
+                });
+    }
+
     private void saveImg(){
         try {
             List<Explain> explains=CacheUtils.getExplains();

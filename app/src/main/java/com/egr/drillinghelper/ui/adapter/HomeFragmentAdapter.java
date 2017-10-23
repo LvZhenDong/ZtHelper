@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.egr.drillinghelper.ui.fragment.ExplainFragment;
 import com.egr.drillinghelper.ui.fragment.KnowledgeFragment;
+import com.egr.drillinghelper.ui.fragment.PartsFragment;
 
 /**
  * author lzd
@@ -14,7 +15,7 @@ import com.egr.drillinghelper.ui.fragment.KnowledgeFragment;
  */
 
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
-    private Class[] fragments = {ExplainFragment.class, KnowledgeFragment.class};
+    private Class[] fragments = {ExplainFragment.class, KnowledgeFragment.class, PartsFragment.class};
 
     public HomeFragmentAdapter(FragmentManager fm) {
         super(fm);

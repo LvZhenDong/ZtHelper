@@ -259,6 +259,13 @@ public abstract class BaseActivity extends SwipeBackActivity {
             leftIv.setOnClickListener(listener);
     }
 
+    public void changeLeftIcon(int resId){
+        if (leftIv == null)
+            throw new RuntimeException("setupAction must first call!!!");
+        leftIv.setVisibility(View.VISIBLE);
+        leftIv.setImageResource(resId);
+    }
+
     public void setActionBarLeft2Icon(View.OnClickListener listener) {
         setActionBarLeft2Icon(0, listener);
     }
@@ -447,8 +454,8 @@ public abstract class BaseActivity extends SwipeBackActivity {
      * 设置消息红点提示的位置
      */
     private void setRedDotLocation() {
-        int width = rightIv.getWidth();
-        int height = rightIv.getHeight();
+        int width = leftIv.getWidth();
+        int height = leftIv.getHeight();
 
         mRedDotIV.setX(width / 2 + DensityUtils.dp2px(this, 2));
         mRedDotIV.setY(height / 4);

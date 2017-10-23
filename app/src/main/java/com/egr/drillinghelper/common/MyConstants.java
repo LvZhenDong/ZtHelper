@@ -18,4 +18,8 @@ public interface MyConstants {
     interface API {
         String Version = "version/check?code=";
     }
+
+    int SEARCH_TYPE_EXPLAIN = 0;
+    int SEARCH_TYPE_KNOWLEDGE = 1;
+    int SEARCH_TYPE_PARTS = 2;
 }

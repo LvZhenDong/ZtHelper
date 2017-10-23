@@ -56,4 +56,9 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
         if(UserManager.isLogined())
             getView().getExplainFail(msg);
     }
+
+    @Override
+    public void search(String keyword) {
+        mModel.search(keyword,1);
+    }
 }

@@ -45,8 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="@drawable/bg_white_top_radius"
-            android:scaleType="centerCrop"
-            android:src="@drawable/test" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_title"

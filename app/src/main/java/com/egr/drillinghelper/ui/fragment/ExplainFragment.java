@@ -8,11 +8,14 @@ import android.view.View;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.rxbus.SearchKey;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
+import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -24,6 +27,10 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+
+import static android.R.attr.data;
 
 /**
  * author lzd
@@ -81,6 +88,15 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
                 Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
                 intent.putExtra(KEY_INTENT, id);
                 startActivity(intent);
+            }
+        });
+
+        EgrRxBus.subscribe(this, SearchKey.class, new Consumer<SearchKey>() {
+            @Override
+            public void accept(@NonNull SearchKey searchKey) throws Exception {
+                if(searchKey.getType() == MyConstants.SEARCH_TYPE_EXPLAIN){
+                    presenter.search(searchKey.getKey());
+                }
             }
         });
         presenter.getExplainList();

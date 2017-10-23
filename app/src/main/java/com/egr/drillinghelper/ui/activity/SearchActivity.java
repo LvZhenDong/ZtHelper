@@ -21,6 +21,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Parts;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
@@ -54,9 +55,7 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         SearchPresenterImpl> implements SearchContract.View {
 
-    public final static int SEARCH_TYPE_EXPLAIN = 0;
-    public final static int SEARCH_TYPE_KNOWLEDGE = 1;
-    public final static int SEARCH_TYPE_PARTS = 2;
+
 
     @BindView(R.id.tv_search)
     TextView tvSearch;
@@ -103,7 +102,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     public void TODO(Bundle savedInstanceState) {
         initSearchRl();
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
-        type = getIntent().getIntExtra(KEY_INTENT, SEARCH_TYPE_EXPLAIN);
+        type = getIntent().getIntExtra(KEY_INTENT, MyConstants.SEARCH_TYPE_EXPLAIN);
 
         mAdapter = new SearchResultAdapter(this);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
@@ -163,10 +162,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         });
     }
 
-    private void clearResult() {
-
-    }
-
     @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
             R.id.ll_search, R.id.rl_search, R.id.iv_cancel})
     public void onClick(View view) {
@@ -198,19 +193,19 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     private void showDetail(int position) {
         switch (type) {
-            case SEARCH_TYPE_EXPLAIN:   //使用说明
+            case MyConstants.SEARCH_TYPE_EXPLAIN:   //使用说明
                 Explain explainOut=mExplainCatalogs.get(position);
                 String id = explainOut.getId();
                 Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
                 intent.putExtra(KEY_INTENT, id);
                 startActivity(intent);
                 break;
-            case SEARCH_TYPE_KNOWLEDGE: //知识问答
+            case MyConstants.SEARCH_TYPE_KNOWLEDGE: //知识问答
                 Intent intentKnow = new Intent(this, KnowArticleActivity.class);
                 intentKnow.putExtra(BaseActivity.KEY_INTENT, mKnowCatalogs.get(position).getContent());
                 startActivity(intentKnow);
                 break;
-            case SEARCH_TYPE_PARTS: //配件
+            case MyConstants.SEARCH_TYPE_PARTS: //配件
                 Parts part = mParts.get(position);
                 CommBrowserActivity.start(this,part.getUrl(),part.getName());
                 break;

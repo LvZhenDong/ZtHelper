@@ -19,6 +19,8 @@ public interface ExplainContract {
         void getExplainList(int current);
 
         void getExplainCache();
+
+        void search(String keyword,int current);
     }
 
     interface View extends IView {
@@ -41,5 +43,7 @@ public interface ExplainContract {
         void getExplainListSuccess(BasePage<Explain> data);
 
         void getExplainFail(String msg);
+
+        void search(String keyword);
     }
 }

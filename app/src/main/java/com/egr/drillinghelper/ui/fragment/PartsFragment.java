@@ -7,10 +7,13 @@ import android.view.View;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
+import com.egr.drillinghelper.bean.rxbus.SearchKey;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
+import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -21,6 +24,8 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 import static android.R.id.list;
 
@@ -73,6 +78,14 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
             }
         });
 
+        EgrRxBus.subscribe(this, SearchKey.class, new Consumer<SearchKey>() {
+            @Override
+            public void accept(@NonNull SearchKey searchKey) throws Exception {
+                if(searchKey.getType() == MyConstants.SEARCH_TYPE_PARTS){
+
+                }
+            }
+        });
         presenter.getPartsList();
     }
 

@@ -1,9 +1,14 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -26,10 +31,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_EXPLAIN;
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_KNOWLEDGE;
-import static com.egr.drillinghelper.ui.activity.SearchActivity.SEARCH_TYPE_PARTS;
 
 /**
  * author lzd
@@ -56,6 +57,17 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     private HomeActivityAdapter homeAdapter;
     private long mExitTime = 0;
 
+    View.OnClickListener homeMsgListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //点击消息按钮
+            if (!isLogin()) return;
+            baseStartActivity(MessageActivity.class);
+        }
+    };
+
+
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_home;
@@ -65,24 +77,16 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     public void TODO(Bundle savedInstanceState) {
         setSwipeBackEnabled(false);//设置不可右滑关闭
         setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
-        setActionBarTitleColor(R.color.white);
-        setActionBarLeftIcon(R.drawable.ic_home_msg, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点击消息按钮
-                if (!isLogin()) return;
-                baseStartActivity(MessageActivity.class);
-            }
-        });
-        setActionbarBackground(ContextCompat.getDrawable(this, R.drawable.bg_actionbar));
-        setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点击搜索按钮
-                onSearchClick(homeAdapter.getHomeFragment().isExplain()
-                        ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
-            }
-        });
+        setActionbarBackground(R.color.white);
+        setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
+//        setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //点击搜索按钮
+//                onSearchClick(homeAdapter.getHomeFragment().isExplain()
+//                        ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
+//            }
+//        });
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
         vpHome.setOffscreenPageLimit(homeAdapter.getCount());
         vpHome.setScrollEnable(false);
@@ -123,24 +127,32 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
                 setActionBarTitleDrawable(R.drawable.bg_home_logo);
-                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        onSearchClick(homeAdapter.getHomeFragment().isExplain()
-                                ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
-                    }
-                });
+//                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        onSearchClick(homeAdapter.getHomeFragment().isExplain()
+//                                ? SEARCH_TYPE_EXPLAIN : SEARCH_TYPE_KNOWLEDGE);
+//                    }
+//                });
+                setActionBarRightTextGone();
+                setActionbarBackground(R.color.white);
+                setActionBarTitleColor(R.color.black);
+                changeLeftIcon(R.drawable.ic_home_msg_gray);
                 break;
             case R.id.rb_parts:
                 vpHome.setCurrentItem(1);
-                setActionBarTitle(R.string.parts);
-                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onSearchClick(SEARCH_TYPE_PARTS);
-                    }
-                });
+                setActionBarTitle(R.string.video_part);
+//                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        onSearchClick(SEARCH_TYPE_PARTS);
+//                    }
+//                });
+                setActionBarRightTextGone();
+                setActionbarBackground(R.color.white);
+                setActionBarTitleColor(R.color.black);
+                changeLeftIcon(R.drawable.ic_home_msg_gray);
                 break;
             case R.id.rb_feedback:
                 vpHome.setCurrentItem(2);
@@ -152,12 +164,18 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                         baseStartActivity(FeedbackHistoryActivity.class);
                     }
                 });
+                setActionbarBackground(R.color.white);
+                setActionBarTitleColor(R.color.black);
+                changeLeftIcon(R.drawable.ic_home_msg_gray);
                 break;
             case R.id.rb_my:
                 vpHome.setCurrentItem(3);
                 setActionBarTitle(R.string.my);
                 setActionBarRightTextGone();
                 setActionBarRightIvGone();
+                setActionbarBackground(ContextCompat.getDrawable(this, R.drawable.bg_actionbar));
+                setActionBarTitleColor(R.color.white);
+                changeLeftIcon(R.drawable.ic_home_msg_white);
                 break;
         }
     }
@@ -201,5 +219,59 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
         return true;
     }
+    /**
+     * 实现点击空白处，软键盘消失事件
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // 获得当前得到焦点的View，一般情况下就是EditText（特殊情况就是轨迹求或者实体案件会移动焦点）
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                hideSoftInput(v.getWindowToken());
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时没必要隐藏
+     *
+     * @param v
+     * @param event
+     * @return
+     */
+    private boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left
+                    + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击EditText的事件，忽略它。
+                return false;
+            } else {
+                return true;
+            }
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 多种隐藏软件盘方法的其中一种
+     *
+     * @param token
+     */
+    private void hideSoftInput(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token,
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 }

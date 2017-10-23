@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--蒲公英 start-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取网络状态 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络通信-->
@@ -18,8 +18,8 @@
     <!--蒲公英 end-->
 
     <!--share sdk 开始-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -66,9 +66,9 @@
         <!--share sdk 开始-->
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
@@ -84,21 +84,27 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1106316759" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="21a761e72b088"/>
-        <meta-data android:name="Mob-AppSecret" android:value="2c67e12ef812f32f3571be3bcbb6079d"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="21a761e72b088" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="2c67e12ef812f32f3571be3bcbb6079d" />
         <!--share sdk 结束-->
 
         <!--极光推送 开始-->
@@ -107,10 +113,11 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.egr.drillinghelper" />
             </intent-filter>
@@ -152,7 +159,9 @@
         </receiver>
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
         <!--自定义Receiver-->
         <receiver
             android:name=".receiver.AppReceiver"
@@ -171,8 +180,8 @@
         <!--极光推送 结束-->
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -180,10 +189,13 @@
         </activity>
 
         <activity android:name=".ui.activity.ForgetPswdActivity" />
-        <activity android:name=".ui.activity.HomeActivity" />
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.CreateFeedbackActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+            android:name=".ui.activity.CreateFeedbackActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.FeedbackHistoryActivity" />
         <activity android:name=".ui.activity.MessageActivity" />
         <activity
@@ -199,7 +211,8 @@
         <activity android:name=".ui.activity.FeedbackDetailActivity" />
         <activity android:name=".ui.activity.CreateFeedbackSuccessActivity" />
         <activity android:name=".ui.activity.MessageDetailActivity" />
-        <activity android:name=".ui.activity.GalleryActivity"
+        <activity
+            android:name=".ui.activity.GalleryActivity"
             android:theme="@style/NoActionBar" />
 
 
