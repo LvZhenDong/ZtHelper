@@ -3,6 +3,7 @@ package com.egr.drillinghelper.utils;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
+import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.common.MyConstants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -65,7 +66,35 @@ public class CacheUtils {
         return null;
     }
 
+    /**
+     * 保存配件缓存
+     *
+     * @param data
+     */
+    public static void saveParts(List<Store> data) {
+        if (CollectionUtil.isListEmpty(data))
+            return;
+        Gson gson = new Gson();
+        String cache = gson.toJson(data);
+        try {
+            FileUtils.writeFile(MyConstants.PATH_STORE, cache, null, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 读取配件list
+     * @return
+     * @throws Exception
+     */
+    public static List<Store> getParts() throws Exception {
+        Gson gson = new Gson();
+        String cache = FileUtils.readFile(MyConstants.PATH_STORE, null);
+        List<Store> stores = gson.fromJson(cache, new TypeToken<List<Store>>() {
+        }.getType());
 
+        return stores;
+    }
     /**
      * 保存使用说明缓存
      *

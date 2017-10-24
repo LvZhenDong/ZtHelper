@@ -22,6 +22,8 @@ public interface PartsContract {
         void getPartsList(String keyword,int pageNum);
 
         void getMall();
+
+        void getPartsCache();
     }
 
     interface View extends IView {
@@ -30,6 +32,8 @@ public interface PartsContract {
         void getPartsListSuccess(BasePage<Store> data);
 
         void noMoreData();
+
+        void showParts(List<Store> list);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -42,5 +46,7 @@ public interface PartsContract {
         void getPastsFail(String msg);
 
         void getMallSuccess();
+
+        void getPartsCache();
     }
 }

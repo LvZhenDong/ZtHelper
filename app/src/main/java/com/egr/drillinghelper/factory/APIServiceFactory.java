@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIServiceFactory {
 
-    private final static long DEFAULT_TIMEOUT = 10;
+    private final static long DEFAULT_TIMEOUT = 20;
     static String baseUrl;
     private final Gson mGsonDateFormat;
     NetApi netApi;

@@ -38,7 +38,7 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
 
     @Override
     public void login(String phone, String password) {
-        if(NetworkUtils.isNetworkConnected(getContext())){
+
             HashMap<String,Object> options=new HashMap<>();
             options.put("phone",phone);
             options.put("password",password);
@@ -68,9 +68,7 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
                             presenter.getView().loginSuccess();
                         }
                     });
-        }else {
-            showCache();
-        }
+
 
     }
 

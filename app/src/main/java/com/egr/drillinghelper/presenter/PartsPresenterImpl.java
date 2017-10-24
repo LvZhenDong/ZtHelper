@@ -60,5 +60,10 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
         mModel.getPartsList(keyword, current);
     }
 
+    @Override
+    public void getPartsCache() {
+        mModel.getPartsCache();
+    }
+
 
 }

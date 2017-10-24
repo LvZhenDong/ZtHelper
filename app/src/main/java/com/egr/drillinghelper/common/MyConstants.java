@@ -14,6 +14,7 @@ public interface MyConstants {
             .getExternalStorageDirectory().getPath() + "/egr/";
     String PATH_EXPLAIN = PATH + "explain.txt";
     String PATH_KNOW = PATH + "know.txt";
+    String PATH_STORE=PATH+"store.txt";
 
     interface API {
         String Version = "version/check?code=";

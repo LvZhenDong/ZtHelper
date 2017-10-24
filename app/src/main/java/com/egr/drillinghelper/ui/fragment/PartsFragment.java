@@ -69,6 +69,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         initSearchEt();
         initRv();
         presenter.getPartsList("");
+        presenter.getPartsCache();
     }
 
     private void initRv(){
@@ -143,5 +144,13 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     public void noMoreData() {
         rvParts.refreshComplete(10);
         ToastUtils.show(getActivity(), R.string.no_more_data);
+    }
+
+    @Override
+    public void showParts(List<Store> list) {
+        rvParts.refreshComplete(10);
+
+        mAdapter.setDataList(list);
+
     }
 }

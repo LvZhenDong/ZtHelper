@@ -4,8 +4,8 @@ import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.ContactUs;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.Explain;
+import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
@@ -34,7 +34,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public interface NetApi {
 
@@ -98,21 +97,36 @@ public interface NetApi {
 
     /**
      * 进入商城链接
+     *
      * @return
      */
     @GET("store/more")
     Observable<BaseResponseBean<StoreMore>> getStoreMore();
+
     /**
      * 配件列表
+     *
      * @param
      * @return
      */
     @GET("store/list")
     Observable<BaseResponseBean<BasePage<Store>>> storeList(@Query("keyword") String keyword,
-                                                  @Query("current") String current);
+                                                            @Query("current") String current);
+
+    /**
+     * 配件列表Cache
+     *
+     * @param
+     * @return
+     */
+    @GET("store/list")
+    Observable<BaseResponseBean<BasePage<Store>>> storeListCache(@Query("keyword") String keyword,
+                                                                 @Query("current") String current,
+                                                                 @Query("size") String pageSize);
 
     /**
      * 修改个人头像
+     *
      * @param photo
      * @return
      */
@@ -122,6 +136,7 @@ public interface NetApi {
 
     /**
      * 获取说明书cache
+     *
      * @return
      */
     @GET("cache/getCache")
@@ -129,6 +144,7 @@ public interface NetApi {
 
     /**
      * 说明书列表
+     *
      * @param current
      * @return
      */
@@ -138,17 +154,19 @@ public interface NetApi {
 
     /**
      * 说明书目录
+     *
      * @param id
      * @return
      */
     @GET("explain/getById")
-    Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id")String id);
+    Observable<BaseResponseBean<List<ExplainCatalog>>> explainCatalog(@Query("id") String id);
 
     @GET("cache/getKnowledgeCache")
     Observable<BaseResponseBean<List<Explain>>> getKnowCache();
 
     /**
      * 知识问答列表
+     *
      * @param current
      * @return
      */
@@ -158,13 +176,16 @@ public interface NetApi {
 
     /**
      * 知识问答目录
+     *
      * @param id
      * @return
      */
     @GET("know/knowList")
-    Observable<BaseResponseBean<List<KnowCatalog>>> knowCatalog(@Query("id")String id);
+    Observable<BaseResponseBean<List<KnowCatalog>>> knowCatalog(@Query("id") String id);
+
     /**
      * 文章详情
+     *
      * @param id
      * @return
      */
@@ -172,7 +193,8 @@ public interface NetApi {
     Observable<BaseResponseBean<Article>> getArticle(@Query("articleId") String id);
 
     /**
-     *  退出登录
+     * 退出登录
+     *
      * @return
      */
     @DELETE("user/logout")
@@ -180,6 +202,7 @@ public interface NetApi {
 
     /**
      * 关于EGR
+     *
      * @return
      */
     @GET("about/detail")
@@ -187,6 +210,7 @@ public interface NetApi {
 
     /**
      * 查询常见问题
+     *
      * @return
      */
     @GET("feedback/getList")
@@ -194,6 +218,7 @@ public interface NetApi {
 
     /**
      * 常见问题详情
+     *
      * @param id
      * @return
      */
@@ -202,15 +227,17 @@ public interface NetApi {
 
     /**
      * 历史反馈
+     *
      * @param status
      * @return
      */
     @GET("feedback/list")
     Observable<BaseResponseBean<BasePage<Reply>>> getReplyList(@Query("status") String status,
-                                                     @Query("current") String current);
+                                                               @Query("current") String current);
 
     /**
      * 信息反馈无图
+     *
      * @param id
      * @return
      */
@@ -219,6 +246,7 @@ public interface NetApi {
 
     /**
      * 信息反馈有图
+     *
      * @param id
      * @param photo
      * @return
@@ -226,10 +254,11 @@ public interface NetApi {
     @Multipart
     @POST("feedback/save")
     Observable<BaseResponseBean<List<Feedback>>> createFeedback(@Query("question") String id,
-                                                        @PartMap Map<String, RequestBody> photo);
+                                                                @PartMap Map<String, RequestBody> photo);
 
     /**
      * 搜索知识问答
+     *
      * @param keyword
      * @return
      */
@@ -239,6 +268,7 @@ public interface NetApi {
 
     /**
      * 搜索使用说明
+     *
      * @param keyword
      * @return
      */
@@ -248,12 +278,14 @@ public interface NetApi {
 
     /**
      * 搜索配件
+     *
      * @param keyword
      * @return
      */
     @GET("search/product")
     Observable<BaseResponseBean<BasePage<Parts>>> searchProduct(@Query("keyword") String keyword,
                                                                 @Query("current") String current);
+
     /**
      * 获取消息列表
      */
@@ -265,6 +297,7 @@ public interface NetApi {
 
     /**
      * 获取未读消息数
+     *
      * @return
      */
     @GET("message/noRead")
@@ -272,6 +305,7 @@ public interface NetApi {
 
     /**
      * 删指定消息
+     *
      * @param id
      * @return
      */
@@ -280,6 +314,7 @@ public interface NetApi {
 
     /**
      * 将消息标记为已读
+     *
      * @param id
      * @return
      */
