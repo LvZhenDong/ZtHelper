@@ -16,6 +16,15 @@ public class UserManager {
     private static String sJPushId;
     private static String userId;
     private static String sToken;
+    private static String userPhoto;
+
+    public static String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public static void setUserPhoto(String userPhoto) {
+        UserManager.userPhoto = userPhoto;
+    }
 
     public static boolean isLogined(){
         return !TextUtils.isEmpty(userId);

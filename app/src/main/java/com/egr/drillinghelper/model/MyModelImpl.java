@@ -6,6 +6,7 @@ import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.MyContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -43,6 +44,7 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
                     @Override
                     public void onComplete(@NonNull UserInfo userInfo) {
                         presenter.getView().getUserInfoSuccess(userInfo);
+                        UserManager.setUserPhoto(userInfo.getPhoto());
                     }
                 });
     }

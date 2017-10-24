@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.presenter;
 
+import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.model.HomeModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
@@ -21,5 +22,15 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,
     @Override
     public void getNoReadMsg() {
         mModel.getNoReadMsg();
+    }
+
+    @Override
+    public void getContactSuccess(ContactUs contactUs) {
+        getView().getContactSuccess(contactUs.getAboutUs().getServiceTel());
+    }
+
+    @Override
+    public void getContact() {
+        mModel.getContact();
     }
 }

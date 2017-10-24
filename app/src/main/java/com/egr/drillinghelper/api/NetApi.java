@@ -14,6 +14,7 @@ import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
+import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
@@ -34,6 +35,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+
+import static cn.jpush.android.api.JPushInterface.a.q;
 
 public interface NetApi {
 
@@ -321,6 +324,21 @@ public interface NetApi {
     @PUT("message/read")
     Observable<BaseResponseBean<NullBodyResponse>> readMsg(@Query("messageIds") String id); //多条用,隔开
 
+    /**
+     * 获取分享内容
+     * @return
+     */
     @GET("about/share")
     Observable<BaseResponseBean<Share>> share();
+
+    @POST("support/sendMessage")
+    Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@Query("message") String msg);
+
+    @Multipart
+    @POST("support/sendMessage")
+    Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@PartMap Map<String, RequestBody> photo);
+
+    @GET("support/getMessage")
+    Observable<BaseResponseBean<BasePage<ServiceMsg>>> getServiceMsg(@Query("current") String current,
+                                                           @Query("size") String size);
 }

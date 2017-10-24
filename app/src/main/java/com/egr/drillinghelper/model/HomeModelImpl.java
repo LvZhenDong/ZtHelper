@@ -3,6 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -32,11 +33,29 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
                 .subscribe(new EObserver<Integer>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getContactError(eMsg);
                     }
 
                     @Override
                     public void onComplete(@NonNull Integer response) {
                         presenter.getView().getNoReadMsgSuccess(response);
+                    }
+                });
+    }
+
+    @Override
+    public void getContact() {
+        api.contactList()
+                .compose(TransformersFactory.<ContactUs>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<ContactUs>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+//                        presenter.getView().
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull ContactUs contactUs) {
+                        presenter.getContactSuccess(contactUs);
                     }
                 });
     }

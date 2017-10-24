@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.egr.drillinghelper.utils.CollectionUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -76,6 +78,12 @@ public abstract class BaseListAdapter<T, R extends RecyclerView.ViewHolder> exte
         int lastIndex = this.mDataList.size();
         if (this.mDataList.addAll(list)) {
             notifyItemRangeInserted(lastIndex, list.size());
+        }
+    }
+
+    public void addAll(int index, Collection<T> list){
+        if(this.mDataList.addAll(index,list)){
+            notifyItemRangeInserted(index, list.size());
         }
     }
 

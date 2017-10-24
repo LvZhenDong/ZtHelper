@@ -26,6 +26,9 @@
     <string name="parts">耗材/配件</string>
     <string name="parts_detail">商品详情</string>
     <string name="feedback">信息反馈</string>
+    <string name="question_service">服务支持</string>
+    <string name="send">发送</string>
+    <string name="image">图片</string>
     <string name="my">个人中心</string>
     <string name="explain">使用说明</string>
     <string name="ask_knowledge">知识问答</string>

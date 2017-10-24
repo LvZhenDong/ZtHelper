@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.bean.response;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -38,7 +40,15 @@ public class Message {
     }
 
     public boolean isLoginConflict(){
-        return code.equals("TS0002");
+        return TextUtils.equals(code,"TS0002");
+    }
+
+    public boolean isMessage(){
+        return TextUtils.equals(code,"TS0001");
+    }
+
+    public boolean isServiceMsg(){
+        return TextUtils.equals(code,"TS0003");
     }
 
     public void setId(String id) {

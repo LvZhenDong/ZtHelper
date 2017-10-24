@@ -2,9 +2,11 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,13 +24,16 @@ import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
+import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ApkUtils;
 import com.egr.drillinghelper.utils.EgrRxBus;
+import com.egr.drillinghelper.utils.PhoneUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.shelwee.update.UpdateHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -40,7 +45,6 @@ import io.reactivex.functions.Consumer;
 
 public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         HomePresenterImpl> implements HomeContract.View {
-
 
     @BindView(R.id.rg_home)
     RadioGroup rgHome;
@@ -56,6 +60,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     RadioButton rbMy;
     private HomeActivityAdapter homeAdapter;
     private long mExitTime = 0;
+    private ACProgressFlower mDialog;
 
     View.OnClickListener homeMsgListener=new View.OnClickListener() {
         @Override
@@ -63,6 +68,27 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             //点击消息按钮
             if (!isLogin()) return;
             baseStartActivity(MessageActivity.class);
+        }
+    };
+
+    View.OnClickListener searchListener= new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
+        }
+    };
+
+    View.OnClickListener phoneListener=new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            if(TextUtils.isEmpty(phone)){
+                mDialog.show();
+                presenter.getContact();
+            }else {
+                PhoneUtils.callPhone(getActivity(), phone);
+            }
+
         }
     };
 
@@ -79,13 +105,10 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
         setActionbarBackground(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
-        setActionBarRightIcon(R.drawable.ic_home_search_gray, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //点击搜索按钮
-                onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
-            }
-        });
+        setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
+
+        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
+
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
         vpHome.setOffscreenPageLimit(homeAdapter.getCount());
         vpHome.setScrollEnable(false);
@@ -126,12 +149,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
                 setActionBarTitleDrawable(R.drawable.bg_home_logo);
-                setActionBarRightIcon(R.drawable.ic_home_search_gray, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
-                    }
-                });
+                setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
                 setActionBarRightTextGone();
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
@@ -140,12 +158,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_parts:
                 vpHome.setCurrentItem(1);
                 setActionBarTitle(R.string.video_part);
-//                setActionBarRightIcon(R.drawable.ic_home_search, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        onSearchClick(SEARCH_TYPE_PARTS);
-//                    }
-//                });
+//                setActionBarRightIcon(R.drawable.ic_home_search, searchListener);
                 setActionBarRightTextGone();
                 setActionBarRightIvGone();
                 setActionbarBackground(R.color.white);
@@ -155,13 +168,14 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_feedback:
                 vpHome.setCurrentItem(2);
                 setActionBarTitle(R.string.feedback);
-                setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //历史反馈
-                        baseStartActivity(FeedbackHistoryActivity.class);
-                    }
-                });
+//                setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //历史反馈
+//                        baseStartActivity(FeedbackHistoryActivity.class);
+//                    }
+//                });
+                setActionBarRightIcon(R.drawable.ic_phone_gray,phoneListener);
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
                 changeLeftIcon(R.drawable.ic_home_msg_gray);
@@ -203,6 +217,39 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             showRedDot();
         else
             hideRedDot();
+    }
+
+    @Override
+    public void getContactSuccess(String phoneNum) {
+        mDialog.dismiss();
+        phone=phoneNum;
+        PhoneUtils.callPhone(this, phoneNum);
+    }
+
+    @Override
+    public void getContactError(String msg) {
+        mDialog.dismiss();
+    }
+
+    String phone;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PhoneUtils.MY_PERMISSIONS_REQUEST_CALL_PHONE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the phone call
+                    PhoneUtils.startPhoneIntent(this, phone);
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                break;
+        }
     }
 
     private boolean isLogin() {

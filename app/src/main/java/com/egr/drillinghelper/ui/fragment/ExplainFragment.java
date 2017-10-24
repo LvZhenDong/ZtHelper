@@ -56,7 +56,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
 
     @Override
     public int returnLayoutID() {
-        return R.layout.fragment_list;
+        return R.layout.fragment_explain;
     }
 
     @Override

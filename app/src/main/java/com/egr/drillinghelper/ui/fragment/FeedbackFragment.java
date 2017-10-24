@@ -16,6 +16,7 @@ import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.FeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.activity.CreateFeedbackActivity;
 import com.egr.drillinghelper.ui.activity.FeedbackDetailActivity;
+import com.egr.drillinghelper.ui.activity.ServiceActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
 import com.egr.drillinghelper.ui.adapter.QuestionAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
@@ -75,7 +76,7 @@ public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
 
     @OnClick(R.id.ll_go_feedback)
     public void onClick() {
-        baseStartActivity(CreateFeedbackActivity.class);
+        baseStartActivity(ServiceActivity.class);
     }
 
     @Override

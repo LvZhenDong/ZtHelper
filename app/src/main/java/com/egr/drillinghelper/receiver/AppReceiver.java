@@ -61,8 +61,10 @@ public class AppReceiver extends BroadcastReceiver {
                 !TextUtils.equals(UserManager.getUserId(),message.getUserId()))return;
         if(message.isLoginConflict()){
             showLoginConflictDialog(context,message);
-        }else {
+        }else if(message.isMessage()){
             showMessage(context,message,string);
+        }else if(message.isServiceMsg()){
+
         }
     }
 
