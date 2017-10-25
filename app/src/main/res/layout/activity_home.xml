@@ -31,7 +31,7 @@
             android:id="@+id/rb_feedback"
             style="@style/RbHome"
             android:drawableTop="@drawable/bg_home_feedback_rb_selector"
-            android:text="@string/feedback" />
+            android:text="@string/question_service" />
 
         <RadioButton
             android:id="@+id/rb_my"

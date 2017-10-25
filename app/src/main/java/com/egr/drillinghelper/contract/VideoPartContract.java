@@ -15,7 +15,7 @@ import com.egr.drillinghelper.mvp.IView;
 
 public interface VideoPartContract {
     interface Model extends IModel {
-        void getVideoList(int current);
+        void getVideoList(String keyword,int current);
     }
 
     interface View extends IView {
@@ -27,7 +27,7 @@ public interface VideoPartContract {
     }
 
     interface Presenter extends IPresenter<View> {
-        void getVideoList();
+        void getVideoList(String keyword);
 
         void loadMore();
 

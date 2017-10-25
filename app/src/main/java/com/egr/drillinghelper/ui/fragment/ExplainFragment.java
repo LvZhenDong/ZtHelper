@@ -73,7 +73,6 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
         super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
         if (isFirstVisiableToUser && isVisibleToUser) {
             rvInstruction.forceToRefresh();
-            presenter.getExplainList("");
             isFirstVisiableToUser = false;
         }
     }
@@ -118,7 +117,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
                     //处理事件
                     keyword = etSearch.getText().toString().trim();
-                    presenter.getExplainList(keyword);
+                    rvInstruction.forceToRefresh();
                 }
                 return false;
             }
@@ -130,7 +129,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
         switch (view.getId()) {
             case R.id.tv_search:
                 keyword = etSearch.getText().toString().trim();
-                presenter.getExplainList(keyword);
+                rvInstruction.forceToRefresh();
                 break;
         }
     }

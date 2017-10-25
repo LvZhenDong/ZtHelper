@@ -18,6 +18,7 @@ import com.egr.drillinghelper.utils.CollectionUtil;
 public class VideoPartPresenterImpl extends BasePresenter<VideoPartContract.View,
         VideoPartModelImpl> implements VideoPartContract.Presenter{
     int current;
+    String keyword;
     @Override
     protected IModel createModel() {
         return new VideoPartModelImpl(this);
@@ -25,19 +26,20 @@ public class VideoPartPresenterImpl extends BasePresenter<VideoPartContract.View
 
 
     @Override
-    public void getVideoList() {
+    public void getVideoList(String keyword) {
         current = 1;
-        mModel.getVideoList(current);
+        this.keyword=keyword;
+        mModel.getVideoList(keyword,current);
     }
 
     @Override
     public void loadMore() {
-        mModel.getVideoList(current+1);
+        mModel.getVideoList(keyword,current+1);
     }
 
     @Override
     public void getVideoListSuc(BasePage<Video> data) {
-        if (CollectionUtil.isListEmpty(data.getRecords())){
+        if (CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
             getView().noMoreData();
         } else{
             current = data.getCurrent();

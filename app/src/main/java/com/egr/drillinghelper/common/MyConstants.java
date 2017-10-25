@@ -16,9 +16,6 @@ public interface MyConstants {
     String PATH_KNOW = PATH + "know.txt";
     String PATH_STORE=PATH+"store.txt";
 
-    interface API {
-        String Version = "version/check?code=";
-    }
 
     int SEARCH_TYPE_EXPLAIN = 0;
     int SEARCH_TYPE_KNOWLEDGE = 1;

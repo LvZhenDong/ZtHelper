@@ -4,7 +4,6 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.Video;
 import com.egr.drillinghelper.contract.VideoPartContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -31,8 +30,8 @@ public class VideoPartModelImpl extends BaseModel<VideoPartPresenterImpl>
     }
 
     @Override
-    public void getVideoList(int current) {
-        api.getVideoList(current+"")
+    public void getVideoList(String keyword, int current) {
+        api.getVideoList(keyword, current + "")
                 .compose(TransformersFactory.<BasePage<Video>>commonTransformer((BaseMVPFragment) presenter.getView()))
                 .subscribe(new EObserver<BasePage<Video>>() {
                     @Override

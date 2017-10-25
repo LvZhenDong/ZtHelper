@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
@@ -129,7 +130,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private void checkVersion() {
-        String url = APIServiceFactory.getBaseUrl() + MyConstants.API.Version + ApkUtils.getVersionCode(this);
+        String url = APIServiceFactory.getBaseUrl() + NetApi.Version + ApkUtils.getVersionCode(this);
         UpdateHelper updateHelper = new UpdateHelper.Builder(this)
                 .checkUrl(url)
                 .isHintNewVersion(false)
@@ -167,7 +168,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 break;
             case R.id.rb_feedback:
                 vpHome.setCurrentItem(2);
-                setActionBarTitle(R.string.feedback);
+                setActionBarTitle(R.string.question_service);
 //                setActionBarRightText(R.string.feedback_histroy, new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {

@@ -70,7 +70,6 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
         super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
         if (isFirstVisiableToUser && isVisibleToUser) {
             rvKnowledge.forceToRefresh();
-            presenter.getKnowList("");
             isFirstVisiableToUser = false;
         }
     }
@@ -117,7 +116,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
                     //处理事件
                     keyword = etSearch.getText().toString().trim();
-                    presenter.getKnowList(keyword);
+                    rvKnowledge.forceToRefresh();
                 }
                 return false;
             }
@@ -129,7 +128,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
         switch (view.getId()) {
             case R.id.tv_search:
                 keyword = etSearch.getText().toString().trim();
-                presenter.getKnowList(keyword);
+                rvKnowledge.forceToRefresh();
                 break;
         }
     }

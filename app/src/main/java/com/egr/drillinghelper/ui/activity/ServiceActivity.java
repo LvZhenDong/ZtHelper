@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrRxBus;
+import com.egr.drillinghelper.utils.TimeUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -46,6 +48,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
 import static com.egr.drillinghelper.R.id.tv_add_img;
+import static com.egr.drillinghelper.utils.TimeUtils.getCurrentTime;
 
 /**
  * author lzd
@@ -55,7 +58,6 @@ import static com.egr.drillinghelper.R.id.tv_add_img;
 
 public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         ServicePresenterImpl> implements ServiceContract.View {
-
 
     public final static int IMAGE_PICKER = 24;
     @BindView(R.id.tv_send)
@@ -87,7 +89,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        setupActionBar(R.string.question_service, true);
+        setupActionBar(R.string.go_feedback, true);
         setActionbarBackground(R.color.white);
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
@@ -128,6 +130,16 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
         mDialog.show();
         presenter.getMsg();
+
+        mAdapter.setReSendListener(new ServiceAdapter.ReSendListener() {
+            @Override
+            public void onReSend(int pos) {
+                ServiceMsg serviceMsg=mAdapter.getDataList().get(pos);
+                presenter.sendMsg(serviceMsg.getMsg());
+                serviceMsg.setSendState(2);
+                mAdapter.notifyItemChanged(pos);
+            }
+        });
     }
 
     private void initEt() {
@@ -169,8 +181,9 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         switch (view.getId()) {
             case R.id.tv_send:
                 String msg = etMsg.getText().toString().trim();
+                if(TextUtils.isEmpty(msg))return;
                 etMsg.setText("");
-                mAdapter.add(ServiceMsg.createSendText(getCurrentTime(),msg));
+                mAdapter.add(ServiceMsg.createSendText(TimeUtils.getCurrentTime(),msg));
                 rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
                 presenter.sendMsg(msg);
                 break;
@@ -206,21 +219,18 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         }
     }
 
-    private String getCurrentTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date curDate = new Date(System.currentTimeMillis());
-
-        return formatter.format(curDate);
-    }
-
     @Override
     public void sendMsgSuc() {
-
+        // TODO 更新item
+        mAdapter.getLastItem().setSendState(0);
+        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
     }
 
     @Override
     public void sendMsgFail() {
-
+        //TODO
+        mAdapter.getLastItem().setSendState(1);
+        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
     }
 
     @Override
@@ -239,12 +249,14 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     @Override
     public void getMsgFail(String msg) {
         mDialog.dismiss();
+        rvMsg.refreshComplete(20);
         ToastUtils.show(this, msg);
     }
 
     @Override
     public void noMoreData() {
+        mDialog.dismiss();
         rvMsg.refreshComplete(20);
-        ToastUtils.show(getActivity(), R.string.no_more_data);
+//        ToastUtils.show(getActivity(), R.string.no_more_data);
     }
 }

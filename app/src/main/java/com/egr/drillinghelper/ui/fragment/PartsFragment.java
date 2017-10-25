@@ -2,7 +2,6 @@ package com.egr.drillinghelper.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,14 +11,10 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Store;
-import com.egr.drillinghelper.bean.response.StoreMore;
-import com.egr.drillinghelper.bean.rxbus.SearchKey;
-import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
-import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -31,10 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-
-import static android.R.id.list;
 
 /**
  * author lzd
@@ -76,7 +67,6 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
         if (isFirstVisiableToUser && isVisibleToUser) {
             rvParts.forceToRefresh();
-            presenter.getPartsList("");
             isFirstVisiableToUser = false;
         }
     }
@@ -115,7 +105,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
                     //处理事件
                     keyword = etSearch.getText().toString().trim();
-                    presenter.getPartsList(keyword);
+                    rvParts.forceToRefresh();
                 }
                 return false;
             }
@@ -127,7 +117,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         switch (view.getId()) {
             case R.id.tv_search:
                 keyword = etSearch.getText().toString().trim();
-                presenter.getPartsList(keyword);
+                rvParts.forceToRefresh();
                 break;
         }
     }

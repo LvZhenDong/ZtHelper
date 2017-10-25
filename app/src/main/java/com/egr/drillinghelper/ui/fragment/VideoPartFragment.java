@@ -2,11 +2,16 @@ package com.egr.drillinghelper.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.Video;
 import com.egr.drillinghelper.contract.VideoPartContract;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
@@ -22,6 +27,8 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * author lzd
@@ -33,9 +40,14 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
         VideoPartPresenterImpl> implements VideoPartContract.View {
     @BindView(R.id.rv)
     LRecyclerView rv;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
     VideoAdapter mAdapter;
-    
+    String keyword;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
     @Override
     protected VideoPartPresenterImpl createPresenter() {
         return new VideoPartPresenterImpl();
@@ -43,13 +55,14 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
 
     @Override
     public int returnLayoutID() {
-        return R.layout.fragment_list;
+        return R.layout.fragment_video;
     }
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
-        mAdapter=new VideoAdapter(getActivity());
-        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
+        initSearchEt();
+        mAdapter = new VideoAdapter(getActivity());
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         rv.setAdapter(mLRecyclerViewAdapter);
 
         rv.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
@@ -57,7 +70,7 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
         rv.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.getVideoList();
+                presenter.getVideoList(keyword);
             }
         });
         rv.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -69,8 +82,24 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Video item=mAdapter.getDataList().get(position);
-                CommBrowserActivity.start(getActivity(),item.getUrl(),item.getDesc());
+                Video item = mAdapter.getDataList().get(position);
+                CommBrowserActivity.start(getActivity(), item.getUrl(), item.getDesc());
+            }
+        });
+    }
+
+    private void initSearchEt() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    //处理事件
+                    keyword = etSearch.getText().toString().trim();
+                    rv.forceToRefresh();
+                }
+                return false;
             }
         });
     }
@@ -80,7 +109,6 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
         super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
         if (isFirstVisiableToUser && isVisibleToUser) {
             rv.forceToRefresh();
-            presenter.getVideoList();
             isFirstVisiableToUser = false;
         }
     }
@@ -106,5 +134,13 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
     public void getVideoListFail(String msg) {
         rv.refreshComplete(10);
         ToastUtils.show(getActivity(), msg);
+    }
+
+
+
+    @OnClick(R.id.tv_search)
+    public void onClick() {
+        keyword = etSearch.getText().toString().trim();
+        rv.forceToRefresh();
     }
 }

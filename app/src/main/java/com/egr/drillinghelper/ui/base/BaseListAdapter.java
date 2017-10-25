@@ -62,6 +62,10 @@ public abstract class BaseListAdapter<T, R extends RecyclerView.ViewHolder> exte
         return mDataList;
     }
 
+    public T getLastItem(){
+        return mDataList.get(mDataList.size()-1);
+    }
+
     public void setDataList(List<T> list) {
         this.mDataList.clear();
         this.mDataList.addAll(list);

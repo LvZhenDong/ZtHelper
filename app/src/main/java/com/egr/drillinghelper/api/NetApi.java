@@ -37,6 +37,8 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface NetApi {
+    //版本更新接口
+    String Version = "version/check?code=";
 
     /**
      * 登录
@@ -362,9 +364,11 @@ public interface NetApi {
 
     /**
      * 获取视频区list
+     *
      * @param current
      * @return
      */
     @GET("video/getList")
-    Observable<BaseResponseBean<BasePage<Video>>> getVideoList(@Query("current") String current);
+    Observable<BaseResponseBean<BasePage<Video>>> getVideoList(@Query("keyword") String keyword,
+                                                               @Query("current") String current);
 }

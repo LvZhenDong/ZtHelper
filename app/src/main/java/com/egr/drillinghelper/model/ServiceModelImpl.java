@@ -43,12 +43,12 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
                 .subscribe(new EObserver<NullBodyResponse>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-
+                        presenter.getView().sendMsgFail();
                     }
 
                     @Override
                     public void onComplete(@NonNull NullBodyResponse response) {
-
+                        presenter.getView().sendMsgSuc();
                     }
                 });
     }

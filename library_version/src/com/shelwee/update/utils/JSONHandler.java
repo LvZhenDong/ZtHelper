@@ -25,7 +25,6 @@ public class JSONHandler {
         jsonObject = jsonObject.getJSONObject("body");  //取data
         UpdateInfo updateInfo = new UpdateInfo();
         Log.d("update", jsonObject.toString());
-        //TODO
         if(jsonObject.has("url")) updateInfo.setApkUrl(jsonObject.getString("url"));
         if(jsonObject.has("name")) updateInfo.setAppName(jsonObject.getString("name"));
         if(jsonObject.has("code")) updateInfo.setVersionCode(jsonObject.getString("code"));

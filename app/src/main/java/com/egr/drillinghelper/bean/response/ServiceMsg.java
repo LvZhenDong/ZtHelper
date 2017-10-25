@@ -18,7 +18,7 @@ public class ServiceMsg {
         msg.setSend(true);
         msg.setCreateTime(time);
         msg.setMsg(text);
-
+        msg.setSendState(2);
         return msg;
     }
 
@@ -26,6 +26,7 @@ public class ServiceMsg {
         ServiceMsg msg=new ServiceMsg();
         msg.setSend(true);
         msg.setCreateTime(time);
+        msg.setSendState(2);
         List<String> imgs = new ArrayList<>();
         imgs.add(img);
         msg.setPictureList(imgs);
@@ -52,6 +53,7 @@ public class ServiceMsg {
      * pictureList : ["http://192.168.31.232:8083/egr/api/static/servicesupport/29159668291111.jpg"]
      */
 
+    private int sendState = 0;
     private String id;
     @SerializedName("createtime")
     private String createTime;
@@ -62,6 +64,13 @@ public class ServiceMsg {
     private int isAdmin;
     private List<String> pictureList;
 
+    public int getSendState() {
+        return sendState;
+    }
+
+    public void setSendState(int sendState) {
+        this.sendState = sendState;
+    }
 
     public boolean isSend() {
         return isAdmin==0;
