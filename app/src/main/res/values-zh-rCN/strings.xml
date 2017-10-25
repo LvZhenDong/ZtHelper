@@ -108,6 +108,7 @@
     <string name="create_input_empty">请输入您遇到的问题</string>
     <string name="create_feedback_success_hint">后台已收到您的反馈，工作人员会尽快回复您。</string>
     <string name="create_feedback_success_hint2">根据您的反馈，我们给您匹配了相似的问题：</string>
+    <string name="can_not_input_emoji">不支持输入表情符号</string>
 
 
 

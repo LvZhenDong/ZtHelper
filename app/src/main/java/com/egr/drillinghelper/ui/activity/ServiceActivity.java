@@ -25,6 +25,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrRxBus;
+import com.egr.drillinghelper.utils.StringUtils;
 import com.egr.drillinghelper.utils.TimeUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -156,12 +157,21 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
+                if (s.length() > 0) {   //显示发送按钮
                     tvAddImg.setVisibility(View.INVISIBLE);
                     tvSend.setVisibility(View.VISIBLE);
-                } else {
+                } else {    //显示发送图片按钮
                     tvAddImg.setVisibility(View.VISIBLE);
                     tvSend.setVisibility(View.INVISIBLE);
+                }
+
+                int index = etMsg.getSelectionStart() - 1;
+                if (index > 0) {
+                    if (StringUtils.isEmojiCharacter(s.charAt(index))) {
+                        Editable edit = etMsg.getText();
+                        edit.delete(s.length() - 2, s.length());
+                        ToastUtils.show(getActivity(),R.string.can_not_input_emoji);
+                    }
                 }
             }
         });
