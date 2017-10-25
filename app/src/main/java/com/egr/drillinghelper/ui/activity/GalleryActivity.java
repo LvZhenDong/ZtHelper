@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
@@ -28,6 +30,12 @@ public class GalleryActivity extends BaseActivity {
 
     private ArrayList<String> images;
 
+    public static void start(Context context, ArrayList<String> imgList) {
+        Intent intent = new Intent(context, GalleryActivity.class);
+        intent.putExtra(KEY_INTENT, imgList);
+        context.startActivity(intent);
+    }
+
     @Override
     public int returnLayoutID() {
         return R.layout.activity_gallery;
@@ -35,7 +43,7 @@ public class GalleryActivity extends BaseActivity {
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        images= (ArrayList<String>) getIntent().getSerializableExtra(KEY_INTENT);
+        images = (ArrayList<String>) getIntent().getSerializableExtra(KEY_INTENT);
         initViewPager();
     }
 
@@ -57,9 +65,9 @@ public class GalleryActivity extends BaseActivity {
             public Object instantiateItem(ViewGroup container, int position) {
                 View view = View.inflate(container.getContext(), R.layout.pager_item, null);
                 ImageView imageView = (ImageView) view.findViewById(R.id.item_img);
-                TextView tv= (TextView) view.findViewById(R.id.tv_number);
-                tv.setText((position+1)+"/"+getCount());
-                GlideUtils.load(images.get(position),imageView);
+                TextView tv = (TextView) view.findViewById(R.id.tv_number);
+                tv.setText((position + 1) + "/" + getCount());
+                GlideUtils.load(images.get(position), imageView);
                 container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
                 return view;

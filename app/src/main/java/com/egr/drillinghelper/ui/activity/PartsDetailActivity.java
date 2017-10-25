@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,6 +10,8 @@ import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.utils.GlideUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,9 +53,22 @@ public class PartsDetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.tv_buy)
-    public void onClick() {
-        if (store != null)
-            CommBrowserActivity.start(this, store.getUrl(), store.getName());
+    @OnClick({R.id.tv_buy, R.id.iv})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_buy:
+                if (store != null)
+                    CommBrowserActivity.start(this, store.getUrl(), store.getName());
+                break;
+            case R.id.iv:
+                if (store != null) {
+                    ArrayList<String> imgs = new ArrayList<>();
+                    imgs.add(store.getPicture());
+                    GalleryActivity.start(this, imgs);
+                }
+                break;
+
+        }
+
     }
 }

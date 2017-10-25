@@ -65,6 +65,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     @BindView(R.id.ll_add_img)
     LinearLayout llAddImg;
     ServiceAdapter mAdapter;
+    LinearLayoutManager linearLayoutManager;
     private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
@@ -88,7 +89,8 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         mAdapter = new ServiceAdapter(this);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         rvMsg.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        rvMsg.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        rvMsg.setLayoutManager(linearLayoutManager);
         rvMsg.setAdapter(mLRecyclerViewAdapter);
         rvMsg.setLoadMoreEnabled(false);
         rvMsg.setOnRefreshListener(new OnRefreshListener() {
@@ -211,6 +213,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         rvMsg.refreshComplete(20);
         if (data.getCurrent() > 1) {
             mAdapter.addAll(0, data.getRecords());
+            linearLayoutManager.scrollToPositionWithOffset(data.getRecords().size(), 0);
         } else if (data.getCurrent() == 1) {
             mAdapter.setDataList(data.getRecords());
             rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
