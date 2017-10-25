@@ -44,7 +44,7 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
                     @Override
                     public void onComplete(@NonNull UserInfo userInfo) {
                         presenter.getView().getUserInfoSuccess(userInfo);
-                        UserManager.setUserPhoto(userInfo.getPhoto());
+                        UserManager.getInstance().updateUserPhoto(userInfo.getPhoto());
                     }
                 });
     }

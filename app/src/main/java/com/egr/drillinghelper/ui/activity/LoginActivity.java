@@ -183,7 +183,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @Override
     public void onBackPressed() {
-        UserManager.quit();
+        UserManager.getInstance().quit();
         super.onBackPressed();
     }
 }

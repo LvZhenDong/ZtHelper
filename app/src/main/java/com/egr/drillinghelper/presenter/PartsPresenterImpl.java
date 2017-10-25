@@ -49,7 +49,7 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
 
     @Override
     public void getPastsFail(String msg) {
-        if (UserManager.isLogined())
+        if (UserManager.getInstance().isLogined())
             getView().getPastsFail(msg);
     }
 

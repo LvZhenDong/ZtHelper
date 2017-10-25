@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.UserInfo;
+import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.PersonalContract;
 import com.egr.drillinghelper.presenter.PersonalPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -62,7 +63,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
         setupActionBar(R.string.personal, true);
         setActionbarBackground(R.color.white);
 
-        mUserInfo = (UserInfo) getIntent().getSerializableExtra(KEY_INTENT);
+        mUserInfo = UserManager.getInstance().getUserInfo();
         if (mUserInfo != null) {
             tvName.setText(mUserInfo.getName());
             tvCompany.setText(mUserInfo.getCompany());

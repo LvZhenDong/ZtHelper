@@ -26,7 +26,7 @@ public class FeedbackPresenterImpl extends BasePresenter<FeedbackContract.View,
 
     @Override
     public void getFeedbackFail(String msg) {
-        if(UserManager.isLogined())
+        if(UserManager.getInstance().isLogined())
             getView().getFeedbackFail(msg);
     }
 }

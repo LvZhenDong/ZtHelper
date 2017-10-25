@@ -48,7 +48,7 @@ public interface NetApi {
      */
     @FormUrlEncoded
     @POST("user/login")
-    Observable<BaseResponseBean<LoginResponse>> login(@FieldMap HashMap<String, Object> options);
+    Observable<BaseResponseBean<UserInfo>> login(@FieldMap HashMap<String, Object> options);
 
 
     /**

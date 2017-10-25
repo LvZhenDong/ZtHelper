@@ -45,7 +45,7 @@ public class AppReceiver extends BroadcastReceiver {
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String id = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Logger.i("极光注册成功 code:" + id);
-            UserManager.setJPushId(id);
+            UserManager.getInstance().setJPushId(id);
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             sendToNotification(context, bundle);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
@@ -57,9 +57,8 @@ public class AppReceiver extends BroadcastReceiver {
         String string = bundle.getString(JPushInterface.EXTRA_MESSAGE);
         Logger.i("接受到推送消息:" + string);
         Message message = new Gson().fromJson(string, Message.class);
-        Logger.i("userId:"+UserManager.getUserId());
-        if(TextUtils.isEmpty(UserManager.getUserId()) ||
-                !TextUtils.equals(UserManager.getUserId(),message.getUserId()))return;
+        if(!UserManager.getInstance().isLogined() ||
+                !TextUtils.equals(UserManager.getInstance().getUserId(),message.getUserId()))return;
         if(message.isLoginConflict()){
             showLoginConflictDialog(context,message);
         }else if(message.isMessage()){
@@ -96,7 +95,7 @@ public class AppReceiver extends BroadcastReceiver {
                 true,ensure, new DialogHelper.OnDialogClickListener() {
                     @Override
                     public void onEnsureClick() {
-                        UserManager.quit();
+                        UserManager.getInstance().quit();
                         EgrAppManager.getInstance().finishAllActivity();
                         Intent intent = new Intent(activity, LoginActivity.class);
                         intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, true);
@@ -148,7 +147,7 @@ public class AppReceiver extends BroadcastReceiver {
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
         Message message = new Gson().fromJson(extras, Message.class);
         if (message == null || TextUtils.isEmpty(message.getId())) return;
-        if(TextUtils.isEmpty(UserManager.getUserId()) || !message.getUserId().equals(UserManager.getUserId())){
+        if(!UserManager.getInstance().isLogined() || !message.getUserId().equals(UserManager.getInstance().getUserId())){
             Intent mIntent = new Intent(context, LoginActivity.class);
             mIntent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, true);
             context.startActivity(mIntent);

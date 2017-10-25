@@ -72,7 +72,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
         public void show(ServiceMsg item) {
             tvTime.setText(item.getCreateTime());
             if (item.isSend()) {
-                GlideUtils.loadCircleImg(UserManager.getUserPhoto(),ivSendHead);
+                GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(),ivSendHead);
                 rlSend.setVisibility(View.VISIBLE);
                 rlReceive.setVisibility(View.GONE);
                 if (CollectionUtil.isListEmpty(item.getPictureList())) {

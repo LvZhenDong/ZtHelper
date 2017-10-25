@@ -55,7 +55,7 @@ public class ExplainPresenterImpl extends BasePresenter<ExplainContract.View,
 
     @Override
     public void getExplainFail(String msg) {
-        if(UserManager.isLogined())
+        if(UserManager.getInstance().isLogined())
             getView().getExplainFail(msg);
     }
 

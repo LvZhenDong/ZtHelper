@@ -57,7 +57,6 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     TextView tvCompany;
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
-    UserInfo mUserInfo;
     private ACProgressFlower mDialog;
 
     @Override
@@ -82,7 +81,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
             }
         });
 
-        presenter.userInfo();
+        getUserInfoSuccess(UserManager.getInstance().getUserInfo());
     }
 
     @OnClick({R.id.ll_contact_us, R.id.ll_about_egr, R.id.ll_share,
@@ -140,7 +139,6 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
      */
     private void goToPersonal() {
         Intent intent = new Intent(getActivity(), PersonalActivity.class);
-        intent.putExtra(KEY_INTENT, mUserInfo);
         startActivity(intent);
     }
 
@@ -148,7 +146,6 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     public void getUserInfoSuccess(UserInfo userInfo) {
         if(userInfo == null)
             return;
-        mUserInfo = userInfo;
         tvName.setText(userInfo.getName());
         tvCompany.setText(userInfo.getCompany());
         GlideUtils.loadCircleImg(userInfo.getPhoto(),ivHead);
@@ -157,7 +154,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @Override
     public void logoutSuccess() {
         mDialog.dismiss();
-        UserManager.quit();
+        UserManager.getInstance().quit();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.putExtra(KEY_INTENT_BOOLEAN, true);
         startActivity(intent);
@@ -167,7 +164,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @Override
     public void logoutFail(String msg) {
         mDialog.dismiss();
-        UserManager.quit();
+        UserManager.getInstance().quit();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.putExtra(KEY_INTENT_BOOLEAN, true);
         startActivity(intent);

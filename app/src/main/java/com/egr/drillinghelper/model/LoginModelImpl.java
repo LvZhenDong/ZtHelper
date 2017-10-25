@@ -6,7 +6,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.LoginResponse;
+import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
-
-import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
 /**
  * author lzd
@@ -42,29 +40,28 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
             HashMap<String,Object> options=new HashMap<>();
             options.put("phone",phone);
             options.put("password",password);
-            String deviceCode= UserManager.getsJPushId(getContext());
+            String deviceCode= UserManager.getInstance().getJPushId(getContext());
             if(!TextUtils.isEmpty(deviceCode))
                 options.put("deviceCode", deviceCode);
             options.put("deviceType",0);    //0-android 1-iOS
 
             APIServiceFactory.getInstance().createService()
                     .login(options)
-                    .compose(TransformersFactory.<LoginResponse>commonTransformer((BaseMVPActivity) presenter.getView()))
-                    .subscribe(new EObserver<LoginResponse>() {
+                    .compose(TransformersFactory.<UserInfo>commonTransformer((BaseMVPActivity) presenter.getView()))
+                    .subscribe(new EObserver<UserInfo>() {
                         @Override
                         public void onError(ResponseThrowable e,String eMsg) {
                             presenter.getView().loginFail(eMsg);
                         }
 
                         @Override
-                        public void onComplete(@NonNull LoginResponse loginResponse) {
+                        public void onComplete(@NonNull UserInfo userInfo) {
 
-                            if(loginResponse == null){
+                            if(userInfo == null){
                                 onError(null,"登录失败");
                                 return;
                             }
-                            UserManager.setTOKEN(loginResponse.getToken());
-                            UserManager.setUserId(loginResponse.getId());
+                            UserManager.getInstance().saveUserInfo(userInfo);
                             presenter.getView().loginSuccess();
                         }
                     });

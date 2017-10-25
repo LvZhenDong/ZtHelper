@@ -3,6 +3,8 @@ package com.egr.drillinghelper.common;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.egr.drillinghelper.bean.response.UserInfo;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -13,56 +15,67 @@ import cn.jpush.android.api.JPushInterface;
 
 public class UserManager {
 
-    private static String sJPushId;
-    private static String userId;
-    private static String sToken;
-    private static String userPhoto;
+    private String sJPushId;
+    private UserInfo userInfo=new UserInfo();
 
-    public static String getUserPhoto() {
-        return userPhoto;
+    private static class SingletonHolder{
+        private static final UserManager instance=new UserManager();
     }
 
-    public static void setUserPhoto(String userPhoto) {
-        UserManager.userPhoto = userPhoto;
+    public static UserManager getInstance(){
+        return SingletonHolder.instance;
     }
 
-    public static boolean isLogined(){
-        return !TextUtils.isEmpty(userId);
+    public void saveUserInfo(UserInfo data){
+        if(data == null)return;
+        this.userInfo=data;
+        setTOKEN(data.getToken());
     }
 
-    public static void quit(){
+    public UserInfo getUserInfo(){
+        return userInfo;
+    }
+
+    public void updateUserPhoto(String photo){
+        userInfo.setPhoto(photo);
+    }
+
+    public String getUserPhoto() {
+        return userInfo.getPhoto();
+    }
+
+    public boolean isLogined(){
+        return !TextUtils.isEmpty(userInfo.getId());
+    }
+
+    public void quit(){
         sJPushId=null;
-        userId=null;
+        userInfo=new UserInfo();
         setTOKEN("");
     }
-    public static String getTOKEN() {
-        if (TextUtils.isEmpty(sToken)) {
-            sToken = MySharePreferencesManager.getInstance().getString("token", "");
+    public String getTOKEN() {
+        if (TextUtils.isEmpty(userInfo.getToken())) {
+            return MySharePreferencesManager.getInstance().getString("token", "");
         }
-        return sToken;
+        return userInfo.getToken();
     }
 
-    public static void setTOKEN(String token) {
-        sToken = token;
+    private void setTOKEN(String token) {
         MySharePreferencesManager.getInstance().putString("token", token);
     }
 
-    public static String getsJPushId(Context context) {
+    public String getJPushId(Context context) {
         if (TextUtils.isEmpty(sJPushId)) {
             sJPushId = JPushInterface.getRegistrationID(context);
         }
         return sJPushId;
     }
 
-    public static void setJPushId(String id) {
+    public void setJPushId(String id) {
         sJPushId = id;
     }
 
-    public static String getUserId() {
-        return userId;
-    }
-
-    public static void setUserId(String userId) {
-        UserManager.userId = userId;
+    public String getUserId() {
+        return userInfo.getId();
     }
 }

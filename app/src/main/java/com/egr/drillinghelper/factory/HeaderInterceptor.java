@@ -20,7 +20,7 @@ class HeaderInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
-        String token = UserManager.getTOKEN();
+        String token = UserManager.getInstance().getTOKEN();
         Request.Builder builder = original.newBuilder();
         if (!TextUtils.isEmpty(token)){
             builder.addHeader("token",token);

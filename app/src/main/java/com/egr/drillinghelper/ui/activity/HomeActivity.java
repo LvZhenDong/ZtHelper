@@ -253,7 +253,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private boolean isLogin() {
-        if (!UserManager.isLogined()) {
+        if (!UserManager.getInstance().isLogined()) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra(KEY_INTENT_BOOLEAN, true);
             startActivity(intent);
