@@ -66,12 +66,19 @@ public class FeedbackFragment extends BaseMVPFragment<FeedbackContract.View,
         initRv();
     }
 
+    @Override
+    public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
+        super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
+        if (isFirstVisiableToUser && isVisibleToUser) {
+            presenter.getFeedbackList();
+            isFirstVisiableToUser = false;
+        }
+    }
+
     private void initRv(){
         mAdapter=new QuestionAdapter(getActivity());
         rvQuestion.setAdapter(mAdapter);
         rvQuestion.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        presenter.getFeedbackList();
     }
 
     @OnClick(R.id.ll_go_feedback)

@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
@@ -34,7 +33,6 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,11 +121,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         EgrRxBus.subscribe(this, Message.class, new Consumer<Message>() {
             @Override
             public void accept(@NonNull Message message) throws Exception {
-                ServiceMsg receiveMsg = new ServiceMsg();
-                receiveMsg.setSend(false);
-                receiveMsg.setMsg(message.getMsg());
-                receiveMsg.setCreateTime(message.getUpdatetime());
-                mAdapter.add(receiveMsg);
+                mAdapter.add(ServiceMsg.createRecText(message));
                 rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
             }
         });
@@ -176,11 +170,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
             case R.id.tv_send:
                 String msg = etMsg.getText().toString().trim();
                 etMsg.setText("");
-                ServiceMsg sendMsg = new ServiceMsg();
-                sendMsg.setSend(true);
-                sendMsg.setMsg(msg);
-                sendMsg.setCreateTime(getCurrentTime());
-                mAdapter.add(sendMsg);
+                mAdapter.add(ServiceMsg.createSendText(getCurrentTime(),msg));
                 rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
                 presenter.sendMsg(msg);
                 break;
@@ -209,13 +199,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra
                         (ImagePicker.EXTRA_RESULT_ITEMS);
                 String imgStr = images.get(0).path;
-                ServiceMsg sendImgMsg = new ServiceMsg();
-                sendImgMsg.setSend(true);
-                List<String> imgs = new ArrayList<>();
-                imgs.add(imgStr);
-                sendImgMsg.setPictureList(imgs);
-                sendImgMsg.setCreateTime(getCurrentTime());
-                mAdapter.add(sendImgMsg);
+                mAdapter.add(ServiceMsg.createSendImg(getCurrentTime(),imgStr));
                 presenter.sendPhoto(imgStr);
                 rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
             }

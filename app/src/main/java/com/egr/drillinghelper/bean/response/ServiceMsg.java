@@ -2,6 +2,7 @@ package com.egr.drillinghelper.bean.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,35 @@ import java.util.List;
  */
 
 public class ServiceMsg {
+
+    public static ServiceMsg createSendText(String time, String text){
+        ServiceMsg msg=new ServiceMsg();
+        msg.setSend(true);
+        msg.setCreateTime(time);
+        msg.setMsg(text);
+
+        return msg;
+    }
+
+    public static ServiceMsg createSendImg(String time, String img){
+        ServiceMsg msg=new ServiceMsg();
+        msg.setSend(true);
+        msg.setCreateTime(time);
+        List<String> imgs = new ArrayList<>();
+        imgs.add(img);
+        msg.setPictureList(imgs);
+
+        return msg;
+    }
+
+    public static ServiceMsg createRecText(Message message){
+        ServiceMsg rec=new ServiceMsg();
+        rec.setSend(false);
+        rec.setCreateTime(message.getUpdatetime());
+        rec.setMsg(message.getMsg());
+
+        return rec;
+    }
 
     /**
      * id : 34abadf8f8c643798294e593b3eec3a6
