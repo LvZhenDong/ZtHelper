@@ -14,13 +14,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.base.BasePage;
+import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.contract.ServiceContract;
 import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ServiceAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -29,6 +32,7 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +42,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 import static com.egr.drillinghelper.R.id.tv_add_img;
 
@@ -101,6 +107,19 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         });
 
         initEt();
+
+        //接收到消息
+        EgrRxBus.subscribe(this, Message.class, new Consumer<Message>() {
+            @Override
+            public void accept(@NonNull Message message) throws Exception {
+                ServiceMsg receiveMsg = new ServiceMsg();
+                receiveMsg.setSend(false);
+                receiveMsg.setMsg(message.getMsg());
+                receiveMsg.setCreateTime(message.getUpdatetime());
+                mAdapter.add(receiveMsg);
+                rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+            }
+        });
 
         mDialog.show();
         presenter.getMsg();

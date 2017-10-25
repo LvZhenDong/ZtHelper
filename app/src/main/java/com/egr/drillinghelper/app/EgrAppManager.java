@@ -1,11 +1,16 @@
 package com.egr.drillinghelper.app;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -84,6 +89,38 @@ public final class EgrAppManager {
         }
         return null;
     }
+
+    public ActivityManager.RunningTaskInfo getTopTask(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = manager.getRunningTasks(1);
+        if (tasks != null && !tasks.isEmpty()) {
+            return tasks.get(0);
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 判断传入的activity是否在顶部
+     * @param context
+     * @param activityName
+     * @return
+     */
+    public boolean isTopActivity(Context context,String activityName) {
+        ActivityManager.RunningTaskInfo topTask=getTopTask(context);
+        if (topTask != null) {
+            ComponentName topActivity = topTask.topActivity;
+
+            if (topActivity.getClassName().equals(activityName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 
     /**
      * 结束除当前activtiy以外的所有activity

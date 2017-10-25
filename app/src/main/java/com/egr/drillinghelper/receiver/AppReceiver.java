@@ -20,6 +20,7 @@ import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.ui.activity.LoginActivity;
 import com.egr.drillinghelper.ui.activity.MessageDetailActivity;
+import com.egr.drillinghelper.ui.activity.ServiceActivity;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
@@ -64,8 +65,24 @@ public class AppReceiver extends BroadcastReceiver {
         }else if(message.isMessage()){
             showMessage(context,message,string);
         }else if(message.isServiceMsg()){
-
+            //如果当前是在ServiceActivity界面就直接显示回复
+            if(EgrAppManager.getInstance().
+                    isTopActivity(context,"com.egr.drillinghelper.ui.activity.ServiceActivity")){
+                EgrRxBus.post(message);
+            }else {     //显示顶部通知
+                showServiceMessage(context,message,string);
+            }
         }
+    }
+
+    private void showServiceMessage(Context context,Message message,String string){
+        JPushLocalNotification ln = new JPushLocalNotification();
+        ln.setBuilderId(0);
+        ln.setContent(message.getMsg());
+        ln.setTitle(message.getTitle());
+        ln.setBroadcastTime(System.currentTimeMillis() + 500);
+        ln.setExtras(string);
+        JPushInterface.addLocalNotification(context, ln);
     }
 
     /**
@@ -137,12 +154,17 @@ public class AppReceiver extends BroadcastReceiver {
             context.startActivity(mIntent);
 
             return;
+        }else if(message.isMessage()){
+            Intent mIntent = new Intent(context, MessageDetailActivity.class);
+            mIntent.putExtra(BaseActivity.KEY_INTENT, message.getId());
+            context.startActivity(mIntent);
+        }else if(message.isServiceMsg()){
+            Intent mIntent = new Intent(context, ServiceActivity.class);
+            context.startActivity(mIntent);
         }
 
 
-        Intent mIntent = new Intent(context, MessageDetailActivity.class);
-        mIntent.putExtra(BaseActivity.KEY_INTENT, message.getId());
-        context.startActivity(mIntent);
+
     }
 
 }

@@ -68,8 +68,17 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
     public void TODO(View view, Bundle savedInstanceState) {
         initSearchEt();
         initRv();
-        presenter.getPartsList("");
         presenter.getPartsCache();
+    }
+
+    @Override
+    public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
+        super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
+        if (isFirstVisiableToUser && isVisibleToUser) {
+            rvParts.forceToRefresh();
+            presenter.getPartsList("");
+            isFirstVisiableToUser = false;
+        }
     }
 
     private void initRv(){

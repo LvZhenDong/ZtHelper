@@ -30,6 +30,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.R.attr.type;
+
 /**
  * author lzd
  * date 2017/9/27 10:17
@@ -63,8 +65,17 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
     public void TODO(View view, Bundle savedInstanceState) {
         initSearchEt();
         initRv();
-        presenter.getExplainList("");
         presenter.getExplainCache();
+    }
+
+    @Override
+    public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
+        super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
+        if (isFirstVisiableToUser && isVisibleToUser) {
+            rvInstruction.forceToRefresh();
+            presenter.getExplainList("");
+            isFirstVisiableToUser = false;
+        }
     }
 
     private void initRv() {

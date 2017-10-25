@@ -62,8 +62,17 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
     public void TODO(View view, Bundle savedInstanceState) {
         initSearchEt();
         initRv();
-        presenter.getKnowList("");
         presenter.getKnowCache();
+    }
+
+    @Override
+    public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
+        super.onVisibleToUserChanged(isVisibleToUser, invokeInResumeOrPause);
+        if (isFirstVisiableToUser && isVisibleToUser) {
+            rvKnowledge.forceToRefresh();
+            presenter.getKnowList("");
+            isFirstVisiableToUser = false;
+        }
     }
 
     private void initRv() {
