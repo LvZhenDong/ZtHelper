@@ -8,6 +8,7 @@ import com.egr.drillinghelper.ui.fragment.FeedbackFragment;
 import com.egr.drillinghelper.ui.fragment.HomeFragment;
 import com.egr.drillinghelper.ui.fragment.MyFragment;
 import com.egr.drillinghelper.ui.fragment.PartsFragment;
+import com.egr.drillinghelper.ui.fragment.VideoPartFragment;
 
 /**
  * author lzd
@@ -16,7 +17,7 @@ import com.egr.drillinghelper.ui.fragment.PartsFragment;
  */
 
 public class HomeActivityAdapter extends FragmentPagerAdapter {
-    private Class[] fragments = {HomeFragment.class, PartsFragment.class, FeedbackFragment.class,
+    private Class[] fragments = {HomeFragment.class, VideoPartFragment.class, FeedbackFragment.class,
             MyFragment.class};
 
     public HomeActivityAdapter(FragmentManager fm) {

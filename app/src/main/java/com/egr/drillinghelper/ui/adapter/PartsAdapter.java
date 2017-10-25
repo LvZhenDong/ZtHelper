@@ -90,10 +90,13 @@ public class PartsAdapter extends BaseListAdapter<Store,
 
     void goPartsDetail(int position){
         Store item = getDataList().get(position);
-//
-//        CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
-        Intent intent=new Intent(mContext, PartsDetailActivity.class);
-        intent.putExtra(BaseActivity.KEY_INTENT,item);
-        mContext.startActivity(intent);
+
+        if(INTO_MALL.equals(item.getId())){ //商城
+            CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
+        }else {
+            Intent intent=new Intent(mContext, PartsDetailActivity.class);
+            intent.putExtra(BaseActivity.KEY_INTENT,item);
+            mContext.startActivity(intent);
+        }
     }
 }

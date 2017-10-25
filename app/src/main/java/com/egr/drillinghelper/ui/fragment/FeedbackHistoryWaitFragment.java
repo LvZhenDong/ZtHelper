@@ -29,7 +29,7 @@ import butterknife.BindView;
 
 public class FeedbackHistoryWaitFragment extends BaseMVPFragment<ReplyContract.View,
         ReplyPresenterImpl> implements ReplyContract.View {
-    @BindView(R.id.rv_instruction)
+    @BindView(R.id.rv)
     LRecyclerView rvInstruction;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter;

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -48,6 +49,8 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     LinearLayout llSales;
     @BindView(R.id.iv_qr)
     ImageView ivQr;
+    @BindView(R.id.sv)
+    ScrollView mSv;
     private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     String phone;
@@ -118,6 +121,7 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     public void getListSuccess(ContactUs contactUs) {
         mDialog.dismiss();
         if (contactUs != null) {
+            mSv.setVisibility(View.VISIBLE);
             mContactUs = contactUs;
 
             mAdapter.setDataList(contactUs.getContactList());

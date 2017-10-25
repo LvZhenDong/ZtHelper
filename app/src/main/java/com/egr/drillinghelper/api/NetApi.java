@@ -9,7 +9,6 @@ import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
-import com.egr.drillinghelper.bean.response.LoginResponse;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Parts;
@@ -19,6 +18,7 @@ import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.bean.response.UserInfo;
+import com.egr.drillinghelper.bean.response.Video;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +35,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
-
-import static cn.jpush.android.api.JPushInterface.a.q;
 
 public interface NetApi {
 
@@ -326,19 +324,47 @@ public interface NetApi {
 
     /**
      * 获取分享内容
+     *
      * @return
      */
     @GET("about/share")
     Observable<BaseResponseBean<Share>> share();
 
+    /**
+     * 发送服务支持消息
+     *
+     * @param msg
+     * @return
+     */
     @POST("support/sendMessage")
     Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@Query("message") String msg);
 
+    /**
+     * 发送服务支持图片
+     *
+     * @param photo
+     * @return
+     */
     @Multipart
     @POST("support/sendMessage")
     Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@PartMap Map<String, RequestBody> photo);
 
+    /**
+     * 获取服务支持历史数据
+     *
+     * @param current
+     * @param size
+     * @return
+     */
     @GET("support/getMessage")
     Observable<BaseResponseBean<BasePage<ServiceMsg>>> getServiceMsg(@Query("current") String current,
-                                                           @Query("size") String size);
+                                                                     @Query("size") String size);
+
+    /**
+     * 获取视频区list
+     * @param current
+     * @return
+     */
+    @GET("video/getList")
+    Observable<BaseResponseBean<BasePage<Video>>> getVideoList(@Query("current") String current);
 }

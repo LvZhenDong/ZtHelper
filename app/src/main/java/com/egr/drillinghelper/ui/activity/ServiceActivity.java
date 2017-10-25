@@ -23,8 +23,10 @@ import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ServiceAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -105,6 +107,15 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 presenter.loadMore();
             }
         });
+        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ServiceMsg item=mAdapter.getDataList().get(position);
+                if(!CollectionUtil.isListEmpty(item.getPictureList())){
+                    GalleryActivity.start(getActivity(), (ArrayList<String>) item.getPictureList());
+                }
+            }
+        });
 
         initEt();
 
@@ -177,8 +188,10 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 //收起keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(etMsg.getWindowToken(), 0);
-                llAddImg.setVisibility(View.VISIBLE);
+//                llAddImg.setVisibility(View.VISIBLE);
                 etMsg.clearFocus();
+                Intent imgIntent = new Intent(getActivity(), ImageGridActivity.class);
+                startActivityForResult(imgIntent, IMAGE_PICKER);
                 break;
             case R.id.ll_add_img:
                 llAddImg.setVisibility(View.GONE);
@@ -230,12 +243,12 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     public void getMsgSuc(BasePage<ServiceMsg> data) {
         mDialog.dismiss();
         rvMsg.refreshComplete(20);
-        if (data.getCurrent() > 1) {
+        if (data.getCurrent() > 1) {    //加载更早的历史消息
             mAdapter.addAll(0, data.getRecords());
             linearLayoutManager.scrollToPositionWithOffset(data.getRecords().size(), 0);
-        } else if (data.getCurrent() == 1) {
+        } else if (data.getCurrent() == 1) {    //加载消息list
             mAdapter.setDataList(data.getRecords());
-            rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+            rvMsg.scrollToPosition(mAdapter.getDataList().size());
         }
     }
 
