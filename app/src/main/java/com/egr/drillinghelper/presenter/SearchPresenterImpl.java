@@ -3,7 +3,7 @@ package com.egr.drillinghelper.presenter;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
-import com.egr.drillinghelper.bean.response.Parts;
+import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.model.SearchModelImpl;
@@ -72,7 +72,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     }
 
     @Override
-    public void searchPartsSuccess(BasePage<Parts> data) {
+    public void searchPartsSuccess(BasePage<Store> data) {
         if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
             getView().noMoreData();
         }else {
@@ -104,9 +104,9 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         return titles;
     }
 
-    private List<String> getPartsTitles(List<Parts> list){
+    private List<String> getPartsTitles(List<Store> list){
         List<String> titles = new ArrayList<>();
-        for (Parts item : list) {
+        for (Store item : list) {
             titles.add(item.getName());
         }
 

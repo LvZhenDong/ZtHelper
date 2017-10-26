@@ -20,10 +20,9 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
-import com.egr.drillinghelper.bean.response.Parts;
+import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.SearchContract;
-import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.presenter.SearchPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
 import com.egr.drillinghelper.ui.base.BaseActivity;
@@ -86,7 +85,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     SearchResultAdapter mAdapter;
     List<String> mList = new ArrayList<>();
     List<KnowCatalog> mKnowCatalogs;
-    List<Parts> mParts;
+    List<Store> mParts;
     List<Explain> mExplainCatalogs;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
@@ -216,8 +215,10 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 startActivity(intentKnow);
                 break;
             case MyConstants.SEARCH_TYPE_PARTS: //配件
-                Parts part = mParts.get(position);
-                CommBrowserActivity.start(this, part.getUrl(), part.getName());
+                Store store = mParts.get(position);
+                Intent intentPart=new Intent(this, PartsDetailActivity.class);
+                intentPart.putExtra(BaseActivity.KEY_INTENT,store);
+                startActivity(intentPart);
                 break;
         }
     }
@@ -251,7 +252,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     }
 
     @Override
-    public void searchParts(List<Parts> parts, List<String> titles) {
+    public void searchParts(List<Store> parts, List<String> titles) {
         int[] pos = new int[2];
         etSearch.getLocationInWindow(pos);
         if (mAdapter != null)

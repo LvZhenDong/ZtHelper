@@ -6,7 +6,7 @@ import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
-import com.egr.drillinghelper.bean.response.Parts;
+import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -51,15 +51,15 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
     @Override
     public void searchParts(String keyword,int current) {
         api.searchProduct(keyword,current+"")
-                .compose(TransformersFactory.<BasePage<Parts>>commonTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<BasePage<Parts>>() {
+                .compose(TransformersFactory.<BasePage<Store>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BasePage<Store>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().searchFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull BasePage<Parts> data) {
+                    public void onComplete(@NonNull BasePage<Store> data) {
                         presenter.searchPartsSuccess(data);
 
                     }

@@ -11,7 +11,6 @@ import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
-import com.egr.drillinghelper.bean.response.Parts;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.bean.response.Share;
@@ -286,7 +285,7 @@ public interface NetApi {
      * @return
      */
     @GET("search/product")
-    Observable<BaseResponseBean<BasePage<Parts>>> searchProduct(@Query("keyword") String keyword,
+    Observable<BaseResponseBean<BasePage<Store>>> searchProduct(@Query("keyword") String keyword,
                                                                 @Query("current") String current);
 
     /**
