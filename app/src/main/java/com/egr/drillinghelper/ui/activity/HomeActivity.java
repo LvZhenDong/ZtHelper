@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
+import com.egr.drillinghelper.bean.rxbus.HomeCurrent;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
@@ -76,7 +77,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
         @Override
         public void onClick(View v) {
-            onSearchClick(homeAdapter.getHomeFragment().getCurrentItem());
+            onSearchClick(mHomeCurrent);
         }
     };
 
@@ -93,6 +94,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         }
     };
 
+    int mHomeCurrent;
 
 
     @Override
@@ -121,6 +123,14 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             public void accept(@NonNull String s) throws Exception {
                 if (s.equals(RxBusConstant.UPDATE_MSG))
                     presenter.getNoReadMsg();
+            }
+        });
+
+        //首页的viewPager切换
+        EgrRxBus.subscribe(this, HomeCurrent.class, new Consumer<HomeCurrent>() {
+            @Override
+            public void accept(@NonNull HomeCurrent homeCurrent) throws Exception {
+                mHomeCurrent=homeCurrent.getCurrent();
             }
         });
 

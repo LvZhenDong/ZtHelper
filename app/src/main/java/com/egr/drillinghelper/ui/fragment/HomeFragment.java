@@ -8,9 +8,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.bean.rxbus.HomeCurrent;
+import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.ui.adapter.HomeFragmentAdapter;
 import com.egr.drillinghelper.ui.base.BaseFragment;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
+import com.egr.drillinghelper.utils.EgrRxBus;
 
 import butterknife.BindView;
 
@@ -71,19 +74,18 @@ public class HomeFragment extends BaseFragment {
                 switch (checkedId) {
                     case R.id.rb_explain:
                         vpHome.setCurrentItem(0);
+                        EgrRxBus.post(new HomeCurrent(0));
                         break;
                     case R.id.rb_knows:
                         vpHome.setCurrentItem(1);
+                        EgrRxBus.post(new HomeCurrent(1));
                         break;
                     case R.id.rb_parts:
                         vpHome.setCurrentItem(2);
+                        EgrRxBus.post(new HomeCurrent(2));
                         break;
                 }
             }
         });
-    }
-
-    public int getCurrentItem() {
-        return vpHome.getCurrentItem();
     }
 }
