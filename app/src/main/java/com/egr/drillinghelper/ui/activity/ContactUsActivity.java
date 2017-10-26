@@ -17,14 +17,11 @@ import com.egr.drillinghelper.presenter.ContactUsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ContactUsAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.ui.widgets.RvInScrollView;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.PhoneUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
@@ -40,7 +37,7 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @BindView(R.id.tv_sales_phone)
     TextView tvSalesPhone;
     @BindView(R.id.rv_contact)
-    LRecyclerView rvMessage;
+    RvInScrollView rvMessage;
     ContactUsAdapter mAdapter;
     ContactUs mContactUs;
     @BindView(R.id.ll_service)
@@ -52,7 +49,6 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @BindView(R.id.sv)
     ScrollView mSv;
     private ACProgressFlower mDialog;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     String phone;
     private View.OnClickListener onPhoneClickListener = new View.OnClickListener() {
         @Override
@@ -85,22 +81,9 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
 
     private void initRv() {
         mAdapter = new ContactUsAdapter(getActivity());
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        rvMessage.setLayoutManager(new LinearLayoutManager(getActivity()){
-            @Override
-            public boolean canScrollVertically() {
-                return false;   //解决滑动卡顿问题，禁止recyclerView滑动
-            }
-        });
-        rvMessage.setAdapter(mLRecyclerViewAdapter);
-        rvMessage.setLoadMoreEnabled(false);
-        rvMessage.setPullRefreshEnabled(false);
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-            }
-        });
+        rvMessage.setNestedScrollingEnabled(false);
+        rvMessage.setLayoutManager(new LinearLayoutManager(this));
+        rvMessage.setAdapter(mAdapter);
 
         if (!mDialog.isShowing())
             mDialog.show();

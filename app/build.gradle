@@ -81,12 +81,12 @@ android {
 
     signingConfigs {
 
-//        debug {
-//            storeFile file('./egr.jks')
-//            storePassword "123456"
-//            keyAlias "egr"
-//            keyPassword "123456"
-//        }
+        debug {
+            storeFile file('./egr.jks')
+            storePassword "123456"
+            keyAlias "egr"
+            keyPassword "123456"
+        }
 
         release {
             storeFile file('./egr.jks')
