@@ -63,7 +63,7 @@ public class GalleryActivity extends BaseActivity {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                View view = View.inflate(container.getContext(), R.layout.pager_item, null);
+                View view = View.inflate(container.getContext(), R.layout.item_pager, null);
                 ImageView imageView = (ImageView) view.findViewById(R.id.item_img);
                 TextView tv = (TextView) view.findViewById(R.id.tv_number);
                 tv.setText((position + 1) + "/" + getCount());
