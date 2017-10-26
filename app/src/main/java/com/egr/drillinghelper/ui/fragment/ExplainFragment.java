@@ -17,6 +17,7 @@ import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.ui.activity.ExplainCatalogActivity;
 import com.egr.drillinghelper.ui.adapter.ExplainAdapter;
+import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -46,7 +47,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.et_search)
-    EditText etSearch;
+    LvEditText etSearch;
     String keyword;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private ExplainAdapter mAdapter;
@@ -109,17 +110,11 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
     }
 
     private void initSearchEt() {
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-                if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE
-                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
-                    //处理事件
-                    keyword = etSearch.getText().toString().trim();
-                    rvInstruction.forceToRefresh();
-                }
-                return false;
+            public void onEnterClick(String text) {
+                keyword=text;
+                rvInstruction.forceToRefresh();
             }
         });
     }

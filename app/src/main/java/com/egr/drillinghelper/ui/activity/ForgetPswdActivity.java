@@ -10,6 +10,7 @@ import com.egr.drillinghelper.presenter.ForgetPswdPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -31,7 +32,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     @BindView(R.id.et_new_pswd)
     EditText etNewPswd;
     @BindView(R.id.et_ensure_pswd)
-    EditText etEnsurePswd;
+    LvEditText etEnsurePswd;
     @BindView(R.id.tv_complete)
     TextView tvComplete;
     @BindView(R.id.tv_get_ver_code)
@@ -50,6 +51,13 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
         setActionbarBackground(R.color.white);
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
+
+        etEnsurePswd.setOnEnterListener(new LvEditText.OnEnterListener() {
+            @Override
+            public void onEnterClick(String text) {
+                complete();
+            }
+        });
     }
 
     @Override
@@ -59,11 +67,11 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
 
 
     @OnClick(R.id.tv_complete)
-    public void onClick() {
+    public void complete() {
         if (!mDialog.isShowing())
             mDialog.show();
         presenter.forgetPswd(etPhoneNum.getText().toString().trim(), etVerCode.getText().toString().trim(),
-                etNewPswd.getText().toString().trim(), etEnsurePswd.getText().toString().trim());
+                etNewPswd.getText().toString().trim(), etEnsurePswd.getTrimText());
     }
 
     @OnClick(R.id.tv_get_ver_code)

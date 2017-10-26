@@ -3,7 +3,6 @@ package com.egr.drillinghelper.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,10 +19,9 @@ import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
-import com.egr.drillinghelper.utils.PhoneUtils;
+import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.SharePreHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,8 +29,6 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.magicbeans.android.ipmanager.module.MBIPInfo;
 import cn.magicbeans.android.ipmanager.utils.FloatWindowUtils;
 import cn.magicbeans.android.ipmanager.utils.MBIPContant;
-
-import static com.egr.drillinghelper.utils.PhoneUtils.MY_PERMISSIONS_REQUEST_CALL_PHONE;
 
 /**
  * author lzd
@@ -49,7 +45,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     @BindView(R.id.et_phoneNum)
     EditText etPhoneNum;
     @BindView(R.id.et_pasw)
-    EditText etPasw;
+    LvEditText etPasw;
     @BindView(R.id.tv_register)
     TextView tvRegister;
     @BindView(R.id.tv_forget_pswd)
@@ -84,6 +80,12 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         etPasw.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_PSW));
         etPhoneNum.setSelection(etPhoneNum.length());
 
+        etPasw.setOnEnterListener(new LvEditText.OnEnterListener() {
+            @Override
+            public void onEnterClick(String text) {
+                login();
+            }
+        });
 
 
         if(BuildConfig.DEBUG){
@@ -134,7 +136,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     public void login() {
         if (!mDialog.isShowing())
             mDialog.show();
-        presenter.login(etPhoneNum.getText().toString().trim(), etPasw.getText().toString().trim());
+        presenter.login(etPhoneNum.getText().toString().trim(), etPasw.getTrimText());
     }
 
     @OnClick(R.id.tv_register)
@@ -158,7 +160,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     public void loginSuccess() {
 
         SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_NAME,etPhoneNum.getText().toString());
-        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,etPasw.getText().toString());
+        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,etPasw.getTrimText());
         mDialog.dismiss();
         baseStartActivity(HomeActivity.class);
         finish();

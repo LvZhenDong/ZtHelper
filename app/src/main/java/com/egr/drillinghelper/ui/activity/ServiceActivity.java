@@ -267,6 +267,6 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     public void noMoreData() {
         mDialog.dismiss();
         rvMsg.refreshComplete(20);
-//        ToastUtils.show(getActivity(), R.string.no_more_data);
+        ToastUtils.show(getActivity(), R.string.no_more_data);
     }
 }

@@ -10,6 +10,7 @@ import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -36,7 +37,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @BindView(R.id.et_ver_code)
     EditText etVerCode;
     @BindView(R.id.et_pswd)
-    EditText etPswd;
+    LvEditText etPswd;
     @BindView(R.id.tv_commit)
     TextView tvCommit;
 
@@ -53,6 +54,13 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
         setActionbarBackground(R.color.white);
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
+
+        etPswd.setOnEnterListener(new LvEditText.OnEnterListener() {
+            @Override
+            public void onEnterClick(String text) {
+                commit();
+            }
+        });
     }
 
     @Override
@@ -62,7 +70,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
 
 
     @OnClick(R.id.tv_commit)
-    public void onClick() {
+    public void commit() {
         if(!mDialog.isShowing())
             mDialog.show();
         presenter.register(etName.getText().toString().trim(),etCompany.getText().toString().trim(),

@@ -29,6 +29,7 @@ import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
+import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.AnimViewWrapper;
 import com.egr.drillinghelper.utils.DensityUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
@@ -56,13 +57,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         SearchPresenterImpl> implements SearchContract.View {
 
 
-
     @BindView(R.id.tv_search)
     TextView tvSearch;
     @BindView(R.id.iv_search)
     ImageView ivSearch;
     @BindView(R.id.et_search)
-    EditText etSearch;
+    LvEditText etSearch;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
     @BindView(R.id.rl_search)
@@ -113,8 +113,8 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         rvResult.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(!TextUtils.isEmpty(keyword)){
-                    presenter.search(keyword,type);
+                if (!TextUtils.isEmpty(keyword)) {
+                    presenter.search(keyword, type);
                 }
             }
         });
@@ -160,6 +160,16 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 }
             }
         });
+        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
+            @Override
+            public void onEnterClick(String text) {
+                keyword = text;
+                if (!TextUtils.isEmpty(keyword)) {
+                    mDialog.show();
+                    presenter.search(keyword, type);
+                }
+            }
+        });
     }
 
     @OnClick({R.id.tv_search, R.id.iv_search, R.id.et_search, R.id.iv_back,
@@ -170,10 +180,10 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 finish();
                 break;
             case R.id.tv_search:
-                keyword=etSearch.getText().toString().trim();
-                if(!TextUtils.isEmpty(keyword)){
+                keyword = etSearch.getTrimText();
+                if (!TextUtils.isEmpty(keyword)) {
                     mDialog.show();
-                    presenter.search(keyword,type);
+                    presenter.search(keyword, type);
                 }
                 break;
             case R.id.iv_search:
@@ -194,7 +204,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     private void showDetail(int position) {
         switch (type) {
             case MyConstants.SEARCH_TYPE_EXPLAIN:   //使用说明
-                Explain explainOut=mExplainCatalogs.get(position);
+                Explain explainOut = mExplainCatalogs.get(position);
                 String id = explainOut.getId();
                 Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
                 intent.putExtra(KEY_INTENT, id);
@@ -207,7 +217,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 break;
             case MyConstants.SEARCH_TYPE_PARTS: //配件
                 Parts part = mParts.get(position);
-                CommBrowserActivity.start(this,part.getUrl(),part.getName());
+                CommBrowserActivity.start(this, part.getUrl(), part.getName());
                 break;
         }
     }

@@ -60,7 +60,8 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/ic_home_search" />
 
-            <EditText
+            <com.egr.drillinghelper.ui.widgets.LvEditText
+                android:imeOptions="actionDone"
                 android:id="@+id/et_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

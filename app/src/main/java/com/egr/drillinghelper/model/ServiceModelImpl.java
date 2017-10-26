@@ -61,12 +61,12 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
                 .subscribe(new EObserver<NullBodyResponse>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-
+                        presenter.getView().sendMsgFail();
                     }
 
                     @Override
                     public void onComplete(@NonNull NullBodyResponse response) {
-
+                        presenter.getView().sendMsgSuc();
                     }
                 });
     }
@@ -78,9 +78,6 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
                 .subscribe(new EObserver<BasePage<ServiceMsg>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        if(e.code== ERROR.UNKNOWN){
-                            presenter.getView().noMoreData();
-                        }else
                             presenter.getView().getMsgFail(eMsg);
                     }
 

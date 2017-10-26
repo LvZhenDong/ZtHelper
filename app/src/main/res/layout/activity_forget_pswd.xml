@@ -104,9 +104,10 @@
                 style="@style/EditTextTv"
                 android:paddingRight="14dp" />
 
-            <EditText
+            <com.egr.drillinghelper.ui.widgets.LvEditText
                 android:id="@+id/et_ensure_pswd"
                 style="@style/EditTextEt"
+                android:imeOptions="actionDone"
                 android:layout_toRightOf="@id/tv_ensure_pswd"
                 android:hint="@string/ensure_pswd_hint"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"

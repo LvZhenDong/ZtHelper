@@ -121,7 +121,8 @@
                 android:paddingRight="14dp"
                 android:text="@string/pswd" />
 
-            <EditText
+            <com.egr.drillinghelper.ui.widgets.LvEditText
+                android:imeOptions="actionSend"
                 android:id="@+id/et_pswd"
                 style="@style/EditTextEt"
                 android:layout_toRightOf="@id/tv_pswd"

@@ -47,10 +47,11 @@
             style="@style/EditTextTv"
             android:text="@string/pswd" />
 
-        <EditText
+        <com.egr.drillinghelper.ui.widgets.LvEditText
             android:id="@+id/et_pasw"
             style="@style/EditTextEt"
             android:layout_width="150dp"
+            android:imeOptions="actionGo"
             android:layout_toRightOf="@id/tvPswd"
             android:hint="@string/pswd_hint"
             android:inputType="textPassword" />
