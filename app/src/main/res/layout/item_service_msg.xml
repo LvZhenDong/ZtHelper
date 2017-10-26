@@ -98,9 +98,8 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <ImageView
+        <com.egr.drillinghelper.ui.widgets.SendStateView
             android:id="@+id/iv_send_state"
-            android:src="@drawable/ic_route_ring"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/rl_send_content"
             android:layout_width="20dp"

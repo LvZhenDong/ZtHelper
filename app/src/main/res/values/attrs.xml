@@ -26,4 +26,9 @@
         <attr name="ios" format="boolean"/>
         <attr name="leftSwipe" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <attr name="frameCount" format="integer"/>
+        <attr name="duration" format="integer" />
+    </declare-styleable>
 </resources>

@@ -14,6 +14,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
+import com.egr.drillinghelper.ui.widgets.SendStateView;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.orhanobut.logger.Logger;
@@ -74,7 +75,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
         @BindView(R.id.tv_time)
         TextView tvTime;
         @BindView(R.id.iv_send_state)
-        ImageView ivSendState;
+        SendStateView ivSendState;
 
         View.OnClickListener listener=new View.OnClickListener() {
             @Override
@@ -94,15 +95,13 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
             if (item.isSend()) {    //发送
                 switch (item.getSendState()){
                     case 0: //已经发送成功
-                        ivSendState.setVisibility(View.GONE);
+                        ivSendState.setSendState(0);
                         break;
                     case 1: //发送失败
-                        ivSendState.setVisibility(View.VISIBLE);
-                        ivSendState.setImageResource(R.drawable.ic_send_fail);
+                        ivSendState.setSendState(1);
                         break;
                     case 2: //发送中
-                        ivSendState.setVisibility(View.VISIBLE);
-                        ivSendState.setImageResource(R.drawable.ic_route_ring);
+                        ivSendState.setSendState(2);
                         break;
                 }
                 GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(),ivSendHead);
