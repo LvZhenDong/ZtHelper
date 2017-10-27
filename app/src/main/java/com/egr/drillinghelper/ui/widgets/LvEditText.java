@@ -44,9 +44,6 @@ public class LvEditText extends android.support.v7.widget.AppCompatEditText {
                     String text = getText().toString().trim();
                     if (mOnEnterListener != null)
                         mOnEnterListener.onEnterClick(text);
-
-                    InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindowToken(), 0);
                 }
                 return false;
             }

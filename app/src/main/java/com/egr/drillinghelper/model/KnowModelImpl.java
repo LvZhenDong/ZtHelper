@@ -12,6 +12,7 @@ import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -21,6 +22,7 @@ import com.egr.drillinghelper.presenter.KnowPresenterImpl;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrTarget;
+import com.egr.drillinghelper.utils.FileUtils;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 import com.egr.drillinghelper.utils.StringUtils;
@@ -110,7 +112,7 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
                         for (String path:imgs) {
                             String[] strs=path.split("/");
                             String name=strs[strs.length-1];
-                            if (!TextUtils.isEmpty(name))
+                            if (!TextUtils.isEmpty(name) && !FileUtils.fileExists(MyConstants.PATH + name))
                                 Glide.with(getContext()).load(path).into(new EgrTarget(name));
                         }
 

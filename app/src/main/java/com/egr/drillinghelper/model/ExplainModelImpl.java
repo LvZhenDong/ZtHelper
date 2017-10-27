@@ -1,11 +1,8 @@
 package com.egr.drillinghelper.model;
 
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
@@ -14,6 +11,7 @@ import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
+import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.ExplainContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -23,10 +21,10 @@ import com.egr.drillinghelper.presenter.ExplainPresenterImpl;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrTarget;
+import com.egr.drillinghelper.utils.FileUtils;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 import com.egr.drillinghelper.utils.StringUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -50,9 +48,9 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
     }
 
     @Override
-    public void getExplainList(String keyword,int current) {
+    public void getExplainList(String keyword, int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
-            api.explainList(keyword,current + "")
+            api.explainList(keyword, current + "")
                     .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
                     .subscribe(new EObserver<BasePage<Explain>>() {
                         @Override
@@ -100,24 +98,24 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                 });
     }
 
-    private void saveImg(){
+    private void saveImg() {
         try {
-            List<Explain> explains=CacheUtils.getExplains();
-            for (Explain item:explains) {
-                if(!TextUtils.isEmpty(item.getPhoto())){//下载list里的图片
-                    GlideUtils.perLoadImg(getContext(),item.getPhoto());
+            List<Explain> explains = CacheUtils.getExplains();
+            for (Explain item : explains) {
+                if (!TextUtils.isEmpty(item.getPhoto())) {//下载list里的图片
+                    GlideUtils.perLoadImg(getContext(), item.getPhoto());
                 }
-                List<ExplainCatalog> explainCatalogs=CacheUtils.getExpandedExplainCatalogList(item.getId());
-                for (ExplainCatalog catalog:explainCatalogs) {
+                List<ExplainCatalog> explainCatalogs = CacheUtils.getExpandedExplainCatalogList(item.getId());
+                for (ExplainCatalog catalog : explainCatalogs) {
                     if (!TextUtils.isEmpty(catalog.getArticleId()) && !catalog.getArticleId().equals("0")) {
-                        Article article=catalog.getArticle();
-                        String content=article.getContent();
-                        List<String> imgs= StringUtils.match(content,"img","src");
-                        if(!CollectionUtil.isListEmpty(imgs)){  //下载图片
-                            for (String path:imgs) {
-                                String[] strs=path.split("/");
-                                String name=strs[strs.length-1];
-                                if (!TextUtils.isEmpty(name))
+                        Article article = catalog.getArticle();
+                        String content = article.getContent();
+                        List<String> imgs = StringUtils.match(content, "img", "src");
+                        if (!CollectionUtil.isListEmpty(imgs)) {  //下载图片
+                            for (String path : imgs) {
+                                String[] strs = path.split("/");
+                                String name = strs[strs.length - 1];
+                                if (!TextUtils.isEmpty(name) && !FileUtils.fileExists(MyConstants.PATH + name))
                                     Glide.with(getContext()).load(path).into(new EgrTarget(name));
                             }
 
