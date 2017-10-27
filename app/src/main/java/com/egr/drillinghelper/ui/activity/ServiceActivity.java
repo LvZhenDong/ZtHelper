@@ -124,8 +124,9 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         EgrRxBus.subscribe(this, Message.class, new Consumer<Message>() {
             @Override
             public void accept(@NonNull Message message) throws Exception {
-                mAdapter.add(ServiceMsg.createRecText(message));
-                rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+//                mAdapter.add(ServiceMsg.createRecText(message));
+//                rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+                presenter.getLatestMsg();
             }
         });
 
@@ -268,5 +269,12 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         mDialog.dismiss();
         rvMsg.refreshComplete(20);
         ToastUtils.show(getActivity(), R.string.no_more_data);
+    }
+
+    @Override
+    public void getLatestSuc(BasePage<ServiceMsg> data) {
+
+        mAdapter.add(data.getRecords().get(0));
+        rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
     }
 }

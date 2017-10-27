@@ -22,9 +22,11 @@ public interface ServiceContract {
     interface Model extends IModel {
         void sendMsg(String msg);
 
-        void getMsg(int current);
+        void getMsg(int current,int size);
 
         void sendPhoto(Map<String, RequestBody> photo);
+
+        void getLatest();
     }
 
     interface View extends IView {
@@ -37,6 +39,8 @@ public interface ServiceContract {
         void getMsgFail(String msg);
 
         void noMoreData();
+
+        void getLatestSuc(BasePage<ServiceMsg> data);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -49,5 +53,7 @@ public interface ServiceContract {
         void getMsg();
 
         void loadMore();
+
+        void getLatestMsg();
     }
 }

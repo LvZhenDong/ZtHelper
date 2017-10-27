@@ -55,12 +55,17 @@ public class ServicePresenterImpl extends BasePresenter<ServiceContract.View,
     @Override
     public void getMsg() {
         current = 1;
-        mModel.getMsg(current);
+        mModel.getMsg(current,20);
     }
 
     @Override
     public void loadMore() {
-        mModel.getMsg(current + 1);
+        mModel.getMsg(current + 1,20);
+    }
+
+    @Override
+    public void getLatestMsg() {
+        mModel.getLatest();
     }
 
     private Map<String, RequestBody> addImage(String path) {

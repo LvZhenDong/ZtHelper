@@ -72,8 +72,25 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
     }
 
     @Override
-    public void getMsg(int current) {
-        api.getServiceMsg(current+"",20+"")
+    public void getLatest() {
+        api.getServiceMsg("1","1")
+                .compose(TransformersFactory.<BasePage<ServiceMsg>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BasePage<ServiceMsg>>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getMsgFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull BasePage<ServiceMsg> data) {
+                        presenter.getView().getLatestSuc(data);
+                    }
+                });
+    }
+
+    @Override
+    public void getMsg(int current,int size) {
+        api.getServiceMsg(current+"",size+"")
                 .compose(TransformersFactory.<BasePage<ServiceMsg>>commonTransformer((BaseMVPActivity) presenter.getView()))
                 .subscribe(new EObserver<BasePage<ServiceMsg>>() {
                     @Override
@@ -87,5 +104,7 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
                     }
                 });
     }
+
+
 
 }
