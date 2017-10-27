@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,7 +27,6 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrRxBus;
-import com.egr.drillinghelper.utils.StringUtils;
 import com.egr.drillinghelper.utils.TimeUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -37,10 +38,9 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -165,18 +165,24 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                     tvAddImg.setVisibility(View.VISIBLE);
                     tvSend.setVisibility(View.INVISIBLE);
                 }
-
-                int index = etMsg.getSelectionStart() - 1;
-                if (index > 0) {
-                    if (StringUtils.isEmojiCharacter(s.charAt(index))) {
-                        Editable edit = etMsg.getText();
-                        edit.delete(s.length() - 2, s.length());
-                        ToastUtils.show(getActivity(),R.string.can_not_input_emoji);
-                    }
-                }
             }
         });
+        InputFilter emojiFilter = new InputFilter() {
 
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                                       int dstart, int dend) {
+                Pattern emoji = Pattern.compile(
+                        "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                        Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+                Matcher emojiMatcher = emoji.matcher(source);
+                if (emojiMatcher.find()) {
+                    return "";
+                }
+                return null;
+            }
+        };
+        etMsg.setFilters(new InputFilter[]{emojiFilter});
         etMsg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
