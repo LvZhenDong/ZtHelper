@@ -1,5 +1,6 @@
 package com.egr.drillinghelper.bean.response;
 
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -13,8 +14,13 @@ import java.util.List;
 
 public class ServiceMsg {
 
-    public static ServiceMsg createSendText(String time, String text){
-        ServiceMsg msg=new ServiceMsg();
+    public static final int TYPE_SEND_TEXT = 0;
+    public static final int TYPE_SEND_IMG = 1;
+    public static final int TYPE_REC_TEXT = 2;
+    public static final int TYPE_REC_IMG = 3;
+
+    public static ServiceMsg createSendText(String time, String text) {
+        ServiceMsg msg = new ServiceMsg();
         msg.setSend(true);
         msg.setCreateTime(time);
         msg.setMsg(text);
@@ -22,8 +28,8 @@ public class ServiceMsg {
         return msg;
     }
 
-    public static ServiceMsg createSendImg(String time, String img){
-        ServiceMsg msg=new ServiceMsg();
+    public static ServiceMsg createSendImg(String time, String img) {
+        ServiceMsg msg = new ServiceMsg();
         msg.setSend(true);
         msg.setCreateTime(time);
         msg.setSendState(2);
@@ -34,8 +40,8 @@ public class ServiceMsg {
         return msg;
     }
 
-    public static ServiceMsg createRecText(Message message){
-        ServiceMsg rec=new ServiceMsg();
+    public static ServiceMsg createRecText(Message message) {
+        ServiceMsg rec = new ServiceMsg();
         rec.setSend(false);
         rec.setCreateTime(message.getUpdatetime());
         rec.setMsg(message.getMsg());
@@ -61,8 +67,27 @@ public class ServiceMsg {
     private String userId;
     private String userName;
     private String msg;
-    private int isAdmin;
+    private int isAdmin;    //0:用户发生，1：服务人员发送
     private List<String> pictureList;
+
+    public int getType() {
+        int type = 0;
+        switch (isAdmin) {
+            case 0:
+                if (CollectionUtil.isListEmpty(pictureList))
+                    type = TYPE_SEND_TEXT;
+                else
+                    type = TYPE_SEND_IMG;
+                break;
+            case 1:
+                if (CollectionUtil.isListEmpty(pictureList))
+                    type = TYPE_REC_TEXT;
+                else
+                    type = TYPE_REC_IMG;
+                break;
+        }
+        return type;
+    }
 
     public int getSendState() {
         return sendState;
@@ -72,12 +97,8 @@ public class ServiceMsg {
         this.sendState = sendState;
     }
 
-    public boolean isSend() {
-        return isAdmin==0;
-    }
-
     public void setSend(boolean send) {
-        this.isAdmin=send?0:1;
+        this.isAdmin = send ? 0 : 1;
     }
 
     public String getId() {
