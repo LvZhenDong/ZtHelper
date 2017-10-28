@@ -1,9 +1,7 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Video;
-import com.egr.drillinghelper.ui.activity.KnowArticleActivity;
-import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -35,18 +30,18 @@ public class VideoAdapter extends BaseListAdapter<Video,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext)
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater
                 .inflate(R.layout.item_explain_catalog, parent, false));
     }
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Video item=getDataList().get(position);
+        Video item = getDataList().get(position);
         holder.tvTitle.setText(item.getDesc());
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.rl_catalog)
         RelativeLayout rlItem;
         @BindView(R.id.tv_title)

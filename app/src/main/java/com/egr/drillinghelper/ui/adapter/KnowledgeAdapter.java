@@ -30,16 +30,16 @@ public class KnowledgeAdapter extends BaseListAdapter<Explain,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_knowledge,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_knowledge,
                 parent, false));
     }
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        Explain item=getDataList().get(position);
+        Explain item = getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
-        GlideUtils.load(item.getPhoto(),holder.ivImg);
+        GlideUtils.load(item.getPhoto(), holder.ivImg);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

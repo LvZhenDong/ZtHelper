@@ -30,28 +30,38 @@ public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
         KnowCatalogAdapter.ViewHolder> {
     private boolean isCache;
 
-    public void setCache(boolean cache) {
-        isCache = cache;
-    }
-
     public KnowCatalogAdapter(Context context) {
         super(context);
     }
 
+    public void setCache(boolean cache) {
+        isCache = cache;
+    }
+
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext)
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater
                 .inflate(R.layout.item_explain_catalog, parent, false));
     }
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        KnowCatalog item=getDataList().get(position);
+        KnowCatalog item = getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    void getDetail(int position) {
+        KnowCatalog item = getDataList().get(position);
+        if (!TextUtils.isEmpty(item.getContent())) {
+            Intent intent = new Intent(mContext, KnowArticleActivity.class);
+            intent.putExtra(BaseActivity.KEY_INTENT, item.getContent());
+            intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, isCache);
+            mContext.startActivity(intent);
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.rl_catalog)
         RelativeLayout rlItem;
         @BindView(R.id.tv_title)
@@ -71,16 +81,6 @@ public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
         @Override
         public void onClick(View v) {
             getDetail(getAdapterPosition());
-        }
-    }
-
-    void getDetail(int position) {
-        KnowCatalog item = getDataList().get(position);
-        if (!TextUtils.isEmpty(item.getContent())) {
-            Intent intent = new Intent(mContext, KnowArticleActivity.class);
-            intent.putExtra(BaseActivity.KEY_INTENT, item.getContent());
-            intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN,isCache);
-            mContext.startActivity(intent);
         }
     }
 }

@@ -33,8 +33,8 @@ public class MessageAdapter extends BaseListAdapter<Message,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_message,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_message,
                 parent, false));
     }
 

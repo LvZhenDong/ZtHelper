@@ -2,7 +2,6 @@ package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.ui.widgets.SendStateView;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,13 +28,15 @@ import butterknife.ButterKnife;
 
 public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.ViewHolder> {
 
+    ReSendListener reSendListener;
+
     public ServiceAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_service_msg,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_service_msg,
                 parent, false));
     }
 
@@ -46,16 +46,15 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
         holder.show(item);
     }
 
-    public void setReSendListener(ReSendListener listener){
-        reSendListener=listener;
+    public void setReSendListener(ReSendListener listener) {
+        reSendListener = listener;
     }
 
-    ReSendListener reSendListener;
-    public interface ReSendListener{
+    public interface ReSendListener {
         void onReSend(int pos);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_receive_head)
         ImageView ivReceiveHead;
         @BindView(R.id.tv_receive_msg)
@@ -77,12 +76,13 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
         @BindView(R.id.iv_send_state)
         SendStateView ivSendState;
 
-        View.OnClickListener listener=new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(reSendListener != null)reSendListener.onReSend(getAdapterPosition()-1);
+                if (reSendListener != null) reSendListener.onReSend(getAdapterPosition() - 1);
             }
         };
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -93,7 +93,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
         public void show(ServiceMsg item) {
             tvTime.setText(item.getCreateTime());
             if (item.isSend()) {    //发送
-                switch (item.getSendState()){
+                switch (item.getSendState()) {
                     case 0: //已经发送成功
                         ivSendState.setSendState(0);
                         break;
@@ -104,7 +104,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, ServiceAdapter.V
                         ivSendState.setSendState(2);
                         break;
                 }
-                GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(),ivSendHead);
+                GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(), ivSendHead);
                 rlSend.setVisibility(View.VISIBLE);
                 rlReceive.setVisibility(View.GONE);
                 if (CollectionUtil.isListEmpty(item.getPictureList())) {

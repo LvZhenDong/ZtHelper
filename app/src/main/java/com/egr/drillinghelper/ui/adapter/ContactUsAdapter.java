@@ -29,8 +29,8 @@ public class ContactUsAdapter extends BaseListAdapter<ContactUs.ContactListBean,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_contact_us,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_contact_us,
                 parent, false));
     }
 
@@ -38,10 +38,13 @@ public class ContactUsAdapter extends BaseListAdapter<ContactUs.ContactListBean,
     public void onBindItemHolder(ViewHolder holder, int position) {
         ContactUs.ContactListBean item = getDataList().get(position);
         holder.tvTitle.setText(item.getName());
-        TextViewUtil.setText(holder.tvAddress,mContext.getString(R.string.tag_address),item.getAddress());
-        TextViewUtil.setText(holder.tvPhone,mContext.getString(R.string.tag_tel),item.getTel());
-        TextViewUtil.setText(holder.tvWeb,mContext.getString(R.string.tag_website),item.getWebsite());
-        TextViewUtil.setText(holder.tvEmail,mContext.getString(R.string.tag_email),item.getEmail());
+        TextViewUtil.setText(holder.tvAddress, mContext.getString(R.string.tag_address), item
+                .getAddress());
+        TextViewUtil.setText(holder.tvPhone, mContext.getString(R.string.tag_tel), item.getTel());
+        TextViewUtil.setText(holder.tvWeb, mContext.getString(R.string.tag_website), item
+                .getWebsite());
+        TextViewUtil.setText(holder.tvEmail, mContext.getString(R.string.tag_email), item
+                .getEmail());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,6 +59,7 @@ public class ContactUsAdapter extends BaseListAdapter<ContactUs.ContactListBean,
         TextView tvWeb;
         @BindView(R.id.tv_email)
         TextView tvEmail;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

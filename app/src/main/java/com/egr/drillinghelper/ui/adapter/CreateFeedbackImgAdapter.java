@@ -36,8 +36,8 @@ public class CreateFeedbackImgAdapter extends BaseListAdapter<String,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_img,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_img,
                 parent, false));
     }
 
@@ -55,9 +55,9 @@ public class CreateFeedbackImgAdapter extends BaseListAdapter<String,
                 mListener.onAddClick();
         } else {
             remove(position);
-            int length=getDataList().size();
+            int length = getDataList().size();
             if (length == IMG_NUMBER - 1 &&
-                    !ITEM_ADD.equals(getDataList().get(length-1)))
+                    !ITEM_ADD.equals(getDataList().get(length - 1)))
                 getDataList().add(ITEM_ADD);
             mListener.removeItem(position);
         }

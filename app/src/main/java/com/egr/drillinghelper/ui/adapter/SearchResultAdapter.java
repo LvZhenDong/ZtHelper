@@ -25,25 +25,25 @@ public class SearchResultAdapter extends BaseListAdapter<String,
 
     private int paddingLeft;
 
-    public void setPaddingLeft(int paddingLeft) {
-        this.paddingLeft = paddingLeft;
-    }
-
     public SearchResultAdapter(Context context) {
         super(context);
     }
 
+    public void setPaddingLeft(int paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext)
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater
                 .inflate(R.layout.item_search_result, parent, false));
     }
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        String item=getDataList().get(position);
-        holder.tvTitle.setPadding(paddingLeft,holder.tvTitle.getPaddingTop(),
-                DensityUtils.dp2px(mContext, 10),holder.tvTitle.getPaddingBottom());
+        String item = getDataList().get(position);
+        holder.tvTitle.setPadding(paddingLeft, holder.tvTitle.getPaddingTop(),
+                DensityUtils.dp2px(mContext, 10), holder.tvTitle.getPaddingBottom());
         holder.tvTitle.setText(item);
     }
 

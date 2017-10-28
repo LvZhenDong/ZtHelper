@@ -19,8 +19,6 @@ import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.GlideUtils;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,17 +31,17 @@ import butterknife.ButterKnife;
 public class PartsAdapter extends BaseListAdapter<Store,
         PartsAdapter.ViewHolder> {
 
+    public final static String INTO_MALL = "-1";
+
     public PartsAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_parts,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_parts,
                 parent, false));
     }
-
-    public final static String INTO_MALL="-1";
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
@@ -56,9 +54,21 @@ public class PartsAdapter extends BaseListAdapter<Store,
             holder.llParts.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(item.getName());
             holder.tvInfo.setText(item.getInformation());
-            GlideUtils.load(item.getPicture(),holder.ivImg);
+            GlideUtils.load(item.getPicture(), holder.ivImg);
         }
 
+    }
+
+    void goPartsDetail(int position) {
+        Store item = getDataList().get(position);
+
+        if (INTO_MALL.equals(item.getId())) { //商城
+            CommBrowserActivity.start(mContext, item.getUrl(), item.getName());
+        } else {
+            Intent intent = new Intent(mContext, PartsDetailActivity.class);
+            intent.putExtra(BaseActivity.KEY_INTENT, item);
+            mContext.startActivity(intent);
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -84,19 +94,7 @@ public class PartsAdapter extends BaseListAdapter<Store,
 
         @Override
         public void onClick(View v) {
-            goPartsDetail(getAdapterPosition()-1);
-        }
-    }
-
-    void goPartsDetail(int position){
-        Store item = getDataList().get(position);
-
-        if(INTO_MALL.equals(item.getId())){ //商城
-            CommBrowserActivity.start(mContext,item.getUrl(),item.getName());
-        }else {
-            Intent intent=new Intent(mContext, PartsDetailActivity.class);
-            intent.putExtra(BaseActivity.KEY_INTENT,item);
-            mContext.startActivity(intent);
+            goPartsDetail(getAdapterPosition() - 1);
         }
     }
 }

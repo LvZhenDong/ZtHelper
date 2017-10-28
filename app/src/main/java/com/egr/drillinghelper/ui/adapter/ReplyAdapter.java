@@ -37,8 +37,8 @@ public class ReplyAdapter extends BaseListAdapter<Reply,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_feedback_history,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_feedback_history,
                 parent, false));
     }
 
@@ -53,7 +53,8 @@ public class ReplyAdapter extends BaseListAdapter<Reply,
             holder.ivImg.setVisibility(View.VISIBLE);
             GlideUtils.load(item.getAttachments().get(0), holder.ivImg);
         }
-        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getAnswer()) ? View.INVISIBLE : View.VISIBLE);
+        holder.tvReadReply.setVisibility(TextUtils.isEmpty(item.getAnswer()) ? View.INVISIBLE :
+                View.VISIBLE);
     }
 
     void showReply(int position) {
@@ -62,8 +63,8 @@ public class ReplyAdapter extends BaseListAdapter<Reply,
     }
 
     void showImgs(int position) {
-        Intent intent=new Intent(mContext, GalleryActivity.class);
-        intent.putExtra(BaseActivity.KEY_INTENT,getDataList().get(position).getAttachments());
+        Intent intent = new Intent(mContext, GalleryActivity.class);
+        intent.putExtra(BaseActivity.KEY_INTENT, getDataList().get(position).getAttachments());
         mContext.startActivity(intent);
     }
 

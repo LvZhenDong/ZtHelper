@@ -2,9 +2,8 @@ package com.egr.drillinghelper.ui.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
-import com.egr.drillinghelper.utils.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +25,8 @@ public abstract class BaseListAdapter<T, R extends RecyclerView.ViewHolder> exte
 
     @Override
     public R onCreateViewHolder(ViewGroup parent, int viewType) {
-        return onLCreateViewHolder(parent, viewType);
+        LayoutInflater inflater=LayoutInflater.from(mContext);
+        return onLCreateViewHolder(inflater,parent, viewType);
     }
 
     @Override
@@ -45,7 +45,7 @@ public abstract class BaseListAdapter<T, R extends RecyclerView.ViewHolder> exte
 
     }
 
-    public abstract R onLCreateViewHolder(ViewGroup parent, int viewType);
+    public abstract R onLCreateViewHolder(LayoutInflater inflater,ViewGroup parent, int viewType);
 
     public abstract void onBindItemHolder(R holder, int position);
 

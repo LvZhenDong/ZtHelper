@@ -31,8 +31,8 @@ public class QuestionAdapter extends BaseListAdapter<Feedback, QuestionAdapter.V
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext)
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater
                 .inflate(R.layout.item_question, parent, false));
     }
 
@@ -41,7 +41,13 @@ public class QuestionAdapter extends BaseListAdapter<Feedback, QuestionAdapter.V
         holder.tvItemQuestion.setText(getDataList().get(position).getQuestion());
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private void getDetail(int position) {
+        Intent intent = new Intent(mContext, FeedbackDetailActivity.class);
+        intent.putExtra(BaseActivity.KEY_INTENT, getDataList().get(position).getId());
+        mContext.startActivity(intent);
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_item_question)
         TextView tvItemQuestion;
         @BindView(R.id.ll_question)
@@ -58,11 +64,5 @@ public class QuestionAdapter extends BaseListAdapter<Feedback, QuestionAdapter.V
         public void onClick(View v) {
             getDetail(getAdapterPosition());
         }
-    }
-
-    private void getDetail(int position){
-        Intent intent=new Intent(mContext, FeedbackDetailActivity.class);
-        intent.putExtra(BaseActivity.KEY_INTENT,getDataList().get(position).getId());
-        mContext.startActivity(intent);
     }
 }

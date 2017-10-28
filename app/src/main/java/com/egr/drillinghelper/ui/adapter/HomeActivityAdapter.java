@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.egr.drillinghelper.ui.fragment.FeedbackFragment;
 import com.egr.drillinghelper.ui.fragment.HomeFragment;
 import com.egr.drillinghelper.ui.fragment.MyFragment;
-import com.egr.drillinghelper.ui.fragment.PartsFragment;
 import com.egr.drillinghelper.ui.fragment.VideoPartFragment;
 
 /**
@@ -17,7 +16,8 @@ import com.egr.drillinghelper.ui.fragment.VideoPartFragment;
  */
 
 public class HomeActivityAdapter extends FragmentPagerAdapter {
-    private Class[] fragments = {HomeFragment.class, VideoPartFragment.class, FeedbackFragment.class,
+    private Class[] fragments = {HomeFragment.class, VideoPartFragment.class, FeedbackFragment
+            .class,
             MyFragment.class};
 
     public HomeActivityAdapter(FragmentManager fm) {

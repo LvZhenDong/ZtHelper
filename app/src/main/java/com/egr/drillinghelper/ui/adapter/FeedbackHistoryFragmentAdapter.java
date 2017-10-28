@@ -14,7 +14,8 @@ import com.egr.drillinghelper.ui.fragment.FeedbackHistoryWaitFragment;
  */
 
 public class FeedbackHistoryFragmentAdapter extends FragmentPagerAdapter {
-    private Class[] fragments = {FeedbackHistoryWaitFragment.class, FeedbackHistoryRepliedFragment.class};
+    private Class[] fragments = {FeedbackHistoryWaitFragment.class,
+            FeedbackHistoryRepliedFragment.class};
 
     public FeedbackHistoryFragmentAdapter(FragmentManager fm) {
         super(fm);

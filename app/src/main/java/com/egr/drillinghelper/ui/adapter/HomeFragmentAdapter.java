@@ -15,7 +15,8 @@ import com.egr.drillinghelper.ui.fragment.PartsFragment;
  */
 
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
-    private Class[] fragments = {ExplainFragment.class, KnowledgeFragment.class, PartsFragment.class};
+    private Class[] fragments = {ExplainFragment.class, KnowledgeFragment.class, PartsFragment
+            .class};
 
     public HomeFragmentAdapter(FragmentManager fm) {
         super(fm);

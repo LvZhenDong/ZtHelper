@@ -30,8 +30,8 @@ public class ExplainAdapter extends BaseListAdapter<Explain,
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_explian,
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater.inflate(R.layout.item_explian,
                 parent, false));
     }
 
@@ -40,7 +40,7 @@ public class ExplainAdapter extends BaseListAdapter<Explain,
         Explain item = getDataList().get(position);
         holder.tvTitle.setText(item.getTitle());
         holder.tvInfo.setText(item.getDescription());
-        GlideUtils.load(item.getPhoto(),holder.ivImg);
+        GlideUtils.load(item.getPhoto(), holder.ivImg);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

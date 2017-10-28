@@ -32,14 +32,14 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         ExplainCatalogAdapter.ViewHolder> {
     String catalogId;
 
-    public ExplainCatalogAdapter(Context context,String catalogId) {
+    public ExplainCatalogAdapter(Context context, String catalogId) {
         super(context);
-        this.catalogId=catalogId;
+        this.catalogId = catalogId;
     }
 
     @Override
-    public ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(mContext)
+    public ViewHolder onLCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+        return new ViewHolder(inflater
                 .inflate(R.layout.item_explain_catalog, parent, false));
     }
 
@@ -49,11 +49,13 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         holder.tvTitle.setText(item.getTitle());
         holder.ivPlay.setVisibility(TextUtils.isEmpty(item.getUrl()) ? View.GONE : View.VISIBLE);
 
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.tvTitle.getLayoutParams();
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.tvTitle
+                .getLayoutParams();
         params.leftMargin = DensityUtils.dp2px(mContext, item.getDeep() * 20);
         holder.tvTitle.setLayoutParams(params);
 
-        ViewGroup.MarginLayoutParams paramsLine = (ViewGroup.MarginLayoutParams) holder.line.getLayoutParams();
+        ViewGroup.MarginLayoutParams paramsLine = (ViewGroup.MarginLayoutParams) holder.line
+                .getLayoutParams();
         paramsLine.leftMargin = DensityUtils.dp2px(mContext, item.getDeep() * 20);
         holder.line.setLayoutParams(paramsLine);
     }
@@ -63,14 +65,14 @@ public class ExplainCatalogAdapter extends BaseListAdapter<ExplainCatalog,
         if (!TextUtils.isEmpty(item.getArticleId()) && !item.getArticleId().equals("0")) {
             Intent intent = new Intent(mContext, ArticleActivity.class);
             intent.putExtra(BaseActivity.KEY_INTENT, item.getArticleId());
-            intent.putExtra("catalogId",catalogId);
+            intent.putExtra("catalogId", catalogId);
             mContext.startActivity(intent);
         }
     }
 
-    void showVideo(int position){
-        ExplainCatalog item=getDataList().get(position);
-        CommBrowserActivity.start(mContext,item.getUrl(),item.getTitle());
+    void showVideo(int position) {
+        ExplainCatalog item = getDataList().get(position);
+        CommBrowserActivity.start(mContext, item.getUrl(), item.getTitle());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
