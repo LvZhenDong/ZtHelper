@@ -137,7 +137,15 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
             @Override
             public void onReSend(int pos) {
                 ServiceMsg serviceMsg=mAdapter.getDataList().get(pos);
-                presenter.sendMsg(serviceMsg.getMsg());
+                switch (serviceMsg.getType()){
+                    case ServiceMsg.TYPE_SEND_TEXT:
+                        presenter.sendMsg(serviceMsg.getMsg());
+                        break;
+                    case ServiceMsg.TYPE_SEND_IMG:
+                        presenter.sendPhoto(serviceMsg.getPictureList().get(0));
+                        break;
+                }
+
                 serviceMsg.setSendState(2);
                 mAdapter.notifyItemChanged(pos);
             }

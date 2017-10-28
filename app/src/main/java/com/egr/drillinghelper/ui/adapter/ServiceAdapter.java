@@ -25,15 +25,14 @@ import butterknife.ButterKnife;
  */
 
 public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.ViewHolder> {
-    LayoutInflater inflater;
 
     public ServiceAdapter(Context context) {
         super(context);
-        inflater = LayoutInflater.from(mContext);
     }
 
     @Override
-    public RecyclerView.ViewHolder onLCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onLCreateViewHolder(LayoutInflater inflater,ViewGroup parent,
+                                                       int viewType) {
         View view;
         switch (viewType) {
             case ServiceMsg.TYPE_SEND_TEXT:
@@ -73,7 +72,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         void onReSend(int pos);
     }
 
-    class SendTextViewHolder extends RecyclerView.ViewHolder implements ShowMsg {
+    class SendTextViewHolder extends RecyclerView.ViewHolder implements ShowMsg,View.OnClickListener{
         @BindView(R.id.tv_time)
         TextView mTvTime;
         @BindView(R.id.iv_send_head)
@@ -86,6 +85,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         public SendTextViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mIvSendState.setOnClickListener(this);
         }
 
         @Override
@@ -95,9 +95,14 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
             GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(), mIvSendHead);
             mTvMsg.setText(item.getMsg());
         }
+
+        @Override
+        public void onClick(View v) {
+            if(reSendListener != null)reSendListener.onReSend(getAdapterPosition()-1);
+        }
     }
 
-    class SendImgViewHolder extends RecyclerView.ViewHolder implements ShowMsg {
+    class SendImgViewHolder extends RecyclerView.ViewHolder implements ShowMsg,View.OnClickListener {
         @BindView(R.id.tv_time)
         TextView mTvTime;
         @BindView(R.id.iv_send_head)
@@ -110,6 +115,7 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         public SendImgViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mIvSendState.setOnClickListener(this);
         }
 
         @Override
@@ -118,6 +124,11 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
             mIvSendState.setSendState(item.getSendState());
             GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(), mIvSendHead);
             GlideUtils.load(item.getPictureList().get(0), mIvImg);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(reSendListener != null)reSendListener.onReSend(getAdapterPosition()-1);
         }
     }
 

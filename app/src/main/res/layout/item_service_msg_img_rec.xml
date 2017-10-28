@@ -40,7 +40,8 @@
             android:layout_toRightOf="@id/iv_receive_head"
             android:adjustViewBounds="true"
             android:maxHeight="100dp"
-            android:maxWidth="250dp" />
+            android:maxWidth="250dp"
+            android:scaleType="fitXY"/>
     </RelativeLayout>
 
 </RelativeLayout>
