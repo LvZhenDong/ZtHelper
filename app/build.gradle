@@ -52,12 +52,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFile = new File(
+                variant.outputs.all { output ->
+                    output.outputFileName = new File(
                             output.outputFile.parent,
-                            "egr_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
+                            "egr_${defaultConfig.versionName}_${buildTime()}.apk")
                 }
             }
+
+
         }
 
         debug{
@@ -65,10 +67,10 @@ android {
             minifyEnabled false
 
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFile = new File(
+                variant.outputs.all { output ->
+                    output.outputFileName = new File(
                             output.outputFile.parent,
-                            "egr_" + defaultConfig.versionName +"_"+buildTime()+  ".apk");
+                            "egr_${defaultConfig.versionName}_${buildTime()}.apk")
                 }
             }
         }
@@ -96,6 +98,7 @@ android {
         }
 
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
