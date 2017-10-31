@@ -337,8 +337,8 @@ public interface NetApi {
      * @param msg
      * @return
      */
-    @POST("support/sendMessage")
-    Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@Query("message") String msg);
+    @POST("support/sendMsg")
+    Observable<BaseResponseBean<List<KnowCatalog>>> sendServiceMsg(@Query("message") String msg);
 
     /**
      * 发送服务支持图片
@@ -347,7 +347,7 @@ public interface NetApi {
      * @return
      */
     @Multipart
-    @POST("support/sendMessage")
+    @POST("support/sendMsg")
     Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@PartMap Map<String, RequestBody> photo);
 
     /**
@@ -361,8 +361,28 @@ public interface NetApi {
     Observable<BaseResponseBean<BasePage<ServiceMsg>>> getServiceMsg(@Query("current") String current,
                                                                      @Query("size") String size);
 
+    /**
+     * 检查是否有未读的服务消息
+     * @return
+     */
     @GET("support/checkRead")
     Observable<BaseResponseBean<Boolean>> checkRead();
+
+    /**
+     * 已解决
+     * @param id
+     * @return
+     */
+    @POST("support/resolved")
+    Observable<BaseResponseBean<NullBodyResponse>> resolved(@Query("id") String id);
+
+    /**
+     * 未解决
+     * @param id
+     * @return
+     */
+    @POST("support/unsolved")
+    Observable<BaseResponseBean<String>> unsolved(@Query("id") String id);
 
     /**
      * 获取视频区list

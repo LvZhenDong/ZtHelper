@@ -110,12 +110,14 @@
     <string name="create_feedback_success_hint2">根据您的反馈，我们给您匹配了相似的问题：</string>
     <string name="can_not_input_emoji">不支持输入表情符号</string>
     <string name="new_service_msg">有新回复</string>
-
-
-
-
-
-
+    <string name="service_match_hint1">根据您的反馈，我们给您匹配了相似的问题：</string>
+    <string name="service_match_hint2">以上回复是否解决了您的问题？</string>
+    <string name="resolved">已解决</string>
+    <string name="unsolved">未解决</string>
+    <string name="service_match_empty_hint">根据您的反馈，未匹配到相似的问题，是否需要安排工作人员进行处理？</string>
+    <string name="need">需要</string>
+    <string name="not_need">不需要</string>
+    <string name="not_need_hint">感谢您的反馈！</string>
 
 
 

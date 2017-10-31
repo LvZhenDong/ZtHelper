@@ -5,19 +5,17 @@ import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ERROR;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.ContactUs;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.NullBodyResponse;
-import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.contract.ServiceContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
-import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.annotations.NonNull;
@@ -29,26 +27,31 @@ import okhttp3.RequestBody;
  * 类描述：
  */
 
-public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements ServiceContract.Model{
+public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements ServiceContract.Model {
+    private NetApi api;
+
     public ServiceModelImpl(ServicePresenterImpl ServicePresenter) {
         super(ServicePresenter);
         api = APIServiceFactory.getInstance().createService();
     }
-    private NetApi api;
 
     @Override
     public void sendMsg(String msg) {
         api.sendServiceMsg(msg)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.<List<KnowCatalog>>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<List<KnowCatalog>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().sendMsgFail();
+                        if (e.code == ERROR.UNKNOWN)
+                            presenter.getView().sendMsgSuc(null);
+                        else
+                            presenter.getView().sendMsgFail();
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
-                        presenter.getView().sendMsgSuc();
+                    public void onComplete(@NonNull List<KnowCatalog> response) {
+                        getLatest();        //返回body不为null,去拿最新的一条数据就是匹配数据
+                        presenter.getView().sendMsgSuc(response);
                     }
                 });
     }
@@ -66,14 +69,14 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
 
                     @Override
                     public void onComplete(@NonNull NullBodyResponse response) {
-                        presenter.getView().sendMsgSuc();
+                        presenter.getView().sendMsgSuc(null);
                     }
                 });
     }
 
     @Override
     public void getLatest() {
-        api.getServiceMsg("1","1")
+        api.getServiceMsg("1", "1")
                 .compose(TransformersFactory.<BasePage<ServiceMsg>>commonTransformer((BaseMVPActivity) presenter.getView()))
                 .subscribe(new EObserver<BasePage<ServiceMsg>>() {
                     @Override
@@ -89,13 +92,48 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
     }
 
     @Override
-    public void getMsg(int current,int size) {
-        api.getServiceMsg(current+"",size+"")
+    public void resolved(String id) {
+        api.resolved(id)
+                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<NullBodyResponse>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getMsgFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull NullBodyResponse response) {
+                        presenter.getView().noNeed();
+                    }
+                });
+    }
+
+    @Override
+    public void unsolved(String id) {
+        api.unsolved(id)
+                .compose(TransformersFactory.<String>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<String>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+                        presenter.getView().getMsgFail(eMsg);
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull String response) {
+                        presenter.getView().resolvedSuc();
+                        getLatest();
+                    }
+                });
+    }
+
+    @Override
+    public void getMsg(int current, int size) {
+        api.getServiceMsg(current + "", size + "")
                 .compose(TransformersFactory.<BasePage<ServiceMsg>>commonTransformer((BaseMVPActivity) presenter.getView()))
                 .subscribe(new EObserver<BasePage<ServiceMsg>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                            presenter.getView().getMsgFail(eMsg);
+                        presenter.getView().getMsgFail(eMsg);
                     }
 
                     @Override
@@ -104,7 +142,6 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
                     }
                 });
     }
-
 
 
 }

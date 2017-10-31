@@ -1,7 +1,7 @@
 package com.egr.drillinghelper.contract;
 
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.ContactUs;
+import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.mvp.IPresenter;
@@ -27,10 +27,14 @@ public interface ServiceContract {
         void sendPhoto(Map<String, RequestBody> photo);
 
         void getLatest();
+
+        void resolved(String id);
+
+        void unsolved(String id);
     }
 
     interface View extends IView {
-        void sendMsgSuc();
+        void sendMsgSuc(List<KnowCatalog> list);
 
         void sendMsgFail();
 
@@ -41,6 +45,10 @@ public interface ServiceContract {
         void noMoreData();
 
         void getLatestSuc(BasePage<ServiceMsg> data);
+
+        void noNeed();
+
+        void resolvedSuc();
     }
 
     interface Presenter extends IPresenter<View> {
@@ -55,5 +63,9 @@ public interface ServiceContract {
         void loadMore();
 
         void getLatestMsg();
+
+        void resolved(String id);
+
+        void unsolved(String id);
     }
 }

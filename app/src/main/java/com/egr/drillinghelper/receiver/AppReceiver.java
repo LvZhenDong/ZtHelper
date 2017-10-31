@@ -70,6 +70,7 @@ public class AppReceiver extends BroadcastReceiver {
                 EgrRxBus.post(message);
             }else {     //显示顶部通知
                 showServiceMessage(context,message,string);
+                EgrRxBus.post(RxBusConstant.NEW_SERVICE_MSG);
             }
         }
     }

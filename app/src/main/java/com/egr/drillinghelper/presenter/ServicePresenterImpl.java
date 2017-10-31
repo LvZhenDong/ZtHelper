@@ -68,6 +68,16 @@ public class ServicePresenterImpl extends BasePresenter<ServiceContract.View,
         mModel.getLatest();
     }
 
+    @Override
+    public void resolved(String id) {
+        mModel.resolved(id);
+    }
+
+    @Override
+    public void unsolved(String id) {
+        mModel.unsolved(id);
+    }
+
     private Map<String, RequestBody> addImage(String path) {
         Map<String, RequestBody> images = new HashMap<>();
         if (TextUtils.isEmpty(path))

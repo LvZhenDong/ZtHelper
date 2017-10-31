@@ -13,4 +13,6 @@ public interface RxBusConstant {
     //刷新首页未读消息数和消息列表
     String UPDATE_MSG ="updateMsgNoRead";
 
+    String NEW_SERVICE_MSG="newServiceMsg";
+
 }

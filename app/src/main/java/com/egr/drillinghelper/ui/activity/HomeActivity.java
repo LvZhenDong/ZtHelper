@@ -131,6 +131,14 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 mHomeCurrent = homeCurrent.getCurrent();
             }
         });
+        //新服务反馈
+        EgrRxBus.subscribe(this, String.class, new Consumer<String>() {
+            @Override
+            public void accept(@NonNull String s) throws Exception {
+                if (s.equals(RxBusConstant.NEW_SERVICE_MSG))
+                    showMsgPw();
+            }
+        });
 
         checkVersion();
         presenter.getNoReadMsg();

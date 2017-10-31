@@ -18,11 +18,13 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.base.BasePage;
+import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.contract.ServiceContract;
 import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ServiceAdapter;
+import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
@@ -39,6 +41,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,6 +153,25 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 mAdapter.notifyItemChanged(pos);
             }
         });
+
+        mAdapter.setMatchListener(new ServiceAdapter.ClickMatchListener() {
+            @Override
+            public void resolved(String id) {
+                presenter.resolved(id);
+            }
+
+            @Override
+            public void unResolved(String id) {
+                presenter.unsolved(id);
+            }
+
+            @Override
+            public void showContent(String content) {
+                Intent intent=new Intent(ServiceActivity.this,KnowArticleActivity.class);
+                intent.putExtra(BaseActivity.KEY_INTENT, content);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initEt() {
@@ -208,7 +230,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 String msg = etMsg.getText().toString().trim();
                 if(TextUtils.isEmpty(msg))return;
                 etMsg.setText("");
-                mAdapter.add(ServiceMsg.createSendText(TimeUtils.getCurrentTime(),msg));
+                mAdapter.add(new ServiceMsg().createSendText(TimeUtils.getCurrentTime(),msg));
                 rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
                 presenter.sendMsg(msg);
                 break;
@@ -245,10 +267,13 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     }
 
     @Override
-    public void sendMsgSuc() {
+    public void sendMsgSuc(List<KnowCatalog> list) {
         // TODO 更新item
         mAdapter.getLastItem().setSendState(0);
         mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
+        if(!CollectionUtil.isListEmpty(list)){
+
+        }
     }
 
     @Override
@@ -290,5 +315,18 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
         mAdapter.add(data.getRecords().get(0));
         rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+    }
+
+    @Override
+    public void noNeed() {
+        ToastUtils.show(this,R.string.not_need_hint);
+        mAdapter.getLastItem().setStatus(1);
+        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
+    }
+
+    @Override
+    public void resolvedSuc() {
+        mAdapter.getLastItem().setStatus(1);
+        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
     }
 }
