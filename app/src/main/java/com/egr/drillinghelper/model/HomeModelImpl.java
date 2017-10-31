@@ -4,7 +4,6 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.response.ContactUs;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.HomeContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -50,12 +49,29 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
                 .subscribe(new EObserver<ContactUs>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-//                        presenter.getView().
+                        presenter.getView().getContactError(eMsg);
                     }
 
                     @Override
                     public void onComplete(@NonNull ContactUs contactUs) {
                         presenter.getContactSuccess(contactUs);
+                    }
+                });
+    }
+
+    @Override
+    public void checkRead() {
+        api.checkRead()
+                .compose(TransformersFactory.<Boolean>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<Boolean>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull Boolean response) {
+                        presenter.getView().checkReadSuc(response);
                     }
                 });
     }

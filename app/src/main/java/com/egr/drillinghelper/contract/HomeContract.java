@@ -16,6 +16,8 @@ public interface HomeContract {
         void getNoReadMsg();
 
         void getContact();
+
+        void checkRead();
     }
 
     interface View extends IView {
@@ -24,6 +26,8 @@ public interface HomeContract {
         void getContactSuccess(String phoneNum);
 
         void getContactError(String msg);
+
+        void checkReadSuc(boolean read);
     }
 
     interface Presenter extends IPresenter<View> {
@@ -32,5 +36,7 @@ public interface HomeContract {
         void getContactSuccess(ContactUs contactUs);
 
         void getContact();
+
+        void checkRead();
     }
 }

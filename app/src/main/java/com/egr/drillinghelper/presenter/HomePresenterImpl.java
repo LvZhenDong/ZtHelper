@@ -33,4 +33,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,
     public void getContact() {
         mModel.getContact();
     }
+
+    @Override
+    public void checkRead() {
+        mModel.checkRead();
+    }
 }

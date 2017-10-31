@@ -361,6 +361,9 @@ public interface NetApi {
     Observable<BaseResponseBean<BasePage<ServiceMsg>>> getServiceMsg(@Query("current") String current,
                                                                      @Query("size") String size);
 
+    @GET("support/checkRead")
+    Observable<BaseResponseBean<Boolean>> checkRead();
+
     /**
      * 获取视频区list
      *

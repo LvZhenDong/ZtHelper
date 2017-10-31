@@ -6,20 +6,18 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.bean.rxbus.HomeCurrent;
-import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.HomeContract;
@@ -30,6 +28,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ApkUtils;
+import com.egr.drillinghelper.utils.DensityUtils;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.PhoneUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
@@ -62,11 +61,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     RadioButton rbFeedback;
     @BindView(R.id.rb_my)
     RadioButton rbMy;
-    private HomeActivityAdapter homeAdapter;
-    private long mExitTime = 0;
-    private ACProgressFlower mDialog;
-
-    View.OnClickListener homeMsgListener=new View.OnClickListener() {
+    View.OnClickListener homeMsgListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             //点击消息按钮
@@ -74,30 +69,31 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             baseStartActivity(MessageActivity.class);
         }
     };
-
-    View.OnClickListener searchListener= new View.OnClickListener(){
+    int mHomeCurrent;
+    View.OnClickListener searchListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
             onSearchClick(mHomeCurrent);
         }
     };
-
-    View.OnClickListener phoneListener=new View.OnClickListener(){
+    String phone;
+    PopupWindow mMsgPw;
+    private HomeActivityAdapter homeAdapter;
+    private long mExitTime = 0;
+    private ACProgressFlower mDialog;
+    View.OnClickListener phoneListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(TextUtils.isEmpty(phone)){
+            if (TextUtils.isEmpty(phone)) {
                 mDialog.show();
                 presenter.getContact();
-            }else {
+            } else {
                 PhoneUtils.callPhone(getActivity(), phone);
             }
 
         }
     };
-
-    int mHomeCurrent;
-
 
     @Override
     public int returnLayoutID() {
@@ -132,13 +128,31 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         EgrRxBus.subscribe(this, HomeCurrent.class, new Consumer<HomeCurrent>() {
             @Override
             public void accept(@NonNull HomeCurrent homeCurrent) throws Exception {
-                mHomeCurrent=homeCurrent.getCurrent();
+                mHomeCurrent = homeCurrent.getCurrent();
             }
         });
 
         checkVersion();
         presenter.getNoReadMsg();
+        presenter.checkRead();
+    }
 
+    /**
+     * 显示新服务支持提示
+     */
+    private void showMsgPw() {
+        if (mMsgPw == null) {
+            initMsgPw();
+        }
+        int height = rbFeedback.getHeight();
+        int pwHeight = DensityUtils.dp2px(HomeActivity.this, 45);
+        mMsgPw.showAsDropDown(rbFeedback, 25, -(height + pwHeight));
+    }
+
+    private void initMsgPw() {
+        View view = getLayoutInflater().inflate(R.layout.pw_msg, null, false);
+        mMsgPw = new PopupWindow(view, DensityUtils.dp2px(this, 80), DensityUtils.dp2px(this, 45), true);
+        mMsgPw.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_new_msg));
     }
 
     private void checkVersion() {
@@ -157,7 +171,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     @OnClick({R.id.rb_home, R.id.rb_parts, R.id.rb_feedback, R.id.rb_my})
     public void onClick(View view) {
-        if (view.getId() != R.id.rb_home && !isLogin())return;
+        if (view.getId() != R.id.rb_home && !isLogin()) return;
         switch (view.getId()) {
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
@@ -188,7 +202,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 //                        baseStartActivity(FeedbackHistoryActivity.class);
 //                    }
 //                });
-                setActionBarRightIcon(R.drawable.ic_phone_gray,phoneListener);
+                setActionBarRightIcon(R.drawable.ic_phone_gray, phoneListener);
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
                 changeLeftIcon(R.drawable.ic_home_msg_gray);
@@ -206,7 +220,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private void onSearchClick(int type) {
-        if(!isLogin())return;
+        if (!isLogin()) return;
 
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(KEY_INTENT, type);
@@ -235,16 +249,21 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @Override
     public void getContactSuccess(String phoneNum) {
         mDialog.dismiss();
-        phone=phoneNum;
+        phone = phoneNum;
         PhoneUtils.callPhone(this, phoneNum);
     }
 
     @Override
     public void getContactError(String msg) {
         mDialog.dismiss();
+        ToastUtils.show(this,msg);
     }
 
-    String phone;
+    @Override
+    public void checkReadSuc(boolean read) {
+        if (read)
+            showMsgPw();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -277,6 +296,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
         return true;
     }
+
     /**
      * 实现点击空白处，软键盘消失事件
      *
