@@ -43,17 +43,6 @@ public class ServiceMsg {
     private int isAdmin;    //0:用户发生，1：服务人员发送
     private List<String> pictureList;
 
-    public ServiceMsg createSendText(String time, String text) {
-        ServiceMsg msg = new ServiceMsg();
-        msg.setSend(true);
-        msg.setCreateTime(time);
-        ChatBean chatBean=new ChatBean();
-        chatBean.setMessage(text);
-        msg.setMsg(new Gson().toJson(chatBean));
-        msg.setSendState(2);
-        return msg;
-    }
-
     public static ServiceMsg createSendImg(String time, String img) {
         ServiceMsg msg = new ServiceMsg();
         msg.setSend(true);
@@ -73,6 +62,17 @@ public class ServiceMsg {
         rec.setMsg(message.getMsg());
 
         return rec;
+    }
+
+    public ServiceMsg createSendText(String time, String text) {
+        ServiceMsg msg = new ServiceMsg();
+        msg.setSend(true);
+        msg.setCreateTime(time);
+        ChatBean chatBean = new ChatBean();
+        chatBean.setMessage(text);
+        msg.setMsg(new Gson().toJson(chatBean));
+        msg.setSendState(2);
+        return msg;
     }
 
     public int getType() {
@@ -98,6 +98,9 @@ public class ServiceMsg {
                             break;
                         case 2:
                             showType = TYPE_REC_MATCH_EMPTY;
+                            break;
+                        case 3:
+                            showType = TYPE_REC_TEXT;
                             break;
                     }
                 }
@@ -203,7 +206,7 @@ public class ServiceMsg {
         }
     }
 
-    public class KnowBean extends MessageBean{
+    public class KnowBean extends MessageBean {
         List<KnowCatalog> message;
 
         public List<KnowCatalog> getMessage() {
@@ -215,7 +218,7 @@ public class ServiceMsg {
         }
     }
 
-    public class ChatBean extends MessageBean{
+    public class ChatBean extends MessageBean {
         String message;
 
         public String getMessage() {

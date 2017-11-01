@@ -27,6 +27,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
     int current;
     String keyword;
     int type;
+
     @Override
     protected IModel createModel() {
         return new SearchModelImpl(this);
@@ -34,63 +35,67 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
 
     @Override
     public void search(String keyword, int type) {
-        current=1;
-        this.keyword=keyword;
-        this.type=type;
-        startSearch(keyword,type,current);
+        current = 1;
+        this.keyword = keyword;
+        this.type = type;
+        startSearch(keyword, type, current);
     }
 
-    void startSearch(String keyword,int type,int current){
+    void startSearch(String keyword, int type, int current) {
         switch (type) {
             case MyConstants.SEARCH_TYPE_EXPLAIN:
-                mModel.searchExplain(keyword,current);
+                mModel.searchExplain(keyword, current);
                 break;
             case MyConstants.SEARCH_TYPE_KNOWLEDGE:
-                mModel.searchKnow(keyword,current);
+                mModel.searchKnow(keyword, current);
                 break;
             case MyConstants.SEARCH_TYPE_PARTS:
-                mModel.searchParts(keyword,current);
+                mModel.searchParts(keyword, current);
                 break;
         }
     }
 
     @Override
     public void loadMore() {
-        startSearch(keyword,type,current+1);
+        startSearch(keyword, type, current + 1);
     }
 
     @Override
     public void searchKnowSuccess(BasePage<KnowCatalog> data) {
-        if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
+        if (CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1) {
             getView().noMoreData();
-        }else {
-            current=data.getCurrent();
-            getView().searchKnowSuccess(data.getRecords(),
-                    getKnowTitles(data.getRecords()));
+        } else {
+            current = data.getCurrent();
+            if (getView() != null)
+                getView().searchKnowSuccess(data.getRecords(),
+                        getKnowTitles(data.getRecords()));
         }
 
     }
 
     @Override
     public void searchPartsSuccess(BasePage<Store> data) {
-        if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
+        if (CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1) {
             getView().noMoreData();
-        }else {
-            current=data.getCurrent();
-            getView().searchParts(data.getRecords(),
-                    getPartsTitles(data.getRecords()));
+        } else {
+            current = data.getCurrent();
+            if (getView() != null)
+                getView().searchParts(data.getRecords(),
+                        getPartsTitles(data.getRecords()));
         }
 
     }
 
     @Override
     public void searchExplainCatalogSuccess(BasePage<Explain> data) {
-        if(CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1){
+        if (CollectionUtil.isListEmpty(data.getRecords()) && data.getCurrent() != 1) {
             getView().noMoreData();
-        }else {
-            current=data.getCurrent();
-            getView().searchExplainCatalog(data.getRecords(),
-                    getExplainTitles(data.getRecords()));
+        } else {
+            current = data.getCurrent();
+            if (getView() != null)
+                getView().searchExplainCatalog(data.getRecords(),
+                        getExplainTitles(data.getRecords()));
+
         }
 
     }
@@ -104,7 +109,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         return titles;
     }
 
-    private List<String> getPartsTitles(List<Store> list){
+    private List<String> getPartsTitles(List<Store> list) {
         List<String> titles = new ArrayList<>();
         for (Store item : list) {
             titles.add(item.getName());
@@ -113,7 +118,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.View,
         return titles;
     }
 
-    private List<String> getExplainTitles(List<Explain> list){
+    private List<String> getExplainTitles(List<Explain> list) {
         List<String> titles = new ArrayList<>();
         for (Explain item : list) {
             titles.add(item.getTitle());

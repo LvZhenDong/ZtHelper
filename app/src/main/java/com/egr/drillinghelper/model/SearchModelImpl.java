@@ -2,6 +2,7 @@ package com.egr.drillinghelper.model;
 
 import android.text.TextUtils;
 
+import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
@@ -23,7 +24,13 @@ import com.egr.drillinghelper.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
@@ -117,84 +124,150 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
 
     private void showExplainCache(String keyword) {
         try {
-            BasePage<Explain> basePage = new BasePage<>();
-            basePage.setRecords(searchExplainsInCache(keyword));
-            presenter.searchExplainCatalogSuccess(basePage);
+            searchExplainsInCache(keyword);
         } catch (Exception e) {
-            e.printStackTrace();
+            presenter.getView().searchFail(getContext().getString(R.string.net_error));
         }
     }
 
-    private List<Explain> searchExplainsInCache(String keyword) throws Exception {
-        List<Explain> searchResult = new ArrayList<>();
-        List<Explain> cacheList = CacheUtils.getExplains();
-        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
-        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
-        for (Explain item : cacheList) {
-            String title=item.getTitle();
-            if(TextUtils.isEmpty(title))break;    //如果标题为null
-            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
-                searchResult.add(item);
-            }
+
+    private void searchExplainsInCache(final String keyword) throws Exception {
+        final List<Explain> searchResult = new ArrayList<>();
+        final List<Explain> cacheList = CacheUtils.getExplains();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) {
+            BasePage<Explain> basePage = new BasePage<>();
+            basePage.setRecords(searchResult);
+            basePage.setCurrent(1);
+            presenter.searchExplainCatalogSuccess(basePage);
+
+            return;
         }
 
-        return searchResult;
+        Observable
+                .create(new ObservableOnSubscribe<List<String>>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<List<String>> e) throws Exception {
+                        e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(List<String> strings) throws Exception {
+                        for (Explain item : cacheList) {
+                            String title = item.getTitle();
+                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
+                                searchResult.add(item);
+                            }
+                        }
+
+                        BasePage<Explain> basePage = new BasePage<>();
+                        basePage.setCurrent(1);
+                        basePage.setRecords(searchResult);
+                        presenter.searchExplainCatalogSuccess(basePage);
+                    }
+                });
     }
 
     private void showPartsCache(String keyword) {
         try {
-            BasePage<Store> basePage = new BasePage<>();
-            basePage.setRecords(searchPartsInCache(keyword));
-            presenter.searchPartsSuccess(basePage);
+            searchPartsInCache(keyword);
         } catch (Exception e) {
-            e.printStackTrace();
+            presenter.getView().searchFail(getContext().getString(R.string.net_error));
         }
     }
 
-    private List<Store> searchPartsInCache(String keyword) throws Exception {
-        List<Store> searchResult = new ArrayList<>();
-        List<Store> cacheList = CacheUtils.getParts();
-        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
-        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
-        for (Store item : cacheList) {
-            String title=item.getName();
-            if(TextUtils.isEmpty(title))break;    //如果标题为null
-            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
-                searchResult.add(item);
-            }
+    private void searchPartsInCache(final String keyword) throws Exception {
+        final List<Store> searchResult = new ArrayList<>();
+        final List<Store> cacheList = CacheUtils.getParts();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) {
+            BasePage<Store> basePage = new BasePage<>();
+            basePage.setRecords(searchResult);
+            basePage.setCurrent(1);
+            presenter.searchPartsSuccess(basePage);
+
+            return;
         }
 
-        return searchResult;
+        Observable
+                .create(new ObservableOnSubscribe<List<String>>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<List<String>> e) throws Exception {
+                        e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(List<String> strings) throws Exception {
+                        for (Store item : cacheList) {
+                            String title = item.getName();
+                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
+                                searchResult.add(item);
+                            }
+                        }
+
+                        BasePage<Store> basePage = new BasePage<>();
+                        basePage.setRecords(searchResult);
+                        basePage.setCurrent(1);
+                        presenter.searchPartsSuccess(basePage);
+                    }
+                });
     }
 
     private void showKnowCache(String keyword) {
         try {
-            BasePage<KnowCatalog> basePage = new BasePage<>();
-            basePage.setRecords(searchKnowInCache(keyword));
-            presenter.searchKnowSuccess(basePage);
+            searchKnowInCache(keyword);
         } catch (Exception e) {
-            e.printStackTrace();
+            presenter.getView().searchFail(getContext().getString(R.string.net_error));
         }
     }
 
-    private List<KnowCatalog> searchKnowInCache(String keyword) throws Exception {
-        List<KnowCatalog> searchResult = new ArrayList<>();
-        List<KnowCatalog> cacheList = new ArrayList<>();
-        List<Explain> explainList = CacheUtils.getKnows();
-        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(explainList)) return cacheList;
-        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
-        for (Explain item : explainList) {
-            cacheList.addAll(item.getKnows());
+    private void searchKnowInCache(final String keyword) throws Exception {
+        final List<KnowCatalog> searchResult = new ArrayList<>();
+        final List<KnowCatalog> cacheList = new ArrayList<>();
+        final List<Explain> explainList = CacheUtils.getKnows();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(explainList)) {
+            BasePage<KnowCatalog> basePage = new BasePage<>();
+            basePage.setRecords(searchResult);
+            basePage.setCurrent(1);
+            presenter.searchKnowSuccess(basePage);
         }
 
-        for (KnowCatalog catalog : cacheList) {
-            String title=catalog.getTitle();
-            if(TextUtils.isEmpty(title))break;    //如果标题为null
-            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
-                searchResult.add(catalog);
-            }
-        }
+        Observable
+                .create(new ObservableOnSubscribe<List<String>>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<List<String>> e) throws Exception {
+                        e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(List<String> strings) throws Exception {
 
-        return searchResult;
+                        for (Explain item : explainList) {
+                            cacheList.addAll(item.getKnows());
+                        }
+
+                        for (KnowCatalog catalog : cacheList) {
+                            String title = catalog.getTitle();
+                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
+                                searchResult.add(catalog);
+                            }
+                        }
+
+                        BasePage<KnowCatalog> basePage = new BasePage<>();
+                        basePage.setRecords(searchResult);
+                        basePage.setCurrent(1);
+                        presenter.searchKnowSuccess(basePage);
+                    }
+                });
     }
 }
