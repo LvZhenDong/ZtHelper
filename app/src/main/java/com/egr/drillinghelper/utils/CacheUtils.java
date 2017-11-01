@@ -2,7 +2,6 @@ package com.egr.drillinghelper.utils;
 
 import com.egr.drillinghelper.bean.response.Explain;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
-import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.common.MyConstants;
 import com.google.gson.Gson;
@@ -10,9 +9,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.id;
-import static android.R.id.list;
 
 /**
  * author lzd
@@ -167,9 +163,5 @@ public class CacheUtils {
                 getList(item.getChilds());
 
         }
-    }
-
-    public String getCacheBitmap(String url){
-        return "";
     }
 }

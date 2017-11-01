@@ -228,8 +228,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     private void onSearchClick(int type) {
-        if (!isLogin()) return;
-
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(KEY_INTENT, type);
         startActivity(intent);

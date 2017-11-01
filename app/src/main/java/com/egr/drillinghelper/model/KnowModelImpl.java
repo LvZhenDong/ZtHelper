@@ -82,7 +82,7 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
         List<Explain> cacheList = CacheUtils.getKnows();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
         for (Explain item : cacheList) {
-            if (item.getTitle().contains(keyword)) {
+            if (item.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
                 searchResult.add(item);
             }
         }
