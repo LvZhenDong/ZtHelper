@@ -319,14 +319,14 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
     @Override
     public void noNeed() {
-        ToastUtils.show(this,R.string.not_need_hint);
-        mAdapter.getLastItem().setStatus(1);
-        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
+//        ToastUtils.show(this,R.string.not_need_hint);
+//        mAdapter.getLastItem().setStatus(1);
+//        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
     }
 
     @Override
     public void resolvedSuc() {
-        mAdapter.getLastItem().setStatus(1);
-        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
+//        mAdapter.getLastItem().setStatus(1);
+//        mAdapter.notifyItemChanged(mAdapter.getDataList().size()-1);
     }
 }

@@ -38,8 +38,6 @@ public class SendStateView extends android.support.v7.widget.AppCompatImageView 
         frameCount = a.getInt(R.styleable.ProgressView_frameCount, 12);
         duration = a.getInt(R.styleable.ProgressView_duration, 1000);
         a.recycle();
-
-        setSendState(2);
     }
 
     private void setAnimation() {

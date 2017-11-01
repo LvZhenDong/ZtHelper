@@ -3,11 +3,12 @@ package com.egr.drillinghelper.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -15,9 +16,9 @@ import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
-import com.egr.drillinghelper.ui.widgets.SendStateView;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,19 +108,36 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         ImageView mIvSendHead;
         @BindView(R.id.tv_msg)
         TextView mTvMsg;
-        @BindView(R.id.iv_send_state)
-        SendStateView mIvSendState;
+        @BindView(R.id.rl_resend)
+        RelativeLayout mRlResend;
+        @BindView(R.id.iv_resend)
+        ImageView mIvResend;
+        @BindView(R.id.avl)
+        AVLoadingIndicatorView mAvl;
 
         public SendTextViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mIvSendState.setOnClickListener(this);
+            mRlResend.setOnClickListener(this);
         }
 
         @Override
         public void showMsg(ServiceMsg item) {
             mTvTime.setText(item.getCreateTime());
-            mIvSendState.setSendState(item.getSendState());
+            switch (item.getSendState()){
+                case 0:
+                    mAvl.hide();
+                    mIvResend.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    mAvl.hide();
+                    mIvResend.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    mAvl.show();
+                    mIvResend.setVisibility(View.GONE);
+                    break;
+            }
             GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(), mIvSendHead);
             ServiceMsg.ChatBean chatBean = gson.fromJson(item.getMsg(), ServiceMsg.ChatBean.class);
             mTvMsg.setText(chatBean.getMessage());
@@ -138,19 +156,36 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         ImageView mIvSendHead;
         @BindView(R.id.iv_img)
         ImageView mIvImg;
-        @BindView(R.id.iv_send_state)
-        SendStateView mIvSendState;
+        @BindView(R.id.rl_resend)
+        RelativeLayout mRlResend;
+        @BindView(R.id.iv_resend)
+        ImageView mIvResend;
+        @BindView(R.id.avl)
+        AVLoadingIndicatorView mAvl;
 
         public SendImgViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mIvSendState.setOnClickListener(this);
+            mRlResend.setOnClickListener(this);
         }
 
         @Override
         public void showMsg(ServiceMsg item) {
             mTvTime.setText(item.getCreateTime());
-            mIvSendState.setSendState(item.getSendState());
+            switch (item.getSendState()){
+                case 0:
+                    mAvl.hide();
+                    mIvResend.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    mAvl.hide();
+                    mIvResend.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    mAvl.show();
+                    mIvResend.setVisibility(View.GONE);
+                    break;
+            }
             GlideUtils.loadCircleImg(UserManager.getInstance().getUserPhoto(), mIvSendHead);
             GlideUtils.load(item.getPictureList().get(0), mIvImg);
         }
@@ -242,6 +277,8 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         public void onClick(View v) {
             ServiceMsg serviceMsg = getDataList().get(getAdapterPosition() - 1);
             if(serviceMsg.getStatus() != 0)return;
+            serviceMsg.setStatus(1);
+            notifyItemChanged(getAdapterPosition());
             switch (v.getId()) {
                 case R.id.tv_resolved:
                     if (matchListener != null)
@@ -280,6 +317,8 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         public void onClick(View v) {
             ServiceMsg serviceMsg = getDataList().get(getAdapterPosition() - 1);
             if(serviceMsg.getStatus() != 0)return;
+            serviceMsg.setStatus(1);
+            notifyItemChanged(getAdapterPosition());
             switch (v.getId()) {
                 case R.id.tv_resolved:
                     if (matchListener != null)
@@ -307,20 +346,18 @@ public class ServiceAdapter extends BaseListAdapter<ServiceMsg, RecyclerView.Vie
         @Override
         public void onBindItemHolder(TitleViewHolder holder, int position) {
             KnowCatalog item = getDataList().get(position);
-            holder.mTvTitle.setText(item.getTitle());
+            holder.mTvTitle.setText(Html.fromHtml("<u>"+item.getTitle()+"</u>"));
         }
 
         class TitleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             @BindView(R.id.tv_title)
             TextView mTvTitle;
-            @BindView(R.id.ll_content)
-            LinearLayout mLlContent;
 
             public TitleViewHolder(View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
 
-                mLlContent.setOnClickListener(this);
+                mTvTitle.setOnClickListener(this);
             }
 
             @Override

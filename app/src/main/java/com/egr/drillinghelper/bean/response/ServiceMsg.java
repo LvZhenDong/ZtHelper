@@ -15,12 +15,12 @@ import java.util.List;
 
 public class ServiceMsg {
 
-    public static final int TYPE_SEND_TEXT = 0;
-    public static final int TYPE_SEND_IMG = 1;
-    public static final int TYPE_REC_TEXT = 2;
-    public static final int TYPE_REC_IMG = 3;
-    public static final int TYPE_REC_MATCH = 4;
-    public static final int TYPE_REC_MATCH_EMPTY = 5;
+    public static final int TYPE_SEND_TEXT = 0; //发送的普通文本
+    public static final int TYPE_SEND_IMG = 1;  //发送的图片
+    public static final int TYPE_REC_TEXT = 2;  //接收到的普通文本
+    public static final int TYPE_REC_IMG = 3;   //接收到的图片
+    public static final int TYPE_REC_MATCH = 4; //接收到的匹配信息
+    public static final int TYPE_REC_MATCH_EMPTY = 5;   //接收到的没有匹配到消息
     /**
      * id : 34abadf8f8c643798294e593b3eec3a6
      * createtime : 2017-10-24 16:48:44
