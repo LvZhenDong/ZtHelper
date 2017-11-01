@@ -26,6 +26,7 @@ import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 import com.egr.drillinghelper.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -48,7 +49,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
     }
 
     @Override
-    public void getExplainList(String keyword, int current) {
+    public void getExplainList(final String keyword, int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
             api.explainList(keyword, current + "")
                     .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
@@ -56,7 +57,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                         @Override
                         public void onError(ResponseThrowable e, String eMsg) {
                             if (e.code == TIMEOUT_ERROR)
-                                showCache();
+                                showCache(keyword);
                             else
                                 presenter.getExplainFail(eMsg);
                         }
@@ -67,17 +68,29 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                         }
                     });
         } else {
-            showCache();
+            showCache(keyword);
         }
-
     }
 
-    private void showCache() {
+    private void showCache(String keyword) {
         try {
-            presenter.getView().showExplainCache(CacheUtils.getExplains());
+            presenter.getView().showExplainCache(searchExplainsInCache(keyword));
         } catch (Exception e) {
             presenter.getExplainFail(getContext().getString(R.string.net_error));
         }
+    }
+
+    private List<Explain> searchExplainsInCache(String keyword) throws Exception {
+        List<Explain> searchResult = new ArrayList<>();
+        List<Explain> cacheList = CacheUtils.getExplains();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
+        for (Explain item : cacheList) {
+            if (item.getTitle().contains(keyword) || item.getDescription().contains(keyword)) {
+                searchResult.add(item);
+            }
+        }
+
+        return searchResult;
     }
 
     @Override

@@ -8,9 +8,7 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.bean.response.Explain;
-import com.egr.drillinghelper.bean.response.ExplainCatalog;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.KnowContract;
@@ -26,8 +24,8 @@ import com.egr.drillinghelper.utils.FileUtils;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 import com.egr.drillinghelper.utils.StringUtils;
-import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -49,7 +47,7 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
     }
 
     @Override
-    public void getKnowList(String keyword,int current) {
+    public void getKnowList(final String keyword, int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
             api.knowList(keyword,current + "")
                     .compose(TransformersFactory.<BasePage<Explain>>commonTransformer((BaseMVPFragment) presenter.getView()))
@@ -57,7 +55,7 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
                         @Override
                         public void onError(ResponseThrowable e, String eMsg) {
                             if (e.code == TIMEOUT_ERROR)
-                                showCache();
+                                showCache(keyword);
                             else
                                 presenter.getView().getKnowFail(eMsg);
                         }
@@ -68,15 +66,28 @@ public class KnowModelImpl extends BaseModel<KnowPresenterImpl> implements KnowC
                         }
                     });
         }else {
-            showCache();
+            showCache(keyword);
         }
     }
-    private void showCache() {
+    private void showCache(String keyword) {
         try {
-            presenter.getView().showKnowCache(CacheUtils.getKnows());
+            presenter.getView().showKnowCache(searchExplainsInCache(keyword));
         } catch (Exception e) {
             presenter.getView().getKnowFail(getContext().getString(R.string.net_error));
         }
+    }
+
+    private List<Explain> searchExplainsInCache(String keyword) throws Exception {
+        List<Explain> searchResult = new ArrayList<>();
+        List<Explain> cacheList = CacheUtils.getKnows();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
+        for (Explain item : cacheList) {
+            if (item.getTitle().contains(keyword)) {
+                searchResult.add(item);
+            }
+        }
+
+        return searchResult;
     }
 
     @Override

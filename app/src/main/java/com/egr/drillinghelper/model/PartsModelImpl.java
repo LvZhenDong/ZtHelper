@@ -17,13 +17,16 @@ import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
 import com.egr.drillinghelper.utils.CacheUtils;
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.NetworkUtils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
+
+import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
 /**
  * author lzd
@@ -42,14 +45,17 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
     }
 
     @Override
-    public void getPartsList(String keyword,int current) {
+    public void getPartsList(final String keyword, int current) {
         if (NetworkUtils.isNetworkConnected(getContext())) {
             api.storeList(keyword, current + "")
                     .compose(TransformersFactory.<BasePage<Store>>commonTransformer((BaseMVPFragment) presenter.getView()))
                     .subscribe(new EObserver<BasePage<Store>>() {
                         @Override
                         public void onError(ResponseThrowable e, String eMsg) {
-                            presenter.getPastsFail(eMsg);
+                            if (e.code == TIMEOUT_ERROR)
+                                showCache(keyword);
+                            else
+                                presenter.getPastsFail(eMsg);
                         }
 
                         @Override
@@ -68,13 +74,13 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
                         }
                     });
         }else {
-            showCache();
+            showCache(keyword);
         }
     }
 
     @Override
     public void getMall() {
-        if (NetworkUtils.isNetworkConnected(getContext())) {
+
             api.getStoreMore()
                     .compose(TransformersFactory.<StoreMore>commonTransformer((BaseMVPFragment) presenter.getView()))
                     .subscribe(new EObserver<StoreMore>() {
@@ -89,17 +95,28 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
                             presenter.getMallSuccess();
                         }
                     });
-        }else {
-            showCache();
-        }
+
     }
 
-    private void showCache() {
+    private void showCache(String keyword) {
         try {
-            presenter.getView().showParts(CacheUtils.getParts());
+            presenter.getView().showParts(searchPartsInCache(keyword));
         } catch (Exception e) {
             presenter.getPastsFail(getContext().getString(R.string.net_error));
         }
+    }
+
+    private List<Store> searchPartsInCache(String keyword) throws Exception {
+        List<Store> searchResult = new ArrayList<>();
+        List<Store> cacheList = CacheUtils.getParts();
+        if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
+        for (Store item : cacheList) {
+            if (item.getName().contains(keyword)) {
+                searchResult.add(item);
+            }
+        }
+
+        return searchResult;
     }
 
     @Override
