@@ -6,12 +6,8 @@ import android.text.style.RelativeSizeSpan;
 
 import com.egr.drillinghelper.common.MyConstants;
 
-import org.ansj.domain.Term;
-import org.ansj.splitWord.analysis.ToAnalysis;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -142,18 +138,20 @@ public class StringUtils {
     }
 
     public static List<String> splitKeyword(String str) {
-        //n 名词 nt机构团体名 nl 名词性惯用语 ng 名词性语素 nw 新词 m 数词 mq 数量词
-        String[] filter = {"n", "nt", "nl", "ng", "nw", "m", "mq", "en"};
-        List<String> filterList = Arrays.asList(filter);
-
-        List<Term> list = ToAnalysis.parse(str).getTerms();
         List<String> strList = new LinkedList<>();
-        for (Term term : list) {
-            String natureStr = term.natrue().natureStr;
-            if (filterList.contains(natureStr)) {
-                strList.add(term.getName());
-            }
-        }
+        //暂时不使用分词
+//        //n 名词 nt机构团体名 nl 名词性惯用语 ng 名词性语素 nw 新词 m 数词 mq 数量词
+//        String[] filter = {"n", "nt", "nl", "ng", "nw", "m", "mq", "en"};
+//        List<String> filterList = Arrays.asList(filter);
+//
+//        List<Term> list = ToAnalysis.parse(str).getTerms();
+//
+//        for (Term term : list) {
+//            String natureStr = term.natrue().natureStr;
+//            if (filterList.contains(natureStr)) {
+//                strList.add(term.getName());
+//            }
+//        }
 
         if (CollectionUtil.isListEmpty(strList))
             strList.add(str);
