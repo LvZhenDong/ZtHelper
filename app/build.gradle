@@ -160,6 +160,8 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.7'
     //    gallery
     compile 'com.github.ybq:parallaxviewpager:2.0.0'
+    //    分词
+    compile 'org.ansj:ansj_seg:5.1.1'
     compile project(':version')
     compile project(':pickerImage')
 }

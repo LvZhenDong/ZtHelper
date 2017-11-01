@@ -18,6 +18,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.NetworkUtils;
+import com.egr.drillinghelper.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,8 +129,11 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         List<Explain> searchResult = new ArrayList<>();
         List<Explain> cacheList = CacheUtils.getExplains();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
+        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
         for (Explain item : cacheList) {
-            if (item.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+            String title=item.getTitle();
+            if(TextUtils.isEmpty(title))break;    //如果标题为null
+            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
                 searchResult.add(item);
             }
         }
@@ -151,8 +155,11 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         List<Store> searchResult = new ArrayList<>();
         List<Store> cacheList = CacheUtils.getParts();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
+        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
         for (Store item : cacheList) {
-            if (item.getName().toLowerCase().contains(keyword.toLowerCase())) {
+            String title=item.getName();
+            if(TextUtils.isEmpty(title))break;    //如果标题为null
+            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
                 searchResult.add(item);
             }
         }
@@ -175,13 +182,17 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         List<KnowCatalog> cacheList = new ArrayList<>();
         List<Explain> explainList = CacheUtils.getKnows();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(explainList)) return cacheList;
+        List<String> splitKeywords=StringUtils.splitKeyword(keyword.toLowerCase());
         for (Explain item : explainList) {
             cacheList.addAll(item.getKnows());
         }
 
         for (KnowCatalog catalog : cacheList) {
-            if (catalog.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+            String title=catalog.getTitle();
+            if(TextUtils.isEmpty(title))break;    //如果标题为null
+            if(StringUtils.stringContainsItemFromList(title.toLowerCase(),splitKeywords)){
                 searchResult.add(catalog);
+            }
         }
 
         return searchResult;
