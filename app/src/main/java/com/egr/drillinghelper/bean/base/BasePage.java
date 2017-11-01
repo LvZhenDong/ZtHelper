@@ -114,5 +114,10 @@ public class BasePage<T> {
         this.records = records;
     }
 
+    public void setCacheRecords(List<T> records) {
+        this.records = records;
+        this.current = 1;
+    }
+
 
 }

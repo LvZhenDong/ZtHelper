@@ -27,10 +27,8 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
@@ -136,13 +134,13 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         final List<Explain> cacheList = CacheUtils.getExplains();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) {
             BasePage<Explain> basePage = new BasePage<>();
-            basePage.setRecords(searchResult);
-            basePage.setCurrent(1);
+            basePage.setCacheRecords(searchResult);
             presenter.searchExplainCatalogSuccess(basePage);
 
             return;
         }
 
+        //这里因为ansj_seg这个分词库第一次加载到内存是时候很耗时（大概有5、6s），所以在子线程中进行分词
         Observable
                 .create(new ObservableOnSubscribe<List<String>>() {
                     @Override
@@ -150,22 +148,20 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
                         e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(TransformersFactory.<List<String>>defaultSchedulers())
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
                         for (Explain item : cacheList) {
                             String title = item.getTitle();
-                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (TextUtils.isEmpty(title)) continue;    //如果标题为null
                             if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
                                 searchResult.add(item);
                             }
                         }
 
                         BasePage<Explain> basePage = new BasePage<>();
-                        basePage.setCurrent(1);
-                        basePage.setRecords(searchResult);
+                        basePage.setCacheRecords(searchResult);
                         presenter.searchExplainCatalogSuccess(basePage);
                     }
                 });
@@ -184,13 +180,13 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         final List<Store> cacheList = CacheUtils.getParts();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) {
             BasePage<Store> basePage = new BasePage<>();
-            basePage.setRecords(searchResult);
-            basePage.setCurrent(1);
+            basePage.setCacheRecords(searchResult);
             presenter.searchPartsSuccess(basePage);
 
             return;
         }
 
+        //这里因为ansj_seg这个分词库第一次加载到内存是时候很耗时（大概有5、6s），所以在子线程中进行分词
         Observable
                 .create(new ObservableOnSubscribe<List<String>>() {
                     @Override
@@ -198,22 +194,20 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
                         e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(TransformersFactory.<List<String>>defaultSchedulers())
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
                         for (Store item : cacheList) {
                             String title = item.getName();
-                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (TextUtils.isEmpty(title)) continue;    //如果标题为null
                             if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
                                 searchResult.add(item);
                             }
                         }
 
                         BasePage<Store> basePage = new BasePage<>();
-                        basePage.setRecords(searchResult);
-                        basePage.setCurrent(1);
+                        basePage.setCacheRecords(searchResult);
                         presenter.searchPartsSuccess(basePage);
                     }
                 });
@@ -233,11 +227,11 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
         final List<Explain> explainList = CacheUtils.getKnows();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(explainList)) {
             BasePage<KnowCatalog> basePage = new BasePage<>();
-            basePage.setRecords(searchResult);
-            basePage.setCurrent(1);
+            basePage.setCacheRecords(searchResult);
             presenter.searchKnowSuccess(basePage);
         }
 
+        //这里因为ansj_seg这个分词库第一次加载到内存是时候很耗时（大概有5、6s），所以在子线程中进行分词
         Observable
                 .create(new ObservableOnSubscribe<List<String>>() {
                     @Override
@@ -245,8 +239,7 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
                         e.onNext(StringUtils.splitKeyword(keyword.toLowerCase()));
                     }
                 })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(TransformersFactory.<List<String>>defaultSchedulers())
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
@@ -257,15 +250,14 @@ public class SearchModelImpl extends BaseModel<SearchPresenterImpl> implements S
 
                         for (KnowCatalog catalog : cacheList) {
                             String title = catalog.getTitle();
-                            if (TextUtils.isEmpty(title)) break;    //如果标题为null
+                            if (TextUtils.isEmpty(title)) continue;    //如果标题为null
                             if (StringUtils.stringContainsItemFromList(title.toLowerCase(), strings)) {
                                 searchResult.add(catalog);
                             }
                         }
 
                         BasePage<KnowCatalog> basePage = new BasePage<>();
-                        basePage.setRecords(searchResult);
-                        basePage.setCurrent(1);
+                        basePage.setCacheRecords(searchResult);
                         presenter.searchKnowSuccess(basePage);
                     }
                 });

@@ -111,7 +111,9 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
         List<Store> cacheList = CacheUtils.getParts();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
         for (Store item : cacheList) {
-            if (item.getName().toLowerCase().contains(keyword.toLowerCase())) {
+            String title=item.getName();
+            if(TextUtils.isEmpty(title))continue;
+            if (title.toLowerCase().contains(keyword.toLowerCase())) {
                 searchResult.add(item);
             }
         }

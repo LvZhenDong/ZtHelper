@@ -85,8 +85,13 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
         List<Explain> cacheList = CacheUtils.getExplains();
         if (TextUtils.isEmpty(keyword) || CollectionUtil.isListEmpty(cacheList)) return cacheList;
         for (Explain item : cacheList) {
-            if (item.getTitle().toLowerCase().contains(keyword.toLowerCase())
-                    || item.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+            String title=item.getTitle();
+            String des=item.getDescription();
+            if(!TextUtils.isEmpty(title) && title.toLowerCase().contains(keyword.toLowerCase())){
+                searchResult.add(item);
+                continue;
+            }
+            if(!TextUtils.isEmpty(des) && des.toLowerCase().contains(keyword.toLowerCase())){
                 searchResult.add(item);
             }
         }

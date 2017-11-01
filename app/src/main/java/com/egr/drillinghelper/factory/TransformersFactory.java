@@ -1,7 +1,6 @@
 package com.egr.drillinghelper.factory;
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
@@ -31,7 +30,7 @@ public class TransformersFactory {
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
                 return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
-                        .io());
+                        .newThread());
             }
         };
     }
