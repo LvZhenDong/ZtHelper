@@ -186,6 +186,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
                 setActionBarTitleDrawable(R.drawable.bg_home_logo);
 //                setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
                 setActionBarRightTextGone();
+                setActionBarRightIvGone();
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);
                 changeLeftIcon(R.drawable.ic_home_msg_gray);
