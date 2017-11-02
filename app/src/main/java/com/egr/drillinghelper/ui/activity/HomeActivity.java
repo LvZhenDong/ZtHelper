@@ -106,7 +106,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
         setActionbarBackground(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
-        setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
+        //setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
 
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
@@ -184,7 +184,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             case R.id.rb_home:
                 vpHome.setCurrentItem(0);
                 setActionBarTitleDrawable(R.drawable.bg_home_logo);
-                setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
+//                setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
                 setActionBarRightTextGone();
                 setActionbarBackground(R.color.white);
                 setActionBarTitleColor(R.color.black);

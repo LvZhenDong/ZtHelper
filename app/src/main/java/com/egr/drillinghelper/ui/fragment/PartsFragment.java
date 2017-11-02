@@ -1,11 +1,10 @@
 package com.egr.drillinghelper.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -14,8 +13,8 @@ import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
+import com.egr.drillinghelper.ui.activity.SearchActivity;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
-import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -34,15 +33,17 @@ import butterknife.OnClick;
  * 类描述：配件/钻探
  */
 
-public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPresenterImpl>
-    implements PartsContract.View{
+public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPresenterImpl>
+        implements PartsContract.View {
     @BindView(R.id.rv_parts)
     LRecyclerView rvParts;
     @BindView(R.id.tv_search)
     TextView tvSearch;
-    @BindView(R.id.et_search)
-    LvEditText etSearch;
-
+    //    @BindView(R.id.et_search)
+//    LvEditText etSearch;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
+    String keyword;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private PartsAdapter mAdapter;
 
@@ -72,12 +73,12 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
         }
     }
 
-    private void initRv(){
-        mAdapter=new PartsAdapter(getActivity());
-        mLRecyclerViewAdapter=new LRecyclerViewAdapter(mAdapter);
+    private void initRv() {
+        mAdapter = new PartsAdapter(getActivity());
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
 
         rvParts.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        rvParts.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        rvParts.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         rvParts.setAdapter(mLRecyclerViewAdapter);  //LZD
         rvParts.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -95,41 +96,48 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View,PartsPrese
 
     }
 
-    String keyword;
-
     private void initSearchEt() {
-        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
-            @Override
-            public void onEnterClick(String text) {
-                keyword=text;
-                rvParts.forceToRefresh();
-            }
-        });
+//        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
+//            @Override
+//            public void onEnterClick(String text) {
+//                keyword=text;
+//                rvParts.forceToRefresh();
+//            }
+//        });
     }
 
-    @OnClick({R.id.tv_search})
+    @OnClick({R.id.ll_search})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_search:
-                keyword = etSearch.getText().toString().trim();
-                rvParts.forceToRefresh();
+//            case R.id.tv_search:
+//                keyword = etSearch.getText().toString().trim();
+//                rvParts.forceToRefresh();
+//                break;
+            case R.id.ll_search:
+                onSearchClick(2);
                 break;
         }
+    }
+
+    private void onSearchClick(int type) {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra(KEY_INTENT, type);
+        startActivity(intent);
     }
 
     @Override
     public void getPastsFail(String msg) {
         rvParts.refreshComplete(10);
-        ToastUtils.show(getActivity(),msg);
+        ToastUtils.show(getActivity(), msg);
     }
 
     @Override
     public void getPartsListSuccess(BasePage<Store> store) {
         rvParts.refreshComplete(10);
 
-        if(store.getCurrent() > 1){
+        if (store.getCurrent() > 1) {
             mAdapter.addAll(store.getRecords());
-        }else if(store.getCurrent() == 1){
+        } else if (store.getCurrent() == 1) {
             mAdapter.setDataList(store.getRecords());
         }
     }

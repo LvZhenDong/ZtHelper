@@ -3,10 +3,8 @@ package com.egr.drillinghelper.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -16,8 +14,8 @@ import com.egr.drillinghelper.contract.KnowContract;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.presenter.KnowPresenterImpl;
 import com.egr.drillinghelper.ui.activity.KnowCatalogActivity;
+import com.egr.drillinghelper.ui.activity.SearchActivity;
 import com.egr.drillinghelper.ui.adapter.KnowledgeAdapter;
-import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -43,8 +41,10 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
     LRecyclerView rvKnowledge;
     @BindView(R.id.tv_search)
     TextView tvSearch;
-    @BindView(R.id.et_search)
-    LvEditText etSearch;
+    //    @BindView(R.id.et_search)
+//    LvEditText etSearch;
+    @BindView(R.id.ll_search)
+    LinearLayout llSearch;
     String keyword;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private KnowledgeAdapter mAdapter;
@@ -109,23 +109,32 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
     }
 
     private void initSearchEt() {
-        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
-            @Override
-            public void onEnterClick(String text) {
-                keyword=text;
-                rvKnowledge.forceToRefresh();
-            }
-        });
+//        etSearch.setOnEnterListener(new LvEditText.OnEnterListener() {
+//            @Override
+//            public void onEnterClick(String text) {
+//                keyword=text;
+//                rvKnowledge.forceToRefresh();
+//            }
+//        });
     }
 
-    @OnClick({R.id.tv_search})
+    @OnClick({R.id.ll_search})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_search:
-                keyword = etSearch.getText().toString().trim();
-                rvKnowledge.forceToRefresh();
+//            case R.id.tv_search:
+//                keyword = etSearch.getText().toString().trim();
+//                rvKnowledge.forceToRefresh();
+//                break;
+            case R.id.ll_search:
+                onSearchClick(1);
                 break;
         }
+    }
+
+    private void onSearchClick(int type) {
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra(KEY_INTENT, type);
+        startActivity(intent);
     }
 
     @Override
