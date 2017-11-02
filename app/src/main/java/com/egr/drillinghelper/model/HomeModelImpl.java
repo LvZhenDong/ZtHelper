@@ -32,7 +32,7 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
                 .subscribe(new EObserver<Integer>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().getContactError(eMsg);
+
                     }
 
                     @Override
