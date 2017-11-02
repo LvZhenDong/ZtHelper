@@ -94,10 +94,10 @@ public class TransformersFactory {
         };
     }
 
-    public static ObservableTransformer<BaseResponseBean, Boolean> emptyTrans(final BaseMVPActivity activity) {
-        return new ObservableTransformer<BaseResponseBean, Boolean>() {
+    public static ObservableTransformer<BaseResponseBean, BaseResponseBean> emptyTrans(final BaseMVPActivity activity) {
+        return new ObservableTransformer<BaseResponseBean, BaseResponseBean>() {
             @Override
-            public ObservableSource<Boolean> apply(@NonNull Observable<BaseResponseBean> upstream) {
+            public ObservableSource<BaseResponseBean> apply(@NonNull Observable<BaseResponseBean> upstream) {
                 return upstream
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
