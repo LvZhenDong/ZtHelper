@@ -114,6 +114,10 @@ public class BasePage<T> {
         this.records = records;
     }
 
+    /**
+     * 手动生成的list数据，是从cache里加载的，current设置为1
+     * @param records
+     */
     public void setCacheRecords(List<T> records) {
         this.records = records;
         this.current = 1;

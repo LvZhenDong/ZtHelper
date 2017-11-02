@@ -12,7 +12,7 @@ public interface RxBusConstant {
     String UPDATE_MY_USER_INFO="updateMyUserInfo";
     //刷新首页未读消息数和消息列表
     String UPDATE_MSG ="updateMsgNoRead";
-
+    //新的服务反馈消息
     String NEW_SERVICE_MSG="newServiceMsg";
 
 }
