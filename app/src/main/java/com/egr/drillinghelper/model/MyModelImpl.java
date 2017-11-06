@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.common.UserManager;
@@ -52,15 +52,15 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
     @Override
     public void logout() {
         api.logout()
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPFragment) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPFragment) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().logoutFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse data) {
+                    public void onComplete(@NonNull BaseResponseBean data) {
                         presenter.getView().logoutSuccess();
                     }
                 });

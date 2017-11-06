@@ -3,9 +3,7 @@ package com.egr.drillinghelper.factory;
 import com.egr.drillinghelper.api.error.EmptyBodyFuc;
 import com.egr.drillinghelper.api.error.HandleFuc;
 import com.egr.drillinghelper.api.error.HttpResponseFunc;
-import com.egr.drillinghelper.api.error.NullResponseFuc;
 import com.egr.drillinghelper.bean.base.BaseResponseBean;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -73,27 +71,6 @@ public class TransformersFactory {
         };
     }
 
-    /**
-     * 适用于返回body为null的情况
-     *
-     * @param activity
-     * @return
-     */
-    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
-    nullBodyTransformer(final BaseMVPActivity activity) {
-        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
-            @Override
-            public ObservableSource<NullBodyResponse> apply(@NonNull
-                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
-                        .io())
-                        .map(new NullResponseFuc())
-                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>())
-                        .compose(activity.<NullBodyResponse>bindUntilEvent(ActivityEvent.DESTROY));
-            }
-        };
-    }
-
     public static ObservableTransformer<BaseResponseBean, BaseResponseBean> emptyTrans(final BaseMVPActivity activity) {
         return new ObservableTransformer<BaseResponseBean, BaseResponseBean>() {
             @Override
@@ -103,42 +80,34 @@ public class TransformersFactory {
                         .subscribeOn(Schedulers.io())
                         .map(new EmptyBodyFuc())
                         .onErrorResumeNext(new HttpResponseFunc())
-                        .compose(activity.<NullBodyResponse>bindUntilEvent(ActivityEvent.DESTROY));
+                        .compose(activity.<Void>bindUntilEvent(ActivityEvent.DESTROY));
             }
         };
     }
 
-    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
-    nullBodyTransformer() {
-        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
+    public static ObservableTransformer<BaseResponseBean, BaseResponseBean> emptyTrans(final BaseMVPFragment activity) {
+        return new ObservableTransformer<BaseResponseBean, BaseResponseBean>() {
             @Override
-            public ObservableSource<NullBodyResponse> apply(@NonNull
-                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
-                        .io())
-                        .map(new NullResponseFuc())
-                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>());
+            public ObservableSource<BaseResponseBean> apply(@NonNull Observable<BaseResponseBean> upstream) {
+                return upstream
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .map(new EmptyBodyFuc())
+                        .onErrorResumeNext(new HttpResponseFunc())
+                        .compose(activity.<Void>bindUntilEvent(FragmentEvent.DESTROY));
             }
         };
     }
 
-    /**
-     * 适用于返回body为null的情况
-     *
-     * @param fragment
-     * @return
-     */
-    public static ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>
-    nullBodyTransformer(final BaseMVPFragment fragment) {
-        return new ObservableTransformer<BaseResponseBean<NullBodyResponse>, NullBodyResponse>() {
+    public static ObservableTransformer<BaseResponseBean, BaseResponseBean> emptyTrans() {
+        return new ObservableTransformer<BaseResponseBean, BaseResponseBean>() {
             @Override
-            public ObservableSource<NullBodyResponse> apply(@NonNull
-                                                                    Observable<BaseResponseBean<NullBodyResponse>> upstream) {
-                return upstream.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers
-                        .io())
-                        .map(new NullResponseFuc())
-                        .onErrorResumeNext(new HttpResponseFunc<NullBodyResponse>())
-                        .compose(fragment.<NullBodyResponse>bindUntilEvent(FragmentEvent.DESTROY));
+            public ObservableSource<BaseResponseBean> apply(@NonNull Observable<BaseResponseBean> upstream) {
+                return upstream
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .map(new EmptyBodyFuc())
+                        .onErrorResumeNext(new HttpResponseFunc());
             }
         };
     }

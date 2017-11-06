@@ -5,8 +5,8 @@ import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ERROR;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.contract.ServiceContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -60,15 +60,15 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
     @Override
     public void sendPhoto(Map<String, RequestBody> photo) {
         api.sendServiceMsg(photo)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().sendMsgFail();
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
+                    public void onComplete(@NonNull BaseResponseBean response) {
                         presenter.getView().sendMsgSuc(null);
                     }
                 });
@@ -94,15 +94,15 @@ public class ServiceModelImpl extends BaseModel<ServicePresenterImpl> implements
     @Override
     public void resolved(String id) {
         api.resolved(id)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().getMsgFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
+                    public void onComplete(@NonNull BaseResponseBean response) {
                         presenter.getView().noNeed();
                     }
                 });

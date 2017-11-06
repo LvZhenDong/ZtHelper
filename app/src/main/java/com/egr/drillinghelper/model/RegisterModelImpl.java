@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.contract.RegisterContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -41,15 +41,15 @@ public class RegisterModelImpl extends BaseModel<RegisterPresenterImpl>
         options.put("code", verCode);
         options.put("password", pswd);
         api.register(options)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().registerFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
+                    public void onComplete(@NonNull BaseResponseBean response) {
                         presenter.getView().registerSuccess();
                     }
                 });

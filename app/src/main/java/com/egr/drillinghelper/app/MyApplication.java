@@ -11,10 +11,6 @@ import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.utils.EgrImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
 import com.pgyersdk.crash.PgyCrashManager;
 
 import cn.jpush.android.api.JPushInterface;
@@ -34,22 +30,10 @@ public class MyApplication extends MultiDexApplication {
 
         registerActivityLifecycle();
         initPgy();
-        initLogger();
         initImagePicker();
         initOther();
     }
 
-    private void initLogger() {
-        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .tag("kklv")
-                .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {
-            @Override
-            public boolean isLoggable(int priority, String tag) {
-                return BuildConfig.DEBUG;
-            }
-        });
-    }
 
     private void initPgy() {
         PgyCrashManager.register(this);

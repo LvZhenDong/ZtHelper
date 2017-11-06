@@ -4,9 +4,9 @@ import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,6 @@ public class MyCookieManager {
             cookieManager.setCookie(url, cookie);
         }
         CookieSyncManager.getInstance().sync();
-        Logger.i(url + "----------------->" + cookieManager.getCookie(url));
     }
 
     /**
@@ -76,6 +75,6 @@ public class MyCookieManager {
         CookieSyncManager.getInstance().sync();
         boolean result = MySharePreferencesManager.getInstance().remove(MyConstants.TAG_COOKIE);
         if (!result)
-            Logger.e("clean cookie fail");
+            L.e("clean cookie fail");
     }
 }

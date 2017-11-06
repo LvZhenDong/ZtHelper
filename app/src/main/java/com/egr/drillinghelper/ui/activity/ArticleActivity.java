@@ -1,25 +1,20 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Article;
-import com.egr.drillinghelper.common.MyConstants;
 import com.egr.drillinghelper.contract.ArticleContract;
 import com.egr.drillinghelper.presenter.ArticlePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.StringUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;
-
-import static com.egr.drillinghelper.common.MyConstants.PATH;
 
 /**
  * author lzd

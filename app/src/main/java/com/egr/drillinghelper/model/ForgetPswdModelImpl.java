@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.contract.ForgetPswdContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -39,15 +39,15 @@ public class ForgetPswdModelImpl extends BaseModel<ForgetPswdPresenterImpl>
         options.put("code", code);
         options.put("password", pswd);
         api.forget(options)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().forgetPswdFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
+                    public void onComplete(@NonNull BaseResponseBean response) {
                         presenter.getView().forgetPswdSuccess();
                     }
                 });

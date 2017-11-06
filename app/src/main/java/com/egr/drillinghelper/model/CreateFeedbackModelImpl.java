@@ -3,15 +3,10 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.CreateFeedbackResponse;
 import com.egr.drillinghelper.bean.response.Feedback;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
-import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.contract.CreateFeedbackContract;
-import com.egr.drillinghelper.contract.SearchContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
-import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.CreateFeedbackPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
@@ -21,8 +16,6 @@ import java.util.Map;
 
 import io.reactivex.annotations.NonNull;
 import okhttp3.RequestBody;
-
-import static com.pgyersdk.views.b.p;
 
 /**
  * author lzd

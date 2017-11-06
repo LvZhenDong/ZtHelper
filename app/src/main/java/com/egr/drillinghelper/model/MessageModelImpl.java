@@ -4,9 +4,8 @@ import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.bean.base.BasePage;
-import com.egr.drillinghelper.bean.response.KnowCatalog;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.Message;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -15,8 +14,6 @@ import com.egr.drillinghelper.presenter.MessagePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import io.reactivex.annotations.NonNull;
-
-import static com.egr.drillinghelper.factory.TransformersFactory.commonTransformer;
 
 /**
  * author lzd
@@ -52,15 +49,15 @@ public class MessageModelImpl extends BaseModel<MessagePresenterImpl> implements
     @Override
     public void deleteMsg(String id) {
         api.deleteMsg(id)
-                .compose(TransformersFactory.<NullBodyResponse>nullBodyTransformer((BaseMVPActivity)presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity)presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().deleteMsgFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse data) {
+                    public void onComplete(@NonNull BaseResponseBean data) {
                         presenter.getView().deleteMsgSuccess();
                     }
                 });

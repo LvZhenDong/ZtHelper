@@ -9,11 +9,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.api.error.EObserver;
-import com.egr.drillinghelper.api.error.ResponseThrowable;
 import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.response.Message;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -24,12 +21,11 @@ import com.egr.drillinghelper.ui.activity.ServiceActivity;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
+import com.egr.drillinghelper.utils.L;
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
-import io.reactivex.annotations.NonNull;
 
 /**
  * author lzd
@@ -44,7 +40,7 @@ public class AppReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String id = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-            Logger.i("极光注册成功 code:" + id);
+            L.i("极光注册成功 code:" + id);
             UserManager.getInstance().setJPushId(id);
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             sendToNotification(context, bundle);
@@ -55,7 +51,7 @@ public class AppReceiver extends BroadcastReceiver {
 
     private void sendToNotification(Context context, Bundle bundle) {
         String string = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-        Logger.i("接受到推送消息:" + string);
+        L.i("接受到推送消息:" + string);
         Message message = new Gson().fromJson(string, Message.class);
         if(!UserManager.getInstance().isLogined() ||
                 !TextUtils.equals(UserManager.getInstance().getUserId(),message.getUserId()))return;
@@ -119,18 +115,7 @@ public class AppReceiver extends BroadcastReceiver {
     private void readLoginConflictMsg(String messageId){
         APIServiceFactory.getInstance().createService()
                 .readMsg(messageId)
-                .compose(TransformersFactory.<NullBodyResponse>nullBodyTransformer())
-                .subscribe(new EObserver<NullBodyResponse>() {
-                    @Override
-                    public void onError(ResponseThrowable e, String eMsg) {
-
-                    }
-
-                    @Override
-                    public void onComplete(@NonNull NullBodyResponse data) {
-
-                    }
-                });
+                .compose(TransformersFactory.emptyTrans());
     }
 
     private void showMessage(Context context,Message message,String string){

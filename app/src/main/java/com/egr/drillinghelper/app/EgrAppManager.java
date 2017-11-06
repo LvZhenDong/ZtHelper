@@ -2,11 +2,8 @@ package com.egr.drillinghelper.app;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
-
-import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -269,7 +266,7 @@ public final class EgrAppManager {
             // 从操作系统中结束掉当前程序的进程
             android.os.Process.killProcess(android.os.Process.myPid());
         } catch (Exception e) {
-            Logger.e("Exit exception", e);
+
         }
     }
 }

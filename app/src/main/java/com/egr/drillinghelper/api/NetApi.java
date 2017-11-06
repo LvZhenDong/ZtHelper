@@ -10,7 +10,6 @@ import com.egr.drillinghelper.bean.response.Feedback;
 import com.egr.drillinghelper.bean.response.FeedbackDetail;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Message;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
 import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.bean.response.Share;
@@ -58,7 +57,7 @@ public interface NetApi {
      */
     @FormUrlEncoded
     @POST("user/register")
-    Observable<BaseResponseBean<NullBodyResponse>> register(@FieldMap HashMap<String, Object> options);
+    Observable<BaseResponseBean> register(@FieldMap HashMap<String, Object> options);
 
     /**
      * 忘记密码
@@ -68,7 +67,7 @@ public interface NetApi {
      */
     @FormUrlEncoded
     @POST("user/forget")
-    Observable<BaseResponseBean<NullBodyResponse>> forget(@FieldMap HashMap<String, Object> options);
+    Observable<BaseResponseBean> forget(@FieldMap HashMap<String, Object> options);
 
     /**
      * 获取验证码
@@ -200,7 +199,7 @@ public interface NetApi {
      * @return
      */
     @DELETE("user/logout")
-    Observable<BaseResponseBean<NullBodyResponse>> logout();
+    Observable<BaseResponseBean> logout();
 
     /**
      * 关于EGR
@@ -312,7 +311,7 @@ public interface NetApi {
      * @return
      */
     @DELETE("message/delete")
-    Observable<BaseResponseBean<NullBodyResponse>> deleteMsg(@Query("messageIds") String id);
+    Observable<BaseResponseBean> deleteMsg(@Query("messageIds") String id);
 
     /**
      * 将消息标记为已读
@@ -321,7 +320,7 @@ public interface NetApi {
      * @return
      */
     @PUT("message/read")
-    Observable<BaseResponseBean<NullBodyResponse>> readMsg(@Query("messageIds") String id); //多条用,隔开
+    Observable<BaseResponseBean> readMsg(@Query("messageIds") String id); //多条用,隔开
 
     /**
      * 获取分享内容
@@ -348,7 +347,7 @@ public interface NetApi {
      */
     @Multipart
     @POST("support/sendMsg")
-    Observable<BaseResponseBean<NullBodyResponse>> sendServiceMsg(@PartMap Map<String, RequestBody> photo);
+    Observable<BaseResponseBean> sendServiceMsg(@PartMap Map<String, RequestBody> photo);
 
     /**
      * 获取服务支持历史数据
@@ -374,7 +373,7 @@ public interface NetApi {
      * @return
      */
     @POST("support/resolved")
-    Observable<BaseResponseBean<NullBodyResponse>> resolved(@Query("id") String id);
+    Observable<BaseResponseBean> resolved(@Query("id") String id);
 
     /**
      * 未解决
