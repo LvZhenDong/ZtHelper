@@ -3,7 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
-import com.egr.drillinghelper.bean.response.NullBodyResponse;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.contract.PersonalContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.factory.TransformersFactory;
@@ -13,7 +13,6 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import java.util.Map;
 
-import io.reactivex.annotations.NonNull;
 import okhttp3.RequestBody;
 
 /**
@@ -31,16 +30,16 @@ public class PersonalModelImpl extends BaseModel<PersonalPresenterImpl> implemen
 
     @Override
     public void userPhoto(Map<String, RequestBody> photo) {
-        api.userPhoto(photo)
-                .compose(TransformersFactory.nullBodyTransformer((BaseMVPActivity) presenter.getView()))
-                .subscribe(new EObserver<NullBodyResponse>() {
+
+        api.userPhoto(photo).compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
                         presenter.getView().changeHeadFail(eMsg);
                     }
 
                     @Override
-                    public void onComplete(@NonNull NullBodyResponse response) {
+                    public void onComplete(BaseResponseBean data) {
                         presenter.changeHeadSuccess();
                     }
                 });

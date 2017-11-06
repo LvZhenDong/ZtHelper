@@ -134,7 +134,7 @@ public interface NetApi {
      */
     @Multipart
     @POST("user/photo")
-    Observable<BaseResponseBean<NullBodyResponse>> userPhoto(@PartMap Map<String, RequestBody> photo);
+    Observable<BaseResponseBean> userPhoto(@PartMap Map<String, RequestBody> photo);
 
     /**
      * 获取说明书cache
