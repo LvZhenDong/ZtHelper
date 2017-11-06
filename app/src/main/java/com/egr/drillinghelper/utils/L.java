@@ -18,7 +18,7 @@ public class L {
     private final static int V = 4;
     private final static int JSON = 5;
     private final static int JSON_INDENT = 2;
-    private static String TAG = "LOG";
+    private static String TAG = "EGR_LOG";
     private volatile static boolean DEBUG = true;
 
     private L() {
