@@ -99,6 +99,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.search);
         initSearchRl();
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         type = getIntent().getIntExtra(KEY_INTENT, MyConstants.SEARCH_TYPE_EXPLAIN);

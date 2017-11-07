@@ -43,6 +43,7 @@ public class GalleryActivity extends BaseActivity {
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.gallery);
         images = (ArrayList<String>) getIntent().getSerializableExtra(KEY_INTENT);
         initViewPager();
     }

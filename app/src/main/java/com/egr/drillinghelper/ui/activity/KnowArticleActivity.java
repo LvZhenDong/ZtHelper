@@ -26,6 +26,7 @@ public class KnowArticleActivity extends BaseActivity {
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.ask_knowledge_detail);
         setupActionBar(R.string.ask_knowledge_detail, true);
         setActionbarBackground(R.color.white);
 

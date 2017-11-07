@@ -59,6 +59,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.home_store);
         initSearchEt();
         initRv();
         presenter.getPartsCache();

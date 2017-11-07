@@ -118,13 +118,13 @@
     <string name="need"><u>需要</u></string>
     <string name="not_need"><u>不需要</u></string>
     <string name="not_need_hint">感谢您的反馈！</string>
-
-
-
-
-
-
-
+    <string name="gallery">查看图片</string>
+    <string name="home_explain">首页使用说明</string>
+    <string name="home_know">首页常见问题</string>
+    <string name="home_store">首页配件</string>
+    <string name="home_video">视频区</string>
+    <string name="home_service">服务支持</string>
+    <string name="home_my">个人中心</string>
 
 
 

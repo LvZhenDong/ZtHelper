@@ -30,6 +30,13 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--share sdk 结束-->
 
+    <!--Umeng start-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--Umeng end-->
+
     <!--极光推送 开始-->
     <permission
         android:name="com.egr.drillinghelper.permission.JPUSH_MESSAGE"
@@ -63,6 +70,10 @@
             android:value="6e882084179c0c627137af44fb6adad6" />
         <!--蒲公英 end-->
 
+        <!--Umeng start-->
+        <meta-data android:value="5a011615a40fa31903000181" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
+        <!--Umeng end-->
         <!--share sdk 开始-->
         <activity
             android:name="com.mob.tools.MobUIShell"

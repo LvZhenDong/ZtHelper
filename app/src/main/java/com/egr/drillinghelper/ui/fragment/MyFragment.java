@@ -24,7 +24,6 @@ import com.egr.drillinghelper.ui.widgets.ShareDialog;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.SharePreHelper;
-import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,8 +31,6 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
-
-import static com.egr.drillinghelper.ui.widgets.DialogHelper.openConfirmDialog;
 
 /**
  * author lzd
@@ -71,6 +68,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.home_my);
         mDialog = DialogHelper.openiOSPbDialog(getActivity(), getString(R.string.waiting));
 
         EgrRxBus.subscribe(this, String.class, new Consumer<String>() {

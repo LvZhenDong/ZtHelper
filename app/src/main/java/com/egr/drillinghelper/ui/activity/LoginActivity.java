@@ -61,6 +61,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.login);
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();

@@ -32,6 +32,7 @@ public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.about_egr);
         setupActionBar(R.string.about_egr, true);
         setActionbarBackground(R.color.white);
 

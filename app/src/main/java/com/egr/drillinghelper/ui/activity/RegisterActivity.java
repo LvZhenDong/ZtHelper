@@ -14,7 +14,6 @@ import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
 
@@ -50,6 +49,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.register);
         setupActionBar(R.string.register, true);
         setActionbarBackground(R.color.white);
 

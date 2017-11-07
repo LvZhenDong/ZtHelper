@@ -12,7 +12,6 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.FeedbackHistoryContract;
 import com.egr.drillinghelper.presenter.FeedbackHistoryPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.FeedbackHistoryFragmentAdapter;
-import com.egr.drillinghelper.ui.adapter.HomeFragmentAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 
 import butterknife.BindView;
@@ -45,6 +44,7 @@ public class FeedbackHistoryActivity extends BaseMVPActivity<FeedbackHistoryCont
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.feedback_histroy);
         setupActionBar(R.string.feedback_histroy, true);
         setActionbarBackground(R.color.white);
 

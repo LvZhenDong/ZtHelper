@@ -36,6 +36,7 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.my_message);
         setupActionBar(R.string.my_message, true);
         setActionbarBackground(R.color.white);
 

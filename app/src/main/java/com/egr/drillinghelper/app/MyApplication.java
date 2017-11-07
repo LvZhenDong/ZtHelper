@@ -12,6 +12,7 @@ import com.egr.drillinghelper.utils.EgrImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 import com.pgyersdk.crash.PgyCrashManager;
+import com.umeng.commonsdk.UMConfigure;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.magicbeans.android.ipmanager.utils.MBIPUtils;
@@ -32,6 +33,7 @@ public class MyApplication extends MultiDexApplication {
         initPgy();
         initImagePicker();
         initOther();
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);
     }
 
 

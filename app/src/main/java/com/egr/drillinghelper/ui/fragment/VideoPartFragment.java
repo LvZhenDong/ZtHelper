@@ -2,12 +2,7 @@ package com.egr.drillinghelper.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
@@ -28,7 +23,6 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -61,6 +55,7 @@ public class VideoPartFragment extends BaseMVPFragment<VideoPartContract.View,
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.home_video);
         initSearchEt();
         mAdapter = new VideoAdapter(getActivity());
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);

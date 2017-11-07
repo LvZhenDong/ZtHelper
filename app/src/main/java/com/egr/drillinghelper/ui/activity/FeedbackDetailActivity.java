@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.contract.AboutEgrContract;
 import com.egr.drillinghelper.contract.FeedbackDetailContract;
-import com.egr.drillinghelper.presenter.AboutEgrPresenterImpl;
 import com.egr.drillinghelper.presenter.FeedbackDetailPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
@@ -34,6 +32,7 @@ public class FeedbackDetailActivity extends BaseMVPActivity<FeedbackDetailContra
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.feedback_detail);
         setupActionBar(R.string.feedback_detail, true);
         setActionbarBackground(R.color.white);
 

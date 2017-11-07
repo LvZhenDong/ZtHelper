@@ -62,6 +62,7 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.home_explain);
         initSearchEt();
         initRv();
         presenter.getExplainCache();

@@ -44,6 +44,7 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.ask_knowledge);
         setupActionBar(R.string.ask_knowledge, true);
         setActionbarBackground(R.color.white);
 

@@ -20,12 +20,12 @@ allprojects {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.egr.drillinghelper"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 16
+        targetSdkVersion 25
         versionCode 9
         versionName "1.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -56,7 +56,6 @@ android {
                             "egr_${defaultConfig.versionName}_${buildTime()}.apk")
                 }
             }
-
 
         }
 
@@ -135,8 +134,6 @@ dependencies {
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
     //    like iOS progress dialog
     compile 'cc.cloudist.acplibrary:library:1.2.1'
-    //    ImagePicker
-//    compile 'com.lzy.widget:imagepicker:0.6.1'
     //    A powerful, flexible and easy to use Video and Image compression library for Android.
     compile 'com.iceteck.silicompressorr:silicompressor:2.0'
     //    IP修改器

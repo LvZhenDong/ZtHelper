@@ -7,6 +7,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -96,6 +98,15 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
         TODO(view, savedInstanceState);
     }
 
+    String mUmengAnalyze;
+
+    public void setUmengAnalyze(String str) {
+        this.mUmengAnalyze = str;
+    }
+
+    public void setUmengAnalyze(int strId){
+        this.mUmengAnalyze=getString(strId);
+    }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -124,7 +135,12 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
 
     @Override
     public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
-
+        if(TextUtils.isEmpty(mUmengAnalyze))return;
+        if(isVisibleToUser){
+            MobclickAgent.onPageStart(mUmengAnalyze);
+        }else {
+            MobclickAgent.onPageEnd(mUmengAnalyze);
+        }
     }
 
     @Override

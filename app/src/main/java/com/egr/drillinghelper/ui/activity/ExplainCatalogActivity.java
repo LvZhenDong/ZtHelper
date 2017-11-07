@@ -1,6 +1,5 @@
 package com.egr.drillinghelper.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.cloudist.acplibrary.ACProgressFlower;
-
-import static android.R.attr.id;
-import static com.pgyersdk.c.a.m;
 
 /**
  * author lzd
@@ -43,6 +39,7 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.explain);
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
 

@@ -57,6 +57,7 @@ public class CreateFeedbackActivity extends BaseMVPActivity<CreateFeedbackContra
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.feedback);
         setupActionBar(R.string.feedback, true);
         setActionbarBackground(R.color.white);
 

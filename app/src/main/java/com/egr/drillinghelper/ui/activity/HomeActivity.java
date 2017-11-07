@@ -33,6 +33,7 @@ import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.PhoneUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.shelwee.update.UpdateHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -241,6 +242,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             mExitTime = System.currentTimeMillis();// 更新mExitTime
         } else {// 否则退出程序
             finish();
+            MobclickAgent.onKillProcess(this);
             System.exit(0);
         }
     }

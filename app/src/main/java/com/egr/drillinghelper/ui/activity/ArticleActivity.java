@@ -35,6 +35,7 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.explain);
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
 

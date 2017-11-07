@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.ui.widgets.swipeback.SwipeBackActivity;
 import com.egr.drillinghelper.utils.DensityUtils;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -47,6 +49,32 @@ public abstract class BaseActivity extends SwipeBackActivity {
         actionBar = getSupportActionBar();
         unbinder = ButterKnife.bind(this);
         setOthers(savedInstanceState);
+    }
+
+    String mUmengAnalyze;
+
+    public void setUmengAnalyze(String str) {
+        this.mUmengAnalyze = str;
+    }
+
+    public void setUmengAnalyze(int strId){
+        this.mUmengAnalyze=getString(strId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(TextUtils.isEmpty(mUmengAnalyze))return;
+        MobclickAgent.onPageStart(mUmengAnalyze);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(TextUtils.isEmpty(mUmengAnalyze))return;
+        MobclickAgent.onPageEnd(mUmengAnalyze);
+        MobclickAgent.onPause(this);
     }
 
     protected void setOthers(Bundle savedInstanceState) {

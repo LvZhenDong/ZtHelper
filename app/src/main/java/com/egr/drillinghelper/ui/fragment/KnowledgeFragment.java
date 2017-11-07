@@ -61,6 +61,7 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
 
     @Override
     public void TODO(View view, Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.home_know);
         initSearchEt();
         initRv();
         presenter.getKnowCache();

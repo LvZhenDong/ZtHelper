@@ -41,6 +41,7 @@ public class PartsDetailActivity extends BaseActivity {
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.parts_detail);
         setupActionBar(R.string.parts_detail, true);
         setActionbarBackground(R.color.white);
 

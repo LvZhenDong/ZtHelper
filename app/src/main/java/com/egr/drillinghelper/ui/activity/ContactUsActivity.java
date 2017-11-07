@@ -72,6 +72,7 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.contact_us);
         setupActionBar(R.string.contact_us, true);
         setActionbarBackground(R.color.white);
 

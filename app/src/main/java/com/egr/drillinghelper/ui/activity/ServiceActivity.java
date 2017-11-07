@@ -93,6 +93,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.go_feedback);
         setupActionBar(R.string.go_feedback, true);
         setActionbarBackground(R.color.white);
 

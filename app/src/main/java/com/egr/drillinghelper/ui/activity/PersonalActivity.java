@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +59,7 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        setUmengAnalyze(R.string.personal);
         setupActionBar(R.string.personal, true);
         setActionbarBackground(R.color.white);
 
