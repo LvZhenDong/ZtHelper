@@ -138,8 +138,8 @@ dependencies {
     compile 'com.iceteck.silicompressorr:silicompressor:2.0'
     //    IP修改器
     compile 'com.github.Rickwan:IPManagerUtils:V1.0.7'
-    //    CircleImageView
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    //    RoundedImageView
+    compile 'com.makeramen:roundedimageview:2.3.0'
     //    BottomDialog
     compile 'me.shaohui:bottomdialog:1.1.9'
     //    极光推送

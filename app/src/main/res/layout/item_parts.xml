@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/CvList"
-    card_view:cardElevation="3dp">
+    app:cardPreventCornerOverlap="false"
+    app:cardElevation="3dp">
 
     <RelativeLayout
         android:id="@+id/rl_mall"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/bg_actionbar"
+        android:background="@drawable/bg_radius_actionbar"
         android:visibility="gone">
 
         <TextView
@@ -38,15 +39,15 @@
         android:id="@+id/ll_parts"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/bg_white_radius_selector"
         android:orientation="vertical">
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_img"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/bg_white_top_radius"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:riv_corner_radius_top_left="@dimen/radius"
+            app:riv_corner_radius_top_right="@dimen/radius"/>
 
         <TextView
             android:id="@+id/tv_title"

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,6 @@ import com.egr.drillinghelper.utils.SharePreHelper;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cc.cloudist.acplibrary.ACProgressFlower;
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -53,7 +53,7 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.iv_head)
-    CircleImageView ivHead;
+    ImageView ivHead;
     private ACProgressFlower mDialog;
 
     @Override
