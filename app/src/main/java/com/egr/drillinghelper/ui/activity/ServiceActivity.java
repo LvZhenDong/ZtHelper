@@ -36,6 +36,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -143,7 +144,9 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 ServiceMsg serviceMsg=mAdapter.getDataList().get(pos);
                 switch (serviceMsg.getType()){
                     case ServiceMsg.TYPE_SEND_TEXT:
-                        presenter.sendMsg(serviceMsg.getMsg());
+                        ServiceMsg.ChatBean chatBean = new Gson().fromJson(serviceMsg.getMsg(), ServiceMsg
+                                .ChatBean.class);
+                        presenter.sendMsg(chatBean.getMessage());
                         break;
                     case ServiceMsg.TYPE_SEND_IMG:
                         presenter.sendPhoto(serviceMsg.getPictureList().get(0));
