@@ -191,7 +191,7 @@
         <!--极光推送 结束-->
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:theme="@style/NoActionBar"
+            android:theme="@style/NoActionBar.DisableSwipeBack"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -202,7 +202,8 @@
         <activity android:name=".ui.activity.ForgetPswdActivity" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:theme="@style/AppTheme.DisableSwipeBack"/>
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity
             android:name=".ui.activity.CreateFeedbackActivity"

@@ -61,7 +61,6 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        setUmengAnalyze(R.string.login);
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
@@ -71,8 +70,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
                 return;
             }
         }
-        setSwipeBackEnabled(false);//设置不可右滑关闭
-
+        setUmengAnalyze(R.string.login);
+        disableSwipeBack();
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 

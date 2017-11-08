@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -19,15 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.ui.widgets.swipeback.SwipeBackActivity;
 import com.egr.drillinghelper.utils.DensityUtils;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
     public final static String KEY_INTENT = "intent data";
     public final static String KEY_INTENT_BOOLEAN = "intent data boolean";
 
@@ -45,6 +47,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SwipeBackHelper.onCreate(this);
         setContentView(returnLayoutID());
         actionBar = getSupportActionBar();
         unbinder = ButterKnife.bind(this);
@@ -59,6 +62,18 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     public void setUmengAnalyze(int strId){
         this.mUmengAnalyze=getString(strId);
+    }
+
+    /**
+     * 关闭左滑返回上级
+     */
+    public void disableSwipeBack(){
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
+    }
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
     }
 
     @Override
@@ -449,6 +464,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
         afterDestroy();
     }
 
