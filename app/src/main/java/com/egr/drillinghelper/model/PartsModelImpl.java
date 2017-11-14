@@ -68,6 +68,7 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
                                     Store mall = new Store();
                                     mall.setUrl(item.getUrl());
                                     mall.setName(item.getName());
+                                    mall.setPicture(item.getPicture());
                                     mall.setInformation(item.getDescription());
                                     mall.setId(PartsAdapter.INTO_MALL);
                                     if (list != null)

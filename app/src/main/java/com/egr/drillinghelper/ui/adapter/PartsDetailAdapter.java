@@ -37,7 +37,7 @@ public class PartsDetailAdapter extends BaseListAdapter<StoreDetail.Parts, Parts
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         StoreDetail.Parts item = getDataList().get(position);
-        holder.tvItemQuestion.setText(item.getNo() + "." + item.getName());
+        holder.tvItemQuestion.setText(item.getName());
     }
 
     private void getDetail(int position) {
