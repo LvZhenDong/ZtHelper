@@ -191,7 +191,7 @@
         <!--极光推送 结束-->
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:theme="@style/NoActionBar.DisableSwipeBack"
+            android:theme="@style/NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
