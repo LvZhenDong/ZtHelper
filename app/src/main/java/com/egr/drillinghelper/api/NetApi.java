@@ -14,6 +14,7 @@ import com.egr.drillinghelper.bean.response.Reply;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.bean.response.StoreDetail;
 import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.bean.response.UserInfo;
 import com.egr.drillinghelper.bean.response.Video;
@@ -32,6 +33,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface NetApi {
@@ -102,7 +104,7 @@ public interface NetApi {
      * @return
      */
     @GET("store/more")
-    Observable<BaseResponseBean<StoreMore>> getStoreMore();
+    Observable<BaseResponseBean<List<StoreMore>>> getStoreMore();
 
     /**
      * 配件列表
@@ -114,6 +116,8 @@ public interface NetApi {
     Observable<BaseResponseBean<BasePage<Store>>> storeList(@Query("keyword") String keyword,
                                                             @Query("current") String current);
 
+    @GET("store/product/{id}")
+    Observable<BaseResponseBean<StoreDetail>> getStoreDetail(@Path("id") String id);
     /**
      * 配件列表Cache
      *

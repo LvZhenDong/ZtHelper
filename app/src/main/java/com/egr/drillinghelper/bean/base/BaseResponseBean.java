@@ -58,6 +58,7 @@ public class BaseResponseBean<T> implements Serializable {
     }
 
     public boolean isSuccess() {
-        return "200".equals(code);
+//        return "200".equals(code);
+        return status;
     }
 }

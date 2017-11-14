@@ -25,6 +25,24 @@ public class StoreMore {
     private String createTime;
     @SerializedName("updatetime")
     private String updateTime;
+    private String description;
+    private String picture;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 
     public String getId() {
         return id;

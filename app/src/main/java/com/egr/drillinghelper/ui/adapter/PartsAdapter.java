@@ -46,16 +46,12 @@ public class PartsAdapter extends BaseListAdapter<Store,
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         Store item = getDataList().get(position);
-        if (INTO_MALL.equals(item.getId())) { //进入商城的处理
-            holder.rlMall.setVisibility(View.VISIBLE);
-            holder.llParts.setVisibility(View.GONE);
-        } else {
-            holder.rlMall.setVisibility(View.GONE);
-            holder.llParts.setVisibility(View.VISIBLE);
-            holder.tvTitle.setText(item.getName());
-            holder.tvInfo.setText(item.getInformation());
-            GlideUtils.load(item.getPicture(), holder.ivImg);
-        }
+        holder.rlMall.setVisibility(View.GONE);
+        holder.llParts.setVisibility(View.VISIBLE);
+        holder.tvTitle.setText(item.getName());
+        holder.tvInfo.setText(item.getInformation());
+        GlideUtils.load(item.getPicture(), holder.ivImg);
+
 
     }
 

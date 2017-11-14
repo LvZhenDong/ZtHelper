@@ -46,30 +46,39 @@
                 android:textColor="@color/tv999"
                 android:textSize="@dimen/text_size_tv" />
 
-            <TextView
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_parts"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingLeft="@dimen/padding_vertical"
-                android:paddingRight="@dimen/padding_vertical"
-                android:text="@string/parts_explain"
-                android:textColor="@color/tv666"
-                android:textSize="@dimen/text_size_tv" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="@dimen/padding_vertical"
+                    android:paddingRight="@dimen/padding_vertical"
+                    android:text="@string/parts_explain"
+                    android:textColor="@color/tv666"
+                    android:textSize="@dimen/text_size_tv" />
 
-            <ImageView
-                android:id="@+id/iv_explain"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="@dimen/padding_vertical"
-                android:layout_marginRight="@dimen/padding_vertical"
-                android:layout_marginTop="10dp"
-                android:scaleType="centerCrop" />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_parts"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/padding_vertical"
+                    android:layout_marginRight="@dimen/padding_vertical"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="centerCrop" />
 
 
-            <com.egr.drillinghelper.ui.widgets.RvInScrollView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <com.egr.drillinghelper.ui.widgets.RvInScrollView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

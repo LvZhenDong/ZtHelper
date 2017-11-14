@@ -1,7 +1,6 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.bean.response.Feedback;
-import com.egr.drillinghelper.ui.activity.FeedbackDetailActivity;
-import com.egr.drillinghelper.ui.base.BaseActivity;
+import com.egr.drillinghelper.bean.response.StoreDetail;
+import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 
 import butterknife.BindView;
@@ -24,7 +22,7 @@ import butterknife.ButterKnife;
  * 类描述：
  */
 
-public class PartsDetailAdapter extends BaseListAdapter<Feedback, PartsDetailAdapter.ViewHolder> {
+public class PartsDetailAdapter extends BaseListAdapter<StoreDetail.Parts, PartsDetailAdapter.ViewHolder> {
 
     public PartsDetailAdapter(Context context) {
         super(context);
@@ -38,13 +36,13 @@ public class PartsDetailAdapter extends BaseListAdapter<Feedback, PartsDetailAda
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        holder.tvItemQuestion.setText(getDataList().get(position).getQuestion());
+        StoreDetail.Parts item = getDataList().get(position);
+        holder.tvItemQuestion.setText(item.getNo() + "." + item.getName());
     }
 
     private void getDetail(int position) {
-        Intent intent = new Intent(mContext, FeedbackDetailActivity.class);
-        intent.putExtra(BaseActivity.KEY_INTENT, getDataList().get(position).getId());
-        mContext.startActivity(intent);
+        StoreDetail.Parts item = getDataList().get(position);
+         CommBrowserActivity.start(mContext, item.getUrl(), item.getName());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

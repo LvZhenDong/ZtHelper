@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/tv"
         style="@style/TvMy"
+        android:layout_marginLeft="0dp"
         android:singleLine="true" />
 
     <View
