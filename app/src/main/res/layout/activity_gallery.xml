@@ -5,12 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.github.ybq.parallaxviewpager.ParallaxViewPager
+    <!--<com.github.ybq.parallaxviewpager.ParallaxViewPager-->
+        <!--android:id="@+id/viewpager"-->
+        <!--app:interpolator="@anim/decelerate_interpolator"-->
+        <!--app:mode="right_overlay"-->
+        <!--app:outset="62%"-->
+        <!--app:shadow_width="30dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+    <ru.truba.touchgallery.GalleryWidget.GalleryViewPager
         android:id="@+id/viewpager"
-        app:interpolator="@anim/decelerate_interpolator"
-        app:mode="right_overlay"
-        app:outset="62%"
-        app:shadow_width="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
 </LinearLayout>
