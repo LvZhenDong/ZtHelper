@@ -22,9 +22,6 @@ import android.view.MotionEvent;
 public class WrapMotionEvent {
     protected MotionEvent event;
 
-
-
-
     protected WrapMotionEvent(MotionEvent event) {
         this.event = event;
     }
