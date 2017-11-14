@@ -228,7 +228,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".ui.activity.GalleryActivity"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/NoActionBar.DisableSwipeBack" />
 
         <activity
             android:name=".hybrid.CommBrowserActivity"
