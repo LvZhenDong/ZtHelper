@@ -19,9 +19,7 @@ package ru.truba.touchgallery.TouchView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.util.AttributeSet;
 import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
@@ -44,7 +42,6 @@ public class UrlTouchImageView extends RelativeLayout {
         super(ctx);
         mContext = ctx;
         init();
-
     }
     public UrlTouchImageView(Context ctx, AttributeSet attrs)
     {
@@ -66,9 +63,9 @@ public class UrlTouchImageView extends RelativeLayout {
     {
         RequestOptions requestOptions = new RequestOptions();
         mImageView.setScaleType(ScaleType.CENTER);
-        Drawable drawable=getResources().getDrawable(R.drawable.bg_placeholder);
-        mImageView.setImageBitmap(drawableToBitmap(drawable));
+        mImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.bg_placeholder));
         Glide.with(getContext().getApplicationContext())
+                .asBitmap()
                 .load(imageUrl)
                 .apply(requestOptions
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -76,35 +73,12 @@ public class UrlTouchImageView extends RelativeLayout {
                 .into(new GlideTarget());
     }
 
-    class GlideTarget extends SimpleTarget<Drawable>{
+    class GlideTarget extends SimpleTarget<Bitmap>{
         @Override
-        public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-            Bitmap bitmap= drawableToBitmap(resource);
+        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
             mImageView.setScaleType(ScaleType.MATRIX);
-            mImageView.setImageBitmap(bitmap);
+            mImageView.setImageBitmap(resource);
         }
-    }
-
-    public static Bitmap drawableToBitmap (Drawable drawable) {
-        Bitmap bitmap = null;
-
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
-            }
-        }
-
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
     }
     
     public void setScaleType(ScaleType scaleType) {

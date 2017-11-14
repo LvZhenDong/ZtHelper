@@ -91,6 +91,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/selector_home_rb_text</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TvHome">
