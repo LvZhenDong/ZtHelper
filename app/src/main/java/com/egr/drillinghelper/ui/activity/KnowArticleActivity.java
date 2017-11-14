@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.ui.base.BaseActivity;
+import com.egr.drillinghelper.contract.KnowArticleContract;
+import com.egr.drillinghelper.presenter.KnowArticlePresenterImpl;
+import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.StringUtils;
 
 import butterknife.BindView;
@@ -15,7 +17,8 @@ import butterknife.BindView;
  * 类描述：知识问答详情
  */
 
-public class KnowArticleActivity extends BaseActivity {
+public class KnowArticleActivity extends BaseMVPActivity<KnowArticleContract.View,KnowArticlePresenterImpl>
+implements KnowArticleContract.View{
     @BindView(R.id.wv)
     WebView webView;
 
@@ -42,5 +45,13 @@ public class KnowArticleActivity extends BaseActivity {
             content = StringUtils.updateHtmlTag(content, "img", "src");
         }
         webView.loadDataWithBaseURL(null,content,null,"utf-8",null);
+
+        //单纯为了后台统计用户查看问题次数
+        presenter.getContent(getIntent().getStringExtra("id"));
+    }
+
+    @Override
+    public KnowArticlePresenterImpl createPresenter() {
+        return new KnowArticlePresenterImpl();
     }
 }

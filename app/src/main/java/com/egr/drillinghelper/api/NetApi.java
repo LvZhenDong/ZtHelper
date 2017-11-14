@@ -185,6 +185,14 @@ public interface NetApi {
     Observable<BaseResponseBean<List<KnowCatalog>>> knowCatalog(@Query("id") String id);
 
     /**
+     * 知识问答详情
+     * @param id
+     * @return
+     */
+    @GET("know/getKnowList")
+    Observable<BaseResponseBean> getKnowContent(@Query("id") String id);
+
+    /**
      * 文章详情
      *
      * @param id

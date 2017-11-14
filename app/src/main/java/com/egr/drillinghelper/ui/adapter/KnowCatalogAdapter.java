@@ -57,6 +57,7 @@ public class KnowCatalogAdapter extends BaseListAdapter<KnowCatalog,
             Intent intent = new Intent(mContext, KnowArticleActivity.class);
             intent.putExtra(BaseActivity.KEY_INTENT, item.getContent());
             intent.putExtra(BaseActivity.KEY_INTENT_BOOLEAN, isCache);
+            intent.putExtra("id",item.getId());
             mContext.startActivity(intent);
         }
     }
