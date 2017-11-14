@@ -118,6 +118,10 @@ public interface NetApi {
 
     @GET("store/product/{id}")
     Observable<BaseResponseBean<StoreDetail>> getStoreDetail(@Path("id") String id);
+
+    @PUT("store/product/parts/{id}")
+    Observable<BaseResponseBean> getProductParts(@Path("id") String id);
+
     /**
      * 配件列表Cache
      *
@@ -190,6 +194,7 @@ public interface NetApi {
 
     /**
      * 知识问答详情
+     *
      * @param id
      * @return
      */
@@ -374,6 +379,7 @@ public interface NetApi {
 
     /**
      * 检查是否有未读的服务消息
+     *
      * @return
      */
     @GET("support/checkRead")
@@ -381,6 +387,7 @@ public interface NetApi {
 
     /**
      * 已解决
+     *
      * @param id
      * @return
      */
@@ -389,6 +396,7 @@ public interface NetApi {
 
     /**
      * 未解决
+     *
      * @param id
      * @return
      */

@@ -22,4 +22,9 @@ public class PartsDetailPresenterImpl extends BasePresenter<PartsDetailContract.
     public void getContent(String id) {
         mModel.getContent(id);
     }
+
+    @Override
+    public void getParts(String id) {
+        mModel.getParts(id);
+    }
 }

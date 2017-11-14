@@ -217,9 +217,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
                 break;
             case MyConstants.SEARCH_TYPE_PARTS: //配件
                 Store store = mParts.get(position);
-                Intent intentPart=new Intent(this, PartsDetailActivity.class);
-                intentPart.putExtra(BaseActivity.KEY_INTENT,store);
-                startActivity(intentPart);
+                PartsDetailActivity.start(this,store.getId());
                 break;
         }
     }

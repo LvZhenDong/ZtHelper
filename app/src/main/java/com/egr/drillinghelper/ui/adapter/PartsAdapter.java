@@ -1,7 +1,6 @@
 package com.egr.drillinghelper.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Store;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
 import com.egr.drillinghelper.ui.activity.PartsDetailActivity;
-import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseListAdapter;
 import com.egr.drillinghelper.utils.GlideUtils;
 
@@ -61,9 +59,7 @@ public class PartsAdapter extends BaseListAdapter<Store,
         if (INTO_MALL.equals(item.getId())) { //商城
             CommBrowserActivity.start(mContext, item.getUrl(), item.getName());
         } else {
-            Intent intent = new Intent(mContext, PartsDetailActivity.class);
-            intent.putExtra(BaseActivity.KEY_INTENT, item);
-            mContext.startActivity(intent);
+            PartsDetailActivity.start(mContext,item.getId());
         }
     }
 

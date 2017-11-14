@@ -43,6 +43,8 @@ public class PartsDetailAdapter extends BaseListAdapter<StoreDetail.Parts, Parts
     private void getDetail(int position) {
         StoreDetail.Parts item = getDataList().get(position);
          CommBrowserActivity.start(mContext, item.getUrl(), item.getName());
+         if(mListener != null)
+             mListener.onGetParts(item.getId());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -62,5 +64,13 @@ public class PartsDetailAdapter extends BaseListAdapter<StoreDetail.Parts, Parts
         public void onClick(View v) {
             getDetail(getAdapterPosition());
         }
+    }
+
+    OnGetPartsListener mListener;
+    public void setOnGetPartsListener(OnGetPartsListener listener){
+        mListener=listener;
+    }
+    public interface OnGetPartsListener{
+        void onGetParts(String id);
     }
 }

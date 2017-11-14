@@ -14,6 +14,8 @@ import com.egr.drillinghelper.mvp.IView;
 public interface PartsDetailContract {
     interface Model extends IModel {
         void getContent(String id);
+
+        void getParts(String id);
     }
 
     interface View extends IView {
@@ -23,5 +25,7 @@ public interface PartsDetailContract {
 
     interface Presenter extends IPresenter<View> {
         void getContent(String id);
+
+        void getParts(String id);
     }
 }

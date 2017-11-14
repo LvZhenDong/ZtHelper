@@ -3,6 +3,7 @@ package com.egr.drillinghelper.model;
 import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.api.error.EObserver;
 import com.egr.drillinghelper.api.error.ResponseThrowable;
+import com.egr.drillinghelper.bean.base.BaseResponseBean;
 import com.egr.drillinghelper.bean.response.StoreDetail;
 import com.egr.drillinghelper.contract.PartsDetailContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -41,4 +42,22 @@ public class PartsDetailModelImpl extends BaseModel<PartsDetailPresenterImpl> im
                     }
                 });
     }
+
+    @Override
+    public void getParts(String id) {
+        api.getProductParts(id)
+                .compose(TransformersFactory.emptyTrans((BaseMVPActivity) presenter.getView()))
+                .subscribe(new EObserver<BaseResponseBean>() {
+                    @Override
+                    public void onError(ResponseThrowable e, String eMsg) {
+
+                    }
+
+                    @Override
+                    public void onComplete(@NonNull BaseResponseBean data) {
+                    }
+                });
+    }
+
+
 }
