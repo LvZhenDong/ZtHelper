@@ -10,14 +10,12 @@ import com.egr.drillinghelper.contract.KnowCatalogContract;
 import com.egr.drillinghelper.presenter.KnowCatalogPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.KnowCatalogAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -30,7 +28,6 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
     @BindView(R.id.rv_catalog)
     RecyclerView rvCatalog;
 
-    private ACProgressFlower mDialog;
     private KnowCatalogAdapter mAdapter;
 
     @Override
@@ -48,7 +45,6 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
         setupActionBar(R.string.ask_knowledge, true);
         setActionbarBackground(R.color.white);
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);
 
         mAdapter=new KnowCatalogAdapter(this);

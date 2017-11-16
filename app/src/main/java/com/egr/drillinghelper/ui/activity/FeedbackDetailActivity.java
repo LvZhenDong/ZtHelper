@@ -7,11 +7,9 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.FeedbackDetailContract;
 import com.egr.drillinghelper.presenter.FeedbackDetailPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -23,7 +21,6 @@ public class FeedbackDetailActivity extends BaseMVPActivity<FeedbackDetailContra
         FeedbackDetailPresenterImpl> implements FeedbackDetailContract.View {
     @BindView(R.id.wv)
     WebView webView;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -38,7 +35,6 @@ public class FeedbackDetailActivity extends BaseMVPActivity<FeedbackDetailContra
 
         String id=getIntent().getStringExtra(KEY_INTENT);
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         if (!mDialog.isShowing())
             mDialog.show();

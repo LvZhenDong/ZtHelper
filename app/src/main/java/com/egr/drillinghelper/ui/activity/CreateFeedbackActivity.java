@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 import static com.lzy.imagepicker.ui.ImageGridActivity.EXTRAS_IMAGES;
 
@@ -48,7 +47,6 @@ public class CreateFeedbackActivity extends BaseMVPActivity<CreateFeedbackContra
     RecyclerView rvImg;
 
     CreateFeedbackImgAdapter mAdapter;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {

@@ -17,6 +17,9 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 
 public class DialogHelper {
 
+    public static ACProgressFlower openiOSPbDialog(Context context) {
+        return openiOSPbDialog(context, context.getString(R.string.waiting));
+    }
     /**
      * 开启类似iOS HDPB dialog
      *

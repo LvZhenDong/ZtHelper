@@ -7,11 +7,9 @@ import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.contract.AboutEgrContract;
 import com.egr.drillinghelper.presenter.AboutEgrPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -23,7 +21,6 @@ public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
         AboutEgrPresenterImpl> implements AboutEgrContract.View {
     @BindView(R.id.wv)
     WebView webView;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -35,8 +32,6 @@ public class AboutEgrActivity extends BaseMVPActivity<AboutEgrContract.View,
         setUmengAnalyze(R.string.about_egr);
         setupActionBar(R.string.about_egr, true);
         setActionbarBackground(R.color.white);
-
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         if (!mDialog.isShowing())
             mDialog.show();

@@ -9,13 +9,11 @@ import com.egr.drillinghelper.contract.ForgetPswdContract;
 import com.egr.drillinghelper.presenter.ForgetPswdPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -38,8 +36,6 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     @BindView(R.id.tv_get_ver_code)
     CountDownTimerButton btnGetVerCode;
 
-    private ACProgressFlower mDialog;
-
     @Override
     public int returnLayoutID() {
         return R.layout.activity_forget_pswd;
@@ -50,8 +46,6 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
         setUmengAnalyze(R.string.forget_password);
         setupActionBar(R.string.forget_password, true);
         setActionbarBackground(R.color.white);
-
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         etEnsurePswd.setOnEnterListener(new LvEditText.OnEnterListener() {
             @Override
@@ -97,7 +91,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     @Override
     public void forgetPswdSuccess() {
         mDialog.dismiss();
-        ToastUtils.show(this,R.string.reset_pswd_success);
+        ToastUtils.show(this, R.string.reset_pswd_success);
         finish();
     }
 
@@ -111,7 +105,7 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     @Override
     public void getVerCodeFail(String msg) {
         mDialog.dismiss();
-        ToastUtils.show(this,msg);
+        ToastUtils.show(this, msg);
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.egr.drillinghelper.contract.MessageContract;
 import com.egr.drillinghelper.presenter.MessagePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.MessageAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -22,7 +21,6 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -41,8 +39,6 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
 
     MessageAdapter mAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private ACProgressFlower mDialog;
-
 
     @Override
     public int returnLayoutID() {
@@ -55,7 +51,6 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
         setupActionBar(R.string.my_message, true);
         setActionbarBackground(R.color.white);
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         initRv();
 
         mDialog.show();

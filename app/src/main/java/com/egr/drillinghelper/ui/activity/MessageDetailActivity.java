@@ -10,12 +10,10 @@ import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.contract.MessageDetailContract;
 import com.egr.drillinghelper.presenter.MessageDetailPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -27,7 +25,6 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
         MessageDetailPresenterImpl> implements MessageDetailContract.View {
     @BindView(R.id.tv_msg)
     TextView tvMsg;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -43,7 +40,6 @@ public class MessageDetailActivity extends BaseMVPActivity<MessageDetailContract
         Intent intent = getIntent();
         String id = intent.getStringExtra(KEY_INTENT);
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         mDialog.show();
         presenter.getMsgDetail(id);
     }

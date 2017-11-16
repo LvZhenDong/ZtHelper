@@ -16,13 +16,11 @@ import com.egr.drillinghelper.contract.ContactUsContract;
 import com.egr.drillinghelper.presenter.ContactUsPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ContactUsAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.RvInScrollView;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.PhoneUtils;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -48,7 +46,6 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     ImageView ivQr;
     @BindView(R.id.sv)
     ScrollView mSv;
-    private ACProgressFlower mDialog;
     String phone;
     private View.OnClickListener onPhoneClickListener = new View.OnClickListener() {
         @Override
@@ -76,7 +73,6 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
         setupActionBar(R.string.contact_us, true);
         setActionbarBackground(R.color.white);
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         initRv();
     }
 

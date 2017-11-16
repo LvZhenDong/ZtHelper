@@ -9,13 +9,11 @@ import com.egr.drillinghelper.contract.RegisterContract;
 import com.egr.drillinghelper.presenter.RegisterPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.CountDownTimerButton;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -40,7 +38,6 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @BindView(R.id.tv_commit)
     TextView tvCommit;
 
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -52,8 +49,6 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
         setUmengAnalyze(R.string.register);
         setupActionBar(R.string.register, true);
         setActionbarBackground(R.color.white);
-
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         etPswd.setOnEnterListener(new LvEditText.OnEnterListener() {
             @Override
@@ -71,16 +66,16 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
 
     @OnClick(R.id.tv_commit)
     public void commit() {
-        if(!mDialog.isShowing())
+        if (!mDialog.isShowing())
             mDialog.show();
-        presenter.register(etName.getText().toString().trim(),etCompany.getText().toString().trim(),
-                etPhoneNum.getText().toString().trim(),etVerCode.getText().toString().trim(),
+        presenter.register(etName.getText().toString().trim(), etCompany.getText().toString().trim(),
+                etPhoneNum.getText().toString().trim(), etVerCode.getText().toString().trim(),
                 etPswd.getText().toString().trim());
     }
 
     @OnClick(R.id.tv_get_ver_code)
-    public void getVerCode(){
-        if(!mDialog.isShowing())
+    public void getVerCode() {
+        if (!mDialog.isShowing())
             mDialog.show();
         presenter.getVerCode(etPhoneNum.getText().toString().trim());
     }
@@ -88,20 +83,20 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @Override
     public void inputError(int e) {
         mDialog.dismiss();
-        ToastUtils.show(this,e);
+        ToastUtils.show(this, e);
     }
 
     @Override
     public void registerSuccess() {
         mDialog.dismiss();
-        ToastUtils.show(this,R.string.register_success);
+        ToastUtils.show(this, R.string.register_success);
         finish();
     }
 
     @Override
     public void registerFail(String message) {
         mDialog.dismiss();
-        ToastUtils.show(this,message);
+        ToastUtils.show(this, message);
     }
 
     @Override
@@ -114,7 +109,7 @@ public class RegisterActivity extends BaseMVPActivity<RegisterContract.View,
     @Override
     public void getVerCodeFail(String msg) {
         mDialog.dismiss();
-        ToastUtils.show(this,msg);
+        ToastUtils.show(this, msg);
     }
 
     @Override

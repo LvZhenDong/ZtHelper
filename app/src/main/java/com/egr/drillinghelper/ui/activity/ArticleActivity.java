@@ -9,12 +9,10 @@ import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.contract.ArticleContract;
 import com.egr.drillinghelper.presenter.ArticlePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.StringUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -26,7 +24,6 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         ArticlePresenterImpl> implements ArticleContract.View {
     @BindView(R.id.wv)
     WebView webView;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -47,7 +44,6 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
 //        settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         String id = getIntent().getStringExtra(KEY_INTENT);
         String catalogId = getIntent().getStringExtra("catalogId");
 

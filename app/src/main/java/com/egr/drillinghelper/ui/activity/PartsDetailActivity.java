@@ -19,7 +19,6 @@ import com.egr.drillinghelper.presenter.PartsDetailPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.PartsDetailAdapter;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -55,7 +53,6 @@ public class PartsDetailActivity extends BaseMVPActivity<PartsDetailContract.Vie
 
     StoreDetail store;
     PartsDetailAdapter mAdapter;
-    private ACProgressFlower mDialog;
 
     public static void start(Context context, String id) {
         Intent intentPart = new Intent(context, PartsDetailActivity.class);
@@ -85,7 +82,6 @@ public class PartsDetailActivity extends BaseMVPActivity<PartsDetailContract.Vie
         rv.setNestedScrollingEnabled(false);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(mAdapter);
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         mDialog.show();
         presenter.getContent(id);
     }

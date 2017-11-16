@@ -14,7 +14,6 @@ import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.PersonalContract;
 import com.egr.drillinghelper.presenter.PersonalPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.lzy.imagepicker.ImagePicker;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -50,7 +48,6 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
     TextView tvComplete;
     UserInfo mUserInfo;
     String mHeadPath;
-    private ACProgressFlower mDialog;
 
     @Override
     public int returnLayoutID() {
@@ -71,7 +68,6 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
             GlideUtils.loadCircleImg(mUserInfo.getPhoto(),ivHead);
         }
 
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
     }
 
     @Override

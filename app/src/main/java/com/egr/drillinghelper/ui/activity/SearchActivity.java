@@ -44,7 +44,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 
 /**
  * author lzd
@@ -89,7 +88,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     List<Explain> mExplainCatalogs;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
-    private ACProgressFlower mDialog;
     private String keyword;
 
     @Override
@@ -101,7 +99,6 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
     public void TODO(Bundle savedInstanceState) {
         setUmengAnalyze(R.string.search);
         initSearchRl();
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
         type = getIntent().getIntExtra(KEY_INTENT, MyConstants.SEARCH_TYPE_EXPLAIN);
 
         mAdapter = new SearchResultAdapter(this);

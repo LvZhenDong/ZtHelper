@@ -26,7 +26,6 @@ import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ServiceAdapter;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.TimeUtils;
@@ -48,7 +47,6 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -79,7 +77,6 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
     LinearLayout llAddImg;
     ServiceAdapter mAdapter;
     LinearLayoutManager linearLayoutManager;
-    private ACProgressFlower mDialog;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
 
     @Override
@@ -97,8 +94,6 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
         setUmengAnalyze(R.string.go_feedback);
         setupActionBar(R.string.go_feedback, true);
         setActionbarBackground(R.color.white);
-
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         mAdapter = new ServiceAdapter(this);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);

@@ -37,7 +37,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -82,7 +81,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     PopupWindow mMsgPw;
     private HomeActivityAdapter homeAdapter;
     private long mExitTime = 0;
-    private ACProgressFlower mDialog;
     View.OnClickListener phoneListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -108,8 +106,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         setActionbarBackground(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
         //setActionBarRightIcon(R.drawable.ic_home_search_gray, searchListener);
-
-        mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.waiting));
 
         homeAdapter = new HomeActivityAdapter(getSupportFragmentManager());
         vpHome.setOffscreenPageLimit(homeAdapter.getCount());

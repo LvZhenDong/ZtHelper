@@ -25,7 +25,6 @@ import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cc.cloudist.acplibrary.ACProgressFlower;
 import cn.magicbeans.android.ipmanager.module.MBIPInfo;
 import cn.magicbeans.android.ipmanager.utils.FloatWindowUtils;
 import cn.magicbeans.android.ipmanager.utils.MBIPContant;
@@ -51,7 +50,6 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     @BindView(R.id.tv_forget_pswd)
     TextView tvForgetPswd;
 
-    private ACProgressFlower mDialog;
     private boolean notReadCache;
 
     @Override
@@ -61,6 +59,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
     @Override
     public void TODO(Bundle savedInstanceState) {
+        //防止再多个栈里重复启动
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
@@ -75,6 +74,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 
+        //自动填充密码和用户名
         etPhoneNum.setText(MySharePreferencesManager.getInstance().getString(MySharePreferencesManager.USER_NAME, ""));
         etPasw.setText(MySharePreferencesManager.getInstance().getString(MySharePreferencesManager.USER_PSWD, ""));
 
@@ -87,11 +87,13 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             }
         });
 
+        //修改IP工具
         if (BuildConfig.DEBUG) {
             FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
             floatWindowUtils.init(this);
         }
 
+        //如果是从“我的”点击退出到此界面，则不用读缓存等操作
         notReadCache = getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN, false);
         if (!notReadCache)
             getWritePermission();
