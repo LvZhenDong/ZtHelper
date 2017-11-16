@@ -171,7 +171,8 @@ dependencies {
     compile 'com.jude:swipebackhelper:3.1.2'
     //stetho
     compile 'com.facebook.stetho:stetho:1.5.0'
-
+    //tabLayout
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     compile project(':version')
     compile project(':pickerImage')
     implementation project(':gallery')

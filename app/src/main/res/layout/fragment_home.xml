@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RadioGroup
-        android:id="@+id/rg_top"
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/tl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/btn_height"
+        android:layout_height="48dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_explain"
-            style="@style/RbHomeTop"
-            android:text="@string/explain" />
-
-        <RadioButton
-            android:id="@+id/rb_knows"
-            style="@style/RbHomeTop"
-            android:text="@string/ask_knowledge" />
-
-        <RadioButton
-            android:id="@+id/rb_parts"
-            style="@style/RbHomeTop"
-            android:text="@string/parts" />
-    </RadioGroup>
-
+        android:background="@drawable/bg_white_radius_3dp"
+        app:tl_iconVisible="false"
+        app:tl_indicator_color="@color/bg_actionbar_start"
+        app:tl_indicator_corner_radius="3dp"
+        app:tl_indicator_margin_bottom="0dp"
+        app:tl_indicator_margin_top="0dp"
+        app:tl_indicator_style="BLOCK"
+        app:tl_textSelectColor="@color/white"
+        app:tl_textUnselectColor="@color/black"
+        app:tl_textsize="@dimen/text_size_tv" />
 
     <com.egr.drillinghelper.ui.widgets.BanSlideViewPager
         android:id="@+id/vp_home"
