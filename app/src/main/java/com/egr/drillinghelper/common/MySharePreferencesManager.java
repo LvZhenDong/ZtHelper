@@ -9,6 +9,9 @@ import java.util.Set;
 
 public class MySharePreferencesManager {
 
+    public static String USER_PSWD = "userPswd";
+    public static String USER_NAME = "userName";
+
     private static class SingletonHolder {
         private static final MySharePreferencesManager instance = new MySharePreferencesManager();
     }
@@ -31,7 +34,7 @@ public class MySharePreferencesManager {
      */
     public SecureSPUtils getSharedPreferences() {
         if (mSecurePrefs == null) {
-            mSecurePrefs = new SecureSPUtils(context, "", "llsp.xml");
+            mSecurePrefs = new SecureSPUtils(context, "", "EGR_SP.xml");
             SecureSPUtils.setLoggingEnabled(true);
         }
         return mSecurePrefs;

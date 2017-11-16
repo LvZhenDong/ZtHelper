@@ -172,6 +172,9 @@ dependencies {
 
     // swipeBack
     compile 'com.jude:swipebackhelper:3.1.2'
+    //stetho
+    compile 'com.facebook.stetho:stetho:1.5.0'
+
     compile project(':version')
     compile project(':pickerImage')
     implementation project(':gallery')

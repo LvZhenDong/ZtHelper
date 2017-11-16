@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.LoginContract;
 import com.egr.drillinghelper.factory.APIServiceFactory;
@@ -20,7 +21,6 @@ import com.egr.drillinghelper.presenter.LoginPresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.LvEditText;
-import com.egr.drillinghelper.utils.SharePreHelper;
 import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -75,9 +75,9 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 
-        SharePreHelper.getIns().initialize(this,"");
-        etPhoneNum.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_NAME));
-        etPasw.setText(SharePreHelper.getIns().getTextData(SharePreHelper.LOGIN_PSW));
+        etPhoneNum.setText(MySharePreferencesManager.getInstance().getString(MySharePreferencesManager.USER_NAME, ""));
+        etPasw.setText(MySharePreferencesManager.getInstance().getString(MySharePreferencesManager.USER_PSWD, ""));
+
         etPhoneNum.setSelection(etPhoneNum.length());
 
         etPasw.setOnEnterListener(new LvEditText.OnEnterListener() {
@@ -87,24 +87,25 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             }
         });
 
-
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             FloatWindowUtils floatWindowUtils = new FloatWindowUtils();
             floatWindowUtils.init(this);
         }
 
-        notReadCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);
-        if(!notReadCache)
+        notReadCache = getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN, false);
+        if (!notReadCache)
             getWritePermission();
     }
+
     public final static int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0X98;
-    private void getWritePermission(){
+
+    private void getWritePermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
             return;
-        }else {
+        } else {
             presenter.readCache();
         }
     }
@@ -159,8 +160,8 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
     @Override
     public void loginSuccess() {
 
-        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_NAME,etPhoneNum.getText().toString());
-        SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,etPasw.getTrimText());
+        MySharePreferencesManager.getInstance().putString(MySharePreferencesManager.USER_NAME, etPhoneNum.getText().toString().trim());
+        MySharePreferencesManager.getInstance().putString(MySharePreferencesManager.USER_PSWD, etPasw.getTrimText());
         mDialog.dismiss();
         baseStartActivity(HomeActivity.class);
         finish();
@@ -178,7 +179,7 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
 
         if (resultCode == MBIPContant.RESULT_CODE && requestCode == MBIPContant.REQUEST_CODE) {
             MBIPInfo info = (MBIPInfo) data.getSerializableExtra(MBIPContant.IP);
-            APIServiceFactory.setBaseUrl(info.getIp()+":"+info.getPort());
+            APIServiceFactory.setBaseUrl(info.getIp() + ":" + info.getPort());
         }
 
     }

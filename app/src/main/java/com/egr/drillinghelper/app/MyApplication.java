@@ -9,6 +9,7 @@ import com.egr.drillinghelper.BuildConfig;
 import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.utils.EgrImageLoader;
+import com.facebook.stetho.Stetho;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;
 import com.pgyersdk.crash.PgyCrashManager;
@@ -49,9 +50,8 @@ public class MyApplication extends MultiDexApplication {
             if (!TextUtils.isEmpty(ip)) {
                 APIServiceFactory.setBaseUrl(ip);
             }
+            Stetho.initializeWithDefaults(this);
         }
-
-
         JPushInterface.init(this);
 
     }

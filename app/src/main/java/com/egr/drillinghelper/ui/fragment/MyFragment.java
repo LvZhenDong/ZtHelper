@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.bean.response.UserInfo;
+import com.egr.drillinghelper.common.MySharePreferencesManager;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.MyContract;
@@ -24,7 +25,6 @@ import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.ShareDialog;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.GlideUtils;
-import com.egr.drillinghelper.utils.SharePreHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -106,9 +106,8 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                                 if (!mDialog.isShowing())
                                     mDialog.show();
 
-                                SharePreHelper.getIns().initialize(getContext(),"");
-                                SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_NAME,"");
-                                SharePreHelper.getIns().setTextData(SharePreHelper.LOGIN_PSW,"");
+                                MySharePreferencesManager.getInstance().remove(MySharePreferencesManager.USER_NAME);
+                                MySharePreferencesManager.getInstance().remove(MySharePreferencesManager.USER_PSWD);
                                 presenter.quit();
                             }
 
