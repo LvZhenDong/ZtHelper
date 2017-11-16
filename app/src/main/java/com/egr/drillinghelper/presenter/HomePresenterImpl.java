@@ -38,4 +38,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,
     public void checkRead() {
         mModel.checkRead();
     }
+
+    @Override
+    public void checkVersion() {
+        mModel.checkVersion();
+    }
 }

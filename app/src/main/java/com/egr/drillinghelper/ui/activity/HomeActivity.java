@@ -16,23 +16,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.egr.drillinghelper.R;
-import com.egr.drillinghelper.api.NetApi;
 import com.egr.drillinghelper.bean.rxbus.HomeCurrent;
 import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.HomeContract;
-import com.egr.drillinghelper.factory.APIServiceFactory;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.HomeActivityAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.BanSlideViewPager;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
-import com.egr.drillinghelper.utils.ApkUtils;
 import com.egr.drillinghelper.utils.DensityUtils;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.PhoneUtils;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.shelwee.update.UpdateHelper;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
@@ -113,6 +108,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         vpHome.setAdapter(homeAdapter);
         vpHome.setCurrentItem(0, false);
 
+        //未读的系统消息
         EgrRxBus.subscribe(this, String.class, new Consumer<String>() {
             @Override
             public void accept(@NonNull String s) throws Exception {
@@ -137,7 +133,7 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
             }
         });
 
-        checkVersion();
+        presenter.checkVersion();
         presenter.getNoReadMsg();
         presenter.checkRead();
     }
@@ -158,15 +154,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
         View view = getLayoutInflater().inflate(R.layout.pw_msg, null, false);
         mMsgPw = new PopupWindow(view, DensityUtils.dp2px(this, 80), DensityUtils.dp2px(this, 45), true);
         mMsgPw.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_new_msg));
-    }
-
-    private void checkVersion() {
-        String url = APIServiceFactory.getBaseUrl() + NetApi.Version + ApkUtils.getVersionCode(this);
-        UpdateHelper updateHelper = new UpdateHelper.Builder(this)
-                .checkUrl(url)
-                .isHintNewVersion(false)
-                .build();
-        updateHelper.check();
     }
 
     @Override

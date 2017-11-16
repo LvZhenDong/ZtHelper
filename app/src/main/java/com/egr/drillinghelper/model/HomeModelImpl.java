@@ -10,6 +10,8 @@ import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.HomePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.utils.ApkUtils;
+import com.shelwee.update.UpdateHelper;
 
 import io.reactivex.annotations.NonNull;
 
@@ -74,5 +76,15 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
                         presenter.getView().checkReadSuc(response);
                     }
                 });
+    }
+
+    @Override
+    public void checkVersion() {
+        String url = APIServiceFactory.getBaseUrl() + NetApi.Version + ApkUtils.getVersionCode(getContext());
+        UpdateHelper updateHelper = new UpdateHelper.Builder(getContext())
+                .checkUrl(url)
+                .isHintNewVersion(false)
+                .build();
+        updateHelper.check();
     }
 }
