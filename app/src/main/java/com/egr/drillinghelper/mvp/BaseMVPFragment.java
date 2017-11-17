@@ -1,48 +1,34 @@
 package com.egr.drillinghelper.mvp;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.egr.drillinghelper.ui.base.BaseActivity;
+import com.egr.drillinghelper.ui.base.BaseFragment;
 import com.egr.drillinghelper.ui.base.FragmentUserVisibleController;
-import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
-import com.umeng.analytics.MobclickAgent;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by Ymmmsick on 17/5/9.
  */
-public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> extends Fragment
+public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> extends BaseFragment
         implements LifecycleProvider<FragmentEvent>, IView, IMvpBase<V>, FragmentUserVisibleController.UserVisibleCallback {
-    public static final String KEY_INTENT= BaseActivity.KEY_INTENT;
-    public static final String KEY_INTENT_BOOLEAN= BaseActivity.KEY_INTENT_BOOLEAN;
-    protected ViewGroup view;
-    Unbinder unbinder;
+
+
     protected P presenter;
-    protected boolean isFirstVisiableToUser = true;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
-    private FragmentUserVisibleController userVisibleController;
 
     public BaseMVPFragment() {
-        userVisibleController = new FragmentUserVisibleController(this, this);
+        super();
     }
 
     @Override
@@ -81,66 +67,13 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        userVisibleController.activityCreated();
-    }
-
-    @Override
-    @CallSuper
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void setOthers(View view, Bundle savedInstanceState) {
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
         if (presenter == null) {
             presenter = createPresenter();
         }
         presenter.attachView(getMvpView());
         TODO(view, savedInstanceState);
-    }
-
-    String mUmengAnalyze;
-
-    public void setUmengAnalyze(String str) {
-        this.mUmengAnalyze = str;
-    }
-
-    public void setUmengAnalyze(int strId){
-        this.mUmengAnalyze=getString(strId);
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        userVisibleController.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void setWaitingShowToUser(boolean waitingShowToUser) {
-        userVisibleController.setWaitingShowToUser(waitingShowToUser);
-    }
-
-    @Override
-    public boolean isWaitingShowToUser() {
-        return userVisibleController.isWaitingShowToUser();
-    }
-
-    @Override
-    public boolean isVisibleToUser() {
-        return userVisibleController.isVisibleToUser();
-    }
-
-    @Override
-    public void callSuperSetUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-    }
-
-    @Override
-    public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
-        if(TextUtils.isEmpty(mUmengAnalyze))return;
-        if(isVisibleToUser){
-            MobclickAgent.onPageStart(mUmengAnalyze);
-        }else {
-            MobclickAgent.onPageEnd(mUmengAnalyze);
-        }
     }
 
     @Override
@@ -155,14 +88,12 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
     public void onResume() {
         super.onResume();
         lifecycleSubject.onNext(FragmentEvent.RESUME);
-        userVisibleController.resume();
     }
 
     @Override
     @CallSuper
     public void onPause() {
         lifecycleSubject.onNext(FragmentEvent.PAUSE);
-        userVisibleController.pause();
         super.onPause();
     }
 
@@ -178,8 +109,6 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
     public void onDestroyView() {
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
         presenter.detachView(getRetainInstance());
-        unbinder.unbind();
-        RxDisposableManager.unsubscribe(this);
         super.onDestroyView();
     }
 
@@ -203,76 +132,5 @@ public abstract class BaseMVPFragment<V extends IView, P extends IPresenter<V>> 
     @Override
     public V getMvpView() {
         return (V) this;
-    }
-
-    /**
-     * use in oncreate
-     * such as <i><b>return inflate(inflater,container)<b/><i/>
-     *
-     * @param inflater
-     * @param container
-     * @param layoutID  the view to be layout
-     * @return
-     */
-    protected View inflate(LayoutInflater inflater, ViewGroup container, int layoutID) {
-        view = (ViewGroup) inflater.inflate(layoutID, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflate(inflater, container, returnLayoutID());
-    }
-
-    public abstract int returnLayoutID();
-
-    /**
-     * 相当于 onCreate
-     *
-     * @param savedInstanceState
-     */
-    public abstract void TODO(View view, Bundle savedInstanceState);
-
-
-    /**
-     * get context
-     *
-     * @return
-     */
-    public Context getContext() {
-        return getActivity();
-    }
-
-    public void baseStartActivity(Class cls) {
-        Intent intent = new Intent(getActivity(), cls);
-        startActivity(intent);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivity(Class cls, Bundle data) {
-        Intent intent = new Intent(getActivity(), cls);
-        intent.putExtras(data);
-        startActivity(intent);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivityForResult(Class cls, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
-        startActivityForResult(intent, requestCode);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivityForResult(Class cls, Bundle data, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
-        intent.putExtras(data);
-        startActivityForResult(intent, requestCode);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void finish() {
-        getActivity().finish();
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

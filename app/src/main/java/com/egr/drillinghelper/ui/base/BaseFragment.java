@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -19,8 +21,9 @@ import butterknife.Unbinder;
  * Created by Ymmmsick on 17/5/9.
  */
 public abstract class BaseFragment extends Fragment implements FragmentUserVisibleController.UserVisibleCallback {
+    protected static final String KEY_INTENT = BaseActivity.KEY_INTENT;
+    protected static final String KEY_INTENT_BOOLEAN = BaseActivity.KEY_INTENT_BOOLEAN;
 
-    protected ViewGroup view;
     Unbinder unbinder;
     protected boolean isFirstVisiableToUser = true;
     private FragmentUserVisibleController userVisibleController;
@@ -33,6 +36,10 @@ public abstract class BaseFragment extends Fragment implements FragmentUserVisib
     @CallSuper
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setOthers(view, savedInstanceState);
+    }
+
+    protected void setOthers(View view, Bundle savedInstanceState) {
         TODO(view, savedInstanceState);
     }
 
@@ -80,9 +87,24 @@ public abstract class BaseFragment extends Fragment implements FragmentUserVisib
         super.setUserVisibleHint(isVisibleToUser);
     }
 
+    String mUmengAnalyze;
+
+    public void setUmengAnalyze(String str) {
+        this.mUmengAnalyze = str;
+    }
+
+    public void setUmengAnalyze(int strId) {
+        this.mUmengAnalyze = getString(strId);
+    }
+
     @Override
     public void onVisibleToUserChanged(boolean isVisibleToUser, boolean invokeInResumeOrPause) {
-
+        if (TextUtils.isEmpty(mUmengAnalyze)) return;
+        if (isVisibleToUser) {
+            MobclickAgent.onPageStart(mUmengAnalyze);
+        } else {
+            MobclickAgent.onPageEnd(mUmengAnalyze);
+        }
     }
 
     @Override
@@ -103,7 +125,7 @@ public abstract class BaseFragment extends Fragment implements FragmentUserVisib
      * @return
      */
     protected View inflate(LayoutInflater inflater, ViewGroup container, int layoutID) {
-        view = (ViewGroup) inflater.inflate(layoutID, container, false);
+        View view = inflater.inflate(layoutID, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -123,7 +145,6 @@ public abstract class BaseFragment extends Fragment implements FragmentUserVisib
      */
     public abstract void TODO(View view, Bundle savedInstanceState);
 
-
     /**
      * get context
      *
@@ -136,31 +157,9 @@ public abstract class BaseFragment extends Fragment implements FragmentUserVisib
     public void baseStartActivity(Class cls) {
         Intent intent = new Intent(getActivity(), cls);
         startActivity(intent);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivity(Class cls, Bundle data) {
-        Intent intent = new Intent(getActivity(), cls);
-        intent.putExtras(data);
-        startActivity(intent);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivityForResult(Class cls, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
-        startActivityForResult(intent, requestCode);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    public void baseStartActivityForResult(Class cls, Bundle data, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
-        intent.putExtras(data);
-        startActivityForResult(intent, requestCode);
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void finish() {
         getActivity().finish();
-//        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
