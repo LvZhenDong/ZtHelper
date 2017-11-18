@@ -467,10 +467,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SwipeBackHelper.onDestroy(this);
-        afterDestroy();
-    }
-
-    protected void afterDestroy() {
         unbinder.unbind();
         RxDisposableManager.unsubscribe(this);
     }

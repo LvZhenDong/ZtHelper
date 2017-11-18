@@ -6,7 +6,6 @@ import com.egr.drillinghelper.mvp.IMvpBase;
 import com.egr.drillinghelper.mvp.IPresenter;
 import com.egr.drillinghelper.mvp.IView;
 import com.egr.drillinghelper.ui.widgets.DialogHelper;
-import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 
 import cc.cloudist.acplibrary.ACProgressFlower;
 
@@ -34,9 +33,8 @@ public abstract class BaseMVPActivity<V extends IView, P extends IPresenter<V>> 
     }
 
     @Override
-    protected void afterDestroy() {
+    protected void onDestroy() {
+        super.onDestroy();
         presenter.detachView(false);
-        unbinder.unbind();
-        RxDisposableManager.unsubscribe(this);
     }
 }
