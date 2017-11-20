@@ -135,7 +135,7 @@ public class ExplainModelImpl extends BaseModel<ExplainPresenterImpl> implements
                                 String[] strs = path.split("/");
                                 String name = strs[strs.length - 1];
                                 if (!TextUtils.isEmpty(name) && !FileUtils.fileExists(MyConstants.PATH + name))
-                                    Glide.with(getContext()).load(path).into(new EgrTarget(name));
+                                    Glide.with(getContext()).asBitmap().load(path).into(new EgrTarget(name));
                             }
 
                         }
