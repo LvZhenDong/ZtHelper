@@ -239,6 +239,9 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
                 imm.hideSoftInputFromWindow(etMsg.getWindowToken(), 0);
 //                llAddImg.setVisibility(View.VISIBLE);
                 etMsg.clearFocus();
+                ImagePicker imagePicker=ImagePicker.getInstance();
+                imagePicker.setMultiMode(false);
+                imagePicker.setCrop(false);
                 Intent imgIntent = new Intent(getActivity(), ImageGridActivity.class);
                 startActivityForResult(imgIntent, IMAGE_PICKER);
                 break;

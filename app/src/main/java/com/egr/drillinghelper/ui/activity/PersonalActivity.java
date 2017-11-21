@@ -19,6 +19,7 @@ import com.egr.drillinghelper.utils.ToastUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
+import com.lzy.imagepicker.view.CropImageView;
 
 import java.util.ArrayList;
 
@@ -79,6 +80,10 @@ public class PersonalActivity extends BaseMVPActivity<PersonalContract.View,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_head:
+                ImagePicker imagePicker=ImagePicker.getInstance();
+                imagePicker.setMultiMode(false);
+                imagePicker.setCrop(true);
+                imagePicker.setStyle(CropImageView.Style.CIRCLE);
                 Intent intent = new Intent(getActivity(), ImageGridActivity.class);
                 startActivityForResult(intent, IMAGE_PICKER);
                 break;
