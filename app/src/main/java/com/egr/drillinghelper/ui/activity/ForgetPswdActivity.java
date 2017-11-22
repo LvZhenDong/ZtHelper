@@ -99,7 +99,8 @@ public class ForgetPswdActivity extends BaseMVPActivity<ForgetPswdContract.View,
     public void getVerCodeSuccess(String code) {
         btnGetVerCode.startCountDownTimer();
         mDialog.dismiss();
-        etVerCode.setText(code);
+//        etVerCode.setText(code);
+        ToastUtils.show(this,R.string.ver_code_send_suc);
     }
 
     @Override

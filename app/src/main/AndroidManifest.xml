@@ -112,10 +112,10 @@
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data
             android:name="Mob-AppKey"
-            android:value="21a761e72b088" />
+            android:value="22893b101327e" />
         <meta-data
             android:name="Mob-AppSecret"
-            android:value="2c67e12ef812f32f3571be3bcbb6079d" />
+            android:value="90ab308d816222f7ccd9540eb42622d9" />
         <!--share sdk 结束-->
 
         <!--极光推送 开始-->
