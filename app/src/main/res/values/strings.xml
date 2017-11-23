@@ -127,8 +127,9 @@
     <string name="home_my">个人中心</string>
     <string name="parts_explain">配件目录</string>
     <string name="ver_code_send_suc">验证码已发送到您的手机，请注意查收</string>
-
-
+    <string name="share_suc">分享成功</string>
+    <string name="share_cancel">分享已取消</string>
+    <string name="share_error">分享失败</string>
 
 
 

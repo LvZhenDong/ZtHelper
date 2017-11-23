@@ -12,12 +12,16 @@ import com.egr.drillinghelper.bean.ShareIcon;
 import com.egr.drillinghelper.bean.response.Share;
 import com.egr.drillinghelper.interfaces.OnItemClickListener;
 import com.egr.drillinghelper.ui.adapter.ShareAdapter;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
@@ -41,13 +45,13 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
     ShareAdapter adapter;
     Context mContent;
     Share share;
-    String text,url;
+    String text, url;
 
     public void setContent(Context mContent, Share share) {
         this.mContent = mContent;
         this.share = share;
-        url=share.getQrcode();
-        text=TextUtils.isEmpty(share.getContent())?getString(R.string.app_name):share.getContent();
+        url = share.getQrcode();
+        text = TextUtils.isEmpty(share.getContent()) ? getString(R.string.app_name) : share.getContent();
     }
 
     @Override
@@ -67,21 +71,20 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
         });
 
         adapter = new ShareAdapter(getContext());
-        rvShare.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        rvShare.setAdapter(adapter);
-
         List<ShareIcon> list = new ArrayList<>();
         list.add(new ShareIcon(R.drawable.ic_weixin, R.string.weixin));
         list.add(new ShareIcon(R.drawable.ic_weixin_moments, R.string.weixin_moments));
         list.add(new ShareIcon(R.drawable.ic_qq, R.string.QQ));
-        list.add(new ShareIcon(R.drawable.ic_qzone, R.string.Qzone));
-        list.add(new ShareIcon(R.drawable.ic_weibo, R.string.weibo));
+//        list.add(new ShareIcon(R.drawable.ic_qzone, R.string.Qzone));
+        //        list.add(new ShareIcon(R.drawable.ic_weibo, R.string.weibo));
+        rvShare.setLayoutManager(new GridLayoutManager(getContext(), list.size()));
+        rvShare.setAdapter(adapter);
         adapter.setDataList(list);
         adapter.notifyDataSetChanged();
         adapter.setListener(this);
     }
 
-    private void showShare(String type) {
+    private void showShare(final String type) {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -93,6 +96,26 @@ public class ShareDialog extends BaseBottomDialog implements OnItemClickListener
         oks.setText(text);
         oks.setImageUrl(url);      //如果图片不能加载出来，则微博分享会失败
         oks.setUrl(url);
+        oks.setSite(getString(R.string.app_name));
+        oks.setSiteUrl(url);
+
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                ToastUtils.show(mContent, R.string.share_suc);
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                ToastUtils.show(mContent, R.string.share_error);
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                if (!TextUtils.equals(type, QQ.NAME) && !TextUtils.equals(type, QZone.NAME))    //因为QQ和Qzone即使分享成功也会回调cancel，所以这里特殊处理
+                    ToastUtils.show(mContent, R.string.share_cancel);
+            }
+        });
 
         // 启动分享
         oks.show(mContent);

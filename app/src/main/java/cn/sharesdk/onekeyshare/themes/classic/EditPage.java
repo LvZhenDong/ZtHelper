@@ -8,7 +8,6 @@
 
 package cn.sharesdk.onekeyshare.themes.classic;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
@@ -26,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mob.MobSDK;
 import com.mob.tools.gui.AsyncImageView;
@@ -112,7 +110,7 @@ public class EditPage extends OnekeySharePage implements OnClickListener, TextWa
 	private void shareAndFinish() {
 		int resId = ResHelper.getStringRes(activity, "ssdk_oks_sharing");
 		if (resId > 0) {
-			Toast.makeText(activity, resId, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(activity, resId, Toast.LENGTH_SHORT).show();
 		}
 
 		if (isDisableSSO()) {
