@@ -15,18 +15,14 @@ import com.egr.drillinghelper.factory.TransformersFactory;
 import com.egr.drillinghelper.mvp.BaseMVPFragment;
 import com.egr.drillinghelper.mvp.BaseModel;
 import com.egr.drillinghelper.presenter.PartsPresenterImpl;
-import com.egr.drillinghelper.ui.adapter.PartsAdapter;
 import com.egr.drillinghelper.utils.CacheUtils;
 import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.GlideUtils;
-import com.egr.drillinghelper.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
-
-import static com.egr.drillinghelper.api.error.ERROR.TIMEOUT_ERROR;
 
 /**
  * author lzd
@@ -46,41 +42,41 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
 
     @Override
     public void getPartsList(final String keyword, int current) {
-        if (NetworkUtils.isNetworkConnected(getContext())) {
-            api.storeList(keyword, current + "")
-                    .compose(TransformersFactory.<BasePage<Store>>commonTransformer((BaseMVPFragment) presenter.getView()))
-                    .subscribe(new EObserver<BasePage<Store>>() {
-                        @Override
-                        public void onError(ResponseThrowable e, String eMsg) {
-                            if (e.code == TIMEOUT_ERROR)
-                                showCache(keyword);
-                            else
-                                presenter.getPastsFail(eMsg);
-                        }
-
-                        @Override
-                        public void onComplete(@NonNull BasePage<Store> data) {
-                            int current = data.getCurrent();
-                            if (current == 1 && !CollectionUtil.isListEmpty(more)) {    //添加商城到list
-                                List<Store> list = data.getRecords();
-                                for (int i = 0; i < more.size(); i++) {
-                                    StoreMore item = more.get(more.size() - i - 1);
-                                    Store mall = new Store();
-                                    mall.setUrl(item.getUrl());
-                                    mall.setName(item.getName());
-                                    mall.setPicture(item.getPicture());
-                                    mall.setInformation(item.getDescription());
-                                    mall.setId(PartsAdapter.INTO_MALL);
-                                    if (list != null)
-                                        list.add(0, mall);
-                                }
-                            }
-                            presenter.getPartsListSuccess(data);
-                        }
-                    });
-        } else {
-            showCache(keyword);
-        }
+//        if (NetworkUtils.isNetworkConnected(getContext())) {
+//            api.storeList(keyword, current + "")
+//                    .compose(TransformersFactory.<BasePage<Store>>commonTransformer((BaseMVPFragment) presenter.getView()))
+//                    .subscribe(new EObserver<BasePage<Store>>() {
+//                        @Override
+//                        public void onError(ResponseThrowable e, String eMsg) {
+//                            if (e.code == TIMEOUT_ERROR)
+//                                showCache(keyword);
+//                            else
+//                                presenter.getPastsFail(eMsg);
+//                        }
+//
+//                        @Override
+//                        public void onComplete(@NonNull BasePage<Store> data) {
+//                            int current = data.getCurrent();
+////                            if (current == 1 && !CollectionUtil.isListEmpty(more)) {    //添加商城到list
+////                                List<Store> list = data.getRecords();
+////                                for (int i = 0; i < more.size(); i++) {
+////                                    StoreMore item = more.get(more.size() - i - 1);
+////                                    Store mall = new Store();
+////                                    mall.setUrl(item.getUrl());
+////                                    mall.setName(item.getName());
+////                                    mall.setPicture(item.getPicture());
+////                                    mall.setInformation(item.getDescription());
+////                                    mall.setId(PartsAdapter.INTO_MALL);
+////                                    if (list != null)
+////                                        list.add(0, mall);
+////                                }
+////                            }
+//                            presenter.getPartsListSuccess(data);
+//                        }
+//                    });
+//        } else {
+//            showCache(keyword);
+//        }
     }
 
     @Override
@@ -91,13 +87,13 @@ public class PartsModelImpl extends BaseModel<PartsPresenterImpl> implements Par
                 .subscribe(new EObserver<List<StoreMore>>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getMallSuccess();
+                        presenter.getView().getPastsFail(eMsg);
                     }
 
                     @Override
                     public void onComplete(@NonNull List<StoreMore> data) {
                         more = data;
-                        presenter.getMallSuccess();
+                        presenter.getMallSuccess(data);
                     }
                 });
 

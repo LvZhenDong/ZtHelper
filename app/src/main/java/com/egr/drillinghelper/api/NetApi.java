@@ -113,7 +113,8 @@ public interface NetApi {
      * @return
      */
     @GET("store/list")
-    Observable<BaseResponseBean<BasePage<Store>>> storeList(@Query("keyword") String keyword,
+    Observable<BaseResponseBean<BasePage<Store>>> storeList(@Query("type") String type,
+                                                            @Query("keyword") String keyword,
                                                             @Query("current") String current);
 
     @GET("store/product/{id}")

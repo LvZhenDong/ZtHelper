@@ -2,12 +2,15 @@ package com.egr.drillinghelper.presenter;
 
 import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.Store;
+import com.egr.drillinghelper.bean.response.StoreMore;
 import com.egr.drillinghelper.common.UserManager;
 import com.egr.drillinghelper.contract.PartsContract;
 import com.egr.drillinghelper.model.PartsModelImpl;
 import com.egr.drillinghelper.mvp.BasePresenter;
 import com.egr.drillinghelper.mvp.IModel;
 import com.egr.drillinghelper.utils.CollectionUtil;
+
+import java.util.List;
 
 /**
  * author lzd
@@ -55,9 +58,9 @@ public class PartsPresenterImpl extends BasePresenter<PartsContract.View,
 
 
     @Override
-    public void getMallSuccess() {
-
-        mModel.getPartsList(keyword, current);
+    public void getMallSuccess(List<StoreMore> list) {
+        getView().getMallSuc(list);
+//        mModel.getPartsList(keyword, current);
     }
 
     @Override
