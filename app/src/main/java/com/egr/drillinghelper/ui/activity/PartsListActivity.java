@@ -13,6 +13,7 @@ import com.egr.drillinghelper.contract.PartsListContract;
 import com.egr.drillinghelper.presenter.PartsListPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.PartsAdapter;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
+import com.egr.drillinghelper.utils.CollectionUtil;
 import com.egr.drillinghelper.utils.ToastUtils;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -98,6 +99,8 @@ public class PartsListActivity extends BaseMVPActivity<PartsListContract.View,
         if (data.getCurrent() > 1) {
             mAdapter.addAll(data.getRecords());
         } else if (data.getCurrent() == 1) {
+            if(CollectionUtil.isListEmpty(data.getRecords()))
+                ToastUtils.show(this,R.string.no_data);
             mAdapter.setDataList(data.getRecords());
         }
     }

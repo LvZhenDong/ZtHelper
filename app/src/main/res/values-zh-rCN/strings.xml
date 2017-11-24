@@ -130,8 +130,12 @@
     <string name="share_suc">分享成功</string>
     <string name="share_cancel">分享已取消</string>
     <string name="share_error">分享失败</string>
-
-
-
-
+    <string name="choose_parts1">易损配件</string>
+    <string name="choose_parts2">主机耗材</string>
+    <string name="choose_parts3">钻探工具</string>
+    <string name="choose_parts4">配方水泥</string>
+    <string name="choose_parts5">液压配件</string>
+    <string name="choose_parts6">发动机配件</string>
+    <string name="parts_title">耗材配件</string>
+    <string name="all">全部</string>
 </resources>
