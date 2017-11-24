@@ -41,8 +41,10 @@ public class LoginModelImpl extends BaseModel<LoginPresenterImpl> implements Log
             options.put("phone",phone);
             options.put("password",password);
             String deviceCode= UserManager.getInstance().getJPushId(getContext());
-            if(!TextUtils.isEmpty(deviceCode))
+            if(!TextUtils.isEmpty(deviceCode)){
                 options.put("deviceCode", deviceCode);
+                options.put("registrationId", deviceCode);
+            }
             options.put("deviceType",0);    //0-android 1-iOS
 
             APIServiceFactory.getInstance().createService()
