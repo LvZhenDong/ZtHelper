@@ -137,7 +137,6 @@ public class PartsDetailActivity extends BaseMVPActivity<PartsDetailContract.Vie
                 mAdapter.setDataList(data.getParts());
             }
             if (!TextUtils.isEmpty(data.getPartsPicture())) {
-                llParts.setVisibility(View.VISIBLE);
                 ivParts.setVisibility(View.VISIBLE);
                 GlideUtils.load(data.getPartsPicture(), ivParts);
             }
