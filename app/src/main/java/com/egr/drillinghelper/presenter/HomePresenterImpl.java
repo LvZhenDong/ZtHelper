@@ -43,4 +43,9 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,
     public void checkVersion() {
         mModel.checkVersion();
     }
+
+    @Override
+    public void unRegisterCheck() {
+        mModel.unRegisterCheck();
+    }
 }

@@ -21,16 +21,19 @@ import io.reactivex.annotations.NonNull;
  * 类描述：
  */
 
-public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeContract.Model{
+public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeContract.Model {
     public HomeModelImpl(HomePresenterImpl homePresenter) {
         super(homePresenter);
         api = APIServiceFactory.getInstance().createService();
     }
+
     private NetApi api;
+
     @Override
     public void getNoReadMsg() {
         api.getNoReadMsg()
-                .compose(TransformersFactory.<Integer>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .compose(TransformersFactory.<Integer>commonTransformer((BaseMVPActivity)
+                        presenter.getView()))
                 .subscribe(new EObserver<Integer>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
@@ -47,7 +50,8 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
     @Override
     public void getContact() {
         api.contactList()
-                .compose(TransformersFactory.<ContactUs>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .compose(TransformersFactory.<ContactUs>commonTransformer((BaseMVPActivity)
+                        presenter.getView()))
                 .subscribe(new EObserver<ContactUs>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
@@ -64,7 +68,8 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
     @Override
     public void checkRead() {
         api.checkRead()
-                .compose(TransformersFactory.<Boolean>commonTransformer((BaseMVPActivity) presenter.getView()))
+                .compose(TransformersFactory.<Boolean>commonTransformer((BaseMVPActivity)
+                        presenter.getView()))
                 .subscribe(new EObserver<Boolean>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
@@ -78,13 +83,22 @@ public class HomeModelImpl extends BaseModel<HomePresenterImpl> implements HomeC
                 });
     }
 
+    UpdateHelper updateHelper;
+
     @Override
     public void checkVersion() {
-        String url = APIServiceFactory.getBaseUrl() + NetApi.Version + ApkUtils.getVersionCode(getContext());
-        UpdateHelper updateHelper = new UpdateHelper.Builder(getContext())
+        String url = APIServiceFactory.getBaseUrl() + NetApi.Version + ApkUtils.getVersionCode
+                (getContext());
+        updateHelper = new UpdateHelper.Builder(getContext())
                 .checkUrl(url)
                 .isHintNewVersion(false)
                 .build();
         updateHelper.check();
+    }
+
+    @Override
+    public void unRegisterCheck() {
+        if (updateHelper != null)
+            updateHelper.onDestory();
     }
 }

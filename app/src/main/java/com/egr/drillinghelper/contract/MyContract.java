@@ -28,6 +28,8 @@ public interface MyContract {
 
         void logoutFail(String msg);
 
+        void getNetFail(String msg);
+
         void getShareContentSuccess(Share share);
     }
 

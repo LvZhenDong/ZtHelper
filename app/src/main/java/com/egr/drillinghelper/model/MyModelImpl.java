@@ -73,7 +73,7 @@ public class MyModelImpl extends BaseModel<MyPresenterImpl> implements MyContrac
                 .subscribe(new EObserver<Share>() {
                     @Override
                     public void onError(ResponseThrowable e, String eMsg) {
-                        presenter.getView().logoutFail(eMsg);
+                        presenter.getView().getNetFail(eMsg);
                     }
 
                     @Override

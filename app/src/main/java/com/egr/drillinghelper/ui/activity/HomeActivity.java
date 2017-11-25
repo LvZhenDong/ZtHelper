@@ -219,6 +219,12 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     }
 
     @Override
+    protected void onDestroy() {
+        presenter.unRegisterCheck();
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - mExitTime) > 2000) {//如果两次按键时间间隔大于2000毫秒，则不退出
             ToastUtils.show(this, getString(R.string.exit_app_pressback_again));

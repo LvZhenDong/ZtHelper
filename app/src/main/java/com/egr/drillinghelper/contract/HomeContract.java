@@ -20,6 +20,8 @@ public interface HomeContract {
         void checkRead();
 
         void checkVersion();
+
+        void unRegisterCheck();
     }
 
     interface View extends IView {
@@ -42,5 +44,7 @@ public interface HomeContract {
         void checkRead();
 
         void checkVersion();
+
+        void unRegisterCheck();
     }
 }

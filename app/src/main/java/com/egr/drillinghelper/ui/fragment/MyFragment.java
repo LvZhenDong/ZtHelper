@@ -25,6 +25,7 @@ import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.ShareDialog;
 import com.egr.drillinghelper.utils.EgrRxBus;
 import com.egr.drillinghelper.utils.GlideUtils;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,15 +100,19 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                 break;
             case R.id.ll_quit:
                 //弹出确认退出dialog
-                Dialog ensureDialog =DialogHelper.openConfirmDialog(getActivity(), R.string.ensure_quit_title,
-                        R.string.ensure_quit_content,false, new DialogHelper.OnDialogClickListener() {
+                Dialog ensureDialog = DialogHelper.openConfirmDialog(getActivity(), R.string
+                                .ensure_quit_title,
+                        R.string.ensure_quit_content, false, new DialogHelper
+                                .OnDialogClickListener() {
                             @Override
                             public void onEnsureClick() {
                                 if (!mDialog.isShowing())
                                     mDialog.show();
 
-                                MySharePreferencesManager.getInstance().remove(MySharePreferencesManager.USER_NAME);
-                                MySharePreferencesManager.getInstance().remove(MySharePreferencesManager.USER_PSWD);
+                                MySharePreferencesManager.getInstance().remove
+                                        (MySharePreferencesManager.USER_NAME);
+                                MySharePreferencesManager.getInstance().remove
+                                        (MySharePreferencesManager.USER_PSWD);
                                 presenter.quit();
                             }
 
@@ -141,11 +146,11 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
 
     @Override
     public void getUserInfoSuccess(UserInfo userInfo) {
-        if(userInfo == null)
+        if (userInfo == null)
             return;
         tvName.setText(userInfo.getName());
         tvCompany.setText(userInfo.getCompany());
-        GlideUtils.loadCircleImg(userInfo.getPhoto(),ivHead);
+        GlideUtils.loadCircleImg(userInfo.getPhoto(), ivHead);
     }
 
     @Override
@@ -170,10 +175,16 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
     }
 
     @Override
+    public void getNetFail(String msg) {
+        mDialog.dismiss();
+        ToastUtils.show(getActivity(), msg);
+    }
+
+    @Override
     public void getShareContentSuccess(Share share) {
         mDialog.dismiss();
-        ShareDialog shareDialog=new ShareDialog();
-        shareDialog.setContent(getActivity(),share);
+        ShareDialog shareDialog = new ShareDialog();
+        shareDialog.setContent(getActivity(), share);
         shareDialog.show(getChildFragmentManager());
     }
 
