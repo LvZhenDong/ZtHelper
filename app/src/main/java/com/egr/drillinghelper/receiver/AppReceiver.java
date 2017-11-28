@@ -125,6 +125,11 @@ public class AppReceiver extends BroadcastReceiver {
                     public void accept(BaseResponseBean baseResponseBean) throws Exception {
 
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
                 });
     }
 
