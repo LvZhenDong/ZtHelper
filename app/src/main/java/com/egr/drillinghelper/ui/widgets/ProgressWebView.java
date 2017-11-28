@@ -1,13 +1,10 @@
 package com.egr.drillinghelper.ui.widgets;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -43,7 +40,6 @@ public class ProgressWebView extends LinearLayout {
         super(context, attrs, defStyle);
         this.mContext = context;
         initView(context);
-        initWebview();
     }
 
     private void initView(Context context) {
@@ -83,49 +79,5 @@ public class ProgressWebView extends LinearLayout {
 
     public void goBack() {
         mWebView.goBack();
-    }
-
-    public void reload() {
-        mWebView.reload();
-    }
-
-    public void destroy() {
-        if (mWebView != null) {
-            mWebView.destroy();
-            mWebView = null;
-        }
-    }
-
-    private void initWebview() {
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        // 设置可以访问文件
-        webSettings.setDomStorageEnabled(true);
-        // 设置WebViewClient
-        mWebView.setWebViewClient(new WebViewClient() {
-            // 页面开始加载
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                mProgressBar.setVisibility(View.VISIBLE);
-                super.onPageStarted(view, url, favicon);
-            }
-
-            // 页面加载完成
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                mProgressBar.setVisibility(View.GONE);
-                super.onPageFinished(view, url);
-            }
-        });
-
-        // 设置WebChromeClient
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            // 设置网页加载的进度条
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                mProgressBar.setProgress(newProgress);
-                super.onProgressChanged(view, newProgress);
-            }
-        });
     }
 }

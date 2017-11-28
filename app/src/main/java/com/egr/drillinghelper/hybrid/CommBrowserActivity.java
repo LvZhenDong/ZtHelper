@@ -3,16 +3,19 @@ package com.egr.drillinghelper.hybrid;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.ui.base.BaseActivity;
@@ -41,7 +44,6 @@ public class CommBrowserActivity extends BaseActivity {
     private String url,title;
     private Intent intent;
     private WebSettings webSettings;
-    private boolean isActionbarEnable;
 
     public static void start(Context context,String url,String title){
         Intent intent=new Intent(context, CommBrowserActivity.class);
@@ -60,18 +62,14 @@ public class CommBrowserActivity extends BaseActivity {
         intent = getIntent();
         url = intent.getStringExtra("url");
         title = intent.getStringExtra("title");
-        isActionbarEnable = intent.getBooleanExtra("isActionbarEnable", false);
 
         initActionBar();
         initWebView();
-//        LLRxBus.subscribe(this, String.class, consumer);
-//        LLCookieManager.syncCookie(this, url);
         commbrowserWebview.loadUrl(url);
     }
 
     private void initActionBar() {
-        setupActionBar(R.string.browser_title_default);
-        setActionBarTitle(title);
+        setupActionBar(title);
         setActionBarLeftIcon(R.drawable.ic_egr_back, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,19 +89,28 @@ public class CommBrowserActivity extends BaseActivity {
     protected void initWebView() {
         webSettings = commbrowserWebview.getSetting();
         commbrowserWebview.getmWebView().addJavascriptInterface(new JSInterfaceSO(this), "JSInterfaceSO");
-        commbrowserWebview.getmWebView().setWebViewClient(new LWebViewClient());
+        commbrowserWebview.getmWebView().setWebViewClient(new WebViewClient(){
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if (commbrowserWebview != null && commbrowserWebview.getmProgressview() != null) {
+                    commbrowserWebview.getmProgressview().setVisibility(View.VISIBLE);
+                }
+            }
+        });
         commbrowserWebview.getmWebView().setWebChromeClient(new LWebChromeClient());
-        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);         //提高渲染优先级
         webSettings.setCacheMode(NetworkUtils.isNetworkConnected(this) ? WebSettings.LOAD_DEFAULT : WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setAppCacheEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setAllowFileAccess(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowContentAccess(true);
 //        设置自适应屏幕，两者合用
         webSettings.setUseWideViewPort(true);  //将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        webSettings.setLoadWithOverviewMode(true); // 尽可能大的视野展示页面
+        //低版本关闭硬件加速，防止花屏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // chromium, enable hardware acceleration
             commbrowserWebview.getmWebView().setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -116,17 +123,19 @@ public class CommBrowserActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        WebView mWebView=commbrowserWebview.getmWebView();
+        if (mWebView != null) {
+            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            mWebView.clearHistory();
+
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mWebView.destroy();
+            mWebView = null;
+        }
         super.onDestroy();
-        if (commbrowserWebview != null)
-            commbrowserWebview.destroy();
     }
 
     public class LWebChromeClient extends WebChromeClient {
-
-        @Override
-        public void onReceivedTitle(WebView webView, String s) {
-
-        }
 
         @Override
         // android 5.0 这里需要使用android5.0 sdk
@@ -177,24 +186,6 @@ public class CommBrowserActivity extends BaseActivity {
             return true;
         }
 
-        // For Android 3.0+
-        public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-            mUploadMessage = uploadMsg;
-            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            i.addCategory(Intent.CATEGORY_OPENABLE);
-            i.setType("image/*");
-            startActivityForResult(Intent.createChooser(i, getString(R.string.choose_img)), FILECHOOSER_RESULTCODE);
-        }
-
-        // For Android 3.0+
-        public void openFileChooser(ValueCallback uploadMsg, String acceptType) {
-            mUploadMessage = uploadMsg;
-            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            i.addCategory(Intent.CATEGORY_OPENABLE);
-            i.setType("image/*");
-            startActivityForResult(Intent.createChooser(i, getString(R.string.choose_img)), FILECHOOSER_RESULTCODE);
-        }
-
         //For Android 4.1
         public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
             mUploadMessage = uploadMsg;
@@ -219,6 +210,7 @@ public class CommBrowserActivity extends BaseActivity {
     public void onBackPressed() {
         pressBack();
     }
+
     private void pressBack() {
         if (commbrowserWebview.canGoBack()) {
                 commbrowserWebview.goBack();

@@ -256,11 +256,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param actionBarTitleResId
      */
     protected void setupActionBar(int actionBarTitleResId) {
+        String text = getString(actionBarTitleResId);
+        setupActionBar(text);
+    }
+
+    protected void setupActionBar(String text){
         if (actionBar == null) {
             return;
         }
         loadView();
-        title.setText(actionBarTitleResId);
+        title.setText(text);
         rightIv.setVisibility(View.GONE);
         leftIv.setVisibility(View.GONE);
     }
