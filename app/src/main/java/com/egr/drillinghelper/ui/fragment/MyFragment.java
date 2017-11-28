@@ -94,9 +94,12 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
                 baseStartActivity(AboutEgrActivity.class);
                 break;
             case R.id.ll_share:
-                mDialog.show();
-                presenter.getShareContent();
-
+                if (mShare == null) {
+                    mDialog.show();
+                    presenter.getShareContent();
+                } else {
+                    getShareContentSuccess(mShare);
+                }
                 break;
             case R.id.ll_quit:
                 //弹出确认退出dialog
@@ -180,8 +183,11 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
         ToastUtils.show(getActivity(), msg);
     }
 
+    Share mShare;
+
     @Override
     public void getShareContentSuccess(Share share) {
+        mShare = share;
         mDialog.dismiss();
         ShareDialog shareDialog = new ShareDialog();
         shareDialog.setContent(getActivity(), share);
