@@ -19,6 +19,7 @@ import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.ui.widgets.RvInScrollView;
 import com.egr.drillinghelper.utils.GlideUtils;
 import com.egr.drillinghelper.utils.PhoneUtils;
+import com.egr.drillinghelper.utils.ToastUtils;
 
 import butterknife.BindView;
 
@@ -95,6 +96,7 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     @Override
     public void getListFail(String msg) {
         mDialog.dismiss();
+        ToastUtils.show(this,msg);
     }
 
     @Override
