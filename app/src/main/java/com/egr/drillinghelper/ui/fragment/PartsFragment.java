@@ -24,9 +24,8 @@ import com.egr.drillinghelper.ui.activity.PartsListActivity;
 import com.egr.drillinghelper.ui.activity.SearchActivity;
 import com.egr.drillinghelper.ui.adapter.ChoosePartsAdapter;
 import com.egr.drillinghelper.ui.adapter.MallAdapter;
+import com.egr.drillinghelper.ui.widgets.RvInScrollView;
 import com.egr.drillinghelper.utils.ToastUtils;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ import butterknife.OnClick;
 public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPresenterImpl>
         implements PartsContract.View {
     @BindView(R.id.rv_parts)
-    LRecyclerView rvParts;
+    RvInScrollView rvParts;
     @BindView(R.id.tv_search)
     TextView tvSearch;
     //    @BindView(R.id.et_search)
@@ -56,7 +55,6 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
     RelativeLayout rlChooseParts;
 
     String keyword;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private ChoosePartsAdapter mAdapter;
     private MallAdapter mallAdapter;
 
@@ -113,14 +111,12 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
                 PartsListActivity.start(getActivity(),position,resId[position]);
             }
         });
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
 
 //        rvParts.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        rvParts.setNestedScrollingEnabled(false);
         rvParts.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        rvParts.setAdapter(mLRecyclerViewAdapter);  //LZD
+        rvParts.setAdapter(mAdapter);  //LZD
         mAdapter.setDataList(list);
-        rvParts.setLoadMoreEnabled(false);
-        rvParts.setPullRefreshEnabled(false);
     }
 
     private void initSearchEt() {
@@ -157,13 +153,11 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
 
     @Override
     public void getPastsFail(String msg) {
-        rvParts.refreshComplete(10);
         ToastUtils.show(getActivity(), msg);
     }
 
     @Override
     public void getPartsListSuccess(BasePage<Store> store) {
-        rvParts.refreshComplete(10);
 
 //        if (store.getCurrent() > 1) {
 //            mAdapter.addAll(store.getRecords());
@@ -174,13 +168,11 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
 
     @Override
     public void noMoreData() {
-        rvParts.refreshComplete(10);
         ToastUtils.show(getActivity(), R.string.no_more_data);
     }
 
     @Override
     public void showParts(List<Store> list) {
-        rvParts.refreshComplete(10);
 
 //        mAdapter.setDataList(list);
 

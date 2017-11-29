@@ -20,50 +20,62 @@
         <include layout="@layout/search_layout" />
     </LinearLayout>
 
-    <TextView
+    <ScrollView
+        android:fillViewport="true"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/bg_e6"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="@string/mall"
-        android:textColor="@color/tv666" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/bg_e6"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="@string/mall"
+                android:textColor="@color/tv666" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rl_mall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_mall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
 
-    <RelativeLayout
-        android:id="@+id/rl_choose_parts"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/bg_e6"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:textColor="@color/tv666">
+            <RelativeLayout
+                android:id="@+id/rl_choose_parts"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/bg_e6"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:textColor="@color/tv666">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/parts_title" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/parts_title" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="@string/all" />
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/all" />
+            </RelativeLayout>
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/rv_parts"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <com.egr.drillinghelper.ui.widgets.RvInScrollView
+                android:id="@+id/rv_parts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

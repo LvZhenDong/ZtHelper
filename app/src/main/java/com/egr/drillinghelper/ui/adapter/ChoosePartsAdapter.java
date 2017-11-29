@@ -63,7 +63,7 @@ public class ChoosePartsAdapter extends BaseListAdapter<ShareIcon, ChoosePartsAd
         @Override
         public void onClick(View v) {
             if (listener != null)
-                listener.onItemClick(getAdapterPosition()-1);
+                listener.onItemClick(getAdapterPosition());
         }
     }
 }
