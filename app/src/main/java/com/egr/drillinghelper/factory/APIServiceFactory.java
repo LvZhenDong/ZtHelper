@@ -43,7 +43,7 @@ public class APIServiceFactory {
     }
 
     public static void setBaseUrl(String url) {
-        baseUrl = "http://" + url + "/egr/api/";
+        baseUrl = "http://" + url + "/api/";
     }
 
     /**
