@@ -21,6 +21,7 @@ import com.egr.drillinghelper.bean.base.BasePage;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
 import com.egr.drillinghelper.bean.response.Message;
 import com.egr.drillinghelper.bean.response.ServiceMsg;
+import com.egr.drillinghelper.common.RxBusConstant;
 import com.egr.drillinghelper.contract.ServiceContract;
 import com.egr.drillinghelper.presenter.ServicePresenterImpl;
 import com.egr.drillinghelper.ui.adapter.ServiceAdapter;
@@ -296,6 +297,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
             mAdapter.setDataList(data.getRecords());
             rvMsg.scrollToPosition(mAdapter.getDataList().size());
         }
+        EgrRxBus.post(RxBusConstant.UPDATE_MSG);
     }
 
     @Override
@@ -317,6 +319,7 @@ public class ServiceActivity extends BaseMVPActivity<ServiceContract.View,
 
         mAdapter.add(data.getRecords().get(0));
         rvMsg.smoothScrollToPosition(mAdapter.getDataList().size());
+        EgrRxBus.post(RxBusConstant.UPDATE_MSG);
     }
 
     @Override

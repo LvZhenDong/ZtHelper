@@ -68,6 +68,7 @@ public class AppReceiver extends BroadcastReceiver {
                     isTopActivity(context, "com.egr.drillinghelper.ui.activity.ServiceActivity")) {
                 EgrRxBus.post(message);
             } else {     //显示顶部通知
+                EgrRxBus.post(RxBusConstant.UPDATE_MSG);
                 showServiceMessage(context, message, string);
                 EgrRxBus.post(RxBusConstant.NEW_SERVICE_MSG);
             }

@@ -123,6 +123,7 @@ public class MessageActivity extends BaseMVPActivity<MessageContract.View,
         mDialog.dismiss();
         if(deletePos != -1)
             mAdapter.remove(deletePos);
+        EgrRxBus.post(RxBusConstant.UPDATE_MSG);
     }
 
     @Override
