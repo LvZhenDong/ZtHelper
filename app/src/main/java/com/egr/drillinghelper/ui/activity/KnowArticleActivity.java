@@ -1,6 +1,7 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.egr.drillinghelper.R;
@@ -17,8 +18,8 @@ import butterknife.BindView;
  * 类描述：知识问答详情
  */
 
-public class KnowArticleActivity extends BaseMVPActivity<KnowArticleContract.View,KnowArticlePresenterImpl>
-implements KnowArticleContract.View{
+public class KnowArticleActivity extends BaseMVPActivity<KnowArticleContract.View, KnowArticlePresenterImpl>
+        implements KnowArticleContract.View {
     @BindView(R.id.wv)
     WebView webView;
 
@@ -35,16 +36,18 @@ implements KnowArticleContract.View{
 
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false); //不显示webview缩放按钮
 
         String content = getIntent().getStringExtra(KEY_INTENT);
-        boolean isCache=getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN,false);
+        boolean isCache = getIntent().getBooleanExtra(KEY_INTENT_BOOLEAN, false);
 
         if (isCache) {
             content = StringUtils.updateHtmlTag(content, "img", "src");
         }
-        webView.loadDataWithBaseURL(null,content,null,"utf-8",null);
+        content = StringUtils.getNewContent(content);
+        webView.loadDataWithBaseURL(null, content, null, "utf-8", null);
 
         //单纯为了后台统计用户查看问题次数
         presenter.getContent(getIntent().getStringExtra("id"));

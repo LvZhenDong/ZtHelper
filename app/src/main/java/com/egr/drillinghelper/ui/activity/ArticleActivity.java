@@ -36,9 +36,10 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
 
-        WebSettings settings=webView.getSettings();
+        WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(true);
         settings.setJavaScriptEnabled(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false); //不显示webview缩放按钮
 //        settings.setUseWideViewPort(true);
@@ -66,6 +67,7 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
             if (article.isCache()) {
                 content = StringUtils.updateHtmlTag(content, "img", "src");
             }
+            content = StringUtils.getNewContent(content);
             webView.loadDataWithBaseURL("", content, "text/html", "utf-8", "");
         }
 

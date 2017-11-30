@@ -6,6 +6,11 @@ import android.text.style.RelativeSizeSpan;
 
 import com.egr.drillinghelper.common.MyConstants;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -167,4 +172,21 @@ public class StringUtils {
         return false;
     }
 
+    /**
+     * 将html文本内容中包含img标签的图片，宽度变为屏幕宽度，高度根据宽度比例自适应
+     **/
+    public static String getNewContent(String htmlText){
+        try {
+            Document doc= Jsoup.parse(htmlText);
+            Elements elements=doc.getElementsByTag("img");
+            for (Element element : elements) {
+                element.attr("width","100%").attr("height","auto");
+            }
+
+            L.i(doc.toString());
+            return doc.toString();
+        } catch (Exception e) {
+            return htmlText;
+        }
+    }
 }
