@@ -27,7 +27,6 @@ import com.egr.drillinghelper.presenter.SearchPresenterImpl;
 import com.egr.drillinghelper.ui.adapter.SearchResultAdapter;
 import com.egr.drillinghelper.ui.base.BaseActivity;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
-import com.egr.drillinghelper.ui.widgets.DialogHelper;
 import com.egr.drillinghelper.ui.widgets.LvEditText;
 import com.egr.drillinghelper.utils.AnimViewWrapper;
 import com.egr.drillinghelper.utils.DensityUtils;
@@ -202,10 +201,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.View,
         switch (type) {
             case MyConstants.SEARCH_TYPE_EXPLAIN:   //使用说明
                 Explain explainOut = mExplainCatalogs.get(position);
-                String id = explainOut.getId();
-                Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
-                intent.putExtra(KEY_INTENT, id);
-                startActivity(intent);
+                ExplainCatalogActivity.start(this,explainOut.getId(),explainOut.getTitle());
                 break;
             case MyConstants.SEARCH_TYPE_KNOWLEDGE: //知识问答
                 Intent intentKnow = new Intent(this, KnowArticleActivity.class);

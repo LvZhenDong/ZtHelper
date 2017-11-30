@@ -99,10 +99,8 @@ public class ExplainFragment extends BaseMVPFragment<ExplainContract.View,
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id = mAdapter.getDataList().get(position).getId();
-                Intent intent = new Intent(getActivity(), ExplainCatalogActivity.class);
-                intent.putExtra(KEY_INTENT, id);
-                startActivity(intent);
+                Explain item=mAdapter.getDataList().get(position);
+                ExplainCatalogActivity.start(getActivity(),item.getId(),item.getTitle());
             }
         });
 

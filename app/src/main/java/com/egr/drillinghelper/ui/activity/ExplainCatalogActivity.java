@@ -1,5 +1,7 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +31,12 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
     RecyclerView rvCatalog;
     private ExplainCatalogAdapter mAdapter;
 
+    public static void start(Context context,String id,String title) {
+        Intent starter = new Intent(context, ExplainCatalogActivity.class);
+        starter.putExtra(KEY_INTENT,id);
+        starter.putExtra("title",title);
+        context.startActivity(starter);
+    }
     @Override
     public int returnLayoutID() {
         return R.layout.activity_explain_catalog;
@@ -36,11 +44,11 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        setUmengAnalyze(R.string.explain);
-        setupActionBar(R.string.explain, true);
-        setActionbarBackground(R.color.white);
-
         String id = getIntent().getStringExtra(KEY_INTENT);
+        String title=getIntent().getStringExtra("title");
+        setUmengAnalyze(R.string.explain);
+        setupActionBar(title, true);
+        setActionbarBackground(R.color.white);
 
         mAdapter = new ExplainCatalogAdapter(this,id);
         rvCatalog.setAdapter(mAdapter);
