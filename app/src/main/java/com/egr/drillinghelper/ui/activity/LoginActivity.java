@@ -70,7 +70,6 @@ public class LoginActivity extends BaseMVPActivity<LoginContract.View, LoginPres
             }
         }
         setUmengAnalyze(R.string.login);
-        disableSwipeBack();
         Glide.with(this).load(R.drawable.logo).into(ivLogo);
         mDialog = DialogHelper.openiOSPbDialog(this, getString(R.string.logining));
 

@@ -15,6 +15,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/tv999"
         android:textSize="16sp" />
 </RelativeLayout>

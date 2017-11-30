@@ -7,7 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.utils.DensityUtils;
-import com.jude.swipbackhelper.SwipeBackHelper;
 import com.michaelflisar.rxbus2.rx.RxDisposableManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -49,7 +47,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //强制竖屏
-        SwipeBackHelper.onCreate(this);
         setContentView(returnLayoutID());
         actionBar = getSupportActionBar();
         unbinder = ButterKnife.bind(this);
@@ -66,17 +63,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         this.mUmengAnalyze=getString(strId);
     }
 
-    /**
-     * 关闭左滑返回上级
-     */
-    public void disableSwipeBack(){
-        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
-    }
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        SwipeBackHelper.onPostCreate(this);
-    }
+
 
     @Override
     protected void onResume() {
@@ -471,7 +458,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SwipeBackHelper.onDestroy(this);
         unbinder.unbind();
         RxDisposableManager.unsubscribe(this);
     }

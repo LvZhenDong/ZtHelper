@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="actionBarSize">@dimen/actionbarSize</item>
-        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
     </style>
 
     <style name="NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -19,7 +18,6 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowAnimationStyle">@style/SlideRightAnimation</item>
     </style>
 
     <!--用于禁止左滑退出的theme-->

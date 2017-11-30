@@ -96,7 +96,6 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        disableSwipeBack();
         setupActionBar(ContextCompat.getDrawable(this, R.drawable.bg_home_logo), false);
         setActionbarBackground(R.color.white);
         setActionBarLeftIcon(R.drawable.ic_home_msg_gray, homeMsgListener);
