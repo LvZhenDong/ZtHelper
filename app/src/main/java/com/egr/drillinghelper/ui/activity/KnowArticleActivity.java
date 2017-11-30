@@ -78,7 +78,8 @@ public class KnowArticleActivity extends BaseMVPActivity<KnowArticleContract.Vie
 
     private void addImageClickListener() {
         // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
-        webView.loadUrl("javascript:(function(){" +
+        if(webView != null)
+            webView.loadUrl("javascript:(function(){" +
                 "var objs = document.getElementsByTagName(\"img\"); " +
                 "for(var i=0;i<objs.length;i++)  " +
                 "{"

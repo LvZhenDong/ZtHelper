@@ -57,7 +57,6 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
         String title=getIntent().getStringExtra("title");
         setUmengAnalyze(R.string.ask_knowledge);
         setupActionBar(title, true);
-        adjustTvTextSize(getTitleTv(),500,title);
         setActionbarBackground(R.color.white);
 
         mAdapter=new KnowCatalogAdapter(this);

@@ -51,7 +51,6 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         String title=getIntent().getStringExtra("title");
         setUmengAnalyze(R.string.explain);
         setupActionBar(title, true);
-        adjustTvTextSize(getTitleTv(),500,title);
         setActionbarBackground(R.color.white);
 
         mAdapter = new ExplainCatalogAdapter(this,id);
