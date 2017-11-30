@@ -139,4 +139,6 @@
     <string name="parts_title">耗材配件</string>
     <string name="all">全部</string>
     <string name="back_home">返回首页</string>
+    <string name="no_contact_phone">暂无客服联系方式</string>
+    <string name="no_share_info">暂未获取到分享内容</string>
 </resources>

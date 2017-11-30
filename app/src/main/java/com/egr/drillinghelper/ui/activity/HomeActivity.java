@@ -246,8 +246,13 @@ public class HomeActivity extends BaseMVPActivity<HomeContract.View,
     @Override
     public void getContactSuccess(String phoneNum) {
         mDialog.dismiss();
-        phone = phoneNum;
-        PhoneUtils.callPhone(this, phoneNum);
+        if(TextUtils.isEmpty(phoneNum)){
+            ToastUtils.show(this,R.string.no_contact_phone);
+        }else {
+            phone = phoneNum;
+            PhoneUtils.callPhone(this, phoneNum);
+        }
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.egr.drillinghelper.ui.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -187,8 +188,14 @@ public class MyFragment extends BaseMVPFragment<MyContract.View, MyPresenterImpl
 
     @Override
     public void getShareContentSuccess(Share share) {
-        mShare = share;
         mDialog.dismiss();
+        if(share == null || TextUtils.isEmpty(share.getQrcode())){
+            ToastUtils.show(getActivity(),R.string.no_share_info);
+
+            return;
+        }
+        mShare = share;
+
         ShareDialog shareDialog = new ShareDialog();
         shareDialog.setContent(getActivity(), share);
         shareDialog.show(getChildFragmentManager());
