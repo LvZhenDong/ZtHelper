@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:ellipsize="end"
-        android:maxLength="8"
         android:textColor="@color/tv333"
         android:textSize="@dimen/actionbar_titlesize" />
 

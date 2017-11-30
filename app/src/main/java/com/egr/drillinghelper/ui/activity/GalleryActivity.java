@@ -3,10 +3,13 @@ package com.egr.drillinghelper.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.ui.base.BaseActivity;
+import com.egr.drillinghelper.utils.GlideUtils;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,8 @@ public class GalleryActivity extends BaseActivity {
     GalleryViewPager viewpager;
     @BindView(R.id.tv_number)
     TextView tvNum;
+    @BindView(R.id.iv_gif)
+    ImageView mIvGif;
     private ArrayList<String> images;
 
     public static void start(Context context, ArrayList<String> imgList) {
@@ -43,7 +48,15 @@ public class GalleryActivity extends BaseActivity {
     public void TODO(Bundle savedInstanceState) {
         setUmengAnalyze(R.string.gallery);
         images = (ArrayList<String>) getIntent().getSerializableExtra(KEY_INTENT);
-        initViewPager();
+        if(images.get(0).endsWith("gif")){
+            viewpager.setVisibility(View.GONE);
+            tvNum.setVisibility(View.GONE);
+            mIvGif.setVisibility(View.VISIBLE);
+            GlideUtils.load(images.get(0),mIvGif);
+        }else {
+            initViewPager();
+        }
+
     }
 
     private void initViewPager() {

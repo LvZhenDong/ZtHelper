@@ -1,12 +1,15 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.contract.ArticleContract;
+import com.egr.drillinghelper.hybrid.JSInterfaceSO;
 import com.egr.drillinghelper.presenter.ArticlePresenterImpl;
 import com.egr.drillinghelper.ui.base.BaseMVPActivity;
 import com.egr.drillinghelper.utils.StringUtils;
@@ -30,12 +33,22 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         return R.layout.activity_article;
     }
 
+    @SuppressLint("JavascriptInterface")
     @Override
     public void TODO(Bundle savedInstanceState) {
         setUmengAnalyze(R.string.explain);
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
 
+
+        webView.addJavascriptInterface(new JSInterfaceSO(this), "JSInterfaceSO");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                addImageClickListener();
+            }
+        });
         WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(true);
         settings.setJavaScriptEnabled(true);
@@ -77,5 +90,19 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
     public void getArticleFail(String msg) {
         mDialog.dismiss();
         ToastUtils.show(this, msg);
+    }
+
+    private void addImageClickListener() {
+        // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+        webView.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName(\"img\"); " +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "    objs[i].onclick=function()  " +
+                "    {  "
+                + "        window.JSInterfaceSO.openImage(this.src);  " +
+                "    }  " +
+                "}" +
+                "})()");
     }
 }

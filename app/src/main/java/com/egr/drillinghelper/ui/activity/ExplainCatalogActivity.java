@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
+import android.util.TypedValue;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.ExplainCatalog;
@@ -48,6 +51,7 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
         String title=getIntent().getStringExtra("title");
         setUmengAnalyze(R.string.explain);
         setupActionBar(title, true);
+        adjustTvTextSize(getTitleTv(),500,title);
         setActionbarBackground(R.color.white);
 
         mAdapter = new ExplainCatalogAdapter(this,id);
@@ -78,6 +82,25 @@ public class ExplainCatalogActivity extends BaseMVPActivity<ExplainCatalogContra
     public void getCatalogFail(String msg) {
         mDialog.dismiss();
         ToastUtils.show(this, msg);
+    }
+
+    private void adjustTvTextSize(TextView tv, int maxWidth, String text) {
+        int avaiWidth = maxWidth - tv.getPaddingLeft() - tv.getPaddingRight() - 10;
+
+        if (avaiWidth <= 0) {
+            return;
+        }
+
+        TextPaint textPaintClone = new TextPaint(tv.getPaint());
+        // note that Paint text size works in px not sp
+        float trySize = textPaintClone.getTextSize();
+
+        while (textPaintClone.measureText(text) > avaiWidth) {
+            trySize--;
+            textPaintClone.setTextSize(trySize);
+        }
+
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, trySize);
     }
 
 }

@@ -129,6 +129,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
+    public TextView getTitleTv(){
+        return title;
+    }
+
     /**
      * set actionbar background
      *
