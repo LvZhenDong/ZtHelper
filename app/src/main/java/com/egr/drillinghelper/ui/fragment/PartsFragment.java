@@ -45,8 +45,8 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
     RvInScrollView rvParts;
     @BindView(R.id.tv_search)
     TextView tvSearch;
-    //    @BindView(R.id.et_search)
-//    LvEditText etSearch;
+    @BindView(R.id.tv_mall)
+    TextView tvMall;
     @BindView(R.id.ll_search)
     LinearLayout llSearch;
     @BindView(R.id.rl_mall)
@@ -153,6 +153,7 @@ public class PartsFragment extends BaseMVPFragment<PartsContract.View, PartsPres
 
     @Override
     public void getPastsFail(String msg) {
+        tvMall.setVisibility(View.GONE);
         ToastUtils.show(getActivity(), msg);
     }
 
