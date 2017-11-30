@@ -3,7 +3,9 @@ package com.egr.drillinghelper.ui.activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,10 +45,16 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
     LinearLayout llService;
     @BindView(R.id.ll_sales)
     LinearLayout llSales;
+    @BindView(R.id.ll_phone)
+    LinearLayout llPhone;
     @BindView(R.id.iv_qr)
     ImageView ivQr;
     @BindView(R.id.sv)
     ScrollView mSv;
+    @BindView(R.id.cv_qr)
+    CardView mCvQr;
+    @BindView(R.id.cv_phone)
+    CardView mCvPhone;
     String phone;
     private View.OnClickListener onPhoneClickListener = new View.OnClickListener() {
         @Override
@@ -108,13 +116,25 @@ public class ContactUsActivity extends BaseMVPActivity<ContactUsContract.View,
 
             mAdapter.setDataList(contactUs.getContactList());
             if (contactUs.getAboutUs() != null) {
-                tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
-                tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+                if(!TextUtils.isEmpty(contactUs.getAboutUs().getSalesTel())){
+                    mCvPhone.setVisibility(View.VISIBLE);
+                    llSales.setVisibility(View.VISIBLE);
+                    tvSalesPhone.setText(contactUs.getAboutUs().getSalesTel());
+                    llSales.setOnClickListener(onPhoneClickListener);
+                }
 
-                llSales.setOnClickListener(onPhoneClickListener);
-                llService.setOnClickListener(onPhoneClickListener);
+                if(!TextUtils.isEmpty(contactUs.getAboutUs().getServiceTel())){
+                    mCvPhone.setVisibility(View.VISIBLE);
+                    llService.setVisibility(View.VISIBLE);
+                    tvServicePhone.setText(contactUs.getAboutUs().getServiceTel());
+                    llService.setOnClickListener(onPhoneClickListener);
+                }
 
-                GlideUtils.load(contactUs.getAboutUs().getQrcode(),ivQr);
+                if(!TextUtils.isEmpty(contactUs.getAboutUs().getQrcode())){
+                    mCvQr.setVisibility(View.VISIBLE);
+                    GlideUtils.load(contactUs.getAboutUs().getQrcode(),ivQr);
+                }
+
             }
         }
 

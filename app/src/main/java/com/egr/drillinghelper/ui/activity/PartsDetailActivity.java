@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.response.StoreDetail;
 import com.egr.drillinghelper.contract.PartsDetailContract;
 import com.egr.drillinghelper.hybrid.CommBrowserActivity;
@@ -70,6 +71,12 @@ public class PartsDetailActivity extends BaseMVPActivity<PartsDetailContract.Vie
         setUmengAnalyze(R.string.parts_detail);
         setupActionBar(R.string.parts_detail, true);
         setActionbarBackground(R.color.white);
+        setActionBarRightText(R.string.back_home, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EgrAppManager.getInstance().finishOtherActivity(HomeActivity.class);
+            }
+        });
 
         String id = getIntent().getStringExtra(KEY_INTENT);
         mAdapter = new PartsDetailAdapter(this);
