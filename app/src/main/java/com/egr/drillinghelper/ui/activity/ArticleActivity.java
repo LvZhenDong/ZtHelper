@@ -2,11 +2,13 @@ package com.egr.drillinghelper.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.bean.response.Article;
 import com.egr.drillinghelper.contract.ArticleContract;
 import com.egr.drillinghelper.hybrid.JSInterfaceSO;
@@ -39,7 +41,12 @@ public class ArticleActivity extends BaseMVPActivity<ArticleContract.View,
         setUmengAnalyze(R.string.explain);
         setupActionBar(R.string.explain, true);
         setActionbarBackground(R.color.white);
-
+        setActionBarRightText(R.string.back_home, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EgrAppManager.getInstance().finishOtherActivity(HomeActivity.class);
+            }
+        });
 
         webView.addJavascriptInterface(new JSInterfaceSO(this), "JSInterfaceSO");
         webView.setWebViewClient(new WebViewClient(){

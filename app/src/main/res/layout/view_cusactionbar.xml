@@ -56,10 +56,11 @@
             android:layout_height="match_parent"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
-            android:gravity="center"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
-            android:textSize="@dimen/actionbar_title_rightsize"
+            android:textSize="14sp"
             android:visibility="gone" />
     </FrameLayout>
 

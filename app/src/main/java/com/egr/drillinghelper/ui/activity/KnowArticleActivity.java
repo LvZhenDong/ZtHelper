@@ -1,11 +1,13 @@
 package com.egr.drillinghelper.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.egr.drillinghelper.R;
+import com.egr.drillinghelper.app.EgrAppManager;
 import com.egr.drillinghelper.contract.KnowArticleContract;
 import com.egr.drillinghelper.hybrid.JSInterfaceSO;
 import com.egr.drillinghelper.presenter.KnowArticlePresenterImpl;
@@ -35,6 +37,12 @@ public class KnowArticleActivity extends BaseMVPActivity<KnowArticleContract.Vie
         setUmengAnalyze(R.string.ask_knowledge_detail);
         setupActionBar(R.string.ask_knowledge_detail, true);
         setActionbarBackground(R.color.white);
+        setActionBarRightText(R.string.back_home, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EgrAppManager.getInstance().finishOtherActivity(HomeActivity.class);
+            }
+        });
 
         webView.addJavascriptInterface(new JSInterfaceSO(this), "JSInterfaceSO");
         webView.setWebViewClient(new WebViewClient(){

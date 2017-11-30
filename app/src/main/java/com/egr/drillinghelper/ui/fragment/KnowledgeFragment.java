@@ -99,10 +99,8 @@ public class KnowledgeFragment extends BaseMVPFragment<KnowContract.View, KnowPr
             @Override
             public void onItemClick(View view, int position) {
 
-                String id = mAdapter.getDataList().get(position).getId();
-                Intent intent = new Intent(getActivity(), KnowCatalogActivity.class);
-                intent.putExtra(KEY_INTENT, id);
-                startActivity(intent);
+                Explain item=mAdapter.getDataList().get(position);
+                KnowCatalogActivity.start(getActivity(),item.getId(),item.getTitle());
             }
         });
 

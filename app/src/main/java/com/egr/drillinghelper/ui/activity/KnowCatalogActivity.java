@@ -1,8 +1,13 @@
 package com.egr.drillinghelper.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
+import android.util.TypedValue;
+import android.widget.TextView;
 
 import com.egr.drillinghelper.R;
 import com.egr.drillinghelper.bean.response.KnowCatalog;
@@ -30,6 +35,13 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
 
     private KnowCatalogAdapter mAdapter;
 
+    public static void start(Context context, String id, String title) {
+        Intent starter = new Intent(context, KnowCatalogActivity.class);
+        starter.putExtra(KEY_INTENT,id);
+        starter.putExtra("title",title);
+        context.startActivity(starter);
+    }
+
     @Override
     public KnowCatalogPresenterImpl createPresenter() {
         return new KnowCatalogPresenterImpl();
@@ -41,11 +53,12 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
 
     @Override
     public void TODO(Bundle savedInstanceState) {
-        setUmengAnalyze(R.string.ask_knowledge);
-        setupActionBar(R.string.ask_knowledge, true);
-        setActionbarBackground(R.color.white);
-
         String id = getIntent().getStringExtra(KEY_INTENT);
+        String title=getIntent().getStringExtra("title");
+        setUmengAnalyze(R.string.ask_knowledge);
+        setupActionBar(title, true);
+        adjustTvTextSize(getTitleTv(),500,title);
+        setActionbarBackground(R.color.white);
 
         mAdapter=new KnowCatalogAdapter(this);
         rvCatalog.setAdapter(mAdapter);
@@ -78,5 +91,24 @@ public class KnowCatalogActivity extends BaseMVPActivity<KnowCatalogContract.Vie
     public void getCatalogCache(List<KnowCatalog> catalogList) {
         getCatalogSuccess(catalogList);
         mAdapter.setCache(true);
+    }
+
+    private void adjustTvTextSize(TextView tv, int maxWidth, String text) {
+        int avaiWidth = maxWidth - tv.getPaddingLeft() - tv.getPaddingRight() - 10;
+
+        if (avaiWidth <= 0) {
+            return;
+        }
+
+        TextPaint textPaintClone = new TextPaint(tv.getPaint());
+        // note that Paint text size works in px not sp
+        float trySize = textPaintClone.getTextSize();
+
+        while (textPaintClone.measureText(text) > avaiWidth) {
+            trySize--;
+            textPaintClone.setTextSize(trySize);
+        }
+
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, trySize);
     }
 }
